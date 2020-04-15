@@ -95,6 +95,13 @@ export class PowerDataComSite {
       timeout: 0
     })
 
+    const items = await this.page.$$('.resultItem')
+
+    items.map(item => {
+      console.log('age', item.$('td.age'))
+    })
+
+
     
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       return option.querySelector('td')

@@ -95,7 +95,7 @@ export class PowerDataComSite {
       timeout: 0
     })
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      console.log(option.innerHTML, option.querySelector('td.age'))
+      console.log(option.querySelector('td.age'))
       return option.innerHTML
 
       
@@ -128,7 +128,7 @@ export class PowerDataComSite {
       // }
     }))
 
-    console.log(html)
+    // console.log(html)
     await this.doTask()
   }
 

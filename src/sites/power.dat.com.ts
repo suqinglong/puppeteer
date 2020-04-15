@@ -83,7 +83,7 @@ export class PowerDataComSite {
     if (task.criteria.destination) {
       await this.page.type('.main-data .dest > input', task.criteria.destination)
     }
-    
+
     await this.page.type('.main-data .dho > input', task.criteria.origin_radius)
     await this.page.type('.main-data .dhd > input', task.criteria.destination_radius)
 
@@ -95,7 +95,30 @@ export class PowerDataComSite {
       timeout: 0
     })
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      return (option as HTMLElement).innerText
+      const item: HTMLElement = option as HTMLElement
+      const age = item.querySelector('td.age').innerHTML
+      const avail = item.querySelector('td.avail').innerHTML
+      const truck = item.querySelector('td.truck').innerHTML
+      const fp  = item.querySelector('td.fp').innerHTML
+      const DO  = item.querySelector('td.do').innerHTML
+      const origin  = item.querySelector('td.origin').innerHTML
+      const trip  = item.querySelector('td.trip a').innerHTML
+      const dest  = item.querySelector('td.dest').innerHTML
+      const dd   = item.querySelector('td.dd ').innerHTML
+      const company  = item.querySelector('td.company a').innerHTML
+      const length   = item.querySelector('td.length ').innerHTML
+
+      const contact  = item.querySelector('td.contact').innerHTML
+      const weight   = item.querySelector('td.weight ').innerHTML
+      const cs  = item.querySelector('td.cs a').innerHTML
+      const dtp  = item.querySelector('td.dtp a').innerHTML
+      const factorable  = item.querySelector('td.factorable').innerHTML
+      const rate  = item.querySelector('td.rate').innerHTML
+       
+      return {
+        age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
+        factorable, rate
+      }
     }))
 
     console.log(html)

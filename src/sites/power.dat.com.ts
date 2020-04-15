@@ -94,6 +94,7 @@ export class PowerDataComSite {
     await this.page.waitForSelector('.resultItem', {
       timeout: 0
     })
+    console.log('abc')
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       console.log("haha", option.querySelector('td'))
       return option.innerHTML

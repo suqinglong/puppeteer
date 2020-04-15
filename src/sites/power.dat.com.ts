@@ -97,7 +97,7 @@ export class PowerDataComSite {
 
     
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      return option.classList
+      return option.querySelector('td')
 
       // const age = item.querySelector('td.age').textContent
       // const avail = item.querySelector('td.avail').textContent

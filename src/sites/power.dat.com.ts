@@ -81,6 +81,8 @@ export class PowerDataComSite {
     await this.page.type('.main-data .dho > input', task.criteria.origin_radius)
     await this.page.type('.main-data .dhd > input', task.criteria.destination_radius)
 
+    await this.page.type('.main-data .avail > input', task.criteria.pick_up_date.substr(5).replace('-', '/'))
+
     this.page.click('button.search')
 
     await this.page.waitForSelector('.resultItem', {

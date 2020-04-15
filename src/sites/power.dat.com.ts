@@ -95,9 +95,11 @@ export class PowerDataComSite {
       timeout: 0
     })
 
-    await this.page.evaluate(() => {
-      console.log('aaaa', document.querySelectorAll('.resultItem'))
+    const html2 = await this.page.evaluate(() => {
+      return document.querySelectorAll('.resultItem')
     })
+
+    console.log('html2', html2)
 
 
     

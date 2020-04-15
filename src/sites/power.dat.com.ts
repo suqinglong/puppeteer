@@ -94,35 +94,32 @@ export class PowerDataComSite {
     await this.page.waitForSelector('.resultItem', {
       timeout: 0
     })
-    console.log('abc')
-    await this.page.$$eval('.resultItem', options => options.map(option => {
-      console.log("haha")
+    const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       console.log(option.textContent)
-      return option.innerHTML
+      const item: HTMLElement = option as HTMLElement
+      console.log('222')
+      console.log(item.textContent)
 
-      
-      // const item: HTMLElement = option as HTMLElement
-      // console.log('222')
-      // console.log(item.innerHTML)
+      return '333'
 
-      // const age = item.querySelector('td.age').innerHTML
-      // const avail = item.querySelector('td.avail').innerHTML
-      // const truck = item.querySelector('td.truck').innerHTML
-      // const fp  = item.querySelector('td.fp').innerHTML
-      // const DO  = item.querySelector('td.do').innerHTML
-      // const origin  = item.querySelector('td.origin').innerHTML
-      // const trip  = item.querySelector('td.trip a').innerHTML
-      // const dest  = item.querySelector('td.dest').innerHTML
-      // const dd   = item.querySelector('td.dd ').innerHTML
-      // const company  = item.querySelector('td.company a').innerHTML
-      // const length   = item.querySelector('td.length ').innerHTML
+      // const age = item.querySelector('td.age').textContent
+      // const avail = item.querySelector('td.avail').textContent
+      // const truck = item.querySelector('td.truck').textContent
+      // const fp  = item.querySelector('td.fp').textContent
+      // const DO  = item.querySelector('td.do').textContent
+      // const origin  = item.querySelector('td.origin').textContent
+      // const trip  = item.querySelector('td.trip a').textContent
+      // const dest  = item.querySelector('td.dest').textContent
+      // const dd   = item.querySelector('td.dd ').textContent
+      // const company  = item.querySelector('td.company a').textContent
+      // const length   = item.querySelector('td.length ').textContent
 
-      // const contact  = item.querySelector('td.contact').innerHTML
-      // const weight   = item.querySelector('td.weight ').innerHTML
-      // const cs  = item.querySelector('td.cs a').innerHTML
-      // const dtp  = item.querySelector('td.dtp a').innerHTML
-      // const factorable  = item.querySelector('td.factorable').innerHTML
-      // const rate  = item.querySelector('td.rate').innerHTML
+      // const contact  = item.querySelector('td.contact').textContent
+      // const weight   = item.querySelector('td.weight ').textContent
+      // const cs  = item.querySelector('td.cs a').textContent
+      // const dtp  = item.querySelector('td.dtp a').textContent
+      // const factorable  = item.querySelector('td.factorable').textContent
+      // const rate  = item.querySelector('td.rate').textContent
        
       // return {
       //   age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
@@ -130,7 +127,7 @@ export class PowerDataComSite {
       // }
     }))
 
-    // console.log(html)
+    console.log(html)
     await this.doTask()
   }
 

@@ -95,16 +95,14 @@ export class PowerDataComSite {
       timeout: 0
     })
 
-    const items = await this.page.$$('.resultItem')
-
-    items.map(item => {
-      console.log('age', item.$('td.age'))
+    await this.page.evaluate(() => {
+      console.log('aaaa', document.querySelectorAll('.resultItem'))
     })
 
 
     
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      return option.querySelector('td')
+      return 
 
       // const age = item.querySelector('td.age').textContent
       // const avail = item.querySelector('td.avail').textContent

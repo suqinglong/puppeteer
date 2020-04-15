@@ -96,7 +96,9 @@ export class PowerDataComSite {
     })
 
     const html2 = await this.page.evaluate(() => {
-      return document.querySelectorAll('.resultItem')
+      return Array.from(document.querySelectorAll('.resultItem')).map(item => {
+        item.querySelector('td.age').innerHTML
+      })
     })
 
     console.log('html2', html2)

@@ -21,6 +21,6 @@ puppeteer.launch({
   await site.doTask();
 });
 
-setInterval(() => {
-  console.log(memory.memory());
-}, 1000)
+// setInterval(() => {
+//   console.log(memory.memory());
+// }, 1000)

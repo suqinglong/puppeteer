@@ -122,6 +122,7 @@ export class PowerDataComSite {
     }))
 
     console.log(html)
+    await this.doTask()
   }
 
   async doTask() {

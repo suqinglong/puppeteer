@@ -1,6 +1,6 @@
 import puppeteer from 'puppeteer'
 import { Tedis } from "tedis";
-import { account } from '@/account';
+import { account } from '../account';
 
 const tedis = new Tedis({
   host: "127.0.0.1",

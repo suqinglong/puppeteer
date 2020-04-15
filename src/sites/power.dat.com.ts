@@ -95,6 +95,7 @@ export class PowerDataComSite {
 
   async doTask() {
     const taskResult = (await tedis.blpop(0, "search_tasks"))[1]
+    console.log('taskResult', taskResult)
     if (taskResult) {
       const task: ITASK = JSON.parse(taskResult) as ITASK
       this.search(task)

@@ -16,17 +16,17 @@ export class PowerDataComSite {
   browser: puppeteer.Browser
 
   infoKeys = [
-    "age", 
-    "pickup", 
-    "Truck", 
-    "fp", 
-    "DH-O", 
-    "orgin", 
-    "trip", 
-    "destination", 
-    "DH-D", 
-    "company", 
-    "contact", 
+    "age",
+    "pickup",
+    "Truck",
+    "fp",
+    "DH-O",
+    "orgin",
+    "trip",
+    "destination",
+    "DH-D",
+    "company",
+    "contact",
     "length",
     "weight",
     "CS",
@@ -73,11 +73,17 @@ export class PowerDataComSite {
       addSearchButton.click();
     }
     await this.page.waitForSelector('.main-data .origin > input', { timeout: 0 });
-    console.log('origin:', task.criteria.origin)
-    await this.page.type('.main-data .origin > input', task.criteria.origin)
-    console.log('destination:', task.criteria.destination)
-    await this.page.type('.main-data .dest > input', task.criteria.destination)
 
+    console.log('origin:', task.criteria.origin)
+    if (task.criteria.origin) {
+      await this.page.type('.main-data .origin > input', task.criteria.origin)
+    }
+
+    console.log('destination:', task.criteria.destination)
+    if (task.criteria.destination) {
+      await this.page.type('.main-data .dest > input', task.criteria.destination)
+    }
+    
     await this.page.type('.main-data .dho > input', task.criteria.origin_radius)
     await this.page.type('.main-data .dhd > input', task.criteria.destination_radius)
 

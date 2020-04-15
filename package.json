@@ -1,0 +1,17 @@
+{
+  "name": "puppeteer",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/puppeteer": "^2.0.1",
+    "puppeteer": "^2.1.1",
+    "tedis": "^0.1.12",
+    "typescript": "^3.8.3"
+  },
+  "scripts": {
+    "build": "rm -rf ./dist/* && tsc",
+    "test": "yarn build && node ./dist/index.js",
+    "deploy": "rsync -auvhp --delete --exclude=node_modules --exclude=dist  ./* aws-redot-test:~/puppeteer"
+  }
+}

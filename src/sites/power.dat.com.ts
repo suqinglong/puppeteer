@@ -94,6 +94,8 @@ export class PowerDataComSite {
     await this.page.waitForSelector('.resultItem', {
       timeout: 0
     })
+
+    console.log(document.querySelector('.resultItem'))
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       return option.querySelectorAll('table')
 

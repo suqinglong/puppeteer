@@ -73,28 +73,35 @@ export class PowerDataComSite {
     const searchValueDisabled = await this.page.$eval('.newSearch', el => el.getAttribute('disabled'));
     if (searchValueDisabled !== 'disabled') {
       addSearchButton.click();
+      console.log('addSearchButton click')
     }
-    await this.page.waitForSelector('.main-data .origin > input', { timeout: 0 });
+    await this.page.waitForSelector('.searchListTable .origin  input', { timeout: 0 });
 
     console.log('origin:', task.criteria.origin)
     if (task.criteria.origin) {
-      await this.page.type('.main-data .origin > input', task.criteria.origin)
+      await this.page.type('.searchListTable .origin  input', task.criteria.origin)
     }
 
     console.log('destination:', task.criteria.destination)
     if (task.criteria.destination) {
-      await this.page.type('.main-data .dest > input', task.criteria.destination)
+      await this.page.type('.searchListTable .dest  input', task.criteria.destination)
     }
 
-    await this.page.type('.main-data .dho > input', task.criteria.origin_radius)
-    await this.page.type('.main-data .dhd > input', task.criteria.destination_radius)
+    await this.page.type('.searchListTable .dho  input', task.criteria.origin_radius)
+    await this.page.type('.searchListTable .dhd  input', task.criteria.destination_radius)
 
-    await this.page.type('.main-data .avail > input', task.criteria.pick_up_date.substr(5).replace('-', '/'))
+    await this.page.$eval('.searchListTable .avail input', (input) => {
+      (input as HTMLInputElement).value = ""
+    })
+
+    const date = task.criteria.pick_up_date.substr(5).replace('-', '/')
+    await this.page.type('.searchListTable .avail  input', date)
 
     this.page.click('button.search')
+    console.log('click search button')
 
     await this.page.waitForSelector('.resultItem', {
-      timeout: 5000
+      timeout: 0
     })
 
     const resultHtml = await this.page.content()
@@ -150,8 +157,10 @@ export class PowerDataComSite {
 
   async doTask() {
     const taskResult = (await tedis.blpop(0, "search_tasks"))[1]
+    // const taskResult = { "task_id": "ca7eb2b1c5c98467ae4809d95bdc5446", "site": "XPO Connect", "criteria": { "origin": "Kennewick, WA", "origin_radius": "100", "destination": "", "destination_radius": "100", "pick_up_date": "2020-04-18", "equipment": "Van" } }
     console.log('taskResult', taskResult)
     if (taskResult) {
+      // const task: ITASK = taskResult as ITASK
       const task: ITASK = JSON.parse(taskResult) as ITASK
       this.search(task)
     }

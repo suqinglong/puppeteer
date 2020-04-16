@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer'
 import { Tedis } from "tedis";
 import { account } from '../account';
 import cheerio from 'cheerio'
+import axios from 'axios'
 
 const tedis = new Tedis({
   host: "127.0.0.1",
@@ -98,34 +99,52 @@ export class PowerDataComSite {
 
     const resultHtml = await this.page.content()
     const $ = cheerio.load(resultHtml)
-    const html = Array.from($('.resultItem')).map((item: any) => {
+    const items = Array.from($('.resultItem')).map((item: any) => {
       const $item = $(item)
-
-      console.log($item.html())
-
+      // console.log($item.html())
       const age = $item.find('.age').text()
       const avail = $item.find('.avail').text()
-      const truck = $item.find('.truck').text()
-      const fp  = $item.find('.fp').text()
-      const DO  = $item.find('.do').text()
-      const origin  = $item.find('.origin').text()
-      const trip  = $item.find('.trip a').text()
-      const dest  = $item.find('.dest').text()
-      const dd   = $item.find('.dd ').text()
-      const company  = $item.find('.company a').text()
-      const length   = $item.find('.length ').text()
-
-      const contact  = $item.find('.contact').text()
-      const weight   = $item.find('.weight ').text()
-      const cs  = $item.find('.cs a').text()
-      const dtp  = $item.find('.dtp a').text()
+      const equipment = $item.find('.truck').text()
+      const fp = $item.find('.fp').text()
+      const origin_radius = $item.find('.do').text()
+      const origin = $item.find('.origin').text()
+      const trip = $item.find('.trip a').text()
+      const destination = $item.find('.dest').text()
+      const destination_radius = $item.find('.dd ').text()
+      const company = $item.find('.company a').text()
+      const length = $item.find('.length ').text()
+      const contact = $item.find('.contact').text()
+      const weight = $item.find('.weight ').text()
+      const cs = $item.find('.cs a').text()
+      const dtp = $item.find('.dtp a').text()
 
       return {
-        age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp
+        age, avail, equipment, fp, origin_radius, origin, trip, destination, destination_radius, company, contact, length, weight, cs, dtp
       }
     })
 
-    console.log(html)
+    axios.post('http://54.219.50.46:9501/api/internal/save_search_result',
+      {
+        "token": "6bbcbce7bc90c008",
+        "records": items.map(item => {
+          return {
+            "task_id": task.task_id,
+            "date": task.criteria.pick_up_date,
+            "source": "DAT",
+            "equipment": item.equipment,
+            "origin": item.origin,
+            "origin_radius": item.origin_radius,
+            "destination": item.destination,
+            "destination_radius": item.destination_radius,
+            "distance": "",
+            "extra": JSON.stringify(item)
+          }
+        })
+      }).then((res: any) => {
+        console.log(res.data)
+      })
+
+    console.log(items)
     await this.doTask()
   }
 

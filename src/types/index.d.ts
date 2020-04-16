@@ -10,3 +10,16 @@ interface ITASK {
     equipment: string
   }
 }
+
+interface IResultData {
+  task_id: string, 
+  date: string, 
+  source: string, 
+  equipment: string, 
+  origin: string, 
+  origin_radius: string, 
+  destination: string, 
+  destination_radius: string, 
+  distance: string, 
+  extra: object
+}

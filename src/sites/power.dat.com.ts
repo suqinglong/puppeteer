@@ -101,6 +101,8 @@ export class PowerDataComSite {
     const html = Array.from($('.resultItem')).map((item: any) => {
       const $item = $(item)
 
+      console.log($item.find('.age').text())
+
       const age = $item.find('td.age').text()
       const avail = $item.find('td.avail').text()
       const truck = $item.find('td.truck').text()

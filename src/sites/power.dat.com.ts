@@ -100,13 +100,12 @@ export class PowerDataComSite {
 
     const $ = cheerio.load(resultHtml)
 
-    const html =Array.from($('.resultItem')).map((item:any) => {
-      console.log(item)
-      return $(item).find('td.age').text()
+    const html = Array.from($('.resultItem')).map((item: any) => {
+      return $(item).html()
     })
-    
+
     // const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      
+
     //   const $ = cheerio.load('<div><span>aaa</span></div>')
     //   return $('span').text()
 
@@ -128,7 +127,7 @@ export class PowerDataComSite {
     //   // const dtp  = item.querySelector('td.dtp a').textContent
     //   // const factorable  = item.querySelector('td.factorable').textContent
     //   // const rate  = item.querySelector('td.rate').textContent
-       
+
     //   // return {
     //   //   age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
     //   //   factorable, rate

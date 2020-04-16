@@ -1,15 +1,15 @@
 import puppeteer from 'puppeteer'
 import { PowerDataComSite } from "./sites/power.dat.com";
 import memory from "./tools/memory";
-// import cheerio from 'cheerio'
+import cheerio from 'cheerio'
 
-// const $ = cheerio.load('<div><span><a>aa</a></span><span><a>bb</a></span></div>')
+const $ = cheerio.load('<div><span><a>aa</a></span><span><a>bb</a></span></div>')
 
-// const html = Array.from($('span')).map((item: any) => {
-//   return $(item).find('a').text();
-// })
+const html = Array.from($('span')).map((item: any) => {
+  return $(item).find('a').html();
+})
 
-// console.log(html)
+console.log(html)
 
 puppeteer.launch({
   // executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',

@@ -1,6 +1,7 @@
 import puppeteer from 'puppeteer'
 import { Tedis } from "tedis";
 import { account } from '../account';
+import cheerio from 'cheerio'
 
 const tedis = new Tedis({
   host: "127.0.0.1",
@@ -95,18 +96,12 @@ export class PowerDataComSite {
       timeout: 0
     })
 
-    const html2 = await this.page.evaluate(() => {
-      return Array.from(document.querySelectorAll('.resultItem')).map(item => {
-        return item.innerHTML
-      })
-    })
-
-    console.log('html2', html2)
-
 
     
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-      return 
+      
+      const $el = cheerio.load(option.innerHTML)
+      return $el.$('td.age').text()
 
       // const age = item.querySelector('td.age').textContent
       // const avail = item.querySelector('td.avail').textContent

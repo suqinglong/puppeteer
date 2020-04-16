@@ -101,6 +101,7 @@ export class PowerDataComSite {
     const $ = cheerio.load(resultHtml)
 
     const html =Array.from($('.resultItem')).map((item:any) => {
+      console.log(item)
       return $(item).find('td.age').text()
     })
     

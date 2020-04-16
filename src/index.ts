@@ -5,7 +5,7 @@ import memory from "./tools/memory";
 puppeteer.launch({
   // executablePath:'/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
   // devtools: false,
-  // headless: false,
+  headless: false,
   // defaultViewport: {
   //   width: 1200,
   //   height: 800

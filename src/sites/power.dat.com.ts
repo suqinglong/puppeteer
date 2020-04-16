@@ -97,42 +97,34 @@ export class PowerDataComSite {
     })
 
     const resultHtml = await this.page.content()
-
     const $ = cheerio.load(resultHtml)
-
     const html = Array.from($('.resultItem')).map((item: any) => {
-      return $(item).find('.age').html()
+      const $item = $(item)
+
+      const age = $item.find('td.age').textContent
+      const avail = $item.find('td.avail').textContent
+      const truck = $item.find('td.truck').textContent
+      const fp  = $item.find('td.fp').textContent
+      const DO  = $item.find('td.do').textContent
+      const origin  = $item.find('td.origin').textContent
+      const trip  = $item.find('td.trip a').textContent
+      const dest  = $item.find('td.dest').textContent
+      const dd   = $item.find('td.dd ').textContent
+      const company  = $item.find('td.company a').textContent
+      const length   = $item.find('td.length ').textContent
+
+      const contact  = $item.find('td.contact').textContent
+      const weight   = $item.find('td.weight ').textContent
+      const cs  = $item.find('td.cs a').textContent
+      const dtp  = $item.find('td.dtp a').textContent
+      const factorable  = $item.find('td.factorable').textContent
+      const rate  = $item.find('td.rate').textContent
+
+      return {
+        age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
+        factorable, rate
+      }
     })
-
-    // const html = await this.page.$$eval('.resultItem', options => options.map(option => {
-
-    //   const $ = cheerio.load('<div><span>aaa</span></div>')
-    //   return $('span').text()
-
-    //   // const age = item.querySelector('td.age').textContent
-    //   // const avail = item.querySelector('td.avail').textContent
-    //   // const truck = item.querySelector('td.truck').textContent
-    //   // const fp  = item.querySelector('td.fp').textContent
-    //   // const DO  = item.querySelector('td.do').textContent
-    //   // const origin  = item.querySelector('td.origin').textContent
-    //   // const trip  = item.querySelector('td.trip a').textContent
-    //   // const dest  = item.querySelector('td.dest').textContent
-    //   // const dd   = item.querySelector('td.dd ').textContent
-    //   // const company  = item.querySelector('td.company a').textContent
-    //   // const length   = item.querySelector('td.length ').textContent
-
-    //   // const contact  = item.querySelector('td.contact').textContent
-    //   // const weight   = item.querySelector('td.weight ').textContent
-    //   // const cs  = item.querySelector('td.cs a').textContent
-    //   // const dtp  = item.querySelector('td.dtp a').textContent
-    //   // const factorable  = item.querySelector('td.factorable').textContent
-    //   // const rate  = item.querySelector('td.rate').textContent
-
-    //   // return {
-    //   //   age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
-    //   //   factorable, rate
-    //   // }
-    // }))
 
     console.log(html)
     await this.doTask()

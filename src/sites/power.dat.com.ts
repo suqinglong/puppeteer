@@ -101,7 +101,7 @@ export class PowerDataComSite {
     const $ = cheerio.load(resultHtml)
 
     const html = Array.from($('.resultItem')).map((item: any) => {
-      return $(item).html()
+      return $(item).find('.age').html()
     })
 
     // const html = await this.page.$$eval('.resultItem', options => options.map(option => {

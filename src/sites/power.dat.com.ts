@@ -101,24 +101,24 @@ export class PowerDataComSite {
     const html = Array.from($('.resultItem')).map((item: any) => {
       const $item = $(item)
 
-      const age = $item.find('td.age').textContent
-      const avail = $item.find('td.avail').textContent
-      const truck = $item.find('td.truck').textContent
-      const fp  = $item.find('td.fp').textContent
-      const DO  = $item.find('td.do').textContent
-      const origin  = $item.find('td.origin').textContent
-      const trip  = $item.find('td.trip a').textContent
-      const dest  = $item.find('td.dest').textContent
-      const dd   = $item.find('td.dd ').textContent
-      const company  = $item.find('td.company a').textContent
-      const length   = $item.find('td.length ').textContent
+      const age = $item.find('td.age').text()
+      const avail = $item.find('td.avail').text()
+      const truck = $item.find('td.truck').text()
+      const fp  = $item.find('td.fp').text()
+      const DO  = $item.find('td.do').text()
+      const origin  = $item.find('td.origin').text()
+      const trip  = $item.find('td.trip a').text()
+      const dest  = $item.find('td.dest').text()
+      const dd   = $item.find('td.dd ').text()
+      const company  = $item.find('td.company a').text()
+      const length   = $item.find('td.length ').text()
 
-      const contact  = $item.find('td.contact').textContent
-      const weight   = $item.find('td.weight ').textContent
-      const cs  = $item.find('td.cs a').textContent
-      const dtp  = $item.find('td.dtp a').textContent
-      const factorable  = $item.find('td.factorable').textContent
-      const rate  = $item.find('td.rate').textContent
+      const contact  = $item.find('td.contact').text()
+      const weight   = $item.find('td.weight ').text()
+      const cs  = $item.find('td.cs a').text()
+      const dtp  = $item.find('td.dtp a').text()
+      const factorable  = $item.find('td.factorable').text()
+      const rate  = $item.find('td.rate').text()
 
       return {
         age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,

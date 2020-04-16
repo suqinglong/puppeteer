@@ -100,8 +100,8 @@ export class PowerDataComSite {
     
     const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       
-      const $el = cheerio.load(option.innerHTML)
-      return $el.$('td.age').text()
+      const $ = cheerio.load(option.innerHTML)
+      return $('td.age').text()
 
       // const age = item.querySelector('td.age').textContent
       // const avail = item.querySelector('td.avail').textContent

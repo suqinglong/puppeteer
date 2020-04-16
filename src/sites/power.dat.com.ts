@@ -96,37 +96,43 @@ export class PowerDataComSite {
       timeout: 0
     })
 
+    const resultHtml = await this.page.content()
 
+    const $ = cheerio.load(resultHtml)
+
+    const html =Array.from($('.resultItem')).map((item:HTMLElement) => {
+      return item.querySelector('td.age').textContent
+    })
     
-    const html = await this.page.$$eval('.resultItem', options => options.map(option => {
+    // const html = await this.page.$$eval('.resultItem', options => options.map(option => {
       
-      const $ = cheerio.load('<div><span>aaa</span></div>')
-      return $('span').text()
+    //   const $ = cheerio.load('<div><span>aaa</span></div>')
+    //   return $('span').text()
 
-      // const age = item.querySelector('td.age').textContent
-      // const avail = item.querySelector('td.avail').textContent
-      // const truck = item.querySelector('td.truck').textContent
-      // const fp  = item.querySelector('td.fp').textContent
-      // const DO  = item.querySelector('td.do').textContent
-      // const origin  = item.querySelector('td.origin').textContent
-      // const trip  = item.querySelector('td.trip a').textContent
-      // const dest  = item.querySelector('td.dest').textContent
-      // const dd   = item.querySelector('td.dd ').textContent
-      // const company  = item.querySelector('td.company a').textContent
-      // const length   = item.querySelector('td.length ').textContent
+    //   // const age = item.querySelector('td.age').textContent
+    //   // const avail = item.querySelector('td.avail').textContent
+    //   // const truck = item.querySelector('td.truck').textContent
+    //   // const fp  = item.querySelector('td.fp').textContent
+    //   // const DO  = item.querySelector('td.do').textContent
+    //   // const origin  = item.querySelector('td.origin').textContent
+    //   // const trip  = item.querySelector('td.trip a').textContent
+    //   // const dest  = item.querySelector('td.dest').textContent
+    //   // const dd   = item.querySelector('td.dd ').textContent
+    //   // const company  = item.querySelector('td.company a').textContent
+    //   // const length   = item.querySelector('td.length ').textContent
 
-      // const contact  = item.querySelector('td.contact').textContent
-      // const weight   = item.querySelector('td.weight ').textContent
-      // const cs  = item.querySelector('td.cs a').textContent
-      // const dtp  = item.querySelector('td.dtp a').textContent
-      // const factorable  = item.querySelector('td.factorable').textContent
-      // const rate  = item.querySelector('td.rate').textContent
+    //   // const contact  = item.querySelector('td.contact').textContent
+    //   // const weight   = item.querySelector('td.weight ').textContent
+    //   // const cs  = item.querySelector('td.cs a').textContent
+    //   // const dtp  = item.querySelector('td.dtp a').textContent
+    //   // const factorable  = item.querySelector('td.factorable').textContent
+    //   // const rate  = item.querySelector('td.rate').textContent
        
-      // return {
-      //   age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
-      //   factorable, rate
-      // }
-    }))
+    //   // return {
+    //   //   age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
+    //   //   factorable, rate
+    //   // }
+    // }))
 
     console.log(html)
     await this.doTask()

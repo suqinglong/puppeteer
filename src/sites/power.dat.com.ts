@@ -101,7 +101,7 @@ export class PowerDataComSite {
     const html = Array.from($('.resultItem')).map((item: any) => {
       const $item = $(item)
 
-      console.log($item.find('td.age').text(), $item.find('.age').text())
+      console.log($item.html())
 
       const age = $item.find('.age').text()
       const avail = $item.find('.avail').text()
@@ -119,12 +119,9 @@ export class PowerDataComSite {
       const weight   = $item.find('.weight ').text()
       const cs  = $item.find('.cs a').text()
       const dtp  = $item.find('.dtp a').text()
-      const factorable  = $item.find('.factorable').text()
-      const rate  = $item.find('.rate').text()
 
       return {
-        age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp,
-        factorable, rate
+        age, avail, truck, fp, DO, origin, trip, dest, dd, company, contact, length, weight, cs, dtp
       }
     })
 

@@ -94,7 +94,7 @@ export class PowerDataComSite {
     this.page.click('button.search')
 
     await this.page.waitForSelector('.resultItem', {
-      timeout: 0
+      timeout: 5000
     })
 
     const resultHtml = await this.page.content()

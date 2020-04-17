@@ -1,6 +1,6 @@
-export const account =   {
-  "power.dat.com": {
-    "name": "haulistix",
-    "password": "Shostakovich5"
-  }
-}
+export const account = {
+    'power.dat.com': {
+        name: 'haulistix',
+        password: 'Shostakovich5'
+    }
+};

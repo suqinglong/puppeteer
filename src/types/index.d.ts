@@ -7,7 +7,7 @@ interface ITASK {
         origin_radius: string;
         destination_radius: string;
         pick_up_date: string;
-        equipment: string;
+        equipment: 'Van' | 'Reef';
     };
 }
 
@@ -23,3 +23,12 @@ interface IResultData {
     distance: string;
     extra: object;
 }
+
+interface ISite {
+    prePare: Function
+    doTask: Function
+}
+
+declare type IErrorType = 'logout' | 'other' | 'search'
+declare type IMode = 'develop' | 'production'
+

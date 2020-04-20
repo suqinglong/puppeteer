@@ -171,6 +171,16 @@ export class PowerDataComSite extends SearchSite {
                 .post('http://54.219.50.46:9501/api/internal/save_search_result', {
                     token: '6bbcbce7bc90c008',
                     records: items.map((item) => {
+                        let extro: any = {}
+
+                        Object.keys(item).forEach(key => {
+                            if (['date', 'source', 'equipment', 'origin',
+                                'origin_radius', 'destination',
+                                'destination_radius', 'distance'].indexOf(key) > -1) {
+                                extro[key] = item[key]
+                            }
+                        })
+
                         return {
                             task_id: task.task_id,
                             date: task.criteria.pick_up_date,

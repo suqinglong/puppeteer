@@ -21,14 +21,18 @@ interface IResultData {
     destination: string;
     destination_radius: string;
     distance: string;
-    extra: object;
+    extra: string;
+}
+
+interface IPostData {
+    token: string;
+    records: Array<IResultData>;
 }
 
 interface ISite {
-    prePare: Function
-    doTask: Function
+    prePare: Function;
+    doTask: Function;
 }
 
-declare type IErrorType = 'logout' | 'other' | 'search'
-declare type IMode = 'develop' | 'production'
-
+declare type IErrorType = 'logout' | 'other' | 'search';
+declare type IMode = 'develop' | 'production';

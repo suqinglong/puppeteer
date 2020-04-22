@@ -4,7 +4,7 @@ import { EchodriveEchoCom } from './sites/echodrive.echo.com';
 import { Settings } from './settings';
 import { getMode } from './tools/index';
 import { SearchSite } from './sites/search.site';
-import { Singleton } from './tools/tedis';
+import { SingletonTedis } from './tools/tedis';
 import { Tedis } from 'tedis';
 
 const searchSites = [
@@ -13,7 +13,7 @@ const searchSites = [
 ]
 
 export class Search {
-    private tedis: Tedis = new Singleton().getInstance();
+    private tedis: Tedis = new SingletonTedis().getInstance();
     private mode: IMode = getMode();
     private settings = this.mode === 'develop' ? Settings : {};
     private searchSites: Array<SearchSite> = [];

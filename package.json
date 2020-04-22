@@ -6,7 +6,7 @@
   "scripts": {
     "build": "rm -rf ./dist/* && tsc",
     "test": "yarn build && node ./dist/index.js --mode=develop",
-    "run": "yarn build && node ./dist/index.js",
+    "product": "yarn build && node ./dist/index.js",
     "deploy": "rsync -auvhp --delete --exclude=node_modules --exclude=dist  ./* aws-redot-test:~/puppeteer",
     "lint": "eslint src --ext .ts && prettier --write -l \"./src/**/*\"",
     "eslint": "eslint src --ext .ts",

@@ -1,9 +1,7 @@
 import cheerio from 'cheerio';
 import puppeteer from 'puppeteer';
-import { Tedis } from 'tedis';
 import { account } from '../account';
 import { SearchSite } from './search.site';
-import { Singleton } from '../tools/tedis';
 import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { Post } from '../api';
@@ -15,7 +13,6 @@ export class PowerDataComSite extends SearchSite {
     private name: string = account['power.dat.com'].name;
     private password: string = account['power.dat.com'].password;
     private page: puppeteer.Page;
-    private tedis: Tedis = new Singleton().getInstance();
 
     public async prePare() {
         try {
@@ -31,7 +28,7 @@ export class PowerDataComSite extends SearchSite {
                 timeout: 5000
             });
         } catch (e) {
-            console.log('PowerDataComSite prepare error');
+            console.log('PowerDataComSite prepare error', e);
         }
     }
 

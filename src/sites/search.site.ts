@@ -1,12 +1,13 @@
 import puppeteer from 'puppeteer';
-export class SearchSite implements ISite {
+export abstract class SearchSite implements ISite {
     protected browser: puppeteer.Browser;
 
     public constructor(browser: puppeteer.Browser) {
         this.browser = browser;
     }
 
-    public async prePare() {}
+    public abstract async prePare()
 
-    public async doTask() {}
+    public abstract async search(task: ITASK)
+    
 }

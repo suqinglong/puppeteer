@@ -31,7 +31,7 @@ interface IPostData {
 
 interface ISite {
     prePare: Function;
-    doTask: Function;
+    search: Function;
 }
 
 declare type IErrorType = 'logout' | 'other' | 'search';

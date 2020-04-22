@@ -19,7 +19,7 @@ export class PowerDataComSite extends SearchSite {
 
     public async prePare() {
         try {
-            console.log('begin prePare');
+            console.log('PowerDataComSite begin prePare');
             this.page = await this.browser.newPage();
             await this.page.goto(this.url);
             await this.page.type('#username', this.name);
@@ -31,20 +31,11 @@ export class PowerDataComSite extends SearchSite {
                 timeout: 5000
             });
         } catch (e) {
-            console.log('prepare error');
+            console.log('PowerDataComSite prepare error');
         }
     }
 
-    public async doTask() {
-        const taskResult = (await this.tedis.blpop(0, 'search_tasks'))[1];
-        console.log('task:', taskResult);
-        if (taskResult) {
-            const task: ITASK = JSON.parse(taskResult) as ITASK;
-            this.search(task);
-        }
-    }
-
-    private async search(task: ITASK) {
+    public async search(task: ITASK) {
         try {
             const addSearchButton = await this.page.$('.newSearch').catch(() => {
                 throw new SiteError('search', 'wait for addSearchButton');
@@ -57,7 +48,7 @@ export class PowerDataComSite extends SearchSite {
                     clickCount: 4,
                     delay: 100
                 });
-                console.log('addSearchButton click');
+                console.log('PowerDataComSite addSearchButton click');
             }
 
             await this.page
@@ -69,7 +60,7 @@ export class PowerDataComSite extends SearchSite {
                     throw new SiteError('search', 'wait for selector');
                 });
 
-            console.log('origin:', task.criteria.origin);
+            console.log('PowerDataComSite origin:', task.criteria.origin);
             if (task.criteria.origin) {
                 await this.page
                     .type('.searchListTable .origin  input', task.criteria.origin)
@@ -103,14 +94,14 @@ export class PowerDataComSite extends SearchSite {
                     throw new SiteError('search', 'wait for selector dho');
                 });
 
-            console.log('task.criteria.destination_radius', task.criteria.destination_radius);
+            console.log('PowerDataComSite task.criteria.destination_radius', task.criteria.destination_radius);
             await this.page
                 .type('.searchListTable .dhd  input', task.criteria.destination_radius)
                 .catch(() => {
                     throw new SiteError('search', 'wait for selector dhd');
                 });
 
-                console.log('avail typing');
+            console.log('PowerDataComSite avail typing');
             await this.page
                 .$eval('.searchListTable .avail input', (input) => {
                     (input as HTMLInputElement).value = '';
@@ -128,19 +119,19 @@ export class PowerDataComSite extends SearchSite {
 
             await this.page.waitFor(200);
 
-            console.log('search click');
+            console.log('PowerDataComSite search click');
             await this.page.click('button.search', {
                 delay: 20,
                 clickCount: 3
             });
 
-            console.log('wait result');
+            console.log('PowerDataComSite wait result');
             await this.page
                 .waitForSelector('.resultItem.exactMatch', {
                     timeout: 5000
                 })
                 .catch((e) => {
-                    console.log('result error:', e)
+                    console.log('PowerDataComSite result error:', e);
                     throw new SiteError('search', 'wait for resultItem');
                 });
 
@@ -161,17 +152,14 @@ export class PowerDataComSite extends SearchSite {
                 return GetDataFromHtml($(item), $);
             });
 
-            console.log('post data:', items)
+            console.log('PowerDataComSite post data:', items);
             await Post(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
 
             await this.page.click('.qa-my-searches-delete');
         } catch (e) {
-            console.log('**** catched ****', e)
-            await this.doTask();
+            console.log('PowerDataComSite **** catched ****', e);
         }
-
-        await this.doTask();
     }
 }

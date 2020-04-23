@@ -15,13 +15,14 @@ export class PowerDatComSite extends SearchSite {
 
     public async prePare(name: string, password: string) {
         try {
-            console.log('PowerDatComSite begin prePare');
+            console.log('PowerDatComSite begin prePare', name, password);
             this.page = await this.browser.newPage();
             await this.page.goto(this.loginPage);
             await this.page.type('#username', name);
             await this.page.type('#password', password);
             await this.page.click('button#login');
             await this.page.waitForNavigation();
+            console.log('PowerDatComSite waitForNavigation ...')
             await this.page.goto(this.searchPage);
             await this.page.waitForSelector('.newSearch', {
                 timeout: 5000

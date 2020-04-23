@@ -5,39 +5,36 @@ import { Settings } from './settings';
 import { getMode } from './tools/index';
 import { SearchSite } from './sites/search.site';
 
-const sites = [EchodriveEchoCom, PowerDatComSite];
+const sitesMap = {
+    'Echo Driver': EchodriveEchoCom,
+    DAT: PowerDatComSite
+};
 
 export class Search implements ISearchClass {
     private mode: IMode = getMode();
     private settings = this.mode === 'develop' ? Settings : {};
-    private searchSites: { [key: string]: SearchSite } = {};
 
-    public async prepare() {
+    public async createBrowser(): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
             ...this.settings,
             args: ['no-sandbox', 'disable-setuid-sandbox']
         });
-        await this.parepareSites(browser, sites);
+        return browser.wsEndpoint();
     }
 
-    public async doTask(task: ITASK) {
-        const matchedSite = this.searchSites[task.site];
-        if (!matchedSite) {
-            return;
-        }
-        if (!matchedSite.isLogin) {
-            await matchedSite.prePare(task.email, task.password);
-        }
-        await matchedSite.search(task);
+    public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
+        const browser = await puppeteer.connect({ browserWSEndpoint });
+        const SiteClass = sitesMap[task.site];
+        const site = this.createPage(SiteClass, browser);
+        await site.prePare(task.email, task.password);
+        await site.search(task);
+        await site.closePage();
     }
 
-    private async parepareSites(
-        browser: puppeteer.Browser,
-        SiteClasses: Array<new (browser: puppeteer.Browser) => SearchSite>
-    ) {
-        SiteClasses.forEach(async (SiteClass) => {
-            const site = new SiteClass(browser);
-            this.searchSites[site.siteName] = site;
-        });
+    private createPage(
+        SiteClass: new (browser: puppeteer.Browser) => SearchSite,
+        browser: puppeteer.Browser
+    ): SearchSite {
+        return new SiteClass(browser);
     }
 }

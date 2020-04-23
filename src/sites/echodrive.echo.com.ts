@@ -49,6 +49,10 @@ export class EchodriveEchoCom extends SearchSite {
         });
     }
 
+    public async closePage() {
+        await this.page.close();
+    }
+
     private getDataFromHtml($: CheerioStatic, taskID: string): Array<IResultData> {
         const result: any = {};
 

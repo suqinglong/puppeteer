@@ -43,8 +43,9 @@ interface ITasksClass {
 
 interface ISearchClass {
     doTask: Function;
-    prepare: Function;
+    createBrowser: Function;
 }
 
 declare type IErrorType = 'logout' | 'other' | 'search';
 declare type IMode = 'develop' | 'production';
+declare type IbrowserWSEndpoint = string;

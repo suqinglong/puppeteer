@@ -163,4 +163,8 @@ export class PowerDatComSite extends SearchSite {
             console.log('PowerDatComSite **** catched ****', e);
         }
     }
+
+    public async closePage() {
+        await this.page.close();
+    }
 }

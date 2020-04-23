@@ -12,4 +12,6 @@ export abstract class SearchSite implements ISite {
     public abstract async prePare(email: string, password: string);
 
     public abstract async search(task: ITASK);
+
+    public abstract async closePage();
 }

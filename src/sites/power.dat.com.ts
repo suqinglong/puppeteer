@@ -50,6 +50,8 @@ export class PowerDatComSite extends SearchSite {
                 console.log('PowerDatComSite addSearchButton click');
             }
 
+            console.log('searchListTable html:',await this.page.$eval('.searchListTable', input => input.innerHTML))
+
             await this.page
                 .waitForSelector('.searchListTable .origin input', {
                     timeout: 10000,

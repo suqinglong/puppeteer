@@ -139,9 +139,11 @@ export class PowerDatComSite extends SearchSite {
 
             console.log('PowerDatComSite have result len:', resultItems.length);
 
+            console.log('result html:', this.page.$eval('.searchResultsTable', input => input.innerHTML))
+
             for (let n = 1, len = resultItems.length; n <= len; n++) {
                 await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`).catch(e => {
-                    throw new SiteError('search', 'result item click')
+                    throw new SiteError('search', 'result item click' + (n + 1))
                 });
                 await this.page.waitForSelector(
                     `.resultItem.exactMatch:nth-child(${n + 1}) .widget-numbers`,

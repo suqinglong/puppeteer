@@ -50,8 +50,6 @@ export class PowerDatComSite extends SearchSite {
                 console.log('PowerDatComSite addSearchButton click');
             }
 
-            console.log('searchListTable html:',await this.page.$eval('.searchListTable', input => input.innerHTML))
-
             await this.page
                 .waitForSelector('.searchListTable .origin input', {
                     timeout: 10000,
@@ -118,6 +116,8 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('.searchListTable .avail  input', date).catch(() => {
                 throw new SiteError('search', 'wait for selector avail');
             });
+
+            console.log('PowerDatComSite to click filter-panel-toggle')
 
             await this.page.click('.filter-panel-toggle');
 

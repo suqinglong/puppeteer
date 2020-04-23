@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 import { SearchSite } from './search.site';
 import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
-import { Post } from '../api';
+import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
 
 export class PowerDatComSite extends SearchSite {
@@ -22,7 +22,7 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('#password', password);
             await this.page.click('button#login');
             await this.page.waitForNavigation();
-            console.log('PowerDatComSite waitForNavigation ...')
+            console.log('PowerDatComSite waitForNavigation ...');
             await this.page.goto(this.searchPage);
             await this.page.waitForSelector('.newSearch', {
                 timeout: 5000
@@ -154,7 +154,7 @@ export class PowerDatComSite extends SearchSite {
             });
 
             console.log('PowerDatComSite post data:', items);
-            await Post(ModifyPostData(task.task_id, items)).then((res: any) => {
+            await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
 

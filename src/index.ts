@@ -1,3 +1,3 @@
 import { Tasks } from './tasks';
 
-(new Tasks()).getTask()
+new Tasks().getTask();

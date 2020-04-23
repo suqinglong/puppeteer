@@ -6,21 +6,20 @@
 async function test(num) {
     return new Promise((resolve) => {
         setTimeout(() => {
-            resolve('test resolve')
-        }, num)
-    })
+            resolve('test resolve');
+        }, num);
+    });
 }
 
 async function aa() {
-    console.log(1)
-    const a = await test(2000)
-    console.log(a)
-    console.log(2)
-    aa()
+    console.log(1);
+    const a = await test(2000);
+    console.log(a);
+    console.log(2);
+    aa();
 }
 
-
-aa()
+aa();
 
 // fs.readFile('./src/test.html', 'utf8', function (err, data) {
 //     if (err) throw err;

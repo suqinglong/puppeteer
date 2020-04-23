@@ -42,8 +42,8 @@ interface ITasksClass {
 }
 
 interface ISearchClass {
-    doTask: Function
-    prepare: Function
+    doTask: Function;
+    prepare: Function;
 }
 
 declare type IErrorType = 'logout' | 'other' | 'search';

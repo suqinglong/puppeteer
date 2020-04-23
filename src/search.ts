@@ -16,14 +16,14 @@ export class Search implements ISearchClass {
         const browser = await puppeteer.launch({
             ...this.settings,
             args: ['no-sandbox', 'disable-setuid-sandbox']
-        })
+        });
         await this.parepareSites(browser, sites);
     }
 
     public async doTask(task: ITASK) {
         const matchedSite = this.searchSites[task.site];
         if (!matchedSite) {
-            return
+            return;
         }
         if (!matchedSite.isLogin) {
             await matchedSite.prePare(task.email, task.password);

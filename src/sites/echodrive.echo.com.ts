@@ -3,7 +3,7 @@ import puppeteer from 'puppeteer';
 import dateformat from 'dateformat';
 import cheerio from 'cheerio';
 import { Trim, ModifyPostData } from '../tools/index';
-import { Post } from '../api';
+import { PostSearchData } from '../api';
 
 export class EchodriveEchoCom extends SearchSite {
     public siteName = 'Echo Driver';
@@ -44,7 +44,7 @@ export class EchodriveEchoCom extends SearchSite {
         await this.page.waitForSelector('.available-loads-row');
         const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
         const $ = cheerio.load(resultHtml);
-        Post(this.getDataFromHtml($, task.task_id)).then((res: any) => {
+        PostSearchData(this.getDataFromHtml($, task.task_id)).then((res: any) => {
             console.log('EchodriveEchoCom', res.data);
         });
     }

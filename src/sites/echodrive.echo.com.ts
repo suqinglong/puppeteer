@@ -40,10 +40,16 @@ export class EchodriveEchoCom extends SearchSite {
             await this.page.type('.destination-input input', task.criteria.destination);
             await this.page.type('.dhd-input input', task.criteria.destination_radius);
             // Apr 22 - 25
-            await this.page.type('.date-input input', dateformat(task.criteria.pick_up_date, 'mmm-dd'));
+            await this.page.type(
+                '.date-input input',
+                dateformat(task.criteria.pick_up_date, 'mmm-dd')
+            );
             await this.page.click('.search-btn');
             await this.page.waitForSelector('.available-loads-row');
-            const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
+            const resultHtml = await this.page.$eval(
+                '.loads-bids-container',
+                (res) => res.innerHTML
+            );
             const $ = cheerio.load(resultHtml);
             PostSearchData(this.getDataFromHtml($, task.task_id)).then((res: any) => {
                 console.log('EchodriveEchoCom', res.data);

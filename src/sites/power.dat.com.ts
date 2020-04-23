@@ -136,14 +136,21 @@ export class PowerDatComSite extends SearchSite {
             console.log('PowerDatComSite have result');
 
             const resultItems = await this.page.$$('.resultItem.exactMatch');
+
+            console.log('PowerDatComSite have result len:', resultItems.length);
+
             for (let n = 1, len = resultItems.length; n <= len; n++) {
-                await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`);
+                await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`).catch(e => {
+                    throw new SiteError('search', 'result item click')
+                });
                 await this.page.waitForSelector(
                     `.resultItem.exactMatch:nth-child(${n + 1}) .widget-numbers`,
                     {
                         timeout: 5000
                     }
-                );
+                ).catch(e => {
+                    throw new SiteError('search', 'waitForSelector result item detail')
+                });
             }
 
             const resultHtml = await this.page.$eval('.search-details', (res) => res.innerHTML);

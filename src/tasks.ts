@@ -29,7 +29,7 @@ export class Tasks implements ITasksClass {
                         if (browserWSEndpoint) {
                             break;
                         }
-                        this.sleep(1);
+                        await this.sleep(1);
                     }
                 }
             }

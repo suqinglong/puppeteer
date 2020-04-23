@@ -139,7 +139,7 @@ export class PowerDatComSite extends SearchSite {
 
             console.log('PowerDatComSite have result len:', resultItems.length);
 
-            console.log('result html:', this.page.$eval('.searchResultsTable', input => input.innerHTML))
+            console.log('result html:', await this.page.$eval('.searchResultsTable', input => input.innerHTML))
 
             for (let n = 1, len = resultItems.length; n <= len; n++) {
                 await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`).catch(e => {

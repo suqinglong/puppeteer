@@ -76,19 +76,20 @@ export class Tasks implements ITasksClass {
 
     if (this.mode === 'develop') {
       const taskResult = JSON.stringify({
-        email: 'primelinkexpress@live.com',
-        password: 'Gary1978',
+        task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
+        site: 'DAT',
         user_id: '3',
-        task_id: 'ca7eb2b1c5c98467ae4809d95bdc5446',
-        site: 'Echo Driver',
+        email: 'haulistix',
+        password: 'Shostakovich5',
         criteria: {
-          origin: 'Simsboro, LA',
+          origin: 'Kennewick, WA',
           origin_radius: '100',
-          destination: 'Luray, VA',
+          destination: '',
           destination_radius: '100',
-          pick_up_date: '2020-04-22',
+          pick_up_date: '2020-04-23',
           equipment: 'Van'
-        }
+        },
+        time: 1587649219
       });
       this.tedis.lpush('search_tasks', taskResult);
     }

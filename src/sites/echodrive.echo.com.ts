@@ -30,6 +30,7 @@ export class EchodriveEchoCom extends SearchSite {
 
     public async search(task: ITASK) {
         try {
+            this.page = await this.browser.newPage();
             await this.page.goto(this.searchPage);
             await this.page.waitForSelector('.search-btn', {
                 timeout: 5000

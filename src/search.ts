@@ -21,6 +21,7 @@ export class Search implements ISearchClass {
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);
         await site.prepare(task.email, task.password); // new page and login
+        await site.closePage();
         return browser.wsEndpoint();
     }
 

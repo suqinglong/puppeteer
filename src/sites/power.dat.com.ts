@@ -23,10 +23,6 @@ export class PowerDatComSite extends SearchSite {
             await this.page.click('button#login');
             await this.page.waitForNavigation();
             console.log('PowerDatComSite waitForNavigation ...');
-            await this.page.goto(this.searchPage);
-            await this.page.waitForSelector('.newSearch', {
-                timeout: 5000
-            });
             this.isLogin = true;
         } catch (e) {
             console.log('PowerDatComSite prepare error', e);
@@ -35,6 +31,10 @@ export class PowerDatComSite extends SearchSite {
 
     public async search(task: ITASK) {
         try {
+            await this.page.goto(this.searchPage);
+            await this.page.waitForSelector('.newSearch', {
+                timeout: 5000
+            });
             const addSearchButton = await this.page.$('.newSearch').catch(() => {
                 throw new SiteError('search', 'wait for addSearchButton');
             });

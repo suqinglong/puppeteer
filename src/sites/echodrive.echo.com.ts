@@ -22,10 +22,6 @@ export class EchodriveEchoCom extends SearchSite {
             await this.page.type('#password-input', password);
             await this.page.click('#loading-button-component');
             await this.page.waitForNavigation();
-            await this.page.goto(this.searchPage);
-            await this.page.waitForSelector('.search-btn', {
-                timeout: 5000
-            });
             this.isLogin = true;
         } catch (e) {
             console.log('EchodriveEchoCom  prepare error', e);
@@ -33,20 +29,28 @@ export class EchodriveEchoCom extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        console.log('EchodriveEchoCom  EchodriveEchoCom search');
-        await this.page.type('.origin-input input', task.criteria.origin);
-        await this.page.type('.dho-input input', task.criteria.origin_radius);
-        await this.page.type('.destination-input input', task.criteria.destination);
-        await this.page.type('.dhd-input input', task.criteria.destination_radius);
-        // Apr 22 - 25
-        await this.page.type('.date-input input', dateformat(task.criteria.pick_up_date, 'mmm-dd'));
-        await this.page.click('.search-btn');
-        await this.page.waitForSelector('.available-loads-row');
-        const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
-        const $ = cheerio.load(resultHtml);
-        PostSearchData(this.getDataFromHtml($, task.task_id)).then((res: any) => {
-            console.log('EchodriveEchoCom', res.data);
-        });
+        try {
+            await this.page.goto(this.searchPage);
+            await this.page.waitForSelector('.search-btn', {
+                timeout: 5000
+            });
+            console.log('EchodriveEchoCom  EchodriveEchoCom search');
+            await this.page.type('.origin-input input', task.criteria.origin);
+            await this.page.type('.dho-input input', task.criteria.origin_radius);
+            await this.page.type('.destination-input input', task.criteria.destination);
+            await this.page.type('.dhd-input input', task.criteria.destination_radius);
+            // Apr 22 - 25
+            await this.page.type('.date-input input', dateformat(task.criteria.pick_up_date, 'mmm-dd'));
+            await this.page.click('.search-btn');
+            await this.page.waitForSelector('.available-loads-row');
+            const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
+            const $ = cheerio.load(resultHtml);
+            PostSearchData(this.getDataFromHtml($, task.task_id)).then((res: any) => {
+                console.log('EchodriveEchoCom', res.data);
+            });
+        } catch (e) {
+            console.log('EchodriveEchoCom **** catched ****', e);
+        }
     }
 
     public async closePage() {

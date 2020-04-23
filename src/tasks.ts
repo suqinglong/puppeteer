@@ -11,6 +11,7 @@ export class Tasks implements ITasksClass {
       const taskResult = (await this.tedis.blpop(0, 'search_tasks'))[1];
       if (taskResult) {
         const task: ITASK = JSON.parse(taskResult) as ITASK;
+        console.log('task', task)
         if (!this.searchMap[task.user_id]) {
           this.searchMap[task.user_id] = new Search()
           await this.searchMap[task.user_id].prepare()

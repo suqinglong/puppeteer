@@ -133,6 +133,8 @@ export class PowerDatComSite extends SearchSite {
                     throw new SiteError('search', 'wait for resultItem');
                 });
 
+            console.log('PowerDatComSite have result');
+
             const resultItems = await this.page.$$('.resultItem.exactMatch');
             for (let n = 1, len = resultItems.length; n <= len; n++) {
                 await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`);

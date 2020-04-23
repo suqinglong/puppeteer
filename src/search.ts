@@ -3,7 +3,6 @@ import { PowerDatComSite } from './sites/power.dat.com';
 import { EchodriveEchoCom } from './sites/echodrive.echo.com';
 import { Settings } from './settings';
 import { getMode } from './tools/index';
-import { SearchSite } from './sites/search.site';
 
 const sitesMap = {
     'Echo Driver': EchodriveEchoCom,

@@ -33,7 +33,7 @@ interface IPostData {
 }
 
 interface ISite {
-    prePare: Function;
+    prepare: Function;
     search: Function;
 }
 

@@ -13,9 +13,9 @@ export class PowerDatComSite extends SearchSite {
     private searchPage = 'https://power.dat.com/search/loads';
     private page: puppeteer.Page;
 
-    public async prePare(name: string, password: string) {
+    public async prepare(name: string, password: string) {
         try {
-            console.log('PowerDatComSite begin prePare', name, password);
+            console.log('PowerDatComSite begin prepare', name, password);
             this.page = await this.browser.newPage();
             await this.page.goto(this.loginPage);
             await this.page.type('#username', name);

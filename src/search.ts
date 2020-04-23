@@ -25,13 +25,13 @@ export class Search implements ISearchClass {
     public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
         const browser = await puppeteer.connect({ browserWSEndpoint });
         const SiteClass = sitesMap[task.site];
-        const site = this.createPage(SiteClass, browser);
-        await site.prePare(task.email, task.password);
+        const site = this.createSite(SiteClass, browser);
+        await site.prepare(task.email, task.password); // new page and login
         await site.search(task);
         await site.closePage();
     }
 
-    private createPage(
+    private createSite(
         SiteClass: new (browser: puppeteer.Browser) => SearchSite,
         browser: puppeteer.Browser
     ): SearchSite {

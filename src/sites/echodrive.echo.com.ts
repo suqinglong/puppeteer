@@ -13,9 +13,9 @@ export class EchodriveEchoCom extends SearchSite {
     private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
     private page: puppeteer.Page;
 
-    public async prePare(name: string, password: string) {
+    public async prepare(name: string, password: string) {
         try {
-            console.log('EchodriveEchoCom  begin prePare');
+            console.log('EchodriveEchoCom  begin prepare');
             this.page = await this.browser.newPage();
             await this.page.goto(this.loginPage);
             await this.page.type('#email-input', name);

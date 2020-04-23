@@ -9,7 +9,7 @@ export abstract class SearchSite implements ISite {
         this.browser = browser;
     }
 
-    public abstract async prePare(email: string, password: string);
+    public abstract async prepare(email: string, password: string);
 
     public abstract async search(task: ITASK);
 

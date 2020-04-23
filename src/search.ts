@@ -17,14 +17,11 @@ export class Search implements ISearchClass {
 
     public async prepare() {
         this.developPrepare();
-        puppeteer
-            .launch({
-                ...this.settings,
-                args: ['no-sandbox', 'disable-setuid-sandbox']
-            })
-            .then(async (browser: puppeteer.Browser) => {
-                await this.parepareSites(browser, sites);
-            });
+        const browser = await puppeteer.launch({
+            ...this.settings,
+            args: ['no-sandbox', 'disable-setuid-sandbox']
+        })
+        await this.parepareSites(browser, sites);
     }
 
     public async doTask(task: ITASK) {

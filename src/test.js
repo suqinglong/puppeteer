@@ -1,7 +1,26 @@
 // const cheerio = require('cheerio');
-// const fs = require('fs');
-const dateformat = require('dateformat')
-console.log(dateformat('2020-04-21', 'mmm-dd'))
+// // const fs = require('fs');
+// const dateformat = require('dateformat');
+// console.log(dateformat('2020-04-21', 'mmm-dd'));
+
+async function test(num) {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('test resolve')
+        }, num)
+    })
+}
+
+async function aa() {
+    console.log(1)
+    const a = await test(2000)
+    console.log(a)
+    console.log(2)
+    aa()
+}
+
+
+aa()
 
 // fs.readFile('./src/test.html', 'utf8', function (err, data) {
 //     if (err) throw err;

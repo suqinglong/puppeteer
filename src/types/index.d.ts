@@ -3,7 +3,7 @@ interface ITASK {
     site: string;
     email: string;
     password: string;
-    userid: string;
+    user_id: string;
     criteria: {
         origin: string;
         destination: string;
@@ -35,6 +35,15 @@ interface IPostData {
 interface ISite {
     prePare: Function;
     search: Function;
+}
+
+interface ITasksClass {
+    getTask: Function;
+}
+
+interface ISearchClass {
+    doTask: Function
+    prepare: Function
 }
 
 declare type IErrorType = 'logout' | 'other' | 'search';

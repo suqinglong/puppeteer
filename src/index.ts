@@ -1,4 +1,3 @@
-import { Search } from './search';
+import { Tasks } from './tasks';
 
-const search = new Search();
-search.run();
+(new Tasks()).getTask()

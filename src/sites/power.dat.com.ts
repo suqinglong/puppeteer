@@ -26,7 +26,7 @@ export class PowerDatComSite extends SearchSite {
             await this.page.waitForSelector('.newSearch', {
                 timeout: 5000
             });
-            this.isLogin = true
+            this.isLogin = true;
         } catch (e) {
             console.log('PowerDatComSite prepare error', e);
         }
@@ -91,7 +91,10 @@ export class PowerDatComSite extends SearchSite {
                     throw new SiteError('search', 'wait for selector dho');
                 });
 
-            console.log('PowerDatComSite task.criteria.destination_radius', task.criteria.destination_radius);
+            console.log(
+                'PowerDatComSite task.criteria.destination_radius',
+                task.criteria.destination_radius
+            );
             await this.page
                 .type('.searchListTable .dhd  input', task.criteria.destination_radius)
                 .catch(() => {

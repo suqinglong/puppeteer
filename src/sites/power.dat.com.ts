@@ -117,12 +117,6 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'wait for selector avail');
             });
 
-            console.log('PowerDatComSite to click filter-panel-toggle')
-
-            await this.page.click('.filter-panel-toggle');
-
-            await this.page.waitFor(200);
-
             console.log('PowerDatComSite search click');
             await this.page.click('button.search', {
                 delay: 20,

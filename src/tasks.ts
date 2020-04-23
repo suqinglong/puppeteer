@@ -17,14 +17,17 @@ export class Tasks implements ITasksClass {
                 console.log('task', task);
                 let browserWSEndpoint = await this.getBrowserKey(task.user_id);
 
-                // if no browser created then create it
+                // if no browser then create
                 if (!browserWSEndpoint) {
-                    if (this.getCreateBrowserLock(task.user_id)) {
-                        browserWSEndpoint = await this.search.createBrowser();
+                    if (this.getCreateBrowserLock(task.user_id)) { 
+                        browserWSEndpoint = await this.search.createBrowser(task);
                         this.setBrowserKey(task.user_id, browserWSEndpoint);
+                        this.deleteBrowserLock(task.user_id)
+                        await this.search.doTask(task, browserWSEndpoint);
                     }
+                } else {
+                  await this.search.doTask(task, browserWSEndpoint);
                 }
-                await this.search.doTask(task, browserWSEndpoint);
             }
         }
     }
@@ -40,6 +43,10 @@ export class Tasks implements ITasksClass {
     private async getCreateBrowserLock(userId: string): Promise<boolean> {
         return (await this.tedis.setnx(`user_id:${userId}:browser_ws_create`, '1')) === 1;
     }
+
+    private async deleteBrowserLock(userId: string) {
+      await this.tedis.del(`user_id:${userId}:browser_ws_create`);
+  }
 
     private developPrepare() {
         if (this.mode === 'develop') {

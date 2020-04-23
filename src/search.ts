@@ -14,11 +14,14 @@ export class Search implements ISearchClass {
     private mode: IMode = getMode();
     private settings = this.mode === 'develop' ? Settings : {};
 
-    public async createBrowser(): Promise<IbrowserWSEndpoint> {
+    public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
             ...this.settings,
             args: ['no-sandbox', 'disable-setuid-sandbox']
         });
+        const SiteClass = sitesMap[task.site];
+        const site = new SiteClass(browser);
+        await site.prepare(task.email, task.password); // new page and login
         return browser.wsEndpoint();
     }
 
@@ -26,7 +29,6 @@ export class Search implements ISearchClass {
         const browser = await puppeteer.connect({ browserWSEndpoint });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);
-        await site.prepare(task.email, task.password); // new page and login
         await site.search(task);
         await site.closePage();
     }

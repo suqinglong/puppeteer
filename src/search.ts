@@ -25,7 +25,7 @@ export class Search implements ISearchClass {
     }
 
     public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
-        console.log('browserWSEndpoint', browserWSEndpoint)
+        console.log('Search browserWSEndpoint', browserWSEndpoint)
         const browser = await puppeteer.connect({ browserWSEndpoint });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);

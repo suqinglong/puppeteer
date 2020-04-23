@@ -23,8 +23,8 @@ export class Tasks implements ITasksClass {
       if (!browserWSEndpoint) {
         console.log('no browserWSEndpoint')
         if (this.getCreateBrowserLock(task.user_id)) {
-          console.log('getCreateBrowserLock')
           browserWSEndpoint = await this.search.createBrowser(task);
+          console.log('createBrowser end')
           this.setBrowserKey(task.user_id, browserWSEndpoint);
           this.deleteBrowserLock(task.user_id);
         } else {

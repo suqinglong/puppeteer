@@ -1,5 +1,4 @@
 import { SearchSite } from './search.site';
-import { account } from '../account';
 import puppeteer from 'puppeteer';
 import dateformat from 'dateformat';
 import cheerio from 'cheerio';
@@ -7,25 +6,27 @@ import { Trim, ModifyPostData } from '../tools/index';
 import { Post } from '../api';
 
 export class EchodriveEchoCom extends SearchSite {
-  private url = 'https://echodrive.echo.com/v2/login';
+  public siteName = 'Echo Driver';
+  public isLogin = false;
+
+  private loginPage = 'https://echodrive.echo.com/v2/login';
   private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
-  private name: string = account['echodrive.echo.com'].name;
-  private password: string = account['echodrive.echo.com'].password;
   private page: puppeteer.Page;
 
-  public async prePare() {
+  public async prePare(name: string, password: string) {
     try {
       console.log('EchodriveEchoCom  begin prePare');
       this.page = await this.browser.newPage();
-      await this.page.goto(this.url);
-      await this.page.type('#email-input', this.name);
-      await this.page.type('#password-input', this.password);
-      this.page.click('#loading-button-component');
+      await this.page.goto(this.loginPage);
+      await this.page.type('#email-input', name);
+      await this.page.type('#password-input', password);
+      await this.page.click('#loading-button-component');
       await this.page.waitForNavigation();
       await this.page.goto(this.searchPage);
       await this.page.waitForSelector('.search-btn', {
         timeout: 5000
       });
+      this.isLogin = true
     } catch (e) {
       console.log('EchodriveEchoCom  prepare error', e);
     }

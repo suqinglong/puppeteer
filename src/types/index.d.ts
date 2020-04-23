@@ -1,6 +1,9 @@
 interface ITASK {
     task_id: string;
     site: string;
+    email: string;
+    password: string;
+    userid: string;
     criteria: {
         origin: string;
         destination: string;

@@ -1,7 +1,7 @@
 // const cheerio = require('cheerio');
 // const fs = require('fs');
 const dateformat = require('dateformat')
-console.log(dateformat(new Date(), 'mmm-dd'))
+console.log(dateformat('2020-04-21', 'mmm-dd'))
 
 // fs.readFile('./src/test.html', 'utf8', function (err, data) {
 //     if (err) throw err;

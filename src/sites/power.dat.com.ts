@@ -18,8 +18,8 @@ export class PowerDatComSite extends SearchSite {
         try {
             console.log('PowerDatComSite begin prepare', name, password);
             this.page = await this.browser.newPage();
-            await this.page.setViewport(viewPort)
-            await this.page.setUserAgent(userAgent)
+            await this.page.setViewport(viewPort);
+            await this.page.setUserAgent(userAgent);
             await this.page.goto(this.loginPage, {
                 timeout: 0,
                 waitUntil: 'load'
@@ -28,13 +28,13 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('#password', password);
 
             await Promise.all([
-                new Promise(resove => {
+                new Promise((resove) => {
                     this.browser.on('targetchanged', () => {
-                        resove()
-                    })
+                        resove();
+                    });
                 }),
                 this.page.click('button#login')
-            ])
+            ]);
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {
@@ -46,26 +46,28 @@ export class PowerDatComSite extends SearchSite {
         try {
             // new page, goto search url, wait for loaded
             this.page = await this.browser.newPage();
-            await this.page.setViewport(viewPort)
-            await this.page.setUserAgent(userAgent)
-            await this.page.goto(this.searchPage, {
-                waitUntil: [
-                    'load'
-                ]
-            }).catch(e => {
-                console.log('PowerDatComSite goto search page', e)
-                throw new SiteError('search', 'PowerDatComSite goto search page')
-            });
+            await this.page.setViewport(viewPort);
+            await this.page.setUserAgent(userAgent);
+            await this.page
+                .goto(this.searchPage, {
+                    waitUntil: ['load']
+                })
+                .catch((e) => {
+                    console.log('PowerDatComSite goto search page', e);
+                    throw new SiteError('search', 'PowerDatComSite goto search page');
+                });
 
-            await this.page.waitForSelector('.newSearch')
+            await this.page.waitForSelector('.newSearch');
 
             // create new search
-            await this.page.click('.newSearch', {
-                delay: 100
-            }).catch(e => {
-                console.log('PowerDatComSite newSearch click', e)
-                throw new SiteError('search', 'PowerDatComSite newSearch click');
-            })
+            await this.page
+                .click('.newSearch', {
+                    delay: 100
+                })
+                .catch((e) => {
+                    console.log('PowerDatComSite newSearch click', e);
+                    throw new SiteError('search', 'PowerDatComSite newSearch click');
+                });
 
             await this.page
                 .waitForSelector('.searchListTable .origin input', {
@@ -73,8 +75,11 @@ export class PowerDatComSite extends SearchSite {
                     visible: true
                 })
                 .catch((e) => {
-                    console.log('PowerDatComSite waitForSelector searchListTable', e)
-                    throw new SiteError('search', 'PowerDatComSite waitForSelector searchListTable');
+                    console.log('PowerDatComSite waitForSelector searchListTable', e);
+                    throw new SiteError(
+                        'search',
+                        'PowerDatComSite waitForSelector searchListTable'
+                    );
                 });
 
             console.log('PowerDatComSite origin:', task.criteria.origin);
@@ -82,7 +87,7 @@ export class PowerDatComSite extends SearchSite {
                 await this.page
                     .type('.searchListTable .origin input', task.criteria.origin)
                     .catch((e) => {
-                        console.log('PowerDatComSite type origin', e)
+                        console.log('PowerDatComSite type origin', e);
                         throw new SiteError('search', 'PowerDatComSite wait for selector origin');
                     });
             }
@@ -91,8 +96,11 @@ export class PowerDatComSite extends SearchSite {
                 await this.page
                     .type('.searchListTable .dest  input', task.criteria.destination)
                     .catch((e) => {
-                        console.log('PowerDatComSite type dest', e)
-                        throw new SiteError('search', 'PowerDatComSite wait for selector destination');
+                        console.log('PowerDatComSite type dest', e);
+                        throw new SiteError(
+                            'search',
+                            'PowerDatComSite wait for selector destination'
+                        );
                     });
             }
 
@@ -103,22 +111,25 @@ export class PowerDatComSite extends SearchSite {
                         task.criteria.equipment.substr(0, 1).toUpperCase()
                     )
                     .catch((e) => {
-                        console.log('PowerDatComSite type equipment', e)
-                        throw new SiteError('search', 'PowerDatComSite wait for selector equipment');
+                        console.log('PowerDatComSite type equipment', e);
+                        throw new SiteError(
+                            'search',
+                            'PowerDatComSite wait for selector equipment'
+                        );
                     });
             }
 
             await this.page
                 .type('.searchListTable .dho input', task.criteria.origin_radius)
                 .catch((e) => {
-                    console.log('PowerDatComSite type dho', e)
+                    console.log('PowerDatComSite type dho', e);
                     throw new SiteError('search', 'PowerDatComSite wait for selector dho');
                 });
 
             await this.page
                 .type('.searchListTable .dhd input', task.criteria.destination_radius)
                 .catch((e) => {
-                    console.log('PowerDatComSite type dhd', e)
+                    console.log('PowerDatComSite type dhd', e);
                     throw new SiteError('search', 'PowerDatComSite wait for selector dhd');
                 });
 
@@ -128,21 +139,21 @@ export class PowerDatComSite extends SearchSite {
                     (input as HTMLInputElement).value = '';
                 })
                 .catch((e) => {
-                    console.log('PowerDatComSite type avail', e)
+                    console.log('PowerDatComSite type avail', e);
                     throw new SiteError('search', 'PowerDatComSite wait for selector avail');
                 });
 
             const date = task.criteria.pick_up_date.substr(5).replace('-', '/');
-            await this.page.type('.searchListTable .avail  input', date).catch(e => {
-                console.log('PowerDatComSite type avail 2', e)
+            await this.page.type('.searchListTable .avail  input', date).catch((e) => {
+                console.log('PowerDatComSite type avail 2', e);
                 throw new SiteError('search', 'PowerDatComSite wait for selector avail');
             });
 
             console.log('PowerDatComSite search click');
             await this.page.evaluate(() => {
-                const button = document.querySelector('button.search') as HTMLElement
-                button.click()
-            })
+                const button = document.querySelector('button.search') as HTMLElement;
+                button.click();
+            });
 
             console.log('PowerDatComSite wait result');
             await this.page
@@ -155,41 +166,44 @@ export class PowerDatComSite extends SearchSite {
                 });
 
             console.log('PowerDatComSite have result');
-            const resultItems = await this.page.$$('.resultItem.exactMatch').catch(e => {
+            const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
                 console.log('PowerDatComSite $$ resultItem', e);
                 throw new SiteError('search', 'PowerDatComSite $$ resultItem');
             });
 
-            await this.cleanSearch()
-            const resultSubItems = Array.from(resultItems).slice(0, 10)
-            resultSubItems.forEach(async item => {
-                console.log('click item expend')
-                await item.click().catch(e => {
-                    console.log('click error')
-                })
-            })
+            await this.cleanSearch();
+            const resultSubItems = Array.from(resultItems).slice(0, 10);
+            resultSubItems.forEach(async (item) => {
+                console.log('click item expend');
+                await item.click().catch((e) => {
+                    console.log('click error');
+                });
+            });
 
             await this.page.waitForSelector('.resultItem.exactMatch .widget-numbers', {
                 timeout: 10000
-            })
-
-
-            const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.outerHTML).catch(e => {
-                console.log('PowerDatComSite $eval .searchResultsTable', e);
-                throw new SiteError('search', 'PowerDatComSite $eval .searchResultsTable')
             });
+
+            const resultHtml = await this.page
+                .$eval('.searchResultsTable', (res) => res.outerHTML)
+                .catch((e) => {
+                    console.log('PowerDatComSite $eval .searchResultsTable', e);
+                    throw new SiteError('search', 'PowerDatComSite $eval .searchResultsTable');
+                });
             const $ = cheerio.load(resultHtml);
-            const items = Array.from($('.resultItem.exactMatch')).slice(0, 10).map((item: any) => {
-                return GetDataFromHtml(task, $(item), $);
-            });
+            const items = Array.from($('.resultItem.exactMatch'))
+                .slice(0, 10)
+                .map((item: any) => {
+                    return GetDataFromHtml(task, $(item), $);
+                });
 
             console.log('PowerDatComSite post data:', items);
             await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
-            console.log('PowerDatComSite search end')
+            console.log('PowerDatComSite search end');
         } catch (e) {
-            this.cleanSearch()
+            this.cleanSearch();
             console.log('PowerDatComSite **** catched ****', e);
         }
     }
@@ -202,9 +216,9 @@ export class PowerDatComSite extends SearchSite {
         await this.page.evaluate(() => {
             document.querySelectorAll('.qa-my-searches-delete').forEach((item, key) => {
                 if (key > 0) {
-                    (item as HTMLElement).click()
+                    (item as HTMLElement).click();
                 }
-            })
-        })
+            });
+        });
     }
 }

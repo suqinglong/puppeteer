@@ -22,5 +22,4 @@ export abstract class SearchSite implements ISite {
     public abstract async search(task: ITASK);
 
     public abstract async closePage();
-
 }

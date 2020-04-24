@@ -14,16 +14,15 @@ export class Search implements ISearchClass {
     private settings = this.mode === 'develop' ? Settings : {};
 
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
-        const browser = await puppeteer.launch(
-            {
-                ...this.settings,
-                ignoreDefaultArgs: ["--enable-automation"],
-                args: ['no-sandbox', 'disable-setuid-sandbox'],
-                defaultViewport: {
-                    width: 1920,
-                    height: 1080,
-                }
-            });
+        const browser = await puppeteer.launch({
+            ...this.settings,
+            ignoreDefaultArgs: ['--enable-automation'],
+            args: ['no-sandbox', 'disable-setuid-sandbox'],
+            defaultViewport: {
+                width: 1920,
+                height: 1080
+            }
+        });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);
         await site.prepare(task.email, task.password); // new page and login
@@ -32,7 +31,7 @@ export class Search implements ISearchClass {
     }
 
     public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
-        console.log('Search browserWSEndpoint', browserWSEndpoint)
+        console.log('Search browserWSEndpoint', browserWSEndpoint);
         const browser = await puppeteer.connect({ browserWSEndpoint });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);

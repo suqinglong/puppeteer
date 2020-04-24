@@ -1,7 +1,6 @@
 <table>
-
-<thead class="thead">
-    <!-- Column-width setting row. Content must be identical in both rows for columns to size properly, 
+    <thead class="thead">
+        <!-- Column-width setting row. Content must be identical in both rows for columns to size properly, 
         and must be first row because of the fixed table sizing. -->
         <tr class="invisible">
             <!-- ngIf: ctrl.showGroupMatchStatus() -->
@@ -21,16 +20,27 @@
             <th class="length">Length</th>
             <th class="weight">Weight</th>
             <!-- ngIf: !isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="cs ng-scope" ng-if="isLoadSearch()">CS</th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="dtp ng-scope" ng-if="isLoadSearch()">DTP</th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="factorable ng-scope" ng-if="isLoadSearch()">Factor</th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="rate ng-scope" ng-if="isLoadSearch()">Rate</th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="bookItNow ng-scope" ng-if="isLoadSearch()">Book</th><!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th class="cs ng-scope" ng-if="isLoadSearch()">CS</th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th class="dtp ng-scope" ng-if="isLoadSearch()">DTP</th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th class="factorable ng-scope" ng-if="isLoadSearch()">Factor</th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th class="rate ng-scope" ng-if="isLoadSearch()">Rate</th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th class="bookItNow ng-scope" ng-if="isLoadSearch()">Book</th>
+            <!-- end ngIf: isLoadSearch() -->
         </tr>
         <tr>
             <th class="exact-similarHeader" colspan="20">
                 <div class="resultsHeader">
-                    <!-- ngIf: ctrl.canPreferOrBlock() --><ul class="filter ng-scope" ng-if="ctrl.canPreferOrBlock()">
+                    <!-- ngIf: ctrl.canPreferOrBlock() -->
+                    <ul class="filter ng-scope" ng-if="ctrl.canPreferOrBlock()">
                         <li class="active">
                             <a class="all">All</a>
                         </li>
@@ -40,9 +50,24 @@
                         <li>
                             <a class="blocked">Blocked</a>
                         </li>
-                    </ul><!-- end ngIf: ctrl.canPreferOrBlock() -->
-                    <!-- ngIf: ctrl.canPreferOrBlock() --><a href="managePreferredOffices" ng-if="ctrl.canPreferOrBlock()" target="_blank" track-link-category="Preferred List" class="managePreferred ng-scope">Manage your preferred list</a><!-- end ngIf: ctrl.canPreferOrBlock() -->
-                    <!-- ngIf: ctrl.canPreferOrBlock() --><a href="manageBlockedOffices" ng-if="ctrl.canPreferOrBlock()" target="_blank" track-link-category="Blocked List" class="manageBlocked ng-scope">Manage your blocked list</a><!-- end ngIf: ctrl.canPreferOrBlock() -->
+                    </ul>
+                    <!-- end ngIf: ctrl.canPreferOrBlock() -->
+                    <!-- ngIf: ctrl.canPreferOrBlock() --><a
+                        href="managePreferredOffices"
+                        ng-if="ctrl.canPreferOrBlock()"
+                        target="_blank"
+                        track-link-category="Preferred List"
+                        class="managePreferred ng-scope"
+                        >Manage your preferred list</a
+                    ><!-- end ngIf: ctrl.canPreferOrBlock() -->
+                    <!-- ngIf: ctrl.canPreferOrBlock() --><a
+                        href="manageBlockedOffices"
+                        ng-if="ctrl.canPreferOrBlock()"
+                        target="_blank"
+                        track-link-category="Blocked List"
+                        class="manageBlocked ng-scope"
+                        >Manage your blocked list</a
+                    ><!-- end ngIf: ctrl.canPreferOrBlock() -->
                     <span class="total ng-binding">29 Total results </span>
                     <!-- ngIf: ctrl.searchCounts.totalBlocked > 0 -->
                     <!-- ngIf: ctrl.isPostPage() -->
@@ -56,7 +81,12 @@
                 <div class="bulkAction dropdown">
                     <a class="checkbox-dropdown" data-toggle="dropdown">
                         <div>
-                            <input type="checkbox" id="matches-tri-state-checkbox" class="customCheckbox searchBatch" disabled="">
+                            <input
+                                type="checkbox"
+                                id="matches-tri-state-checkbox"
+                                class="customCheckbox searchBatch"
+                                disabled=""
+                            />
                             <label for="matches-tri-state-checkbox"></label>
                         </div>
                     </a>
@@ -67,1288 +97,2438 @@
                     </ul>
                 </div>
             </th>
-            <th class="age ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Age" ng-model="ctrl.currentSort"><a class="sortField asc"><ng-transclude><span class="ng-scope">Age</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="avail ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="EarliestAvailability" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-binding ng-scope">Pickup</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="truck ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="EquipmentType" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Truck</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="fp ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Ltl" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">F/P</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="do ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="OriginDeadhead" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">DH–O</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="origin ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Origin" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Origin</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="trip ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="TripDistance" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Trip</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="dest ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Destination" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Destination</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="dd ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="DestinationDeadhead" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">DH–D</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="company ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="CompanyName" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Company</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="contact ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="PreferredCallback" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Contact</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="length ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Length" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Length</span></ng-transclude><i class="sort"></i></a></th>
-            <th class="weight ng-pristine ng-untouched ng-valid ng-isolate-scope" sortable="Weight" ng-model="ctrl.currentSort"><a class="sortField "><ng-transclude><span class="ng-scope">Weight</span></ng-transclude><i class="sort"></i></a></th>
+            <th
+                class="age ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Age"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField asc"
+                    ><ng-transclude><span class="ng-scope">Age</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="avail ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="EarliestAvailability"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-binding ng-scope">Pickup</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="truck ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="EquipmentType"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Truck</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="fp ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Ltl"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">F/P</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="do ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="OriginDeadhead"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">DH–O</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="origin ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Origin"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Origin</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="trip ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="TripDistance"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Trip</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="dest ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Destination"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Destination</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="dd ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="DestinationDeadhead"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">DH–D</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="company ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="CompanyName"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Company</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="contact ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="PreferredCallback"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Contact</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="length ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Length"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Length</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <th
+                class="weight ng-pristine ng-untouched ng-valid ng-isolate-scope"
+                sortable="Weight"
+                ng-model="ctrl.currentSort"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Weight</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
             <!-- ngIf: !isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="cs ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope" sortable="CreditScore" ng-model="ctrl.currentSort" ng-if="isLoadSearch()"><a class="sortField "><ng-transclude><span class="ng-scope">CS</span></ng-transclude><i class="sort"></i></a></th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="dtp ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope" sortable="DaysToPay" ng-model="ctrl.currentSort" ng-if="isLoadSearch()"><a class="sortField "><ng-transclude><span class="ng-scope">DTP</span></ng-transclude><i class="sort"></i></a></th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="factorable ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope" sortable="Factorable" ng-model="ctrl.currentSort" ng-if="isLoadSearch()"><a class="sortField "><ng-transclude><span class="ng-scope">Factor</span></ng-transclude><i class="sort"></i></a></th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="rate ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope" sortable="Rate" ng-model="ctrl.currentSort" desc-first="true" ng-if="isLoadSearch()"><a class="sortField "><ng-transclude><span class="ng-scope">Rate</span></ng-transclude><i class="sort"></i></a></th><!-- end ngIf: isLoadSearch() -->
-            <!-- ngIf: isLoadSearch() --><th class="bookItNow ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope" sortable="BookItNow" ng-model="ctrl.currentSort" desc-first="true" ng-if="isLoadSearch()"><a class="sortField "><ng-transclude><span class="ng-scope">Book</span></ng-transclude><i class="sort"></i></a></th><!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th
+                class="cs ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope"
+                sortable="CreditScore"
+                ng-model="ctrl.currentSort"
+                ng-if="isLoadSearch()"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">CS</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th
+                class="dtp ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope"
+                sortable="DaysToPay"
+                ng-model="ctrl.currentSort"
+                ng-if="isLoadSearch()"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">DTP</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th
+                class="factorable ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope"
+                sortable="Factorable"
+                ng-model="ctrl.currentSort"
+                ng-if="isLoadSearch()"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Factor</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th
+                class="rate ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope"
+                sortable="Rate"
+                ng-model="ctrl.currentSort"
+                desc-first="true"
+                ng-if="isLoadSearch()"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Rate</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <!-- end ngIf: isLoadSearch() -->
+            <!-- ngIf: isLoadSearch() -->
+            <th
+                class="bookItNow ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope"
+                sortable="BookItNow"
+                ng-model="ctrl.currentSort"
+                desc-first="true"
+                ng-if="isLoadSearch()"
+            >
+                <a class="sortField"
+                    ><ng-transclude><span class="ng-scope">Book</span></ng-transclude
+                    ><i class="sort"></i
+                ></a>
+            </th>
+            <!-- end ngIf: isLoadSearch() -->
         </tr>
         <tr class="subHead exactMatchHeader">
             <td class="exactHeader ng-binding" colspan="20">2 Exact Matches</td>
         </tr>
-    </thead><tbody class="resultItem            exactMatch        expanded">
-<tr id="LS3kdjT1" class="qa-match-row resultSummary">
+    </thead>
+    <tbody class="resultItem exactMatch expanded">
+        <tr id="LS3kdjT1" class="qa-match-row resultSummary">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjT1-check" />
+                <label for="LS3kdjT1-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:22</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">140</td>
+            <td class="origin">Spokane, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,395</a
+                >
+            </td>
+            <td class="dest">Tempe, AZ</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Landstar Ranger Inc (click for details)"
+                    >Landstar Ranger Inc</a
+                >
+            </td>
+            <td class="contact">
+                <a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank"
+                    >alex.qxl@landstarmail.com</a
+                >
+            </td>
+            <td class="length">17</td>
+            <td class="weight">1,896</td>
 
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjT1-check">
-    <label for="LS3kdjT1-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:22</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">140</td>
-<td class="origin">Spokane, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,395</a></td>
-<td class="dest ">Tempe, AZ</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Landstar Ranger Inc (click for details)">Landstar Ranger Inc</a>
-</td>
-<td class="contact"><a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank">alex.qxl@landstarmail.com</a></td>
-<td class="length ">17</td>
-<td class="weight ">1,896</td>
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$1,050.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+        <tr class="resultDetails ng-scope">
+            <td colspan="20">
+                <!---->
+                <!-- colspan not the same as summary row due to rowspan in groups -->
+                <dl>
+                    <dt>Ref:</dt>
+                    <dd class="refId"></dd>
 
+                    <dt>Commodity:</dt>
+                    <dd class="commodity" title=""></dd>
+                </dl>
 
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$1,050.00</td>
-<td class="bookItNow">
-    —
-</td>
+                <dl>
+                    <dt>Comments 1:</dt>
+                    <dd class="comments1" title="424 377 0822 Alex">424 377 0822 Alex</dd>
 
-</tr>
-<tr class="resultDetails  ng-scope">
-<td colspan="20">
-    <!---->
-    <!-- colspan not the same as summary row due to rowspan in groups -->
-    <dl>
-        <dt>Ref:</dt>
-        <dd class="refId"></dd>
+                    <dt>Comments 2:</dt>
+                    <dd
+                        class="comments2"
+                        title="1 Pick 1 Drop FCFS 51x40x107 8pallets NO Traight trucks"
+                    >
+                        1 Pick 1 Drop FCFS 51x40x107 8pallets NO Traight trucks
+                    </dd>
+                </dl>
 
-        
-        <dt>Commodity:</dt>
-        <dd class="commodity" title=""></dd>
-        
-    </dl>
+                <dl>
+                    <dt class="">Docket:</dt>
+                    <dd class="docket">
+                        <a
+                            href="urls?Category=CustomerDirectoryTCSIProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180"
+                            class="trackLink"
+                            track-link-category="Company"
+                            target="_blank"
+                            >MC#178439</a
+                        >
+                    </dd>
 
-    <dl>
-        <dt>Comments 1:</dt>
-        <dd class="comments1" title="424 377 0822 Alex">424 377 0822 Alex</dd>
+                    <dd class="bonding">
+                        <span class="is-tia-member" title="TIA Member"></span>
 
-        <dt>Comments 2:</dt>
-        <dd class="comments2" title="1 Pick 1 Drop FCFS 51x40x107 8pallets NO Traight trucks">1 Pick 1 Drop FCFS 51x40x107 8pallets NO Traight trucks</dd>
+                        <span class="is-assurable" title="Assure It">
+                            <a
+                                href="urls?Category=Assurance&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180"
+                                class="trackLink"
+                                track-link-category="Assurable"
+                                target="_blank"
+                            ></a>
+                        </span>
+                    </dd>
+                </dl>
 
-        
+                <div
+                    class="rateViewInfo ng-isolate-scope"
+                    origin="{cityState: 'Spokane, WA', latLong: '47.65889,-117.425'}"
+                    destination="{cityState: 'Tempe, AZ', latLong: '33.41472,-111.9086'}"
+                    equipment="{types : 'V'}"
+                >
+                    <div class="fm-rateview-widget-container">
+                        <div class="fm-rateview-widget spot fetchingRateInfo">
+                            <h3 class="fm-rateview-widget-title">Broker-to-Carrier Spot</h3>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="actions ng-scope">
+            <td colspan="20">
+                <a class="print" title="Print"></a>
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem exactMatch expanded">
+        <tr id="DS1ye1qt" class="qa-match-row resultSummary">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ye1qt-check" />
+                <label for="DS1ye1qt-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">01:04</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">140</td>
+            <td class="origin">Spokane, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,759</a
+                >
+            </td>
+            <td class="dest">Oklahoma City, OK</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Integrity Express Logistics LLC (click for details)"
+                    >Integrity Express Logistics LLC</a
+                >
+            </td>
+            <td class="contact">(888) 374-5138</td>
+            <td class="length">53</td>
+            <td class="weight">39,000</td>
 
-        
-    </dl>
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$1,425.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+        <tr class="resultDetails ng-scope">
+            <td colspan="20">
+                <!---->
+                <!-- colspan not the same as summary row due to rowspan in groups -->
+                <dl>
+                    <dt>Ref:</dt>
+                    <dd class="refId">5949959</dd>
 
+                    <dt>Commodity:</dt>
+                    <dd class="commodity" title=""></dd>
+                </dl>
 
-    <dl>
-        <dt class="">Docket:</dt>
-        <dd class="docket ">
-            
-            <a href="urls?Category=CustomerDirectoryTCSIProfile&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Company" target="_blank">MC#178439</a>
-            
-        </dd>
+                <dl>
+                    <dt>Comments 1:</dt>
+                    <dd
+                        class="comments1"
+                        title="Do not call Any numbers - Email Kjllinas@intxlog.com for info -- 1 and"
+                    >
+                        Do not call Any numbers - Email Kjllinas@intxlog.com for info -- 1 and
+                    </dd>
 
-        
-        <dd class="bonding">
-            
-            <span class="is-tia-member" title="TIA Member"></span>
-            
-            
-            <span class="is-assurable" title="Assure It">
-                <a href="urls?Category=Assurance&amp;MatchId=LS3kdjT1&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Assurable" target="_blank"></a>
-            </span>
-            
-        </dd>
-        
-    </dl>
+                    <dt>Comments 2:</dt>
+                    <dd
+                        class="comments2"
+                        title="1 FCFS Deliver Any dayDo not call Any numbers - Email Kjllinas@intxlo"
+                    >
+                        1 FCFS Deliver Any dayDo not call Any numbers - Email Kjllinas@intxlo
+                    </dd>
+                </dl>
 
-    <div class="rateViewInfo ng-isolate-scope" origin="{cityState: 'Spokane, WA', latLong: '47.65889,-117.425'}" destination="{cityState: 'Tempe, AZ', latLong: '33.41472,-111.9086'}" equipment="{types : 'V'}"><div class="fm-rateview-widget-container"><div class="fm-rateview-widget spot fetchingRateInfo"><h3 class="fm-rateview-widget-title">Broker-to-Carrier Spot</h3></div></div></div>
-</td>
-</tr>
-<tr class="actions ng-scope">
-<td colspan="20">
-    <a class="print" title="Print"></a>
-</td>
-</tr></tbody><tbody class="resultItem            exactMatch        expanded">
-<tr id="DS1ye1qt" class="qa-match-row resultSummary">
+                <dl>
+                    <dt class="">Docket:</dt>
+                    <dd class="docket">
+                        <a
+                            href="urls?Category=CustomerDirectoryTCSIProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869"
+                            class="trackLink"
+                            track-link-category="Company"
+                            target="_blank"
+                            >MC#596655</a
+                        >
+                    </dd>
 
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ye1qt-check">
-    <label for="DS1ye1qt-check"></label>
-    &nbsp;
-</td>
-<td class="age ">01:04</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">140</td>
-<td class="origin">Spokane, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,759</a></td>
-<td class="dest ">Oklahoma City, OK</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Integrity Express Logistics LLC (click for details)">Integrity Express Logistics LLC</a>
-</td>
-<td class="contact">(888) 374-5138</td>
-<td class="length ">53</td>
-<td class="weight ">39,000</td>
+                    <dd class="bonding">
+                        <span class="is-tia-member" title="TIA Member"></span>
 
+                        <span class="is-assurable" title="Assure It">
+                            <a
+                                href="urls?Category=Assurance&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869"
+                                class="trackLink"
+                                track-link-category="Assurable"
+                                target="_blank"
+                            ></a>
+                        </span>
+                    </dd>
+                </dl>
 
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$1,425.00</td>
-<td class="bookItNow">
-    —
-</td>
+                <div
+                    class="rateViewInfo ng-isolate-scope"
+                    origin="{cityState: 'Spokane, WA', latLong: '47.65889,-117.425'}"
+                    destination="{cityState: 'Oklahoma City, OK', latLong: '35.4675,-97.51611'}"
+                    equipment="{types : 'V'}"
+                >
+                    <div class="fm-rateview-widget-container">
+                        <div class="fm-rateview-widget spot">
+                            <h3 class="fm-rateview-widget-title">Broker-to-Carrier Spot</h3>
+                            <p class="widget-title-incl-text">(incl. fuel: $0.20 this week)</p>
+                            <div class="widget-numbers">
+                                <p class="widget-numbers-num">$1.09</p>
+                                <p class="widget-numbers-range">($0.97 - $1.28)</p>
+                            </div>
 
-</tr>
-<tr class="resultDetails  ng-scope">
-<td colspan="20">
-    <!---->
-    <!-- colspan not the same as summary row due to rowspan in groups -->
-    <dl>
-        <dt>Ref:</dt>
-        <dd class="refId">5949959</dd>
+                            <a
+                                href="https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0"
+                                class="widget-reports-company is-upsell"
+                                target="_blank"
+                            >
+                                <p class="widget-reports">
+                                    <span class="widget-reports-title">Reports</span>
+                                </p>
+                                <p class="widget-companies">
+                                    <span class="widget-companies-title">Companies</span>
+                                </p>
+                            </a>
 
-        
-        <dt>Commodity:</dt>
-        <dd class="commodity" title=""></dd>
-        
-    </dl>
+                            <hr class="widget-divider" />
+                            <p class="widget-per-trip-num">
+                                <span class="widget-per-trip-value">$1,926</span>
+                                <span class="widget-per-trip-text">per trip</span>
+                            </p>
+                            <p class="widget-mi-trip-num">
+                                1,759 <span class="widget-mi-trip-text">mi. trip</span>
+                            </p>
 
-    <dl>
-        <dt>Comments 1:</dt>
-        <dd class="comments1" title="Do not call Any numbers - Email Kjllinas@intxlog.com for info -- 1 and">Do not call Any numbers - Email Kjllinas@intxlog.com for info -- 1 and</dd>
+                            <div class="widget-button-container">
+                                <button
+                                    onclick="window.open('https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0');"
+                                    class="widget-button-submit is-upsell"
+                                >
+                                    Upgrade
+                                </button>
+                            </div>
 
-        <dt>Comments 2:</dt>
-        <dd class="comments2" title="1 FCFS Deliver Any dayDo not call Any numbers - Email Kjllinas@intxlo">1 FCFS Deliver Any dayDo not call Any numbers - Email Kjllinas@intxlo</dd>
+                            <a
+                                href="https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0"
+                                target="blank"
+                                class="widget-markets-days is-upsell"
+                            >
+                                <p class="widget-origin-text">Spokane Mkt</p>
+                                <p class="widget-destination-text">Oklahoma City Mkt</p>
+                                <p class="widget-days-text">
+                                    for past 15 days
+                                </p>
+                            </a>
 
-        
-
-        
-    </dl>
-
-
-    <dl>
-        <dt class="">Docket:</dt>
-        <dd class="docket ">
-            
-            <a href="urls?Category=CustomerDirectoryTCSIProfile&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869" class="trackLink" track-link-category="Company" target="_blank">MC#596655</a>
-            
-        </dd>
-
-        
-        <dd class="bonding">
-            
-            <span class="is-tia-member" title="TIA Member"></span>
-            
-            
-            <span class="is-assurable" title="Assure It">
-                <a href="urls?Category=Assurance&amp;MatchId=DS1ye1qt&amp;RegistryId=S.103673.225869" class="trackLink" track-link-category="Assurable" target="_blank"></a>
-            </span>
-            
-        </dd>
-        
-    </dl>
-
-    <div class="rateViewInfo ng-isolate-scope" origin="{cityState: 'Spokane, WA', latLong: '47.65889,-117.425'}" destination="{cityState: 'Oklahoma City, OK', latLong: '35.4675,-97.51611'}" equipment="{types : 'V'}"><div class="fm-rateview-widget-container">
-
-
-
-
-<div class="fm-rateview-widget spot">
-<h3 class="fm-rateview-widget-title">Broker-to-Carrier Spot</h3>
-    <p class="widget-title-incl-text">(incl. fuel: $0.20 this week)</p>
-    <div class="widget-numbers">
-        <p class="widget-numbers-num">$1.09</p>
-        <p class="widget-numbers-range">($0.97 - $1.28)</p>
-    </div>
-
-    <a href="https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0" class="widget-reports-company is-upsell" target="_blank">
-        <p class="widget-reports">
-            <span class="widget-reports-title">Reports</span></p>
-        <p class="widget-companies">
-            <span class="widget-companies-title">Companies</span></p>
-    </a>
-
-<hr class="widget-divider">
-    <p class="widget-per-trip-num">
-        <span class="widget-per-trip-value">$1,926</span> <span class="widget-per-trip-text">per trip</span></p>
-<p class="widget-mi-trip-num">
-    1,759 <span class="widget-mi-trip-text">mi. trip</span></p>
-
-<div class="widget-button-container">
-
-        <button onclick="window.open('https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0');" class="widget-button-submit is-upsell">Upgrade</button>
-
-</div>
-
-        <a href="https://www.dat.com/Freight-Rates/promotion2.aspx?openNewWindow=true&amp;token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImhhdWxpc3RpeCIsInN1YnNjcmlwdGlvbiI6Ik5vIFByb2R1Y3QgU3Vic2NyaXB0aW9uIEZvdW5kOiBHcmFudGVkIFZpZXcgT25seSIsInByaW1hcnlTZXNzaW9uVG9rZW4iOiJrNGg0YzJ4TmZtU1hNVURMR2hnVUN6MldFRXpVV0RTSFdZYmg4dkhiT0dFPSIsInNlY29uZGFyeVNlc3Npb25Ub2tlbiI6IkZGcVd4RWpNNTN6UkdLeXk2T2c5ZldYMjhlaFpkb2J1aDlMTWhTV3QrYXc9IiwiY2FwYWJpbGl0aWVzIjoiWzE3LDI2LDgsOSw0LDI3LDFdIiwibmJmIjoxNTg3NzA1NTYwLCJleHAiOjE1ODc3MzQzNjAsImlzcyI6InJhdGV2aWV3LmRhdC5jb20iLCJhdWQiOiJkYXQuY29tIn0.m4MVW1GBHJhS4c24DQlSWAYQARIgaNbDbSZcnF-zLY0" target="blank" class="widget-markets-days is-upsell">
-            <p class="widget-origin-text">Spokane Mkt</p>
-            <p class="widget-destination-text">Oklahoma City Mkt</p>
-            <p class="widget-days-text">
-for past 15 days				</p>
-        </a>
-
-<p class="widget-rate-market-toggle">Shipper-to-Carrier Contract</p>
-</div></div></div>
-</td>
-</tr>
-<tr class="actions ng-scope">
-<td colspan="20">
-    <a class="print" title="Print"></a>
-</td>
-</tr></tbody>
+                            <p class="widget-rate-market-toggle">Shipper-to-Carrier Contract</p>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="actions ng-scope">
+            <td colspan="20">
+                <a class="print" title="Print"></a>
+            </td>
+        </tr>
+    </tbody>
     <tbody id="noExactMatchesMessage" class="ng-hide">
         <tr>
             <td colspan="20">
-                <h5 class="noResultsMessage qa-no-exact-message">No exact results. Try expanding your filters.</h5>
+                <h5 class="noResultsMessage qa-no-exact-message">
+                    No exact results. Try expanding your filters.
+                </h5>
             </td>
         </tr>
     </tbody>
     <tbody id="similarMatchesHeader" class="">
         <tr>
-            <td class="similar ng-binding" colspan="20"><a id="similarMatchesToggle" href="#" class="expanded"></a>27 Similar Matches</td>
+            <td class="similar ng-binding" colspan="20">
+                <a id="similarMatchesToggle" href="#" class="expanded"></a>27 Similar Matches
+            </td>
         </tr>
-    </tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydvJY" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydvJY-check">
-    <label for="DS1ydvJY-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:02</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">279</td>
-<td class="origin">Superior, MT</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">259</a></td>
-<td class="dest ">Cut Bank, MT</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Online Freight Service Inc (click for details)">Online Freight Service Inc</a>
-</td>
-<td class="contact">(651) 468-6868</td>
-<td class="length ">53</td>
-<td class="weight ">45,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydvJX" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydvJX-check">
-    <label for="DS1ydvJX-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:02</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">279</td>
-<td class="origin">Superior, MT</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">259</a></td>
-<td class="dest ">Cut Bank, MT</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Online Freight Service Inc (click for details)">Online Freight Service Inc</a>
-</td>
-<td class="contact">(651) 468-6868</td>
-<td class="length ">48</td>
-<td class="weight ">45,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydpWJ" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydpWJ-check">
-    <label for="DS1ydpWJ-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:02</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">209</td>
-<td class="origin">Portland, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,105</a></td>
-<td class="dest ">Lewisville, TX</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="JB Hunt Transport Services Inc (click for details)">JB Hunt Transport Services Inc</a>
-</td>
-<td class="contact">(800) 723-2499</td>
-<td class="length ">53</td>
-<td class="weight ">5,685</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600" class="trackLink" track-link-category="Credit Score" target="_blank">80</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600" class="trackLink" track-link-category="Credit Score" target="_blank">35</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydpSu" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydpSu-check">
-    <label for="DS1ydpSu-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:02</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">228</td>
-<td class="origin">Wilsonville, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,966</a></td>
-<td class="dest ">Ronkonkoma, NY</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="XPO Logistics LLC (click for details)">XPO Logistics LLC</a>
-</td>
-<td class="contact">(855) 976-2662</td>
-<td class="length ">53</td>
-<td class="weight ">43,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895" class="trackLink" track-link-category="Credit Score" target="_blank">31</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydagE" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydagE-check">
-    <label for="DS1ydagE-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:07</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">225</td>
-<td class="origin">Kent, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,396</a></td>
-<td class="dest ">Memphis, TN</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Choptank Transport Inc (click for details)">Choptank Transport Inc</a>
-</td>
-<td class="contact">(800) 568-2240 (827)</td>
-<td class="length ">53</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdDkG" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDkG-check">
-    <label for="LS3kdDkG-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:17</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">226</td>
-<td class="origin">N Plains, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,794</a></td>
-<td class="dest ">Nanticoke, PA</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="JB Hunt Transport Services Inc (click for details)">JB Hunt Transport Services Inc</a>
-</td>
-<td class="contact"><a href="mailto:LAW_OPS@jbhunt.com" class="trackLink" target="_blank">LAW_OPS@jbhunt.com</a></td>
-<td class="length ">53</td>
-<td class="weight ">43,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600" class="trackLink" track-link-category="Credit Score" target="_blank">80</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600" class="trackLink" track-link-category="Credit Score" target="_blank">35</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdhGf" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdhGf-check">
-    <label for="LS3kdhGf-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:17</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">228</td>
-<td class="origin">Wilsonville, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,966</a></td>
-<td class="dest ">Ronkonkoma, NY</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="XPO Logistics (click for details)">XPO Logistics</a>
-</td>
-<td class="contact">(734) 757-2147</td>
-<td class="length ">53</td>
-<td class="weight ">43,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755" class="trackLink" track-link-category="Credit Score" target="_blank">31</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$3,400.00</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydrtm" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydrtm-check">
-    <label for="DS1ydrtm-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:22</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">287</td>
-<td class="origin">Tangent, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,862</a></td>
-<td class="dest ">Winston Salem, NC</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Epes Logistics Services Inc (click for details)">Epes Logistics Services Inc</a>
-</td>
-<td class="contact">(866) 251-8468</td>
-<td class="length ">53</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydkVk" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydkVk-check">
-    <label for="DS1ydkVk-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:22</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">231</td>
-<td class="origin">Monroe, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,734</a></td>
-<td class="dest ">Monrovia, MD</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">37,800</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydngt" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydngt-check">
-    <label for="DS1ydngt-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">286</td>
-<td class="origin">Burlington, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">245</a></td>
-<td class="dest ">Portland, OR</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Uber Freight Llc (click for details)">Uber Freight Llc</a>
-</td>
-<td class="contact">(312) 319-4795</td>
-<td class="length ">53</td>
-<td class="weight ">30,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583" class="trackLink" track-link-category="Credit Score" target="_blank">31</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdjSx" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjSx-check">
-    <label for="LS3kdjSx-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">140</td>
-<td class="origin">Spokane, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,395</a></td>
-<td class="dest ">Tempe, AZ</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Landstar Ranger Inc (click for details)">Landstar Ranger Inc</a>
-</td>
-<td class="contact"><a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank">alex.qxl@landstarmail.com</a></td>
-<td class="length ">17</td>
-<td class="weight ">1,896</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$1,000.00</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdDMc" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDMc-check">
-    <label for="LS3kdDMc-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">140</td>
-<td class="origin">Spokane, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,395</a></td>
-<td class="dest ">Tempe, AZ</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Landstar Ranger Inc (click for details)">Landstar Ranger Inc</a>
-</td>
-<td class="contact"><a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank">alex.qxl@landstarmail.com</a></td>
-<td class="length ">17</td>
-<td class="weight ">1,896</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$1,000.00</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydytG" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydytG-check">
-    <label for="DS1ydytG-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">237</td>
-<td class="origin">Sumner, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">459</a></td>
-<td class="dest ">Ontario, OR</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Landstar Ranger Inc (click for details)">Landstar Ranger Inc</a>
-</td>
-<td class="contact">(718) 701-9018</td>
-<td class="length ">53</td>
-<td class="weight ">8,600</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydjjZ" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydjjZ-check">
-    <label for="DS1ydjjZ-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">241</td>
-<td class="origin">Tacoma, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,302</a></td>
-<td class="dest ">Brawley, CA</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">13,293</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydbub" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydbub-check">
-    <label for="DS1ydbub-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">225</td>
-<td class="origin">Kent, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,673</a></td>
-<td class="dest ">Eagan, MN</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">45,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydxp0" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydxp0-check">
-    <label for="DS1ydxp0-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">231</td>
-<td class="origin">Molalla, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,817</a></td>
-<td class="dest ">Lenexa, KS</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="SCHNEIDER NATIONAL INC (click for details)">SCHNEIDER NATIONAL INC</a>
-</td>
-<td class="contact">(800) 537-4031</td>
-<td class="length ">—</td>
-<td class="weight ">43,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075" class="trackLink" track-link-category="Credit Score" target="_blank">85</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1yddSZ" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1yddSZ-check">
-    <label for="DS1yddSZ-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:37</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">241</td>
-<td class="origin">Tacoma, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">273</a></td>
-<td class="dest ">Toledo, OR</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="England Logistics Inc (click for details)">England Logistics Inc</a>
-</td>
-<td class="contact">(888) 228-8615</td>
-<td class="length ">—</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydxbZ" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydxbZ-check">
-    <label for="DS1ydxbZ-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:42</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">VR</td>
-<td class="fp ">F</td>
-<td class="do inexact">256</td>
-<td class="origin">Salem, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">203</a></td>
-<td class="dest ">Auburn, WA</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">41,838</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydyk9" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydyk9-check">
-    <label for="DS1ydyk9-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:52</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">279</td>
-<td class="origin">Superior, MT</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">581</a></td>
-<td class="dest ">Salt Lake City, UT</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Online Freight Service Inc (click for details)">Online Freight Service Inc</a>
-</td>
-<td class="contact">(651) 468-6868</td>
-<td class="length ">53</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdjnR" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjnR-check">
-    <label for="LS3kdjnR-check"></label>
-    &nbsp;
-</td>
-<td class="age ">00:57</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">225</td>
-<td class="origin">Kent, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,510</a></td>
-<td class="dest ">Mesa, AZ</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Echo Global Logistics Inc (click for details)">Echo Global Logistics Inc</a>
-</td>
-<td class="contact">(928) 230-3863</td>
-<td class="length ">53</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">$1,500.00</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdDjx" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDjx-check">
-    <label for="LS3kdDjx-check"></label>
-    &nbsp;
-</td>
-<td class="age ">01:21</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">VM</td>
-<td class="fp ">F</td>
-<td class="do inexact">228</td>
-<td class="origin">Seattle, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdDjx&amp;RegistryId=S.138136.263040&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,064</a></td>
-<td class="dest ">Chicago, IL</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="US Cargo Link LLC (click for details)">US Cargo Link LLC</a>
-</td>
-<td class="contact">(888) 552-5623</td>
-<td class="length ">53</td>
-<td class="weight ">30,000</td>
-
-
-<td class="cs">—</td>
-<td class="dtp">—</td>
-<td class="factorable" title="Factor It"></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydgBN" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydgBN-check">
-    <label for="DS1ydgBN-check"></label>
-    &nbsp;
-</td>
-<td class="age ">01:27</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">65</td>
-<td class="origin">Dayton, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,125</a></td>
-<td class="dest ">New Era, MI</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">42,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdjCx" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjCx-check">
-    <label for="LS3kdjCx-check"></label>
-    &nbsp;
-</td>
-<td class="age ">01:27</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">250</td>
-<td class="origin">Longview, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,151</a></td>
-<td class="dest ">Northlake, IL</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Transplace Texas Lp (click for details)">Transplace Texas Lp</a>
-</td>
-<td class="contact">(479) 231-3938</td>
-<td class="length ">53</td>
-<td class="weight ">44,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydmzA" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydmzA-check">
-    <label for="DS1ydmzA-check"></label>
-    &nbsp;
-</td>
-<td class="age ">01:47</td>
-<td class="avail inexact">04/23</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do ">44</td>
-<td class="origin">Grandview, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,206</a></td>
-<td class="dest ">Ludington, MI</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="CH Robinson Company (click for details)">CH Robinson Company</a>
-</td>
-<td class="contact">(833) 428-5247</td>
-<td class="length ">53</td>
-<td class="weight ">44,500</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdf4z" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdf4z-check">
-    <label for="LS3kdf4z-check"></label>
-    &nbsp;
-</td>
-<td class="age inexact">02:02</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">241</td>
-<td class="origin">Tacoma, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">634</a></td>
-<td class="dest ">Buhl, ID</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="U S Xpress Inc (click for details)">U S Xpress Inc</a>
-</td>
-<td class="contact">(952) 656-2550</td>
-<td class="length ">53</td>
-<td class="weight ">42,500</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231" class="trackLink" track-link-category="Credit Score" target="_blank">95</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="DS1ydy4R" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydy4R-check">
-    <label for="DS1ydy4R-check"></label>
-    &nbsp;
-</td>
-<td class="age inexact">02:09</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">209</td>
-<td class="origin">Portland, OR</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">2,840</a></td>
-<td class="dest ">Easton, PA</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="Leeway Global Logistics - Lee Freight Line Inc (click for details)">Leeway Global Logistics - Lee Freight Line Inc</a>
-</td>
-<td class="contact">(844) 533-9294</td>
-<td class="length ">53</td>
-<td class="weight ">40,640</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427" class="trackLink" track-link-category="Credit Score" target="_blank">97</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"><a href="urls?Category=Factoring&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427&amp;CategoryProvider=abc" class="trackLink" track-link-category="Factoring" target="_blank"></a></td>
-<td class="rate">—</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody><tbody class="resultItem 
-    
-   similarMatch 
-    ">
-<tr id="LS3kdhhE" class="qa-match-row resultSummary unread">
-
-<td class="new">&nbsp;</td> <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
-<td class="select">
-    <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdhhE-check">
-    <label for="LS3kdhhE-check"></label>
-    &nbsp;
-</td>
-<td class="age inexact">02:13</td>
-<td class="avail ">04/24</td>
-<td class="truck ">V</td>
-<td class="fp ">F</td>
-<td class="do inexact">257</td>
-<td class="origin">Dupont, WA</td>
-<td class="trip"><a href="urls?Category=Routing&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893&amp;CategoryProvider=ProMiles" class="trackLink" track-link-category="Trip Miles" target="_blank">1,350</a></td>
-<td class="dest ">Gallup, NM</td>
-<td class="dd ">—</td>
-<td class="company dropdown ">
-    <a data-toggle="dropdown" class="trackLink companyToggle " title="BSS Logistics LLC (click for details)">BSS Logistics LLC</a>
-</td>
-<td class="contact"><a href="mailto:josephbsslogistics@gmail.com" class="trackLink" target="_blank">josephbsslogistics@gmail.com</a></td>
-<td class="length ">53</td>
-<td class="weight ">33,000</td>
-
-
-<td class="cs"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893" class="trackLink" track-link-category="Credit Score" target="_blank">85</a></td>
-<td class="dtp"><a href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893" class="trackLink" track-link-category="Credit Score" target="_blank">30</a></td>
-<td class="factorable" title="Factor It"></td>
-<td class="rate">$1,575.00</td>
-<td class="bookItNow">
-    —
-</td>
-
-</tr>
-</tbody>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydvJY" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydvJY-check" />
+                <label for="DS1ydvJY-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:02</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">279</td>
+            <td class="origin">Superior, MT</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >259</a
+                >
+            </td>
+            <td class="dest">Cut Bank, MT</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Online Freight Service Inc (click for details)"
+                    >Online Freight Service Inc</a
+                >
+            </td>
+            <td class="contact">(651) 468-6868</td>
+            <td class="length">53</td>
+            <td class="weight">45,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydvJY&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydvJX" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydvJX-check" />
+                <label for="DS1ydvJX-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:02</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">279</td>
+            <td class="origin">Superior, MT</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >259</a
+                >
+            </td>
+            <td class="dest">Cut Bank, MT</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Online Freight Service Inc (click for details)"
+                    >Online Freight Service Inc</a
+                >
+            </td>
+            <td class="contact">(651) 468-6868</td>
+            <td class="length">48</td>
+            <td class="weight">45,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydvJX&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydpWJ" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydpWJ-check" />
+                <label for="DS1ydpWJ-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:02</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">209</td>
+            <td class="origin">Portland, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,105</a
+                >
+            </td>
+            <td class="dest">Lewisville, TX</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="JB Hunt Transport Services Inc (click for details)"
+                    >JB Hunt Transport Services Inc</a
+                >
+            </td>
+            <td class="contact">(800) 723-2499</td>
+            <td class="length">53</td>
+            <td class="weight">5,685</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >80</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >35</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydpWJ&amp;RegistryId=S.116289.291600&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydpSu" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydpSu-check" />
+                <label for="DS1ydpSu-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:02</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">228</td>
+            <td class="origin">Wilsonville, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,966</a
+                >
+            </td>
+            <td class="dest">Ronkonkoma, NY</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="XPO Logistics LLC (click for details)"
+                    >XPO Logistics LLC</a
+                >
+            </td>
+            <td class="contact">(855) 976-2662</td>
+            <td class="length">53</td>
+            <td class="weight">43,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >31</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydpSu&amp;RegistryId=S.145688.270895&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydagE" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydagE-check" />
+                <label for="DS1ydagE-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:07</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">225</td>
+            <td class="origin">Kent, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,396</a
+                >
+            </td>
+            <td class="dest">Memphis, TN</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Choptank Transport Inc (click for details)"
+                    >Choptank Transport Inc</a
+                >
+            </td>
+            <td class="contact">(800) 568-2240 (827)</td>
+            <td class="length">53</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydagE&amp;RegistryId=S.493928.135566&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdDkG" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDkG-check" />
+                <label for="LS3kdDkG-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:17</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">226</td>
+            <td class="origin">N Plains, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,794</a
+                >
+            </td>
+            <td class="dest">Nanticoke, PA</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="JB Hunt Transport Services Inc (click for details)"
+                    >JB Hunt Transport Services Inc</a
+                >
+            </td>
+            <td class="contact">
+                <a href="mailto:LAW_OPS@jbhunt.com" class="trackLink" target="_blank"
+                    >LAW_OPS@jbhunt.com</a
+                >
+            </td>
+            <td class="length">53</td>
+            <td class="weight">43,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >80</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >35</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdDkG&amp;RegistryId=S.116289.291600&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdhGf" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdhGf-check" />
+                <label for="LS3kdhGf-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:17</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">228</td>
+            <td class="origin">Wilsonville, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,966</a
+                >
+            </td>
+            <td class="dest">Ronkonkoma, NY</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="XPO Logistics (click for details)"
+                    >XPO Logistics</a
+                >
+            </td>
+            <td class="contact">(734) 757-2147</td>
+            <td class="length">53</td>
+            <td class="weight">43,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >31</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdhGf&amp;RegistryId=S.494603.120755&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$3,400.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydrtm" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydrtm-check" />
+                <label for="DS1ydrtm-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:22</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">287</td>
+            <td class="origin">Tangent, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,862</a
+                >
+            </td>
+            <td class="dest">Winston Salem, NC</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Epes Logistics Services Inc (click for details)"
+                    >Epes Logistics Services Inc</a
+                >
+            </td>
+            <td class="contact">(866) 251-8468</td>
+            <td class="length">53</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydrtm&amp;RegistryId=S.235644.318431&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydkVk" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydkVk-check" />
+                <label for="DS1ydkVk-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:22</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">231</td>
+            <td class="origin">Monroe, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,734</a
+                >
+            </td>
+            <td class="dest">Monrovia, MD</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">37,800</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydkVk&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydngt" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydngt-check" />
+                <label for="DS1ydngt-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">286</td>
+            <td class="origin">Burlington, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >245</a
+                >
+            </td>
+            <td class="dest">Portland, OR</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Uber Freight Llc (click for details)"
+                    >Uber Freight Llc</a
+                >
+            </td>
+            <td class="contact">(312) 319-4795</td>
+            <td class="length">53</td>
+            <td class="weight">30,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >31</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydngt&amp;RegistryId=S.194757.353583&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdjSx" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjSx-check" />
+                <label for="LS3kdjSx-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">140</td>
+            <td class="origin">Spokane, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,395</a
+                >
+            </td>
+            <td class="dest">Tempe, AZ</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Landstar Ranger Inc (click for details)"
+                    >Landstar Ranger Inc</a
+                >
+            </td>
+            <td class="contact">
+                <a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank"
+                    >alex.qxl@landstarmail.com</a
+                >
+            </td>
+            <td class="length">17</td>
+            <td class="weight">1,896</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdjSx&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$1,000.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdDMc" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDMc-check" />
+                <label for="LS3kdDMc-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">140</td>
+            <td class="origin">Spokane, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,395</a
+                >
+            </td>
+            <td class="dest">Tempe, AZ</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Landstar Ranger Inc (click for details)"
+                    >Landstar Ranger Inc</a
+                >
+            </td>
+            <td class="contact">
+                <a href="mailto:alex.qxl@landstarmail.com" class="trackLink" target="_blank"
+                    >alex.qxl@landstarmail.com</a
+                >
+            </td>
+            <td class="length">17</td>
+            <td class="weight">1,896</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdDMc&amp;RegistryId=S.176207.350180&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$1,000.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydytG" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydytG-check" />
+                <label for="DS1ydytG-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">237</td>
+            <td class="origin">Sumner, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >459</a
+                >
+            </td>
+            <td class="dest">Ontario, OR</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Landstar Ranger Inc (click for details)"
+                    >Landstar Ranger Inc</a
+                >
+            </td>
+            <td class="contact">(718) 701-9018</td>
+            <td class="length">53</td>
+            <td class="weight">8,600</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydytG&amp;RegistryId=S.176207.344113&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydjjZ" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydjjZ-check" />
+                <label for="DS1ydjjZ-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">241</td>
+            <td class="origin">Tacoma, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,302</a
+                >
+            </td>
+            <td class="dest">Brawley, CA</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">13,293</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydjjZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydbub" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydbub-check" />
+                <label for="DS1ydbub-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">225</td>
+            <td class="origin">Kent, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,673</a
+                >
+            </td>
+            <td class="dest">Eagan, MN</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">45,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydbub&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydxp0" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydxp0-check" />
+                <label for="DS1ydxp0-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">231</td>
+            <td class="origin">Molalla, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,817</a
+                >
+            </td>
+            <td class="dest">Lenexa, KS</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="SCHNEIDER NATIONAL INC (click for details)"
+                    >SCHNEIDER NATIONAL INC</a
+                >
+            </td>
+            <td class="contact">(800) 537-4031</td>
+            <td class="length">—</td>
+            <td class="weight">43,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >85</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydxp0&amp;RegistryId=S.120064.65075&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1yddSZ" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1yddSZ-check" />
+                <label for="DS1yddSZ-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:37</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">241</td>
+            <td class="origin">Tacoma, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >273</a
+                >
+            </td>
+            <td class="dest">Toledo, OR</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="England Logistics Inc (click for details)"
+                    >England Logistics Inc</a
+                >
+            </td>
+            <td class="contact">(888) 228-8615</td>
+            <td class="length">—</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1yddSZ&amp;RegistryId=S.473028.100845&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydxbZ" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydxbZ-check" />
+                <label for="DS1ydxbZ-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:42</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">VR</td>
+            <td class="fp">F</td>
+            <td class="do inexact">256</td>
+            <td class="origin">Salem, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >203</a
+                >
+            </td>
+            <td class="dest">Auburn, WA</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">41,838</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydxbZ&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydyk9" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydyk9-check" />
+                <label for="DS1ydyk9-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:52</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">279</td>
+            <td class="origin">Superior, MT</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >581</a
+                >
+            </td>
+            <td class="dest">Salt Lake City, UT</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Online Freight Service Inc (click for details)"
+                    >Online Freight Service Inc</a
+                >
+            </td>
+            <td class="contact">(651) 468-6868</td>
+            <td class="length">53</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydyk9&amp;RegistryId=S.462055.89806&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdjnR" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjnR-check" />
+                <label for="LS3kdjnR-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">00:57</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">225</td>
+            <td class="origin">Kent, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,510</a
+                >
+            </td>
+            <td class="dest">Mesa, AZ</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Echo Global Logistics Inc (click for details)"
+                    >Echo Global Logistics Inc</a
+                >
+            </td>
+            <td class="contact">(928) 230-3863</td>
+            <td class="length">53</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdjnR&amp;RegistryId=S.782078.425306&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">$1,500.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdDjx" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdDjx-check" />
+                <label for="LS3kdDjx-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">01:21</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">VM</td>
+            <td class="fp">F</td>
+            <td class="do inexact">228</td>
+            <td class="origin">Seattle, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdDjx&amp;RegistryId=S.138136.263040&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,064</a
+                >
+            </td>
+            <td class="dest">Chicago, IL</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="US Cargo Link LLC (click for details)"
+                    >US Cargo Link LLC</a
+                >
+            </td>
+            <td class="contact">(888) 552-5623</td>
+            <td class="length">53</td>
+            <td class="weight">30,000</td>
+
+            <td class="cs">—</td>
+            <td class="dtp">—</td>
+            <td class="factorable" title="Factor It"></td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydgBN" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydgBN-check" />
+                <label for="DS1ydgBN-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">01:27</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">65</td>
+            <td class="origin">Dayton, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,125</a
+                >
+            </td>
+            <td class="dest">New Era, MI</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">42,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydgBN&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdjCx" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdjCx-check" />
+                <label for="LS3kdjCx-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">01:27</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">250</td>
+            <td class="origin">Longview, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,151</a
+                >
+            </td>
+            <td class="dest">Northlake, IL</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Transplace Texas Lp (click for details)"
+                    >Transplace Texas Lp</a
+                >
+            </td>
+            <td class="contact">(479) 231-3938</td>
+            <td class="length">53</td>
+            <td class="weight">44,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdjCx&amp;RegistryId=S.453970.350693&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydmzA" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydmzA-check" />
+                <label for="DS1ydmzA-check"></label>
+                &nbsp;
+            </td>
+            <td class="age">01:47</td>
+            <td class="avail inexact">04/23</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do">44</td>
+            <td class="origin">Grandview, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,206</a
+                >
+            </td>
+            <td class="dest">Ludington, MI</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="CH Robinson Company (click for details)"
+                    >CH Robinson Company</a
+                >
+            </td>
+            <td class="contact">(833) 428-5247</td>
+            <td class="length">53</td>
+            <td class="weight">44,500</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydmzA&amp;RegistryId=S.528573.154058&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdf4z" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdf4z-check" />
+                <label for="LS3kdf4z-check"></label>
+                &nbsp;
+            </td>
+            <td class="age inexact">02:02</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">241</td>
+            <td class="origin">Tacoma, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >634</a
+                >
+            </td>
+            <td class="dest">Buhl, ID</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="U S Xpress Inc (click for details)"
+                    >U S Xpress Inc</a
+                >
+            </td>
+            <td class="contact">(952) 656-2550</td>
+            <td class="length">53</td>
+            <td class="weight">42,500</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >95</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=LS3kdf4z&amp;RegistryId=S.118653.280231&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="DS1ydy4R" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="DS1ydy4R-check" />
+                <label for="DS1ydy4R-check"></label>
+                &nbsp;
+            </td>
+            <td class="age inexact">02:09</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">209</td>
+            <td class="origin">Portland, OR</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >2,840</a
+                >
+            </td>
+            <td class="dest">Easton, PA</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="Leeway Global Logistics - Lee Freight Line Inc (click for details)"
+                    >Leeway Global Logistics - Lee Freight Line Inc</a
+                >
+            </td>
+            <td class="contact">(844) 533-9294</td>
+            <td class="length">53</td>
+            <td class="weight">40,640</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >97</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It">
+                <a
+                    href="urls?Category=Factoring&amp;MatchId=DS1ydy4R&amp;RegistryId=S.183331.311427&amp;CategoryProvider=abc"
+                    class="trackLink"
+                    track-link-category="Factoring"
+                    target="_blank"
+                ></a>
+            </td>
+            <td class="rate">—</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
+    <tbody class="resultItem similarMatch">
+        <tr id="LS3kdhhE" class="qa-match-row resultSummary unread">
+            <td class="new">&nbsp;</td>
+            <!-- Please leave the nbsp, they are necessary for table row strikeout to work right in IE -->
+            <td class="select">
+                <input type="checkbox" class="customCheckbox searchBatch" id="LS3kdhhE-check" />
+                <label for="LS3kdhhE-check"></label>
+                &nbsp;
+            </td>
+            <td class="age inexact">02:13</td>
+            <td class="avail">04/24</td>
+            <td class="truck">V</td>
+            <td class="fp">F</td>
+            <td class="do inexact">257</td>
+            <td class="origin">Dupont, WA</td>
+            <td class="trip">
+                <a
+                    href="urls?Category=Routing&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893&amp;CategoryProvider=ProMiles"
+                    class="trackLink"
+                    track-link-category="Trip Miles"
+                    target="_blank"
+                    >1,350</a
+                >
+            </td>
+            <td class="dest">Gallup, NM</td>
+            <td class="dd">—</td>
+            <td class="company dropdown">
+                <a
+                    data-toggle="dropdown"
+                    class="trackLink companyToggle"
+                    title="BSS Logistics LLC (click for details)"
+                    >BSS Logistics LLC</a
+                >
+            </td>
+            <td class="contact">
+                <a href="mailto:josephbsslogistics@gmail.com" class="trackLink" target="_blank"
+                    >josephbsslogistics@gmail.com</a
+                >
+            </td>
+            <td class="length">53</td>
+            <td class="weight">33,000</td>
+
+            <td class="cs">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >85</a
+                >
+            </td>
+            <td class="dtp">
+                <a
+                    href="urls?Category=CustomerDirectoryCreditProfile&amp;MatchId=LS3kdhhE&amp;RegistryId=S.303007.429893"
+                    class="trackLink"
+                    track-link-category="Credit Score"
+                    target="_blank"
+                    >30</a
+                >
+            </td>
+            <td class="factorable" title="Factor It"></td>
+            <td class="rate">$1,575.00</td>
+            <td class="bookItNow">
+                —
+            </td>
+        </tr>
+    </tbody>
 </table>

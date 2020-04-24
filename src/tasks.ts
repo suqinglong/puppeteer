@@ -8,8 +8,6 @@ export class Tasks implements ITasksClass {
   private mode: IMode = getMode();
   private search = new Search();
 
-
-
   public async getTask() {
     await this.developPrepare();
     while (true) {
@@ -18,7 +16,7 @@ export class Tasks implements ITasksClass {
       const task: ITASK = JSON.parse(taskResult) as ITASK;
       console.log('task', task);
       let browserWSEndpoint = await this.getBrowserKey(task.user_id);
-      console.log('browserWSEndpoint', browserWSEndpoint)
+      console.log('have browserWSEndpoint', browserWSEndpoint)
       // if no browser then create
       if (!browserWSEndpoint) {
         console.log('no browserWSEndpoint')
@@ -86,7 +84,7 @@ export class Tasks implements ITasksClass {
           origin_radius: '100',
           destination: '',
           destination_radius: '100',
-          pick_up_date: '2020-04-23',
+          pick_up_date: '2020-04-24',
           equipment: 'Van'
         },
         time: 1587649219

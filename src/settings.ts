@@ -3,8 +3,8 @@ export const Settings = {
     devtools: false,
     headless: false,
     defaultViewport: {
-        width: 1200,
-        height: 800
+        width: 1400,
+        height: 1200,
     }
 };
 

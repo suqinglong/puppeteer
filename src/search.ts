@@ -14,10 +14,12 @@ export class Search implements ISearchClass {
     private settings = this.mode === 'develop' ? Settings : {};
 
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
-        const browser = await puppeteer.launch({
-            ...this.settings,
-            args: ['no-sandbox', 'disable-setuid-sandbox']
-        });
+        const browser = await puppeteer.launch(
+            {
+                ...this.settings,
+                ignoreDefaultArgs: ["--enable-automation"],
+                args: ['no-sandbox', 'disable-setuid-sandbox']
+            });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);
         await site.prepare(task.email, task.password); // new page and login

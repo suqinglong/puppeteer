@@ -1,6 +1,6 @@
 import { Trim } from './index';
 
-export function GetDataFromHtml($el: Cheerio, $: CheerioStatic): any {
+export function GetDataFromHtml(task:ITASK, $el: Cheerio, $: CheerioStatic): any {
     const result: any = {};
 
     // summary data
@@ -51,5 +51,6 @@ export function GetDataFromHtml($el: Cheerio, $: CheerioStatic): any {
         return $el.find(item).text();
     });
     result['Broker-to-Carrier'] = borkerToCarrierSpotData;
+    result['date'] = task.criteria.pick_up_date
     return result;
 }

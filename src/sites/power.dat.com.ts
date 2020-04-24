@@ -173,19 +173,28 @@ export class PowerDatComSite extends SearchSite {
 
             await this.cleanSearch();
             await this.page.click('.carriers .search')
-            await this.page.waitFor(500);
+            await this.page.waitFor(200);
             const resultSubItems = Array.from(resultItems).slice(0, 10);
-            resultSubItems.forEach(async (item) => {
-                console.log('click item expend');
-                await item.click().catch((e) => {
-                    console.log('click error', e);
-                });
-            });
+            const resultlen = resultSubItems.length
 
-            await this.page.waitForSelector('.resultItem.exactMatch .widget-numbers-num', {
-                timeout: 10000
-            });
-            this.page.waitFor(1000);
+            await this.page.evaluate((resultlen) => {
+                document.querySelectorAll('.resultItem.exactMatch .age').forEach((item, key) => {
+                    if (key < resultlen) {
+                        setTimeout(() => {
+                            (item as HTMLElement).click()
+                            console.log('clicked', item)
+                        }, 100)
+                    }
+                })
+            }, resultlen)
+
+            // for (let i = 0; i < resultlen; i++) {
+            //     await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${i + 2}) .widget-numbers-num`, {
+            //         timeout: 3000
+            //     });
+            // }
+
+            await this.page.waitFor(10000);
 
             const resultHtml = await this.page
                 .$eval('.searchResultsTable', (res) => res.outerHTML)

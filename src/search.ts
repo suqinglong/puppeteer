@@ -18,7 +18,11 @@ export class Search implements ISearchClass {
             {
                 ...this.settings,
                 ignoreDefaultArgs: ["--enable-automation"],
-                args: ['no-sandbox', 'disable-setuid-sandbox']
+                args: ['no-sandbox', 'disable-setuid-sandbox'],
+                defaultViewport: {
+                    width: 1200,
+                    height: 1200,
+                }
             });
         const SiteClass = sitesMap[task.site];
         const site = new SiteClass(browser);

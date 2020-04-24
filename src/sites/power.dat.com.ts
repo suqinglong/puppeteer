@@ -174,8 +174,8 @@ export class PowerDatComSite extends SearchSite {
 
             await this.cleanSearch();
             await this.page.click('.carriers .search')
-            await this.page.waitFor(2000);
-            const resultSubItems = Array.from(resultItems).slice(0, 10);
+            await this.page.waitFor(1000);
+            const resultSubItems = Array.from(resultItems)
             const resultlen = resultSubItems.length
 
             await this.page.evaluate((resultlen) => {
@@ -205,7 +205,6 @@ export class PowerDatComSite extends SearchSite {
                 });
             const $ = cheerio.load(resultHtml);
             const items = Array.from($('.resultItem.exactMatch'))
-                .slice(0, 10)
                 .map((item: any) => {
                     return GetDataFromHtml(task, $(item), $);
                 });

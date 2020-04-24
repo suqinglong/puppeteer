@@ -27,13 +27,14 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('#username', name);
             await this.page.type('#password', password);
 
-            await this.page.click('button#login');
-            await new Promise(resove => {
-                this.browser.on('targetchanged', () => {
-                    resove()
-                })
-            })
-
+            await Promise.all([
+                new Promise(resove => {
+                    this.browser.on('targetchanged', () => {
+                        resove()
+                    })
+                }),
+                this.page.click('button#login')
+            ])
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {

@@ -34,8 +34,7 @@ export function GetDataFromHtml(task:ITASK, $el: Cheerio, $: CheerioStatic): any
 
     // detail data
     const key_value_arr = [];
-    $el.find('dl > dt, dl > dt + dd').each((key, item) => {
-        console.info(key);
+    $el.find('dl > dt, dl > dt + dd').each((_key, item) => {
         key_value_arr.push(Trim($(item).text()));
     });
     for (let i = 0; i < key_value_arr.length; i += 2) {
@@ -52,5 +51,6 @@ export function GetDataFromHtml(task:ITASK, $el: Cheerio, $: CheerioStatic): any
     });
     result['Broker-to-Carrier'] = borkerToCarrierSpotData;
     result['date'] = task.criteria.pick_up_date
+
     return result;
 }

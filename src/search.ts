@@ -21,7 +21,7 @@ export class Search implements ISearchClass {
                 args: ['no-sandbox', 'disable-setuid-sandbox'],
                 defaultViewport: {
                     width: 1200,
-                    height: 1200,
+                    height: 1080,
                 }
             });
         const SiteClass = sitesMap[task.site];

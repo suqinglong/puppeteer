@@ -24,9 +24,7 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('#username', name);
             await this.page.type('#password', password);
             await this.page.click('button#login');
-            await this.page.waitForNavigation({
-                waitUntil: 'domcontentloaded'
-            });
+            await this.page.waitFor(200)
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {
@@ -40,10 +38,10 @@ export class PowerDatComSite extends SearchSite {
             this.page = await this.browser.newPage();
             this.page.setViewport({
                 width: 1200,
-                height: 1200
+                height: 1080
             })
             this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36')
-            console.log('userAgent 2',await this.page.evaluate(() => navigator.userAgent ))
+            console.log('userAgent 2', await this.page.evaluate(() => navigator.userAgent))
             await this.page.goto(this.searchPage, {
                 waitUntil: [
                     'load'
@@ -130,15 +128,10 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite wait for selector avail');
             });
 
-            await this.page.waitFor(200)
-
             console.log('PowerDatComSite search click');
-            await this.page.click('button.search', {
-                delay: 20,
-                clickCount: 3
-            }).catch(e => {
-                console.log('PowerDatComSite click search', e)
-                throw new SiteError('search', 'PowerDatComSite wait for selector avail');
+            await this.page.evaluate(() => {
+                const button = document.querySelector('button.search') as HTMLElement
+                button.click()
             })
 
             console.log('PowerDatComSite wait result');
@@ -157,7 +150,7 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite $$ resultItem');
             });
 
-            
+
             console.log('click resultItem')
             for (let n = 1, len = resultItems.length; n <= len; n++) {
                 await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`).catch(e => {
@@ -176,7 +169,8 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'waitForSelector result item detail' + (resultItems.length + 1))
             });
 
-            const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.innerHTML).catch(e => {
+            
+            const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.outerHTML).catch(e => {
                 console.log('PowerDatComSite $eval .searchResultsTable', e);
                 throw new SiteError('search', 'PowerDatComSite $eval .searchResultsTable')
             });
@@ -185,10 +179,20 @@ export class PowerDatComSite extends SearchSite {
                 return GetDataFromHtml(task, $(item), $);
             });
 
-            console.log('PowerDatComSite post data:', $('.resultItem.exactMatch').html(), items, ModifyPostData(task.task_id, items));
+            console.log('PowerDatComSite post data:', items);
             await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
+
+            // clear search items
+            await this.page.evaluate(() => {
+                document.querySelectorAll('.qa-my-searches-delete').forEach((item, key) => {
+                    if (key > 1) {
+                        (item as HTMLElement).click()
+                    }
+                })
+            })
+
             console.log('PowerDatComSite search end')
         } catch (e) {
             console.log('PowerDatComSite **** catched ****', e);

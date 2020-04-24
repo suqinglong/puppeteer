@@ -27,14 +27,14 @@ export function ModifyPostData(taskId: string, dataArr: Array<any>): Array<IResu
 
         return {
             task_id: taskId,
-            date: data.pick_up_date,
+            date: data.date,
             source: 'DAT',
             equipment: data.equipment,
             origin: data.origin,
             origin_radius: data.origin_radius,
             destination: data.destination,
             destination_radius: data.destination_radius,
-            distance: data.distance,
+            distance: data.distance || '0',
             extra: JSON.stringify(extroData)
         };
     });

@@ -26,10 +26,21 @@ export class PowerDatComSite extends SearchSite {
             });
             await this.page.type('#username', name);
             await this.page.type('#password', password);
-            await this.page.click('button#login');
-            await this.page.waitForNavigation({
-                waitUntil: 'domcontentloaded'
-            })
+            
+            // await this.page.click('button#login');
+            // await new Promise(resove => {
+            //     this.browser.on('targetchanged', () => {
+            //         resove()
+            //     })
+            // })
+
+            await Promise.all([
+                this.page.waitForNavigation({
+                    waitUntil: 'domcontentloaded'
+                }),
+                this.page.click('button#login'),
+            ]);
+
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {
@@ -171,7 +182,7 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'waitForSelector result item detail' + (resultItems.length + 1))
             });
 
-            
+
             const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.outerHTML).catch(e => {
                 console.log('PowerDatComSite $eval .searchResultsTable', e);
                 throw new SiteError('search', 'PowerDatComSite $eval .searchResultsTable')

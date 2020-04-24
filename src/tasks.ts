@@ -80,7 +80,7 @@ export class Tasks implements ITasksClass {
         email: 'haulistix',
         password: 'Shostakovich5',
         criteria: {
-          origin: 'Kennewick, WA',
+          origin: 'New York, NY',
           origin_radius: '100',
           destination: '',
           destination_radius: '100',

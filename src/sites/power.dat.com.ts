@@ -60,7 +60,9 @@ export class PowerDatComSite extends SearchSite {
             await this.page.waitForSelector('.newSearch')
 
             // create new search
-            await this.page.click('.newSearch').catch(e => {
+            await this.page.click('.newSearch', {
+                delay: 100
+            }).catch(e => {
                 console.log('PowerDatComSite newSearch click', e)
                 throw new SiteError('search', 'PowerDatComSite newSearch click');
             })
@@ -158,19 +160,17 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite $$ resultItem');
             });
 
+            await this.cleanSearch()
             const resultSubItems = Array.from(resultItems).slice(0, 10)
             resultSubItems.forEach(async item => {
-                await item.click()
-                let time = Number(new Date())
-                while (true) {
-                    this.sleep(100)
-                    if (await item.$('.widget-numbers')) {
-                        break;
-                    }
-                    if (Number(new Date()) - time > 3000) {
-                        break;
-                    }
-                }
+                console.log('click item expend')
+                await item.click().catch(e => {
+                    console.log('click error')
+                })
+            })
+
+            await this.page.waitForSelector('.resultItem.exactMatch .widget-numbers', {
+                timeout: 10000
             })
 
 
@@ -179,7 +179,7 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite $eval .searchResultsTable')
             });
             const $ = cheerio.load(resultHtml);
-            const items = Array.from($('.resultItem.exactMatch')).map((item: any) => {
+            const items = Array.from($('.resultItem.exactMatch')).slice(0, 10).map((item: any) => {
                 return GetDataFromHtml(task, $(item), $);
             });
 
@@ -187,14 +187,24 @@ export class PowerDatComSite extends SearchSite {
             await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
-
             console.log('PowerDatComSite search end')
         } catch (e) {
+            this.cleanSearch()
             console.log('PowerDatComSite **** catched ****', e);
         }
     }
 
     public async closePage() {
         // await this.page.close();
+    }
+
+    private async cleanSearch() {
+        await this.page.evaluate(() => {
+            document.querySelectorAll('.qa-my-searches-delete').forEach((item, key) => {
+                if (key > 0) {
+                    (item as HTMLElement).click()
+                }
+            })
+        })
     }
 }

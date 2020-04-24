@@ -158,21 +158,20 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite $$ resultItem');
             });
 
-
-            console.log('click resultItem')
-            await this.page.evaluate(() => {
-                document.querySelectorAll('.resultItem.exactMatch .age').forEach(item => {
-                    (item as HTMLElement).click()
-                })
-            })
-
-
-            while (true) {
-                this.sleep(100)
-                if ((await this.page.$$('.resultItem.exactMatch .widget-numbers')).length === resultItems.length) {
-                    break;
+            const resultSubItems = Array.from(resultItems).slice(0, 10)
+            resultSubItems.forEach(async item => {
+                await item.click()
+                let time = Number(new Date())
+                while (true) {
+                    this.sleep(100)
+                    if (await item.$('.widget-numbers')) {
+                        break;
+                    }
+                    if (Number(new Date()) - time > 3000) {
+                        break;
+                    }
                 }
-            }
+            })
 
 
             const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.outerHTML).catch(e => {

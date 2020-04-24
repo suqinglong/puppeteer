@@ -26,20 +26,13 @@ export class PowerDatComSite extends SearchSite {
             });
             await this.page.type('#username', name);
             await this.page.type('#password', password);
-            
-            // await this.page.click('button#login');
-            // await new Promise(resove => {
-            //     this.browser.on('targetchanged', () => {
-            //         resove()
-            //     })
-            // })
 
-            await Promise.all([
-                this.page.waitForNavigation({
-                    waitUntil: 'domcontentloaded'
-                }),
-                this.page.click('button#login'),
-            ]);
+            await this.page.click('button#login');
+            await new Promise(resove => {
+                this.browser.on('targetchanged', () => {
+                    resove()
+                })
+            })
 
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;

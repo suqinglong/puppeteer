@@ -20,7 +20,7 @@ export class Search implements ISearchClass {
                 ignoreDefaultArgs: ["--enable-automation"],
                 args: ['no-sandbox', 'disable-setuid-sandbox'],
                 defaultViewport: {
-                    width: 1200,
+                    width: 1900,
                     height: 1080,
                 }
             });

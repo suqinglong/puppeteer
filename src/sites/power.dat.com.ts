@@ -24,7 +24,9 @@ export class PowerDatComSite extends SearchSite {
             await this.page.type('#username', name);
             await this.page.type('#password', password);
             await this.page.click('button#login');
-            await this.page.waitFor(200)
+            await this.page.waitForNavigation({
+                waitUntil: 'domcontentloaded'
+            })
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {
@@ -37,7 +39,7 @@ export class PowerDatComSite extends SearchSite {
             // new page, goto search url, wait for loaded
             this.page = await this.browser.newPage();
             this.page.setViewport({
-                width: 1200,
+                width: 1900,
                 height: 1080
             })
             this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36')

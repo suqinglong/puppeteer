@@ -51,6 +51,8 @@ export class PowerDatComSite extends SearchSite {
                 throw new SiteError('search', 'PowerDatComSite goto search page')
             });
 
+            await this.page.waitForSelector('.newSearch')
+
             // create new search
             await this.page.click('.newSearch').catch(e => {
                 console.log('PowerDatComSite newSearch click', e)
@@ -152,12 +154,11 @@ export class PowerDatComSite extends SearchSite {
 
 
             console.log('click resultItem')
-            for (let n = 1, len = resultItems.length; n <= len; n++) {
-                await this.page.click(`.resultItem.exactMatch:nth-child(${n + 1})`).catch(e => {
-                    console.log(`.resultItem.exactMatch:nth-child(${n + 1})`, e)
-                    throw new SiteError('search', 'result item click' + (n + 1))
-                });
-            }
+            await this.page.evaluate(() => {
+                document.querySelectorAll('.resultItem.exactMatch .age').forEach(item => {
+                    (item as HTMLElement).click()
+                })
+            })
 
             await this.page.waitForSelector(
                 `.resultItem.exactMatch:nth-child(${resultItems.length + 1}) .widget-numbers`,
@@ -183,15 +184,6 @@ export class PowerDatComSite extends SearchSite {
             await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
                 console.log(res.data);
             });
-
-            // clear search items
-            await this.page.evaluate(() => {
-                document.querySelectorAll('.qa-my-searches-delete').forEach((item, key) => {
-                    if (key > 1) {
-                        (item as HTMLElement).click()
-                    }
-                })
-            })
 
             console.log('PowerDatComSite search end')
         } catch (e) {

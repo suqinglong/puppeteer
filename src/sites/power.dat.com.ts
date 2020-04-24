@@ -57,6 +57,7 @@ export class PowerDatComSite extends SearchSite {
                     throw new SiteError('search', 'PowerDatComSite goto search page');
                 });
 
+            await this.page.click('.carriers .search')
             await this.page.waitForSelector('.newSearch');
 
             // create new search
@@ -173,7 +174,7 @@ export class PowerDatComSite extends SearchSite {
 
             await this.cleanSearch();
             await this.page.click('.carriers .search')
-            await this.page.waitFor(200);
+            await this.page.waitFor(2000);
             const resultSubItems = Array.from(resultItems).slice(0, 10);
             const resultlen = resultSubItems.length
 
@@ -183,7 +184,7 @@ export class PowerDatComSite extends SearchSite {
                         setTimeout(() => {
                             (item as HTMLElement).click()
                             console.log('clicked', item)
-                        }, 100)
+                        }, 500)
                     }
                 })
             }, resultlen)

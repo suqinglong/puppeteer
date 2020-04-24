@@ -172,17 +172,20 @@ export class PowerDatComSite extends SearchSite {
             });
 
             await this.cleanSearch();
+            await this.page.click('.carriers .search')
+            await this.page.waitFor(500);
             const resultSubItems = Array.from(resultItems).slice(0, 10);
             resultSubItems.forEach(async (item) => {
                 console.log('click item expend');
                 await item.click().catch((e) => {
-                    console.log('click error');
+                    console.log('click error', e);
                 });
             });
 
-            await this.page.waitForSelector('.resultItem.exactMatch .widget-numbers', {
+            await this.page.waitForSelector('.resultItem.exactMatch .widget-numbers-num', {
                 timeout: 10000
             });
+            this.page.waitFor(1000);
 
             const resultHtml = await this.page
                 .$eval('.searchResultsTable', (res) => res.outerHTML)

@@ -18,12 +18,15 @@ export class PowerDatComSite extends SearchSite {
             console.log('PowerDatComSite begin prepare', name, password);
             this.page = await this.browser.newPage();
             await this.page.goto(this.loginPage, {
-                timeout: 0
+                timeout: 0,
+                waitUntil: 'load'
             });
             await this.page.type('#username', name);
             await this.page.type('#password', password);
             await this.page.click('button#login');
-            // await this.page.waitForNavigation();
+            await this.page.waitForNavigation({
+                waitUntil: 'domcontentloaded'
+            });
             console.log('PowerDatComSite waitForNavigation ...');
             this.isLogin = true;
         } catch (e) {

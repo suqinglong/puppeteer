@@ -5,6 +5,7 @@ import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
+import { userAgent, viewPort } from '../settings';
 
 export class PowerDatComSite extends SearchSite {
     public siteName = 'DAT';
@@ -17,6 +18,8 @@ export class PowerDatComSite extends SearchSite {
         try {
             console.log('PowerDatComSite begin prepare', name, password);
             this.page = await this.browser.newPage();
+            await this.page.setViewport(viewPort)
+            await this.page.setUserAgent(userAgent)
             await this.page.goto(this.loginPage, {
                 timeout: 0,
                 waitUntil: 'load'
@@ -38,12 +41,8 @@ export class PowerDatComSite extends SearchSite {
         try {
             // new page, goto search url, wait for loaded
             this.page = await this.browser.newPage();
-            this.page.setViewport({
-                width: 1900,
-                height: 1080
-            })
-            this.page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.122 Safari/537.36')
-            console.log('userAgent 2', await this.page.evaluate(() => navigator.userAgent))
+            await this.page.setViewport(viewPort)
+            await this.page.setUserAgent(userAgent)
             await this.page.goto(this.searchPage, {
                 waitUntil: [
                     'load'

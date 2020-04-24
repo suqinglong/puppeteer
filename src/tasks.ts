@@ -72,7 +72,7 @@ export class Tasks implements ITasksClass {
       this.tedis.del(key)
     });
 
-    // if (this.mode === 'develop' || true) {
+    if (this.mode === 'develop') {
       const taskResult = JSON.stringify({
         task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
         site: 'DAT',
@@ -90,6 +90,6 @@ export class Tasks implements ITasksClass {
         time: 1587649219
       });
       this.tedis.lpush('search_tasks', taskResult);
-    // }
+    }
   }
 }

@@ -166,15 +166,13 @@ export class PowerDatComSite extends SearchSite {
                 })
             })
 
-            await this.page.waitForSelector(
-                `.resultItem.exactMatch:nth-child(${resultItems.length + 1}) .widget-numbers`,
-                {
-                    timeout: 10000
+
+            while (true) {
+                this.sleep(100)
+                if ((await this.page.$$('.resultItem.exactMatch .widget-numbers')).length === resultItems.length) {
+                    break;
                 }
-            ).catch(e => {
-                console.log(`.resultItem.exactMatch:nth-child(${resultItems.length + 1}) .widget-numbers`, e)
-                throw new SiteError('search', 'waitForSelector result item detail' + (resultItems.length + 1))
-            });
+            }
 
 
             const resultHtml = await this.page.$eval('.searchResultsTable', (res) => res.outerHTML).catch(e => {

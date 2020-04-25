@@ -8,15 +8,13 @@ import { GetDataFromHtml } from '../tools/power.data.com';
 import { userAgent, viewPort } from '../settings';
 
 export class PowerDatComSite extends SearchSite {
-    public siteName = 'DAT';
-    public isLogin = false;
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
     private page: puppeteer.Page;
 
-    public async prepare(name: string, password: string) {
+    public async login(task: ITASK) {
         try {
-            console.log('PowerDatComSite begin prepare', name, password);
+            console.log('PowerDatComSite begin prepare', task.password);
             this.page = await this.browser.newPage();
             await this.page.setViewport(viewPort);
             await this.page.setUserAgent(userAgent);
@@ -24,8 +22,8 @@ export class PowerDatComSite extends SearchSite {
                 timeout: 0,
                 waitUntil: 'load'
             });
-            await this.page.type('#username', name);
-            await this.page.type('#password', password);
+            await this.page.type('#username', task.email);
+            await this.page.type('#password', task.password);
 
             await Promise.all([
                 new Promise((resove) => {
@@ -35,8 +33,8 @@ export class PowerDatComSite extends SearchSite {
                 }),
                 this.page.click('button#login')
             ]);
+            await this.removeUserFromLogoutList(task);
             console.log('PowerDatComSite waitForNavigation ...');
-            this.isLogin = true;
         } catch (e) {
             console.log('PowerDatComSite prepare error', e);
         }
@@ -57,7 +55,10 @@ export class PowerDatComSite extends SearchSite {
                     throw new SiteError('search', 'PowerDatComSite goto search page');
                 });
 
-            await this.page.click('.carriers .search')
+            await this.page.click('.carriers .search').catch(e => {
+                console.log('click .carriers .search', e)
+                throw new SiteError('logout', 'PowerDatComSite logout')
+            })
             await this.page.waitForSelector('.newSearch');
 
             // create new search
@@ -189,12 +190,6 @@ export class PowerDatComSite extends SearchSite {
                 })
             }, resultlen)
 
-            // for (let i = 0; i < resultlen; i++) {
-            //     await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${i + 2}) .widget-numbers-num`, {
-            //         timeout: 3000
-            //     });
-            // }
-
             await this.page.waitFor(10000);
 
             const resultHtml = await this.page
@@ -215,13 +210,15 @@ export class PowerDatComSite extends SearchSite {
             });
             console.log('PowerDatComSite search end');
         } catch (e) {
-            this.cleanSearch();
+            if (e instanceof SiteError && e.type === 'logout') {
+                await this.addUserToLogoutList(task)
+            }
             console.log('PowerDatComSite **** catched ****', e);
         }
     }
 
     public async closePage() {
-        // await this.page.close();
+        await this.page.close();
     }
 
     private async cleanSearch() {

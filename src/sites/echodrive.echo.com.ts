@@ -6,20 +6,17 @@ import { Trim, ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 
 export class EchodriveEchoCom extends SearchSite {
-    public siteName = 'Echo Driver';
-    public isLogin = false;
-
     private loginPage = 'https://echodrive.echo.com/v2/login';
     private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
     private page: puppeteer.Page;
 
-    public async prepare(name: string, password: string) {
+    public async login(task: ITASK) {
         try {
             console.log('EchodriveEchoCom  begin prepare');
             this.page = await this.browser.newPage();
             await this.page.goto(this.loginPage);
-            await this.page.type('#email-input', name);
-            await this.page.type('#password-input', password);
+            await this.page.type('#email-input', task.email);
+            await this.page.type('#password-input', task.password);
             await Promise.all([
                 new Promise((resove) => {
                     this.browser.on('targetchanged', () => {
@@ -28,8 +25,9 @@ export class EchodriveEchoCom extends SearchSite {
                 }),
                 this.page.click('#loading-button-component')
             ]);
-            this.isLogin = true;
+            await this.removeUserFromLogoutList(task);
         } catch (e) {
+            await this.addUserToLogoutList(task);
             console.log('EchodriveEchoCom  prepare error', e);
         }
     }

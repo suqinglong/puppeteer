@@ -4,7 +4,7 @@ import { Tedis } from 'tedis';
 import { getMode } from './tools/index';
 
 export class Tasks implements ITasksClass {
-    private tedis: Tedis = new SingletonTedis().getInstance();
+    private tedis: Tedis = SingletonTedis.getInstance();
     private mode: IMode = getMode();
     private search = new Search();
 

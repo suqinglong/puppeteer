@@ -20,8 +20,14 @@ export class EchodriveEchoCom extends SearchSite {
             await this.page.goto(this.loginPage);
             await this.page.type('#email-input', name);
             await this.page.type('#password-input', password);
-            await this.page.click('#loading-button-component');
-            await this.page.waitForNavigation();
+            await Promise.all([
+                new Promise((resove) => {
+                    this.browser.on('targetchanged', () => {
+                        resove();
+                    });
+                }),
+                this.page.click('#loading-button-component')
+            ]);
             this.isLogin = true;
         } catch (e) {
             console.log('EchodriveEchoCom  prepare error', e);

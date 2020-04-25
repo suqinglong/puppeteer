@@ -20,7 +20,7 @@ export function ModifyPostData(taskId: string, dataArr: Array<any>): Array<IResu
     return dataArr.map((data) => {
         let extroData: any = {};
         Object.keys(data).forEach((key) => {
-            if (keys.indexOf(key) > -1) {
+            if (keys.indexOf(key) === -1) {
                 extroData[key] = data[key];
             }
         });

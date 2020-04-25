@@ -76,22 +76,41 @@ export class Tasks implements ITasksClass {
         });
 
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify({
-                task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
-                site: 'DAT',
+            const taskResult = JSON.stringify(
+            //     {
+            //     task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
+            //     site: 'DAT',
+            //     user_id: '3',
+            //     email: 'haulistix',
+            //     password: 'Shostakovich5',
+            //     criteria: {
+            //         origin: 'New York, NY',
+            //         origin_radius: '100',
+            //         destination: '',
+            //         destination_radius: '100',
+            //         pick_up_date: '2020-04-24',
+            //         equipment: 'Van'
+            //     },
+            //     time: 1587649219
+            // }
+            {
+                task_id: 'f1f83186dac71994df2309d5ece61cd6',
+                site: 'Echo Driver',
                 user_id: '3',
-                email: 'haulistix',
-                password: 'Shostakovich5',
+                email: 'primelinkexpress@live.com',
+                password: 'Gary1978',
                 criteria: {
-                    origin: 'New York, NY',
-                    origin_radius: '100',
-                    destination: '',
-                    destination_radius: '100',
-                    pick_up_date: '2020-04-24',
-                    equipment: 'Van'
+                  origin: 'New York, NY',
+                  origin_radius: '100',
+                  destination: '',
+                  destination_radius: '100',
+                  pick_up_date: '2020-04-24',
+                  equipment: 'Van'
                 },
-                time: 1587649219
-            });
+                time: 1587728419
+              }
+              
+            );
             this.tedis.lpush('search_tasks', taskResult);
         }
     }

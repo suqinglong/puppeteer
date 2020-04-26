@@ -5,6 +5,17 @@ export function getMode(): IMode {
     return args.mode;
 }
 
+export function useDev(): 'yes' | null {
+    let args = minimist(process.argv.slice(2));
+    return args.usedev
+}
+
+
+export function useScreenshot(): 'yes' | null {
+    let args = minimist(process.argv.slice(2));
+    return args.useScreenshot
+}
+
 export function ModifyPostData(taskId: string, dataArr: Array<any>): Array<IResultData> {
     const keys = [
         'date',

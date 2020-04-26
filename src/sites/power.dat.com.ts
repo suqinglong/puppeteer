@@ -1,5 +1,4 @@
 import cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
 import { SearchSite } from './search.site';
 import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
@@ -8,9 +7,9 @@ import { GetDataFromHtml } from '../tools/power.data.com';
 import { userAgent, viewPort } from '../settings';
 
 export class PowerDatComSite extends SearchSite {
+    public static siteName = 'DAT'
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
-    private page: puppeteer.Page;
 
     public async login(task: ITASK) {
         try {
@@ -27,7 +26,11 @@ export class PowerDatComSite extends SearchSite {
 
             await Promise.all([
                 new Promise((resove) => {
+                    let st = setTimeout(() => {
+                        resove()
+                    }, 3000)
                     this.browser.on('targetchanged', () => {
+                        clearTimeout(st)
                         resove();
                     });
                 }),
@@ -36,6 +39,7 @@ export class PowerDatComSite extends SearchSite {
             await this.removeUserFromLogoutList(task);
             console.log('PowerDatComSite waitForNavigation ...');
         } catch (e) {
+            await this.addUserToLogoutList(task);
             console.log('PowerDatComSite prepare error', e);
         }
     }
@@ -212,6 +216,7 @@ export class PowerDatComSite extends SearchSite {
         } catch (e) {
             if (e instanceof SiteError && e.type === 'logout') {
                 await this.addUserToLogoutList(task)
+                await this.notifyLoginFaild(task)
             }
             console.log('PowerDatComSite **** catched ****', e);
         }

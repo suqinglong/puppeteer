@@ -1,14 +1,14 @@
 import { SearchSite } from './search.site';
-import puppeteer from 'puppeteer';
+import { SiteError } from '../error';
 import dateformat from 'dateformat';
 import cheerio from 'cheerio';
 import { Trim, ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 
 export class EchodriveEchoCom extends SearchSite {
+    public static siteName = 'Echo Driver'
     private loginPage = 'https://echodrive.echo.com/v2/login';
     private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
-    private page: puppeteer.Page;
 
     public async login(task: ITASK) {
         try {
@@ -28,6 +28,7 @@ export class EchodriveEchoCom extends SearchSite {
             await this.removeUserFromLogoutList(task);
         } catch (e) {
             await this.addUserToLogoutList(task);
+            await this.notifyLoginFaild(task);
             console.log('EchodriveEchoCom  prepare error', e);
         }
     }
@@ -60,6 +61,10 @@ export class EchodriveEchoCom extends SearchSite {
                 console.log('EchodriveEchoCom', res.data);
             });
         } catch (e) {
+            if (e instanceof SiteError && e.type === 'logout') {
+                await this.addUserToLogoutList(task)
+                await this.notifyLoginFaild(task)
+            }
             console.log('EchodriveEchoCom **** catched ****', e);
         }
     }

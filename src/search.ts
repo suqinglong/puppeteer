@@ -1,31 +1,25 @@
 import puppeteer from 'puppeteer';
-import { PowerDatComSite } from './sites/power.dat.com';
-import { EchodriveEchoCom } from './sites/echodrive.echo.com';
 import { Settings } from './settings';
-import { getMode } from './tools/index';
+import { getMode, useDev } from './tools/index';
 import { SingletonTedis } from './tools/tedis'
 import { SearchSite } from './sites/search.site';
-
-const sitesMap = {
-    'Echo Driver': EchodriveEchoCom,
-    DAT: PowerDatComSite
-};
+import { SiteManager } from './sites/SiteManager'
 
 export class Search implements ISearchClass {
     private mode: IMode = getMode();
-    private settings = this.mode === 'develop' ? Settings : {};
+    private settings = this.mode === 'develop' ? (useDev() === 'yes' ? Settings : {}) : {};
 
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
             ...this.settings,
             ignoreDefaultArgs: ['--enable-automation'],
-            args: ['no-sandbox', 'disable-setuid-sandbox'],
+            // args: ['no-sandbox', 'disable-setuid-sandbox'],
             defaultViewport: {
                 width: 1920,
                 height: 1080
             }
         });
-        const SiteClass = sitesMap[task.site];
+        const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
         await site.login(task); // new page and login
         await site.closePage();
@@ -33,9 +27,9 @@ export class Search implements ISearchClass {
     }
 
     public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
-        console.log('Search browserWSEndpoint', browserWSEndpoint);
+        console.log('Search doTask');
         const browser = await puppeteer.connect({ browserWSEndpoint });
-        const SiteClass = sitesMap[task.site];
+        const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
         if (await SingletonTedis.isUserLogoutSite(task.user_id, task.site)) {
             await site.login(task)

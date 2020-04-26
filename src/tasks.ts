@@ -2,6 +2,7 @@ import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
 import { Tedis } from 'tedis';
 import { getMode } from './tools/index';
+import { TaskData } from './demoTaskData'
 
 export class Tasks implements ITasksClass {
     private tedis: Tedis = SingletonTedis.getInstance();
@@ -11,24 +12,24 @@ export class Tasks implements ITasksClass {
     public async getTask() {
         await this.developPrepare();
         while (true) {
-            const taskResult = (await this.tedis.blpop(0, 'search_tasks'))[1];
+            const taskResult = await SingletonTedis.getTask()
             if (!taskResult) continue;
             const task: ITASK = JSON.parse(taskResult) as ITASK;
             console.log('task', task);
-            let browserWSEndpoint = await this.getBrowserKey(task.user_id);
+            let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
             console.log('have browserWSEndpoint', browserWSEndpoint);
             // if no browser then create
             if (!browserWSEndpoint) {
                 console.log('no browserWSEndpoint');
-                if (this.getCreateBrowserLock(task.user_id)) {
+                if (await SingletonTedis.getCreateBrowserLock(task.user_id)) {
                     browserWSEndpoint = await this.search.createBrowser(task);
                     console.log('createBrowser end');
-                    this.setBrowserKey(task.user_id, browserWSEndpoint);
-                    this.deleteBrowserLock(task.user_id);
+                    SingletonTedis.setBrowserKey(task.user_id, browserWSEndpoint);
+                    await SingletonTedis.deleteBrowserLock(task.user_id);
                 } else {
                     console.log('not getCreateBrowserLock');
                     while (true) {
-                        browserWSEndpoint = await this.getBrowserKey(task.user_id);
+                        browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
                         if (browserWSEndpoint) {
                             break;
                         }
@@ -48,70 +49,14 @@ export class Tasks implements ITasksClass {
         });
     }
 
-    private setBrowserKey(userId: string, broserKey: string) {
-        this.tedis.set(`user_id:${userId}:browser_ws_endpoint`, broserKey);
-    }
-
-    private async getBrowserKey(userId: string): Promise<string | number> {
-        const key = await this.tedis.get(`user_id:${userId}:browser_ws_endpoint`);
-        return key;
-    }
-
-    private async getCreateBrowserLock(userId: string): Promise<boolean> {
-        return (await this.tedis.setnx(`user_id:${userId}:browser_ws_create`, '1')) === 1;
-    }
-
-    private async deleteBrowserLock(userId: string) {
-        await this.tedis.del(`user_id:${userId}:browser_ws_create`);
-    }
-
     private async developPrepare() {
-        const keys = [
-            ...(await this.tedis.keys('*:browser_ws_endpoint')),
-            ...(await this.tedis.keys('*:browser_ws_create'))
-        ];
-        console.log('keys', keys);
-        keys.forEach((key) => {
-            this.tedis.del(key);
-        });
-
+        await SingletonTedis.deleteKeys()
         if (this.mode === 'develop') {
             const taskResult = JSON.stringify(
-            //     {
-            //     task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
-            //     site: 'DAT',
-            //     user_id: '3',
-            //     email: 'haulistix',
-            //     password: 'Shostakovich5',
-            //     criteria: {
-            //         origin: 'New York, NY',
-            //         origin_radius: '100',
-            //         destination: '',
-            //         destination_radius: '100',
-            //         pick_up_date: '2020-04-24',
-            //         equipment: 'Van'
-            //     },
-            //     time: 1587649219
-            // }
-            {
-                task_id: 'f1f83186dac71994df2309d5ece61cd6',
-                site: 'Echo Driver',
-                user_id: '3',
-                email: 'primelinkexpress@live.com',
-                password: 'Gary1978',
-                criteria: {
-                  origin: 'New York, NY',
-                  origin_radius: '100',
-                  destination: '',
-                  destination_radius: '100',
-                  pick_up_date: '2020-04-24',
-                  equipment: 'Van'
-                },
-                time: 1587728419
-              }
-              
+                TaskData["Navisphere"]
             );
-            this.tedis.lpush('search_tasks', taskResult);
+            await SingletonTedis.pushTask(taskResult)
+            console.log('push task', taskResult)
         }
     }
 }

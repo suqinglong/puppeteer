@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "build": "rm -rf ./dist/* && tsc",
-    "test": "yarn build && node ./dist/index.js --mode=develop",
+    "test": "yarn build && node ./dist/index.js --mode=develop --usedev=no --useScreenshot=yes",
+    "test2": "yarn build && node ./dist/index.js --mode=develop",
     "product": "yarn build && node ./dist/index.js",
     "deploy": "yarn build && rsync -auvhp --delete --exclude=node_modules ./* aws-redot-test:~/puppeteer",
     "lint": "eslint src --ext .ts && prettier --write -l \"./src/**/*\"",

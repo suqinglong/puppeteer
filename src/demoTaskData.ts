@@ -59,11 +59,11 @@ export const TaskData = {
     email: 'brentprimelink',
     password: 'Annaleigh1',
     criteria: {
-      origin: 'New York, NY',
-      origin_radius: '100',
-      destination: 'New York, NY',
-      destination_radius: '100',
-      pick_up_date: '2020-04-24,2020-04-30',
+      origin: 'Atwater, CA',
+      origin_radius: '250',
+      destination: 'Sumner, WA',
+      destination_radius: '250',
+      pick_up_date: '2020-04-27,2020-04-28',
       equipment: 'Van'
     },
     time: time

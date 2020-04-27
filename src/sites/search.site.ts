@@ -25,6 +25,14 @@ export abstract class SearchSite implements ISite {
         }
     }
 
+    protected async pageScreenshot(page:puppeteer.Page, name: string) {
+        if (this.isUseScreenshot) {
+            await page.screenshot({
+                path: `/home/ubuntu/screenshot/${name}.png`
+            })
+        }
+    }
+
     protected async addUserToLogoutList(task: ITASK) {
         await SingletonTedis.addUserToLogoutList(task.user_id, task.site)
         await AddNotification(task.user_id, `${task.site} logout`)

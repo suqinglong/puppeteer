@@ -16,7 +16,7 @@ export function useScreenshot(): 'yes' | null {
     return args.useScreenshot
 }
 
-export function ModifyPostData(taskId: string, dataArr: Array<any>): Array<IResultData> {
+export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultData> {
     const keys = [
         'date',
         'source',
@@ -37,9 +37,9 @@ export function ModifyPostData(taskId: string, dataArr: Array<any>): Array<IResu
         });
 
         return {
-            task_id: taskId,
+            task_id: task.task_id,
             date: data.date,
-            source: 'DAT',
+            source: task.site,
             equipment: data.equipment,
             origin: data.origin,
             origin_radius: data.origin_radius,

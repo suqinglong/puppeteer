@@ -47,7 +47,7 @@ export class WWWJbhuntCom extends SearchSite {
         const dhdInput = document.querySelector('.header-container input[formcontrolname="deadheadDestination"]') as HTMLInputElement
         dhdInput.value = criteria.destination_radius
 
-      }, task.criteria as { [key: string]: string })
+      }, task.criteria)
 
       await this.page.click('.search-button')
 

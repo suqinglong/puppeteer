@@ -209,7 +209,7 @@ export class PowerDatComSite extends SearchSite {
                 });
 
             console.log('PowerDatComSite post data:', items);
-            await PostSearchData(ModifyPostData(task.task_id, items)).then((res: any) => {
+            await PostSearchData(ModifyPostData(task, items)).then((res: any) => {
                 console.log(res.data);
             });
             console.log('PowerDatComSite search end');

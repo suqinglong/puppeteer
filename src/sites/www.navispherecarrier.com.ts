@@ -41,20 +41,23 @@ export class NavispherecarrierCom extends SearchSite {
       })
 
       await Promise.all([
-        new Promise((resove) => {
-          let st = setTimeout(() => {
-            resove()
-          }, 3000)
-          this.browser.on('targetchanged', () => {
-            clearTimeout(st)
-            resove();
-          });
+        this.page.waitForNavigation({
+          timeout: 10000,
+          waitUntil: 'load'
         }),
-        this.page.click('#btnLogin').catch(e => {
-          this.log.log('click btnLogin', e)
-        })
-      ]);
+        this.page.click('#btnLogin')
+      ]).then(res => {
+        this.log.log('login in success')
+      }).catch(e => {
+        this.log.log('login in error')
+        throw new SiteError('logout', 'login in error')
+      })
+
+      await this.screenshot('endlogin')
+      await this.page.waitFor(1000)
+
       this.log.log('login success')
+      await this.removeUserFromLogoutList(task);
     } catch (e) {
       await this.screenshot(NavispherecarrierCom.siteName + '.loginerror')
       await this.addUserToLogoutList(task);
@@ -68,79 +71,155 @@ export class NavispherecarrierCom extends SearchSite {
     if (task.criteria.origin.indexOf(',') === -1 || task.criteria.destination.indexOf(',') === -1) {
       return
     }
-    // origin: 'New York, NY',
-    const [originCity, originStateProvinceCode] = task.criteria.origin.split(',').map(item => item.trim())
-    const [destinationCity, destinationStateProvinceCode] = task.criteria.destination.split(',').map(item => item.trim())
-    const [pickupStart, pickupEnd] = task.criteria.pick_up_date.split(',').map(item => dateformat(item, "yyyy-mm-dd'T'HH:MM:ss"))
-    const search = {
-      originCountryCode: 'US',
-      originStateProvinceCode,
-      originCity,
-      originRadiusMiles: task.criteria.origin_radius,
-      destinationCountryCode: 'US',
-      // destinationStateProvinceCode,
-      // destinationCity,
-      destinationRadiusMiles: task.criteria.destination_radius,
-      pickupStart,
-      pickupEnd,
-      mode: task.criteria.equipment.substr(0, 1).toUpperCase()
+    try {
+      // origin: 'New York, NY',
+      const [originCity, originStateProvinceCode] = task.criteria.origin.split(',').map(item => item.trim())
+      const [destinationCity, destinationStateProvinceCode] = task.criteria.destination.split(',').map(item => item.trim())
+      const pickupStart = dateformat(task.criteria.pick_up_date, "yyyy-mm-dd'T'HH:MM:ss")
+      const search = {
+        originCountryCode: 'US',
+        originStateProvinceCode,
+        originCity,
+        originRadiusMiles: task.criteria.origin_radius,
+        destinationCountryCode: 'US',
+        destinationStateProvinceCode,
+        destinationCity,
+        destinationRadiusMiles: task.criteria.destination_radius,
+        pickupStart,
+        // pickupEnd,
+        mode: task.criteria.equipment.substr(0, 1).toUpperCase()
+      }
+
+      let searchQuery = ''
+      Object.keys(search).forEach(key => {
+        searchQuery += `&${key}=${encodeURIComponent(search[key])}`
+      })
+      const searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1)
+      this.log.log('searchPage', searchPage)
+
+      this.page = await this.browser.newPage();
+      await this.page.setViewport(viewPort);
+      await this.page.setUserAgent(userAgent);
+      await this.page.goto(searchPage, {
+        timeout: waitingTimeout(),
+        waitUntil: 'load'
+      });
+
+      await this.page.waitForSelector('.loading-indicator', {
+        timeout: 10000,
+        hidden: true
+      }).catch(e => {
+        this.log.log('wait loading', e)
+        throw new SiteError('logout', 'wait loading')
+      })
+
+      await this.page.waitForSelector('.data-table', {
+        timeout: 20000
+      }).catch(e => {
+        this.log.log('wait for data-table')
+        throw new SiteError('noData', 'no data')
+      })
+
+      const resultHtml = await this.page.$eval(
+        '.data-table',
+        (res) => res.outerHTML
+      );
+      const $ = cheerio.load(resultHtml);
+      const resultData = this.getDataFromHtml($, task.task_id)
+
+      await Promise.all(
+        resultData.map(async item => {
+          const detailData = await this.goToDetailPage(item['loadNumber'])
+          const { pickUpData, dropOffData, requirementData, contactData } = detailData
+          item['pickUpData'] = pickUpData
+          item['dropOffData'] = dropOffData
+          item['requirementData'] = requirementData
+          item['contactData'] = contactData
+        })
+      )
+
+      this.log.log('resultData', ModifyPostData(task, resultData))
+      await PostSearchData(ModifyPostData(task, resultData))
+    } catch (e) {
+      if (e instanceof SiteError && e.type === 'logout') {
+        await this.addUserToLogoutList(task)
+        await this.notifyLoginFaild(task)
+      }
+      this.screenshot('searchError')
+      this.log.log('search catch *****', e)
     }
+  }
 
-    let searchQuery = ''
-    Object.keys(search).forEach(key => {
-      searchQuery += `&${key}=${encodeURIComponent(search[key])}`
-    })
-    const searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1)
-    this.log.log('searchPage', searchPage)
-
-    this.page = await this.browser.newPage();
-    await this.page.setViewport(viewPort);
-    await this.page.setUserAgent(userAgent);
-    await this.page.goto(searchPage, {
-      timeout: waitingTimeout(),
-      waitUntil: 'load'
-    });
-
-    await this.page.waitForSelector('.loading-indicator', {
+  private async goToDetailPage(id: string): Promise<any> {
+    console.log('goToDetailPage', id)
+    const page = await this.browser.newPage()
+    await page.setViewport(viewPort);
+    await page.setUserAgent(userAgent);
+    await page.goto(`https://www.navispherecarrier.com/find-load-details/${id}`)
+    await page.waitForSelector('.loading-indicator', {
       timeout: 10000,
       hidden: true
+    }).catch(e => {
+      this.log.log('goToDetailPage wait loading', e)
+      this.pageScreenshot(page, `goToDetailPage${id}`)
+      throw new SiteError('search', 'goToDetailPage wait loading')
+    })
+    const $ = cheerio.load(await page.content())
+    return this.getDetailDataFromHtml($)
+  }
+
+  private getDetailDataFromHtml($: CheerioStatic): any {
+    let pickUpData = {}
+    let dropOffData = {}
+    $('.data-table tbody tr').each((_index, tr) => {
+      let resultTableTr = []
+      $(tr).find('td').each((_index, td) => {
+        resultTableTr.push($(td).text())
+      })
+      const [pickOrDrop, dateTime, location, driverWork, weight, distance] = resultTableTr
+      if (pickOrDrop.indexOf('Pickup') > -1) {
+        pickUpData = {
+          dateTime, location, driverWork, weight, distance
+        }
+      } else {
+        dropOffData = {
+          dateTime, location, driverWork, weight, distance
+        }
+      }
     })
 
-    // await this.page.waitForSelector('select#page-size', {
-    //   timeout: 20000
-    // })
-
-    await this.screenshot('search')
-    await this.page.evaluate(() => {
-      (document.querySelector('select#page-size') as HTMLSelectElement).value = '100'
-    })
-    
-    await this.page.click('.refresh-button')
-    await this.screenshot('search1')
-
-    await this.page.waitForSelector('.data-table', {
-      timeout: 10000
+    // requirements data
+    const requirementData = {}
+    $('.load-requirements .requirement').each((_index, item) => {
+      const key = $(item).find('.requirement-label').text()
+      const value = $(item).find('.value').text()
+      requirementData[key] = value
     })
 
-    const resultHtml = await this.page.$eval(
-      '.data-table',
-      (res) => res.outerHTML
-    );
-    const $ = cheerio.load(resultHtml);
-    this.getDataFromHtml($, task.task_id)
+    const contactData = []
+    $('.contact-rep-section .col-sm-6').each((_index, item) => {
+      const name = $(item).find('h5').text()
+      const phone = $(item).find('#phone-rep-btn').text()
+      const email = $(item).find('#email-rep-btn').text()
+      contactData.push({
+        name, phone, email
+      })
+    })
+
+    return { pickUpData, dropOffData, requirementData, contactData }
   }
 
   private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
     const result: any = [];
-    $('tr').each((_index, item) => {
+    $('tbody tr').each((_index, item) => {
       const resultItem = []
       $(item).find('td').each((_tdIndex, tdItem) => {
         resultItem.push($(tdItem).text())
       })
-      const [loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement] = resultItem
-      result.push({ loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement })
+      let [loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement] = resultItem
+      loadNumber = (loadNumber as String).match(/\d+/)[0]
+      result.push({ loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement })
     })
-    this.log.log('result', result)
     return result
   }
 }

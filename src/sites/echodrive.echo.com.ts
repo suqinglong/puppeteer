@@ -57,7 +57,7 @@ export class EchodriveEchoCom extends SearchSite {
                 (res) => res.innerHTML
             );
             const $ = cheerio.load(resultHtml);
-            PostSearchData(this.getDataFromHtml($, task.task_id)).then((res: any) => {
+            PostSearchData(this.getDataFromHtml($, task)).then((res: any) => {
                 console.log('EchodriveEchoCom', res.data);
             });
         } catch (e) {
@@ -73,7 +73,7 @@ export class EchodriveEchoCom extends SearchSite {
         await this.page.close();
     }
 
-    private getDataFromHtml($: CheerioStatic, taskID: string): Array<IResultData> {
+    private getDataFromHtml($: CheerioStatic, task: ITASK): Array<IResultData> {
         const result: any = {};
 
         const dataItemClass = [
@@ -124,6 +124,6 @@ export class EchodriveEchoCom extends SearchSite {
             records.push({ ...resultItemRows[i], ...resultItemDetails[i] });
         }
 
-        return ModifyPostData(taskID, records);
+        return ModifyPostData(task, records);
     }
 }

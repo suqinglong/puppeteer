@@ -98,48 +98,46 @@ export class NavispherecarrierCom extends SearchSite {
     await this.page.setUserAgent(userAgent);
     await this.page.goto(searchPage, {
       timeout: waitingTimeout(),
-      waitUntil: 'domcontentloaded'
+      waitUntil: 'load'
     });
-    this.log.log('search page loaded')
 
-    await this.screenshot('search')
-    await this.page.waitForSelector('select#page-size', {
-      timeout: 20000
+    await this.page.waitForSelector('.loading-indicator', {
+      timeout: 10000,
+      hidden: true
     })
 
-    await this.screenshot('search5')
-
-    // await this.page.select('select#page-size', '100')
-    // await this.page.click('.refresh-button')
-    // await this.screenshot('search1')
-    // await this.page.waitForSelector('.loading-indicator', {
-    //   timeout: 10000,
-    //   hidden: true
-    // })
-    // await this.screenshot('search2')
-
-    // await this.page.waitForSelector('.data-table', {
-    //   timeout: 10000
+    // await this.page.waitForSelector('select#page-size', {
+    //   timeout: 20000
     // })
 
-    // const resultHtml = await this.page.$eval(
-    //   '.data-table',
-    //   (res) => res.innerHTML
-    // );
-    // const $ = cheerio.load(resultHtml);
+    await this.screenshot('search')
+    await this.page.evaluate(() => {
+      (document.querySelector('select#page-size') as HTMLSelectElement).value = '100'
+    })
+    
+    await this.page.click('.refresh-button')
+    await this.screenshot('search1')
 
-    // this.getDataFromHtml($, task.task_id)
+    await this.page.waitForSelector('.data-table', {
+      timeout: 10000
+    })
+
+    const resultHtml = await this.page.$eval(
+      '.data-table',
+      (res) => res.outerHTML
+    );
+    const $ = cheerio.load(resultHtml);
+    this.getDataFromHtml($, task.task_id)
   }
 
   private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
-    console.log($.html())
-    const result: any = {};
+    const result: any = [];
     $('tr').each((_index, item) => {
-      const result = []
+      const resultItem = []
       $(item).find('td').each((_tdIndex, tdItem) => {
-        result.push($(tdItem).text())
+        resultItem.push($(tdItem).text())
       })
-      const [loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement] = result
+      const [loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement] = resultItem
       result.push({ loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement })
     })
     this.log.log('result', result)

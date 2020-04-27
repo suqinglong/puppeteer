@@ -97,23 +97,52 @@ export class NavispherecarrierCom extends SearchSite {
     await this.page.setViewport(viewPort);
     await this.page.setUserAgent(userAgent);
     await this.page.goto(searchPage, {
-       timeout: waitingTimeout(),
-       waitUntil: 'domcontentloaded'
-      });
+      timeout: waitingTimeout(),
+      waitUntil: 'domcontentloaded'
+    });
     this.log.log('search page loaded')
 
     await this.screenshot('search')
     await this.page.waitForSelector('select#page-size', {
-      timeout: 10000
+      timeout: 20000
     })
 
-    await this.page.select('select#page-size', '100')
-    await this.page.click('.refresh-button')
-    await this.screenshot('search1')
-    await this.page.waitForSelector('.loading-indicator', {
-      timeout: 10000,
-      hidden: true
+    await this.screenshot('search5')
+
+    // await this.page.select('select#page-size', '100')
+    // await this.page.click('.refresh-button')
+    // await this.screenshot('search1')
+    // await this.page.waitForSelector('.loading-indicator', {
+    //   timeout: 10000,
+    //   hidden: true
+    // })
+    // await this.screenshot('search2')
+
+    // await this.page.waitForSelector('.data-table', {
+    //   timeout: 10000
+    // })
+
+    // const resultHtml = await this.page.$eval(
+    //   '.data-table',
+    //   (res) => res.innerHTML
+    // );
+    // const $ = cheerio.load(resultHtml);
+
+    // this.getDataFromHtml($, task.task_id)
+  }
+
+  private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
+    console.log($.html())
+    const result: any = {};
+    $('tr').each((_index, item) => {
+      const result = []
+      $(item).find('td').each((_tdIndex, tdItem) => {
+        result.push($(tdItem).text())
+      })
+      const [loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement] = result
+      result.push({ loadNumber, orgin, pickUp, originDeadhead, destination, dropOff, weight, distance, equipment, endorsement })
     })
-    await this.screenshot('search2')
+    this.log.log('result', result)
+    return result
   }
 }

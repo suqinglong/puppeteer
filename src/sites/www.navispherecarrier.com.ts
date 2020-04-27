@@ -49,7 +49,7 @@ export class NavispherecarrierCom extends SearchSite {
       ]).then(res => {
         this.log.log('login in success')
       }).catch(e => {
-        this.log.log('login in error')
+        this.log.log('login in error', e)
         throw new SiteError('logout', 'login in error')
       })
 

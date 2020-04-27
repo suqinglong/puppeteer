@@ -56,7 +56,6 @@ export class Tasks implements ITasksClass {
                 TaskData["Navisphere"]
             );
             await SingletonTedis.pushTask(taskResult)
-            console.log('push task', taskResult)
         }
     }
 }

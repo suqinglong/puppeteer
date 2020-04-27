@@ -14,6 +14,15 @@ interface ITASK {
     };
 }
 
+interface IQuery {
+    origin: string;
+    destination: string;
+    origin_radius: string;
+    destination_radius: string;
+    pick_up_date: string;
+    equipment: 'Van' | 'Reef';
+}
+
 interface IResultData {
     task_id: string;
     date: string;

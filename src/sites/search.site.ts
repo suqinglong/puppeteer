@@ -3,7 +3,7 @@ import { SingletonTedis } from '../tools/tedis';
 import { useScreenshot } from '../tools/index';
 import { AddNotification, InactiveLoadSource } from '../api';
 export abstract class SearchSite implements ISite {
-    
+
     public static siteName: string;
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
@@ -14,13 +14,13 @@ export abstract class SearchSite implements ISite {
     }
 
     public async closePage() {
-        this.page && this.page.close()
+        // this.page && this.page.close()
     }
 
-    protected async screenshot() {
+    protected async screenshot(name: string) {
         if (this.isUseScreenshot) {
-           await this.page.screenshot({
-                path: ' /home/ubuntu/screenshot'
+            await this.page.screenshot({
+                path: `/home/ubuntu/screenshot/${name}.png`
             })
         }
     }

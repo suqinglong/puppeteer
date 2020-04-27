@@ -27,7 +27,7 @@ export const TaskData = {
     criteria: {
       origin: 'New York, NY',
       origin_radius: '100',
-      destination: '',
+      destination: 'New York, NY',
       destination_radius: '100',
       pick_up_date: '2020-04-24',
       equipment: 'Van'
@@ -44,7 +44,7 @@ export const TaskData = {
     criteria: {
       origin: 'New York, NY',
       origin_radius: '100',
-      destination: '',
+      destination: 'New York, NY',
       destination_radius: '100',
       pick_up_date: '2020-04-24',
       equipment: 'Van'
@@ -61,9 +61,9 @@ export const TaskData = {
     criteria: {
       origin: 'New York, NY',
       origin_radius: '100',
-      destination: '',
+      destination: 'New York, NY',
       destination_radius: '100',
-      pick_up_date: '2020-04-24',
+      pick_up_date: '2020-04-24,2020-04-30',
       equipment: 'Van'
     },
     time: time

@@ -34,7 +34,7 @@ export class WWWJbhuntCom extends SearchSite {
       await this.page.waitFor(500);
       await this.page.click('[role="option"][aria-label="Dry Van"]');
 
-      await this.page.evaluate((criteria) => {
+      await this.page.evaluate((criteria: IQuery) => {
         const orignInput = document.querySelector('.header-container [formcontrolname=origin] input') as HTMLInputElement
         orignInput.value = criteria.origin
 
@@ -47,7 +47,7 @@ export class WWWJbhuntCom extends SearchSite {
         const dhdInput = document.querySelector('.header-container input[formcontrolname="deadheadDestination"]') as HTMLInputElement
         dhdInput.value = criteria.destination_radius
 
-      }, task.criteria)
+      }, task.criteria as { [key: string]: string })
 
       await this.page.click('.search-button')
 

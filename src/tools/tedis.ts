@@ -74,6 +74,7 @@ export class SingletonTedis {
     public static async pushTask(taskResult:string) {
         const r = this.getInstance()
         await r.lpush('search_tasks', taskResult);
+        console.log('push task', taskResult)
     }
 
     private static getUserInfoKey(userId: string, siteName: string): string {

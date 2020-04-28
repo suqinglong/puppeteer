@@ -34,19 +34,19 @@ export class NavispherecarrierCom extends SearchSite {
         this.log.log('type Username', e)
       })
 
-      await page.waitForSelector('#Password');
+      await this.page.waitForSelector('#Password');
       await this.page.type('#Password', task.password).catch(e => {
         this.log.log('type Password', e)
       })
 
-      await page.waitForSelector('#btnLogin');
+      await this.page.waitForSelector('#btnLogin');
       // page.click('#btnLogin') doesn't works
-      await page.evaluate(() => {
+      await this.page.evaluate(() => {
         let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
         btn.click();
       });
 
-      await page.waitForSelector('div.find-loads', {timeout: 10000});
+      await this.page.waitForSelector('div.find-loads', {timeout: 10000});
       console.log('login succeed.');
 
       await this.screenshot('endlogin')

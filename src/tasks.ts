@@ -15,6 +15,9 @@ export class Tasks implements ITasksClass {
             const taskResult = await SingletonTedis.getTask()
             if (!taskResult) continue;
             const task: ITASK = JSON.parse(taskResult) as ITASK;
+            if ( Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
+                continue;
+            }
             console.log('task', task);
             let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
             console.log('have browserWSEndpoint', browserWSEndpoint);
@@ -55,7 +58,6 @@ export class Tasks implements ITasksClass {
             const taskResult = JSON.stringify(
                 TaskData['DAT']
             );
-            await SingletonTedis.pushTask(taskResult)
             await SingletonTedis.pushTask(taskResult)
         }
     }

@@ -29,7 +29,7 @@ export const TaskData = {
       origin_radius: '100',
       destination: 'New York, NY',
       destination_radius: '100',
-      pick_up_date: '2020-04-24',
+      pick_up_date: '2020-04-28',
       equipment: 'Van'
     },
     time: time

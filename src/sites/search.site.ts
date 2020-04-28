@@ -2,13 +2,15 @@ import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
 import { useScreenshot } from '../tools/index';
 import { AddNotification, InactiveLoadSource } from '../api';
+import { SiteError } from '../error';
+
 export abstract class SearchSite implements ISite {
 
     public static siteName: string;
     protected siteName = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
-    protected isUseScreenshot = useScreenshot() === 'yes'
+    protected isUseScreenshot = true // useScreenshot() === 'yes'
 
     public constructor(browser: puppeteer.Browser) {
         this.browser = browser;
@@ -18,10 +20,16 @@ export abstract class SearchSite implements ISite {
         // this.page && this.page.close()
     }
 
+    protected generateError(type: IErrorType, msg: string) {
+        return new SiteError(type, `${this.siteName}: ${msg}`)
+    }
+
     protected async screenshot(name: string) {
         if (this.isUseScreenshot) {
+            console.log(`screenshot: ${this.siteName}-${name}.png`)
             await this.page.screenshot({
-                path: `/home/ubuntu/screenshot/${this.siteName}-${name}.png`
+                path: `/home/ubuntu/screenshot/${this.siteName}-${name}.png`,
+                fullPage: true
             })
         }
     }
@@ -29,7 +37,8 @@ export abstract class SearchSite implements ISite {
     protected async pageScreenshot(page:puppeteer.Page, name: string) {
         if (this.isUseScreenshot) {
             await page.screenshot({
-                path: `/home/ubuntu/screenshot/${name}.png`
+                path: `/home/ubuntu/screenshot/${name}.png`,
+                fullPage: true
             })
         }
     }

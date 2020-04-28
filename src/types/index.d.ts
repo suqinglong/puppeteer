@@ -4,6 +4,7 @@ interface ITASK {
     email: string;
     password: string;
     user_id: string;
+    time: string;
     criteria: {
         origin: string;
         destination: string;

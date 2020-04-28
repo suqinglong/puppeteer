@@ -50,7 +50,7 @@ export const TaskData = {
       equipment: 'Van'
     },
     time: time
-  }, 
+  },
 
   'Navisphere': {
     task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
@@ -58,6 +58,23 @@ export const TaskData = {
     user_id: '3',
     email: 'brentprimelink',
     password: 'Annaleigh1',
+    criteria: {
+      origin: 'Atwater, CA',
+      origin_radius: '250',
+      destination: 'Sumner, WA',
+      destination_radius: '250',
+      pick_up_date: '2020-04-27,2020-04-28',
+      equipment: 'Van'
+    },
+    time: time
+  },
+
+  'Coyote': {
+    task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
+    site: 'Coyote',
+    user_id: '3',
+    email: 'dispatch@ajgtransport.com',
+    password: 'KeepLoaded20!',
     criteria: {
       origin: 'Atwater, CA',
       origin_radius: '250',

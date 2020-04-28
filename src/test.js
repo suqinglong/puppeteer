@@ -12,14 +12,29 @@ async function test(num) {
 }
 
 async function aa() {
-    console.log(1);
-    const a = await test(2000);
-    console.log(a);
-    console.log(2);
-    aa();
+    await test(2000)
+    for (let i = 0; i < 10; i++) {
+        console.log('start' + i)
+        await test(2000)
+        console.log('end' + i)
+    }
+    console.log('done')
 }
 
-aa();
+function bb() {
+    console.log('bb start');
+    [1, 2, 3].map(async item => {
+        console.log(await test(2000))
+    })
+    console.log('bb end');
+}
+
+let n = 0
+setInterval(() => {
+    console.log(n++)
+}, 100);
+
+bb()
 
 // fs.readFile('./src/test.html', 'utf8', function (err, data) {
 //     if (err) throw err;

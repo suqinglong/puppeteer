@@ -5,6 +5,7 @@ import { AddNotification, InactiveLoadSource } from '../api';
 export abstract class SearchSite implements ISite {
 
     public static siteName: string;
+    protected siteName = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
     protected isUseScreenshot = useScreenshot() === 'yes'
@@ -20,7 +21,7 @@ export abstract class SearchSite implements ISite {
     protected async screenshot(name: string) {
         if (this.isUseScreenshot) {
             await this.page.screenshot({
-                path: `/home/ubuntu/screenshot/${name}.png`
+                path: `/home/ubuntu/screenshot/${this.siteName}-${name}.png`
             })
         }
     }

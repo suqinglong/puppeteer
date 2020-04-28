@@ -53,8 +53,9 @@ export class Tasks implements ITasksClass {
         await SingletonTedis.deleteKeys()
         if (this.mode === 'develop') {
             const taskResult = JSON.stringify(
-                TaskData["Navisphere"]
+                TaskData['DAT']
             );
+            await SingletonTedis.pushTask(taskResult)
             await SingletonTedis.pushTask(taskResult)
         }
     }

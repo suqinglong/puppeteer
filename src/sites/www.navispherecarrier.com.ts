@@ -127,16 +127,17 @@ export class NavispherecarrierCom extends SearchSite {
       const $ = cheerio.load(resultHtml);
       const resultData = this.getDataFromHtml($, task.task_id)
 
-      await Promise.all(
-        resultData.map(async item => {
-          const detailData = await this.goToDetailPage(item['loadNumber'])
+      
+      const detailNumbers = resultData.map(item => item['loadNumber']) as Array<string>
+      for (let i = 0, len = detailNumbers.length; i < len; i++) {
+          const detailData = await this.goToDetailPage(detailNumbers[i])
           const { pickUpData, dropOffData, requirementData, contactData } = detailData
+          const item = resultData[i]
           item['pickUpData'] = pickUpData
           item['dropOffData'] = dropOffData
           item['requirementData'] = requirementData
           item['contactData'] = contactData
-        })
-      )
+      }
 
       this.log.log('resultData', ModifyPostData(task, resultData))
       await PostSearchData(ModifyPostData(task, resultData))
@@ -165,6 +166,7 @@ export class NavispherecarrierCom extends SearchSite {
       throw new SiteError('search', 'goToDetailPage wait loading')
     })
     const $ = cheerio.load(await page.content())
+    await page.close()
     return this.getDetailDataFromHtml($)
   }
 

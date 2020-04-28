@@ -57,3 +57,11 @@ export function Trim(str: string) {
         .replace(/\n/g, '')
         .replace(/\s{2,}/g, ' ');
 }
+
+export function createUrl(baseUrl:string, search: { [key: string]: string }) {
+    let searchQuery = ''
+    Object.keys(search).forEach(key => {
+        searchQuery += `&${key}=${encodeURIComponent(search[key])}`
+    })
+    return baseUrl + '?' + searchQuery.substr(1)
+}

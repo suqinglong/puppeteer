@@ -8,6 +8,7 @@ import { userAgent, viewPort } from '../settings';
 
 export class PowerDatComSite extends SearchSite {
     public static siteName = 'DAT'
+    protected siteName = 'DAT'
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
 
@@ -41,6 +42,7 @@ export class PowerDatComSite extends SearchSite {
         } catch (e) {
             await this.addUserToLogoutList(task);
             console.log('PowerDatComSite prepare error', e);
+            this.screenshot('login_error')
         }
     }
 

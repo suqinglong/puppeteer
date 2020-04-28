@@ -191,10 +191,21 @@ export class PowerDatComSite extends SearchSite {
             //     await this.getDetailData(i + 2)
             // }
 
-            await this.page.evaluate(() => {
-                document.querySelectorAll('.resultItem.exactMatch').forEach(item => {
-                    (item as HTMLElement).click()
-                })
+            await this.page.evaluate(async () => {
+                await (async () => {
+                    async function sleep(num: number) {
+                        return new Promise((resolve) => {
+                            setTimeout(() => {
+                                resolve('test resolve');
+                            }, num);
+                        });
+                    }
+                    const els = Array.from(document.querySelectorAll('.resultItem.exactMatch'))
+                    for (let i = 0, len = els.length; i < len; i++) {
+                        await sleep(200);
+                        (els[i] as HTMLElement).click();
+                    }
+                })();
             })
             await this.page.waitFor(10000);
             this.log.log('expended all details')

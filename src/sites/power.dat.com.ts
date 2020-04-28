@@ -10,7 +10,6 @@ import puppeteer from 'puppeteer';
 
 export class PowerDatComSite extends SearchSite {
     public static siteName = 'DAT'
-    protected siteName = 'DAT'
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
     private log: Log = new Log('power.dat.com')
@@ -18,28 +17,30 @@ export class PowerDatComSite extends SearchSite {
     public async login(task: ITASK) {
         try {
             this.log.log('login begin')
+
             this.page = await this.browser.newPage();
             await this.page.setViewport(viewPort);
             await this.page.setUserAgent(userAgent);
+
             await this.page.goto(this.loginPage, {
-                timeout: 0,
+                timeout: 10000,
                 waitUntil: 'load'
             });
+
+            await this.page.waitForSelector('#username');
             await this.page.type('#username', task.email);
+
+            await this.page.waitForSelector('#password');
             await this.page.type('#password', task.password);
 
-            await Promise.all([
-                new Promise((resove) => {
-                    let st = setTimeout(() => {
-                        resove()
-                    }, 3000)
-                    this.browser.on('targetchanged', () => {
-                        clearTimeout(st)
-                        resove();
-                    });
-                }),
-                this.page.click('button#login')
-            ]);
+            await this.page.waitForSelector('#login');
+            await this.page.evaluate(() => {
+                let btn: HTMLElement = document.querySelector('#login') as HTMLElement;
+                btn.click();
+            });
+
+            await this.page.waitForSelector('li.carriers, a.search', {timeout: 10000});
+
             await this.removeUserFromLogoutList(task);
             this.log.log('login success')
             this.screenshot('login success')

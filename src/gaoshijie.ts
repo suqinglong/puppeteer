@@ -10,8 +10,52 @@ puppeteer.launch({
     },
     dumpio: false
 }).then(async browser => {
+    // CH Robinson
+    // const loginUrl = 'https://www.navispherecarrier.com/login';
+    //
+    // const page = await browser.newPage();
+    //
+    // page.once('load', () => console.log('Page loaded!'));
+    //
+    // await page.goto(loginUrl, {waitUntil: 'load'});
+    //
+    //
+    // //await page.screenshot({path: 'screenshot.png'});
+    //
+    // let title = await page.title();
+    // console.log('title:' + title);
+    // console.log('url:' + page.url());
+    //
+    // const username = 'ajgtransportllc';
+    // const password = 'Loaded2020!';
+    //
+    // await page.waitForSelector('#Username');
+    // await page.type('#Username', username);
+    //
+    // await page.waitForSelector('#Password');
+    // await page.type('#Password', password);
+    //
+    // await page.waitForSelector('#btnLogin');
+    // //await page.click('#btnLogin'); // doesn't work
+    // // await page.$eval('#btnLogin', elem => elem.click()); // works
+    // await page.evaluate(() => {
+    //     let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
+    //     btn.click();
+    // });
+    //
+    // await page.waitForSelector('div.find-loads', {timeout: 10000});
+    // console.log('登录成功.');
+    //
+    // title = await page.title();
+    // console.log('title:' + title);
+    // console.log('url:' + page.url());
+    //
+    // await browser.close();
+    // console.log('done');
 
-    const loginUrl = 'https://www.navispherecarrier.com/login';
+
+    // DAT
+    const loginUrl = 'https://power.dat.com/login';
 
     const page = await browser.newPage();
 
@@ -19,32 +63,28 @@ puppeteer.launch({
 
     await page.goto(loginUrl, {waitUntil: 'load'});
 
-
-    //await page.screenshot({path: 'screenshot.png'});
-
     let title = await page.title();
     console.log('title:' + title);
     console.log('url:' + page.url());
 
+    const username = 'haulistix';
+    const password = 'Shostakovich5';
 
-    const username = 'ajgtransportllc';
-    const password = 'Loaded2020!';
+    await page.waitForSelector('#username');
+    await page.type('#username', username);
 
-    await page.waitForSelector('#Username');
-    await page.type('#Username', username);
+    await page.waitForSelector('#password');
+    await page.type('#password', password);
 
-    await page.waitForSelector('#Password');
-    await page.type('#Password', password);
-
-    await page.waitForSelector('#btnLogin');
+    await page.waitForSelector('#login');
     //await page.click('#btnLogin'); // doesn't work
     // await page.$eval('#btnLogin', elem => elem.click()); // works
     await page.evaluate(() => {
-        let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
+        let btn: HTMLElement = document.querySelector('#login') as HTMLElement;
         btn.click();
     });
 
-    await page.waitForSelector('div.find-loads', {timeout: 10000});
+    await page.waitForSelector('li.carriers, a.search', {timeout: 10000});
     console.log('登录成功.');
 
     title = await page.title();
@@ -53,5 +93,4 @@ puppeteer.launch({
 
     await browser.close();
     console.log('done');
-
 });

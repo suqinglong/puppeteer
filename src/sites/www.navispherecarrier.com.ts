@@ -10,6 +10,7 @@ import dateformat from 'dateformat'
 
 export class NavispherecarrierCom extends SearchSite {
   public static siteName = 'Navisphere'
+  protected siteName = 'Navisphere'
   private log: Log = new Log('www.navispherecarrier.com')
   private loginPage = 'https://www.navispherecarrier.com/login';
   private host = 'https://www.navispherecarrier.com'
@@ -46,7 +47,7 @@ export class NavispherecarrierCom extends SearchSite {
         btn.click();
       });
 
-      await this.page.waitForSelector('div.find-loads', {timeout: 10000});
+      await this.page.waitForSelector('div.find-loads', { timeout: 10000 });
       console.log('login succeed.');
 
       await this.screenshot('endlogin')
@@ -122,20 +123,24 @@ export class NavispherecarrierCom extends SearchSite {
       const $ = cheerio.load(resultHtml);
       const resultData = this.getDataFromHtml($, task.task_id)
 
-      
+
       const detailNumbers = resultData.map(item => item['loadNumber']) as Array<string>
       for (let i = 0, len = detailNumbers.length; i < len; i++) {
-          const detailData = await this.goToDetailPage(detailNumbers[i])
-          const { pickUpData, dropOffData, requirementData, contactData } = detailData
-          const item = resultData[i]
-          item['pickUpData'] = pickUpData
-          item['dropOffData'] = dropOffData
-          item['requirementData'] = requirementData
-          item['contactData'] = contactData
+        const detailData = await this.goToDetailPage(detailNumbers[i])
+        const { pickUpData, dropOffData, requirementData, contactData } = detailData
+        const item = resultData[i]
+        item['pickUpData'] = pickUpData
+        item['dropOffData'] = dropOffData
+        item['requirementData'] = requirementData
+        item['contactData'] = contactData
       }
 
       this.log.log('resultData', ModifyPostData(task, resultData))
-      await PostSearchData(ModifyPostData(task, resultData))
+      const res = await PostSearchData(ModifyPostData(task, resultData))
+
+      if (!(res.data && res.data.success)) {
+        this.log.log('PostSearchData API res:', res.data)
+      }
     } catch (e) {
       if (e instanceof SiteError && e.type === 'logout') {
         await this.addUserToLogoutList(task)
@@ -215,7 +220,7 @@ export class NavispherecarrierCom extends SearchSite {
       })
       let [loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement] = resultItem
       loadNumber = (loadNumber as String).match(/\d+/)[0]
-      result.push({ loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement })
+      result.push({ loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement, destination_radius: '' })
     })
     return result
   }

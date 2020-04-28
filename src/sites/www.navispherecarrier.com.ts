@@ -17,10 +17,12 @@ export class NavispherecarrierCom extends SearchSite {
   public async login(task: ITASK) {
     try {
       this.log.log('login begin')
+
       this.page = await this.browser.newPage();
       await this.page.setViewport(viewPort);
       await this.page.setUserAgent(userAgent);
-      await this.page.goto(this.loginPage, { timeout: waitingTimeout() });
+
+      await this.page.goto(this.loginPage, { waitUntil: 'load', timeout: waitingTimeout() });
       this.log.log('login page loaded')
 
       await this.page.waitForSelector('#Username', {
@@ -28,33 +30,26 @@ export class NavispherecarrierCom extends SearchSite {
       }).catch(e => {
         this.log.log('waitForSelector Username', e)
       })
-
-      await this.page.click('body')
-      await this.page.waitFor(500)
-
       await this.page.type('#Username', task.email).catch(e => {
         this.log.log('type Username', e)
       })
 
+      await page.waitForSelector('#Password');
       await this.page.type('#Password', task.password).catch(e => {
         this.log.log('type Password', e)
       })
 
-      await Promise.all([
-        this.page.waitForNavigation({
-          timeout: 10000,
-          waitUntil: 'load'
-        }),
-        this.page.click('#btnLogin')
-      ]).then(res => {
-        this.log.log('login in success')
-      }).catch(e => {
-        this.log.log('login in error', e)
-        throw new SiteError('logout', 'login in error')
-      })
+      await page.waitForSelector('#btnLogin');
+      // page.click('#btnLogin') doesn't works
+      await page.evaluate(() => {
+        let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
+        btn.click();
+      });
+
+      await page.waitForSelector('div.find-loads', {timeout: 10000});
+      console.log('login succeed.');
 
       await this.screenshot('endlogin')
-      await this.page.waitFor(1000)
 
       this.log.log('login success')
       await this.removeUserFromLogoutList(task);

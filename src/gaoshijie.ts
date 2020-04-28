@@ -77,7 +77,7 @@ puppeteer.launch({
     await page.type('#password', password);
 
     await page.waitForSelector('#login');
-    //await page.click('#btnLogin'); // doesn't work
+    // await page.click('#btnLogin'); // doesn't work
     // await page.$eval('#btnLogin', elem => elem.click()); // works
     await page.evaluate(() => {
         let btn: HTMLElement = document.querySelector('#login') as HTMLElement;

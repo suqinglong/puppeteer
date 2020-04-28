@@ -10,6 +10,7 @@ import puppeteer from 'puppeteer';
 
 export class PowerDatComSite extends SearchSite {
     public static siteName = 'DAT'
+    protected siteName = 'DAT'
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
     private log: Log = new Log('power.dat.com')

@@ -40,15 +40,15 @@ export class PowerDatComSite extends SearchSite {
                 btn.click();
             });
 
-            await this.page.waitForSelector('li.carriers, a.search', {timeout: 10000});
+            await this.page.waitForSelector('li.carriers, a.search', { timeout: 10000 });
 
             await this.removeUserFromLogoutList(task);
             this.log.log('login success')
-            this.screenshot('login success')
+            await this.screenshot('login success')
         } catch (e) {
             await this.addUserToLogoutList(task);
             this.log.log('login error', e)
-            this.screenshot('login_error')
+            await this.screenshot('login_error')
         }
     }
 
@@ -189,17 +189,6 @@ export class PowerDatComSite extends SearchSite {
             this.log.log('expended all details')
             await this.screenshot('expended all details')
 
-            // await this.page.evaluate(() => {
-            //     document.querySelectorAll('.resultItem.exactMatch .age').forEach((item, key) => {
-            //         setTimeout(() => {
-            //             (item as HTMLElement).click()
-            //             console.log('clicked', item)
-            //         }, 500)
-            //     })
-            // })
-
-            // await this.page.waitFor(10000);
-
             const resultHtml = await this.page
                 .$eval('.searchResultsTable', (res) => res.outerHTML)
                 .catch((e) => {
@@ -232,9 +221,14 @@ export class PowerDatComSite extends SearchSite {
     }
 
     private async getDetailData(n: number) {
-        await this.page.evaluate((n) => {
-            (document.querySelector(`.resultItem.exactMatch:nth-child(${n}) .age`) as HTMLElement).click()
+        const extendClick = await this.page.evaluate((n) => {
+            const age = document.querySelector(`.resultItem.exactMatch:nth-child(${n}) .age`) as HTMLElement;
+            if (age) {
+                age.click()
+            }
+            return n
         }, n)
+        this.log.log('extendClick:', extendClick)
         await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`).catch(e => {
             if (e instanceof TimeoutError) {
                 this.log.log(`timeout .resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`)

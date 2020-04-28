@@ -47,9 +47,12 @@ export function GetDataFromHtml(task: ITASK, $el: Cheerio, $: CheerioStatic): an
         '.widget-numbers-num',
         '.widget-numbers-range'
     ];
-    const borkerToCarrierSpotData = borkerToCarrierSpot.map((item) => {
-        return $el.find(item).text();
+    let borkerToCarrierSpotData = borkerToCarrierSpot.map((item) => {
+        return Trim($el.find(item).text());
     });
+    if (Object.values(borkerToCarrierSpotData).join('') === '') {
+        borkerToCarrierSpotData = []
+    }
     result['Broker-to-Carrier'] = borkerToCarrierSpotData;
     result['date'] = dateformat(task.criteria.pick_up_date, 'yyyy-mm-dd HH:MM:ss');
 

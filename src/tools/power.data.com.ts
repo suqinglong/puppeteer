@@ -1,4 +1,5 @@
 import { Trim } from './index';
+import dateformat from 'dateformat'
 
 export function GetDataFromHtml(task: ITASK, $el: Cheerio, $: CheerioStatic): any {
     const result: any = {};
@@ -50,7 +51,7 @@ export function GetDataFromHtml(task: ITASK, $el: Cheerio, $: CheerioStatic): an
         return $el.find(item).text();
     });
     result['Broker-to-Carrier'] = borkerToCarrierSpotData;
-    result['date'] = task.criteria.pick_up_date;
+    result['date'] = dateformat(task.criteria.pick_up_date, 'yyyy-mm-dd HH:MM:ss');
 
     return result;
 }

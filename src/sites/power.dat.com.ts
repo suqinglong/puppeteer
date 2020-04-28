@@ -6,7 +6,7 @@ import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
 import { userAgent, viewPort } from '../settings';
 import { Log } from '../tools/log';
-import puppeteer from 'puppeteer';
+import { TimeoutError } from 'puppeteer/Errors';
 
 export class PowerDatComSite extends SearchSite {
     public static siteName = 'DAT'
@@ -235,7 +235,14 @@ export class PowerDatComSite extends SearchSite {
         await this.page.evaluate((n) => {
             (document.querySelector(`.resultItem.exactMatch:nth-child(${n}) .age`) as HTMLElement).click()
         }, n)
-        await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`)
+        await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`).catch(e => {
+            if (e instanceof TimeoutError) {
+                this.log.log(`timeout .resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`)
+            } else {
+                this.log.log('getDetailData error:', e)
+                throw this.generateError('search', 'getDetailData')
+            }
+        })
     }
 
     private async cleanSearch() {

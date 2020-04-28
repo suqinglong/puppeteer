@@ -1,6 +1,5 @@
 import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
-import { useScreenshot } from '../tools/index';
 import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
 

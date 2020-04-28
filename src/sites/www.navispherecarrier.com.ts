@@ -1,5 +1,4 @@
 import cheerio from 'cheerio';
-import puppeteer from 'puppeteer';
 import { SearchSite } from './search.site';
 import { SiteError } from '../error';
 import { ModifyPostData, Trim } from '../tools/index';
@@ -7,6 +6,7 @@ import { Log } from '../tools/log'
 import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat'
+import { TimeoutError } from 'puppeteer/Errors';
 
 export class NavispherecarrierCom extends SearchSite {
   public static siteName = 'Navisphere'
@@ -152,7 +152,7 @@ export class NavispherecarrierCom extends SearchSite {
   }
 
   private async goToDetailPage(id: string): Promise<any> {
-    console.log('goToDetailPage', id)
+    this.log.log('goToDetailPage', id)
     const page = await this.browser.newPage()
     await page.setViewport(viewPort);
     await page.setUserAgent(userAgent);
@@ -161,9 +161,13 @@ export class NavispherecarrierCom extends SearchSite {
       timeout: 10000,
       hidden: true
     }).catch(e => {
-      this.log.log('goToDetailPage wait loading', e)
       this.pageScreenshot(page, `goToDetailPage${id}`)
-      throw new SiteError('search', 'goToDetailPage wait loading')
+      if (e instanceof TimeoutError) {
+        this.log.log('goToDetailPage timeout:', e)
+      } else {
+        this.log.log('goToDetailPage:', e)
+        throw new SiteError('search', 'goToDetailPage wait loading')
+      }
     })
     const $ = cheerio.load(await page.content())
     await page.close()
@@ -219,6 +223,7 @@ export class NavispherecarrierCom extends SearchSite {
         resultItem.push($(tdItem).text())
       })
       let [loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement] = resultItem
+      date = dateformat(date.substr(0, 10), 'yyyy-mm-dd HH:MM:ss');
       loadNumber = (loadNumber as String).match(/\d+/)[0]
       result.push({ loadNumber, origin, date, origin_radius, destination, dropOff, weight, distance, equipment, endorsement, destination_radius: '' })
     })

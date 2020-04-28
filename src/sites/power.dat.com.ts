@@ -146,6 +146,8 @@ export class PowerDatComSite extends SearchSite {
                     throw this.generateError('search', 'wait for selector avail');
                 });
 
+            await this.page.keyboard.press("Enter", { delay: 50 });
+
             const date = task.criteria.pick_up_date.substr(5).replace('-', '/');
             await this.page.type('.searchListTable .avail input', date).catch((e) => {
                 this.log.log('type avail', e);
@@ -168,24 +170,33 @@ export class PowerDatComSite extends SearchSite {
                     throw this.generateError('search', 'wait for result');
                 });
 
+            await this.cleanSearch();
+            await this.page.click('.carriers .search')
+
             this.log.log('have result');
             const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
                 this.log.log('$$ .resultItem.exactMatch', e)
                 throw this.generateError('search', '$$ .resultItem.exactMatch');
             });
 
-            await this.cleanSearch();
-            await this.page.click('.carriers .search')
-            await this.page.waitFor(2000);
+            const resultHtml1 = await this.page.$eval('.searchResultsTable', input => input.outerHTML)
+            this.log.log('resultHtml1', resultHtml1)
 
             const resultSubItems = Array.from(resultItems)
             const resultSubItemsLength = resultSubItems.length
             this.log.log('expend details:', resultSubItemsLength)
             await this.screenshot('get result')
 
-            for (let i = 0; i < resultSubItemsLength; i++) {
-                await this.getDetailData(i + 2)
-            }
+            // for (let i = 0; i < resultSubItemsLength; i++) {
+            //     await this.getDetailData(i + 2)
+            // }
+
+            await this.page.evaluate(() => {
+                document.querySelectorAll('.resultItem.exactMatch').forEach(item => {
+                    (item as HTMLElement).click()
+                })
+            })
+            await this.page.waitFor(10000);
             this.log.log('expended all details')
             await this.screenshot('expended all details')
 
@@ -221,15 +232,29 @@ export class PowerDatComSite extends SearchSite {
     }
 
     private async getDetailData(n: number) {
+        await this.page.evaluate(function (n) {
+            const wh = window.innerHeight
+            for (let y = 0; y <= 300 * n; y += 10) {
+                window.scrollTo(0, wh + y)
+            }
+        }, n)
+
+
         const extendClick = await this.page.evaluate((n) => {
             const age = document.querySelector(`.resultItem.exactMatch:nth-child(${n}) .age`) as HTMLElement;
             if (age) {
                 age.click()
+                return n
             }
-            return n
+            return 'getDetailData age not found'
         }, n)
         this.log.log('extendClick:', extendClick)
-        await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`).catch(e => {
+        if (extendClick === 'getDetailData age not found') {
+            await this.screenshot('getDetailData age not found ' + n)
+        }
+        await this.page.waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`, {
+            timeout: 3000
+        }).catch(e => {
             if (e instanceof TimeoutError) {
                 this.log.log(`timeout .resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`)
             } else {

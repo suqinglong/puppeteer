@@ -11,30 +11,32 @@ async function test(num) {
     });
 }
 
-async function aa() {
-    await test(2000)
-    for (let i = 0; i < 10; i++) {
-        console.log('start' + i)
-        await test(2000)
-        console.log('end' + i)
-    }
-    console.log('done')
-}
+await test(200)
 
-function bb() {
-    console.log('bb start');
-    [1, 2, 3].map(async item => {
-        console.log(await test(2000))
-    })
-    console.log('bb end');
-}
+// async function aa() {
+//     await test(2000)
+//     for (let i = 0; i < 10; i++) {
+//         console.log('start' + i)
+//         await test(2000)
+//         console.log('end' + i)
+//     }
+//     console.log('done')
+// }
 
-let n = 0
-setInterval(() => {
-    console.log(n++)
-}, 100);
+// function bb() {
+//     console.log('bb start');
+//     [1, 2, 3].map(async item => {
+//         console.log(await test(2000))
+//     })
+//     console.log('bb end');
+// }
 
-bb()
+// let n = 0
+// setInterval(() => {
+//     console.log(n++)
+// }, 100);
+
+// bb()
 
 // fs.readFile('./src/test.html', 'utf8', function (err, data) {
 //     if (err) throw err;

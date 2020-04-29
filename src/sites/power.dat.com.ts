@@ -170,7 +170,6 @@ export class PowerDatComSite extends SearchSite {
                     throw this.generateError('search', 'wait for result');
                 });
 
-            await this.cleanSearch();
             await this.page.click('.carriers .search')
 
             this.log.log('have result');
@@ -207,7 +206,7 @@ export class PowerDatComSite extends SearchSite {
                     }
                 })();
             })
-            await this.page.waitFor(10000);
+            await this.page.waitFor(20000);
             this.log.log('expended all details')
             await this.screenshot('expended all details')
 
@@ -239,6 +238,7 @@ export class PowerDatComSite extends SearchSite {
     }
 
     public async closePage() {
+        await this.cleanSearch()
         await this.page.close();
     }
 

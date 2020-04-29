@@ -1,4 +1,6 @@
 import puppeteer from 'puppeteer';
+import cheerio from 'cheerio';
+
 
 puppeteer.launch({
     headless: true,
@@ -55,41 +57,83 @@ puppeteer.launch({
 
 
     // DAT
-    const loginUrl = 'https://power.dat.com/login';
+    // const loginUrl = 'https://power.dat.com/login';
+    //
+    // const page = await browser.newPage();
+    //
+    // page.once('load', () => console.log('Page loaded!'));
+    //
+    // await page.goto(loginUrl, {waitUntil: 'load'});
+    //
+    // let title = await page.title();
+    // console.log('title:' + title);
+    // console.log('url:' + page.url());
+    //
+    // const username = 'haulistix';
+    // const password = 'Shostakovich5';
+    //
+    // await page.waitForSelector('#username');
+    // await page.type('#username', username);
+    //
+    // await page.waitForSelector('#password');
+    // await page.type('#password', password);
+    //
+    // await page.waitForSelector('#login');
+    // // await page.click('#btnLogin'); // doesn't work
+    // // await page.$eval('#btnLogin', elem => elem.click()); // works
+    // await page.evaluate(() => {
+    //     let btn: HTMLElement = document.querySelector('#login') as HTMLElement;
+    //     btn.click();
+    // });
+    //
+    // await page.waitForSelector('li.carriers, a.search', {timeout: 10000});
+    // console.log('登录成功.');
+    //
+    // title = await page.title();
+    // console.log('title:' + title);
+    // console.log('url:' + page.url());
 
+    // await browser.close();
+    // console.log('done');
+
+
+    // werner
     const page = await browser.newPage();
 
     page.once('load', () => console.log('Page loaded!'));
 
-    await page.goto(loginUrl, {waitUntil: 'load'});
+    const url = 'http://www.werner.com/content/carriers/available_loads/';
 
-    let title = await page.title();
-    console.log('title:' + title);
-    console.log('url:' + page.url());
+    await page.goto(url, {waitUntil: 'load'});
 
-    const username = 'haulistix';
-    const password = 'Shostakovich5';
+    await page.waitForSelector('#OriginState');
+    await page.select('#OriginState', 'CA');
 
-    await page.waitForSelector('#username');
-    await page.type('#username', username);
+    await page.waitForSelector('#DestinState');
+    await page.select('#DestinState', 'OR');
 
-    await page.waitForSelector('#password');
-    await page.type('#password', password);
+    await page.waitForSelector('#avail_loads_table');
+    let content = await page.evaluate(() => {
+        return document.querySelector('#avail_loads_table').outerHTML
+    });
+    console.log(content);
 
-    await page.waitForSelector('#login');
-    // await page.click('#btnLogin'); // doesn't work
-    // await page.$eval('#btnLogin', elem => elem.click()); // works
-    await page.evaluate(() => {
-        let btn: HTMLElement = document.querySelector('#login') as HTMLElement;
-        btn.click();
+
+    const $ = cheerio.load(content);
+    console.log('从 table 里面拿数据');
+
+    // console.log($('tbody tr').length);
+
+    $('tbody tr').each((_index, item) => {
+
+        $(item).find('td').each((k, v) => {
+
+            console.log($(v).text());
+        });
+
+        console.log("\n");
     });
 
-    await page.waitForSelector('li.carriers, a.search', {timeout: 10000});
-    console.log('登录成功.');
-
-    title = await page.title();
-    console.log('title:' + title);
-    console.log('url:' + page.url());
 
     await browser.close();
     console.log('done');

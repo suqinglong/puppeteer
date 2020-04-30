@@ -5,6 +5,8 @@ import { SiteError } from '../error';
 
 export abstract class SearchSite implements ISite {
 
+    public needLogin: boolean;
+
     public static siteName: string;
     protected siteName = '';
     protected browser: puppeteer.Browser;

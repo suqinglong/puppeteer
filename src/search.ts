@@ -21,8 +21,10 @@ export class Search implements ISearchClass {
         });
         const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
-        await site.login(task); // new page and login
-        await site.closePage();
+        if (site.needLogin) {
+            await site.login(task); // new page and login
+            await site.closePage();
+        }
         return browser.wsEndpoint();
     }
 

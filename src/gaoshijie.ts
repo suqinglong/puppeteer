@@ -1,5 +1,6 @@
 import puppeteer from 'puppeteer';
 import cheerio from 'cheerio';
+import dateformat from 'dateformat'
 
 
 puppeteer.launch({
@@ -126,10 +127,22 @@ puppeteer.launch({
 
     $('tbody tr').each((_index, item) => {
 
-        $(item).find('td').each((k, v) => {
+        // $(item).find('td').each((k, v) => {
+        //
+        //     console.log(k);
+        //     console.log($(v).text());
+        //
+        //     if (k == 6) {
+        //         const time = '1588242715'
+        //
+        //         const t = new Date( Number(time) * 1000 );
+        //         console.log(t)
+        //     }
+        // });
 
-            console.log($(v).text());
-        });
+        const tds = $(item).find('td');
+        console.log($(tds[0]).text());
+        
 
         console.log("\n");
     });

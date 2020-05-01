@@ -8,16 +8,16 @@ import { SearchSite } from './search.site';
 import puppeteer from 'puppeteer';
 
 const sites = [
-  EchodriveEchoCom,
-  PowerDatComSite,
-  WWWJbhuntCom,
-  NavispherecarrierCom,
-  ConnectCoyoteCom,
-  CarriersSunteckttsCom
+    EchodriveEchoCom,
+    PowerDatComSite,
+    WWWJbhuntCom,
+    NavispherecarrierCom,
+    ConnectCoyoteCom,
+    CarriersSunteckttsCom
 ];
 
 export class SiteManager {
-  public static getSite(siteName:string): new(browser: puppeteer.Browser) => SearchSite {
-    return sites.find(item => item.siteName === siteName)
-  }
+    public static getSite(siteName: string): new (browser: puppeteer.Browser) => SearchSite {
+        return sites.find((item) => item.siteName === siteName);
+    }
 }

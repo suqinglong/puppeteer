@@ -7,13 +7,12 @@ export function getMode(): IMode {
 
 export function useDev(): 'yes' | null {
     let args = minimist(process.argv.slice(2));
-    return args.usedev
+    return args.usedev;
 }
-
 
 export function useScreenshot(): 'yes' | null {
     let args = minimist(process.argv.slice(2));
-    return args.useScreenshot
+    return args.useScreenshot;
 }
 
 export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultData> {
@@ -58,10 +57,10 @@ export function Trim(str: string) {
         .replace(/\s{2,}/g, ' ');
 }
 
-export function createUrl(baseUrl:string, search: { [key: string]: string }) {
-    let searchQuery = ''
-    Object.keys(search).forEach(key => {
-        searchQuery += `&${key}=${encodeURIComponent(search[key])}`
-    })
-    return baseUrl + '?' + searchQuery.substr(1)
+export function createUrl(baseUrl: string, search: { [key: string]: string }) {
+    let searchQuery = '';
+    Object.keys(search).forEach((key) => {
+        searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
+    });
+    return baseUrl + '?' + searchQuery.substr(1);
 }

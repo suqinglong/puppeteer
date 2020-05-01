@@ -37,14 +37,25 @@ interface IResultData {
     extra: string;
 }
 
+interface IResultHTMLData {
+    date: string;
+    equipment: string;
+    origin: string;
+    origin_radius: string;
+    destination: string;
+    destination_radius: string;
+    distance: string;
+    [key: string]: any;
+}
+
 interface IPostData {
     token: string;
     records: Array<IResultData>;
 }
 
 interface ISite {
-    login: Function;
-    search: Function;
+    doLogin: Function;
+    doSearch: Function;
 }
 
 interface ITasksClass {

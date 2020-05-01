@@ -1,5 +1,5 @@
 import { Trim } from './index';
-import dateformat from 'dateformat'
+import dateformat from 'dateformat';
 
 export function GetDataFromHtml(task: ITASK, $el: Cheerio, $: CheerioStatic): any {
     const result: any = {};
@@ -51,7 +51,7 @@ export function GetDataFromHtml(task: ITASK, $el: Cheerio, $: CheerioStatic): an
         return Trim($el.find(item).text());
     });
     if (Object.values(borkerToCarrierSpotData).join('') === '') {
-        borkerToCarrierSpotData = []
+        borkerToCarrierSpotData = [];
     }
     result['Broker-to-Carrier'] = borkerToCarrierSpotData;
     result['date'] = dateformat(task.criteria.pick_up_date, 'yyyy-mm-dd HH:MM:ss');

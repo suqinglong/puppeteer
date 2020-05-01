@@ -2,7 +2,7 @@ import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
 import { Tedis } from 'tedis';
 import { getMode } from './tools/index';
-import { TaskData } from './demoTaskData'
+import { TaskData } from './demoTaskData';
 
 export class Tasks implements ITasksClass {
     private tedis: Tedis = SingletonTedis.getInstance();
@@ -12,10 +12,10 @@ export class Tasks implements ITasksClass {
     public async getTask() {
         await this.developPrepare();
         while (true) {
-            const taskResult = await SingletonTedis.getTask()
+            const taskResult = await SingletonTedis.getTask();
             if (!taskResult) continue;
             const task: ITASK = JSON.parse(taskResult) as ITASK;
-            if ( Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
+            if (Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
                 continue;
             }
             console.log('task', task);
@@ -53,12 +53,10 @@ export class Tasks implements ITasksClass {
     }
 
     private async developPrepare() {
-        await SingletonTedis.deleteKeys()
+        await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(
-                TaskData['Carriers']
-            );
-            await SingletonTedis.pushTask(taskResult)
+            const taskResult = JSON.stringify(TaskData['Carriers']);
+            await SingletonTedis.pushTask(taskResult);
         }
     }
 }

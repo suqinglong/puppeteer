@@ -1,9 +1,9 @@
 import puppeteer from 'puppeteer';
 import { Settings } from './settings';
 import { getMode, useDev } from './tools/index';
-import { SingletonTedis } from './tools/tedis'
+import { SingletonTedis } from './tools/tedis';
 import { SearchSite } from './sites/search.site';
-import { SiteManager } from './sites/SiteManager'
+import { SiteManager } from './sites/SiteManager';
 
 export class Search implements ISearchClass {
     private mode: IMode = getMode();
@@ -23,7 +23,7 @@ export class Search implements ISearchClass {
         const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
         if (site.needLogin) {
-            await site.login(task); // new page and login
+            await site.doLogin(task); // new page and login
             await site.closePage();
         }
         return browser.wsEndpoint();
@@ -35,9 +35,9 @@ export class Search implements ISearchClass {
         const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
         if (await SingletonTedis.isUserLogoutSite(task.user_id, task.site)) {
-            await site.login(task)
+            await site.doLogin(task);
         }
-        await site.search(task);
+        await site.doSearch(task);
         await site.closePage();
     }
 }

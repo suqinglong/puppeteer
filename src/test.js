@@ -11,7 +11,7 @@ async function test(num) {
     });
 }
 
-await test(200)
+await test(200);
 
 // Atwater, CA
 // Sumner, WA
@@ -19,7 +19,6 @@ await test(200)
 // Green Bay, WI
 // San Francisco, CA
 // San Francisco, CA
-
 
 // async function aa() {
 //     await test(2000)

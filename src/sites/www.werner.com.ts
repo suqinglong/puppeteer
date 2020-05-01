@@ -1,125 +1,108 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './search.site';
 import { SiteError } from '../error';
-import { ModifyPostData, Trim } from '../tools/index';
-import { Log } from '../tools/log'
+import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { userAgent, viewPort, waitingTimeout } from '../settings';
-import dateformat from 'dateformat'
-import { TimeoutError } from 'puppeteer/Errors';
+import { userAgent, viewPort } from '../settings';
+import dateformat from 'dateformat';
 
 export class WernerCom extends SearchSite {
-  public needLogin = false;
+    public static siteName = 'WernerCom';
+    public needLogin = false;
+    protected debugPre = 'WernerCom';
+    private searchPage = 'http://www.werner.com/content/carriers/available_loads/';
 
-  public static siteName = 'WernerCom'
-  protected siteName = 'WernerCom'
-  private log: Log = new Log('www.werner.com')
-  private loginPage = '';
-  private host = 'https://www.navispherecarrier.com'
-  
-  public async login(task: ITASK) {
-    // 不需要登录
-  }
+    protected async search(task: ITASK) {
+        this.page = await this.browser.newPage();
+        await this.page.setViewport(viewPort);
+        await this.page.setUserAgent(userAgent);
 
-  public async search(task: ITASK) {
+        await this.page.goto(this.searchPage, {
+            timeout: 10000,
+            waitUntil: 'load'
+        });
 
-    this.page = await this.browser.newPage();
+        await this.page.waitForSelector('#OriginState');
+        const [, originState] = task.criteria.origin.split(',').map((item) => item.trim());
+        await this.page.select('#OriginState', originState);
 
-    await this.page.setViewport(viewPort);
-    await this.page.setUserAgent(userAgent);
+        await this.page.waitForSelector('#DestinState');
+        const [, destState] = task.criteria.origin.split(',').map((item) => item.trim());
+        await this.page.select('#DestinState', destState);
 
-    const searchPage = 'http://www.werner.com/content/carriers/available_loads/';
+        await Promise.race([
+            this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData'),
+            (await this.page.waitForSelector('#avail_loads_table tr[role="row"]')).evaluateHandle(
+                () => 'haveData'
+            )
+        ])
+            .then((raceResult) => {
+                if (raceResult === 'noData') {
+                    this.log.log('There is no data');
+                    this.generateError('noData', 'There is no data');
+                }
+            })
+            .catch((e) => {
+                this.log.log('Promise race error', e);
+                this.generateError('search', 'Promise race error');
+            });
 
-    await this.page.goto(searchPage, {
-      timeout: 10000,
-      waitUntil: 'load'
-    });
+        // expend all child
+        await this.page.evaluate(() => {
+            document.querySelectorAll('#avail_loads_table .min-phone-l').forEach((item, _key) => {
+                (item as HTMLElement).click();
+            });
+        });
+        await this.page.waitFor(200);
+        await this.screenshot('search data done');
 
-    await this.page.waitForSelector('#OriginState');
-    // todo 从 task.criteria.origin 取
-    await this.page.select('#OriginState', 'CA');
+        const content = await this.page.evaluate(() => {
+            return document.querySelector('#avail_loads_table').outerHTML;
+        });
+        this.log.log('result html', content);
+        const $ = cheerio.load(content);
 
-    await this.page.waitForSelector('#DestinState');
-    // todo 从 task.criteria.destination 取
-    await this.page.select('#DestinState', 'OR');
+        PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
+            this.log.log(res.data);
+        });
+    }
 
-    await this.page.waitForSelector('#avail_loads_table');
-    let content = await this.page.evaluate(() => {
-      return document.querySelector('#avail_loads_table').outerHTML
-    });
-    console.log(content);
+    private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {
+        const result: Array<IResultHTMLData> = [];
+        const parentItems = $('tbody tr.parent');
 
-    //const $ = cheerio.load(content);
-    //console.log('从 table 里面拿数据');
-
-    let records = [];
-
-    $('tbody tr').each((_index, item) => {
-
-      $(item).find('td').each((k, v) => {
-
-        console.log(k);
-        console.log($(v).text());
-
-        // todo 判断 pickup date 是否满足条件
-        // todo 判断 equipment 是否满足条件
-        // 算了,不判断了
-      });
-
-
-      const tds = $(item).find('td');
-
-      // task_id
-      const taskID = task.task_id;
-
-      // date
-      const d = Date.parse($(tds[6]).text());
-      const dateFormated = dateformat(new Date(d), 'yyyy-mm-dd HH:MM');
-
-      // source
-      const source = 'Werner';
-
-      // equipment
-      const equipment = $(tds[5]).text();
-
-      // origin
-      const origin = $(tds[0]).text() + ',' + $(tds[1]).text();
-
-      // origin_radius
-      const origin_radius = '';
-
-      // destination
-      const destination = $(tds[2]).text() + ',' + $(tds[3]).text();
-
-      // destination_radius
-      const destination_radius = '';
-
-      // distance
-      const distance = $(tds[4]).text();
-
-      // extra
-      const extra = new Map();
-      extra.set('pickup', $(tds[6])).text();
-      extra.set('contact number', $(tds[7]).text());
-      extra.set('region', $(tds[8]).text());
-      
-      records.push({
-        'task_id':taskID,
-        'date': dateFormated,
-        'source': source,
-        'equipment': equipment,
-        'origin': origin,
-        'origin_radius': origin_radius,
-        'destination': destination,
-        'destination_radius': destination_radius,
-        'distance': distance,
-        'extra': JSON.stringify(extra)
-      });
-
-      console.log("\n");
-    });
-
-    // 调用内部接口,保存 records
-    // todo records 是个 array, 不能直接使用 PostSearchData,如何是好。。
-  }
+        parentItems.each((_number, element) => {
+            const $element = $(element);
+            const childTr = $(element).next('tr.child');
+            let [
+                originCity,
+                originState,
+                destCity,
+                destState,
+                miles,
+                equipment,
+                pickup,
+                contactMember,
+                region
+            ] = Array.from($element.find('td')).map((el) => $(el).text());
+            let [stops, reference] = Array.from(childTr.find('.dtr-data')).map((el) =>
+                $(el).text()
+            );
+            result.push({
+                date: dateformat(new Date(Date.parse(pickup)), 'yyyy-mm-dd HH:MM'),
+                equipment,
+                origin: [originCity, originState].join(', '),
+                origin_radius: '',
+                destination: [destCity, destState].join(', '),
+                destination_radius: '',
+                distance: miles,
+                contactMember,
+                region,
+                stops,
+                reference
+            });
+        });
+        this.log.log('result:', result);
+        return result;
+    }
 }

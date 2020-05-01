@@ -1,9 +1,7 @@
 import cheerio from 'cheerio';
 import puppeteer from 'puppeteer';
 import { SearchSite } from './search.site';
-import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
-import { Log } from '../tools/log';
 import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 

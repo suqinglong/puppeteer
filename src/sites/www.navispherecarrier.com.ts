@@ -1,8 +1,7 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './search.site';
 import { SiteError } from '../error';
-import { ModifyPostData, Trim } from '../tools/index';
-import { Log } from '../tools/log';
+import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat';

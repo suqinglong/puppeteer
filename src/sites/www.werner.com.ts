@@ -1,12 +1,11 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './search.site';
-import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 
-export class WernerCom extends SearchSite {
+export class WwwWernerCom extends SearchSite {
     public static siteName = 'WernerCom';
     public needLogin = false;
     protected debugPre = 'WernerCom';

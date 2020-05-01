@@ -13,6 +13,14 @@ async function test(num) {
 
 await test(200)
 
+// Atwater, CA
+// Sumner, WA
+// Cedar Falls, IA
+// Green Bay, WI
+// San Francisco, CA
+// San Francisco, CA
+
+
 // async function aa() {
 //     await test(2000)
 //     for (let i = 0; i < 10; i++) {

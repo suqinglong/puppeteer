@@ -2,6 +2,7 @@ import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
 import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
+import { useScreenshot } from '../tools/index';
 
 export abstract class SearchSite implements ISite {
 
@@ -11,7 +12,7 @@ export abstract class SearchSite implements ISite {
     protected siteName = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
-    protected isUseScreenshot = true // useScreenshot() === 'yes'
+    protected isUseScreenshot = useScreenshot() === 'yes'
 
     public constructor(browser: puppeteer.Browser) {
         this.browser = browser;

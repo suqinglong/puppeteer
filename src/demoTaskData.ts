@@ -84,5 +84,22 @@ export const TaskData = {
       equipment: 'Van'
     },
     time: time
+  },
+
+  'Carriers': {
+    task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
+    site: 'Carriers',
+    user_id: '3',
+    email: 'ajgtransportation@gmail.com',
+    password: 'KeepLoaded19',
+    time: time,
+    criteria: {
+      origin: 'Atwater, CA',
+      origin_radius: '250',
+      destination: 'Sumner, WA',
+      destination_radius: '250',
+      pick_up_date: '2020-04-30,2020-04-32',
+      equipment: 'Van'
+    },
   }
 }

@@ -3,6 +3,7 @@ import { EchodriveEchoCom } from './echodrive.echo.com';
 import { WWWJbhuntCom } from './www.jbhunt.com';
 import { NavispherecarrierCom } from './www.navispherecarrier.com';
 import { ConnectCoyoteCom } from './connect.coyote.com';
+import { CarriersSunteckttsCom } from './carriers.suntecktts.com';
 import { SearchSite } from './search.site';
 import puppeteer from 'puppeteer';
 
@@ -11,7 +12,8 @@ const sites = [
   PowerDatComSite,
   WWWJbhuntCom,
   NavispherecarrierCom,
-  ConnectCoyoteCom
+  ConnectCoyoteCom,
+  CarriersSunteckttsCom
 ];
 
 export class SiteManager {

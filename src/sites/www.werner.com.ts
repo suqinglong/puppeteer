@@ -6,9 +6,9 @@ import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 
 export class WwwWernerCom extends SearchSite {
-    public static siteName = 'WernerCom';
+    public static siteName = 'Werner';
     public needLogin = false;
-    protected debugPre = 'WernerCom';
+    protected debugPre = 'Werner';
     private searchPage = 'http://www.werner.com/content/carriers/available_loads/';
 
     protected async search(task: ITASK) {

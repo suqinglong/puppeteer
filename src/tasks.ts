@@ -55,7 +55,7 @@ export class Tasks implements ITasksClass {
     private async developPrepare() {
         await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(TaskData['Carriers']);
+            const taskResult = JSON.stringify(TaskData['Werner']);
             await SingletonTedis.pushTask(taskResult);
         }
     }

@@ -4,7 +4,6 @@ import dateformat from 'dateformat';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import cheerio from 'cheerio';
-import { SiteError } from '../error';
 
 export class CarriersSunteckttsCom extends SearchSite {
     public static siteName = 'Carriers';

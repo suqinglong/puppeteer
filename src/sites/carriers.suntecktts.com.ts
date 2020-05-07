@@ -17,6 +17,9 @@ export class CarriersSunteckttsCom extends SearchSite {
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
         await this.page.goto(this.loginPage, { timeout: waitingTimeout() });
+        await this.page.waitForSelector('#_submit:not(:disabled)', {
+            timeout: 20000
+        });
         await this.page.type('#username', task.email);
         await this.page.type('#password', task.password);
         await this.page.click('#_submit');
@@ -29,7 +32,9 @@ export class CarriersSunteckttsCom extends SearchSite {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage);
+        await this.page.goto(this.searchPage, {
+            timeout: 20000
+        });
 
         const pickUpDate = dateformat(task.criteria.pick_up_date.split(',')[0], 'mm/dd/yyyy');
         await this.page
@@ -49,7 +54,7 @@ export class CarriersSunteckttsCom extends SearchSite {
         await this.page.select('#load_board_search_shipperState', originState);
         // 50, 100, 200, 300
         let shipperRadius = 50;
-        const shipperRadiusN = parseInt(String(Number(task.criteria.origin_radius) / 100), 10);
+        const shipperRadiusN = Math.ceil(Number(task.criteria.origin_radius) / 100);
         if (shipperRadiusN > 1 && shipperRadiusN < 300) {
             shipperRadius = shipperRadiusN * 100;
         } else {
@@ -57,12 +62,12 @@ export class CarriersSunteckttsCom extends SearchSite {
         }
         await this.page.select('#load_board_search_shipperRadius', String(shipperRadius));
 
-        const [destCity, destState] = task.criteria.origin.split(',').map((item) => item.trim());
+        const [destCity, destState] = task.criteria.destination.split(',').map((item) => item.trim());
         await this.page.type('#load_board_search_consigneeCity', destCity);
         await this.page.select('#load_board_search_consigneeState', destState);
         // 50, 100, 200, 300
         let consigneeRadius = 50;
-        const consigneeRadiusN = parseInt(String(Number(task.criteria.origin_radius) / 100), 10);
+        const consigneeRadiusN = Math.ceil(Number(task.criteria.destination_radius) / 100);
         if (consigneeRadiusN > 1 && consigneeRadiusN < 300) {
             consigneeRadius = consigneeRadiusN * 100;
         } else {
@@ -78,27 +83,11 @@ export class CarriersSunteckttsCom extends SearchSite {
             (document.querySelector('#autoRefresh') as HTMLInputElement).checked = false;
         });
 
-        await Promise.race([
-            this.page
-                .waitForSelector('#js-load-board-results tbody tr[role=row]', {
-                    timeout: 10000
-                })
-                .then(() => 'hasData'),
-            this.page
-                .waitForSelector('#js-load-board-results .dataTables_empty', {
-                    timeout: 10000
-                })
-                .then(() => 'noData')
-        ])
-            .then((raceResult) => {
-                if (raceResult === 'noData') {
-                    throw this.generateError('noData', 'have no data');
-                }
-            })
-            .catch((e) => {
-                this.log.log('promise search', e);
-                throw this.generateError('search', 'loading data');
-            });
+        await this.page.waitForSelector('#js-load-board-results tbody tr[role=row]', {
+            timeout: 5000
+        }).catch(e => {
+            throw this.generateError('noData', 'have no data');
+        })
 
         const resultHtml = await this.page.$eval(
             '#js-load-board-results',

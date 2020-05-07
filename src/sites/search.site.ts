@@ -16,10 +16,10 @@ export abstract class SearchSite implements ISite {
 
     public constructor(browser: puppeteer.Browser) {
         this.browser = browser;
-        this.log = new Log(this.debugPre);
     }
 
     public async doLogin(task: ITASK) {
+        this.prepare();
         try {
             await this.login(task);
         } catch (e) {
@@ -30,6 +30,7 @@ export abstract class SearchSite implements ISite {
     }
 
     public async doSearch(task: ITASK) {
+        this.prepare();
         try {
             await this.search(task);
         } catch (e) {
@@ -44,6 +45,10 @@ export abstract class SearchSite implements ISite {
 
     public async closePage() {
         // this.page && this.page.close();
+    }
+
+    protected prepare() {
+        this.log = new Log(this.debugPre)
     }
 
     protected async login(task: ITASK) {}

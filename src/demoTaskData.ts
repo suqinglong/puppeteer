@@ -94,11 +94,11 @@ export const TaskData = {
         password: 'KeepLoaded19',
         time: time,
         criteria: {
-            origin: 'Atwater, CA',
+            origin: 'Concordia, KS',
             origin_radius: '250',
-            destination: 'Sumner, WA',
+            destination: 'Shakopee, MN',
             destination_radius: '250',
-            pick_up_date: '2020-04-30,2020-04-32',
+            pick_up_date: '2020-05-07',
             equipment: 'Van'
         }
     },

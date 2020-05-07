@@ -1,11 +1,9 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
-import { Tedis } from 'tedis';
 import { getMode } from './tools/index';
 import { TaskData } from './demoTaskData';
 
 export class Tasks implements ITasksClass {
-    private tedis: Tedis = SingletonTedis.getInstance();
     private mode: IMode = getMode();
     private search = new Search();
 
@@ -55,7 +53,7 @@ export class Tasks implements ITasksClass {
     private async developPrepare() {
         await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(TaskData['Coyote']);
+            const taskResult = JSON.stringify(TaskData['Carriers']);
             await SingletonTedis.pushTask(taskResult);
         }
     }

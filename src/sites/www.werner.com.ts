@@ -9,7 +9,7 @@ export class WwwWernerCom extends SearchSite {
     public static siteName = 'Werner';
     public needLogin = false;
     protected debugPre = 'Werner';
-    private searchPage = 'http://www.werner.com/content/carriers/available_loads/';
+    private searchPage = 'http://65.247.121.34/content/carriers/available_loads/';
 
     protected async search(task: ITASK) {
         this.page = await this.browser.newPage();
@@ -17,7 +17,7 @@ export class WwwWernerCom extends SearchSite {
         await this.page.setUserAgent(userAgent);
 
         await this.page.goto(this.searchPage, {
-            timeout: 10000,
+            timeout: 40000,
             waitUntil: 'load'
         });
 

@@ -7,7 +7,7 @@ import { Log } from '../tools/log';
 
 export abstract class SearchSite implements ISite {
     public static siteName: string;
-    public needLogin: boolean;
+    public needLogin = true;
     protected debugPre = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
@@ -21,7 +21,7 @@ export abstract class SearchSite implements ISite {
 
     public async doLogin(task: ITASK) {
         try {
-            this.login(task);
+            await this.login(task);
         } catch (e) {
             await this.screenshot('login error');
             await this.addUserToLogoutList(task);
@@ -31,7 +31,7 @@ export abstract class SearchSite implements ISite {
 
     public async doSearch(task: ITASK) {
         try {
-            this.search(task);
+            await this.search(task);
         } catch (e) {
             if (e instanceof SiteError && e.type === 'logout') {
                 await this.addUserToLogoutList(task);
@@ -43,7 +43,7 @@ export abstract class SearchSite implements ISite {
     }
 
     public async closePage() {
-        this.page && this.page.close();
+        // this.page && this.page.close();
     }
 
     protected async login(task: ITASK) {}

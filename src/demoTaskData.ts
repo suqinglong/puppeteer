@@ -80,7 +80,7 @@ export const TaskData = {
             origin_radius: '250',
             destination: 'Sumner, WA',
             destination_radius: '250',
-            pick_up_date: '2020-04-27,2020-04-28',
+            pick_up_date: '2020-04-27',
             equipment: 'Van'
         },
         time: time

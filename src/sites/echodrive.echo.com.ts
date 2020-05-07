@@ -45,7 +45,7 @@ export class EchodriveEchoCom extends SearchSite {
         await this.page.waitForSelector('.available-loads-row');
         const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
         const $ = cheerio.load(resultHtml);
-        PostSearchData(this.getDataFromHtml($, task)).then((res: any) => {
+        await PostSearchData(this.getDataFromHtml($, task)).then((res: any) => {
             console.log('EchodriveEchoCom', res.data);
         });
     }

@@ -136,11 +136,9 @@ export class NavispherecarrierCom extends SearchSite {
         }
 
         this.log.log('resultData', ModifyPostData(task, resultData));
-        const res = await PostSearchData(ModifyPostData(task, resultData));
-
-        if (!(res.data && res.data.success)) {
-            this.log.log('PostSearchData API res:', res.data);
-        }
+        await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
+            this.log.log(res.data);
+        });
     }
 
     private async goToDetailPage(id: string): Promise<any> {

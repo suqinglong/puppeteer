@@ -1,4 +1,5 @@
 import minimist from 'minimist';
+import xlsx from 'node-xlsx';
 
 export function getMode(): IMode {
     let args = minimist(process.argv.slice(2));
@@ -57,10 +58,16 @@ export function Trim(str: string) {
         .replace(/\s{2,}/g, ' ');
 }
 
-export function createUrl(baseUrl: string, search: { [key: string]: string }) {
+export function createUrl(baseUrl: string, search: { [key: string]: string | boolean | number }) {
     let searchQuery = '';
     Object.keys(search).forEach((key) => {
         searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
     });
     return baseUrl + '?' + searchQuery.substr(1);
 }
+
+export function xlsxParse(file: string) {
+    return xlsx.parse(file)[0]['data']
+}
+
+

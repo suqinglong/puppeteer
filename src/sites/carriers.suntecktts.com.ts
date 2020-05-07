@@ -109,7 +109,7 @@ export class CarriersSunteckttsCom extends SearchSite {
         const resultData = this.getDataFromHtml($, task);
         this.log.log('data', ModifyPostData(task, resultData));
 
-        PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
+        await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
             this.log.log(res.data);
         });
     }

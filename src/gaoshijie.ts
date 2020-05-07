@@ -172,7 +172,13 @@ puppeteer
         await page.waitForSelector('#oStates');
 
         let originCityValue = await page.evaluate(() => {
-            return document.querySelectorAll("#oStates option").forEach(element => {if((element as HTMLElement).innerText == "CA"){return (element as HTMLInputElement).value}});
+            let value = ''
+            document.querySelectorAll("#oStates option").forEach(element => {
+                if ((element as HTMLElement).innerText === "CA") {
+                    value = (element as HTMLInputElement).value
+                }
+            });
+            return value
         });
 
         console.log('origin city value:' + originCityValue);
@@ -185,13 +191,13 @@ puppeteer
 
         // 再输入city
         await page.waitForSelector('#ocities');
-        await page.type('#ocities', 'Atwater', {delay: 1000});
+        await page.type('#ocities', 'Atwater', { delay: 1000 });
 
         // 此时应该出现智能提示
         let originCities = await page.$$('#SLoCities ul li');
         // 判断 originCities 的个数,如果为0或者大于1, 就放弃这个搜索任务吧
         // 如果只有一个,就 click
-        if (originCities.length == 1) {
+        if (originCities.length === 1) {
             await originCities[0].click();
             console.log('找到一个 origin city');
         } else {
@@ -220,7 +226,7 @@ puppeteer
         let destinationCities = await page.$$('#SLdCities ul li');
         // 判断 orginCities 的个数,如果为0或者大于1, 就放弃这个搜索任务吧
         // 如果只有一个,就 click
-        if (destinationCities.length == 1) {
+        if (destinationCities.length === 1) {
             await destinationCities[0].click();
             console.log('找到一个 destination city');
         } else {

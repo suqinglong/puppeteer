@@ -154,7 +154,10 @@ puppeteer
         page.once('load', () => console.log('搜索页面加载完成。'));
 
         page.on('requestfinished', request => {
-            console.log('on request finished. url:' + request.url());
+            console.log('on request finished. url:' + request.url() + ' method: ' + request.method());
+            if (request.url() == "https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState") {
+                console.log('post data:' + request.postData());
+            }
         });
 
         const url = 'https://carrierdashboard.tql.com/#/LoadSearch';
@@ -171,7 +174,7 @@ puppeteer
         // origin
         await page.waitForSelector('#oStates');
 
-        let originCityValue = await page.evaluate(() => {
+        let originStateValue = await page.evaluate(() => {
             let value = ''
             document.querySelectorAll("#oStates option").forEach(element => {
                 if ((element as HTMLElement).innerText === "CA") {
@@ -181,13 +184,13 @@ puppeteer
             return value
         });
 
-        console.log('origin city value:' + originCityValue);
-        await page.select('#oStates', originCityValue);
+        console.log('origin state value:' + originStateValue);
+        await page.select('#oStates', originStateValue);
 
 
         // 等 ajax 完成
-        console.log('sleep 5 秒,等 ajax 获取所有的 origin cities');
-        page.waitFor(5000);
+        console.log('sleep 8 秒,等 ajax 获取所有的 origin cities');
+        page.waitFor(8000);
 
         // 再输入city
         await page.waitForSelector('#ocities');
@@ -208,19 +211,45 @@ puppeteer
         // origin radius
         await page.waitForSelector('#orgRadius');
         // 取值范围: 25, 50, 75, 100, 150, 200, 250, 300
-        await page.select('#orgRadius', '150');
+
+        let originRadiusValue = await page.evaluate(() => {
+            let value = '';
+            document.querySelectorAll("#orgRadius option").forEach(element => {
+                if ((element as HTMLElement).innerText === "150") {
+                    value = (element as HTMLInputElement).value
+                }
+            });
+            return value;
+        });
+
+        await page.select('#orgRadius', originRadiusValue);
 
         // destination
         await page.waitForSelector('#dStates');
-        await page.select('#dStates', 'WA');
+
+        let destinationStateValue = await page.evaluate(() => {
+            let value = ''
+            document.querySelectorAll("#dStates option").forEach(element => {
+                if ((element as HTMLElement).innerText === "WA") {
+                    value = (element as HTMLInputElement).value
+                }
+            });
+            return value
+        });
+
+        console.log('destination state value:' + destinationStateValue);
+
+        await page.select('#dStates', destinationStateValue);
 
         // 等 ajax 完成
-        page.waitFor(5000);
-        console.log('sleep 5 秒,等 ajax 获取所有 destination cities');
+        page.waitFor(8000);
+        console.log('sleep 8 秒,等 ajax 获取所有 destination cities');
 
         // 再输入city
         await page.waitForSelector('#dcities');
-        await page.type('#dcities', 'Sumner');
+        await page.type('#dcities', 'Sumner', { delay: 1000 });
+
+        page.waitFor(1000);
 
         // 此时应该出现智能提示
         let destinationCities = await page.$$('#SLdCities ul li');
@@ -237,7 +266,18 @@ puppeteer
         // destination radius
         await page.waitForSelector('#destRadius');
         // 取值范围: 25, 50, 75, 100, 150, 200, 250, 300
-        await page.select('#destRadius', '150');
+
+        let destinationRadiusValue = await page.evaluate(() => {
+            let value = '';
+            document.querySelectorAll("#destRadius option").forEach(element => {
+                if ((element as HTMLElement).innerText === "150") {
+                    value = (element as HTMLInputElement).value
+                }
+            });
+            return value;
+        });
+
+        await page.select('#destRadius', destinationRadiusValue);
 
 
         // equipment
@@ -252,20 +292,59 @@ puppeteer
         console.log('开始搜索');
 
         let searchButton = await page.waitForSelector('#SLSrchBtn');
-        await searchButton.click();
+        // await searchButton.click();
+        await page.evaluate(() => {
+            let btn: HTMLElement = document.querySelector('#SLSrchBtn') as HTMLElement;
+            btn.click();
+        });
 
         // 等待搜索结果
         console.log('等待搜索结果');
+        await page.waitFor(10000);
         await page.waitForSelector('div.ag-body');
 
-        let resultHtml = await page.evaluate(() => {
-            return document.querySelector('div.ag-body').innerHTML;
-        });
+        const resultHtml = await page.$eval('div.ag-body', e => e.innerHTML);
+
+
         console.log(resultHtml);
 
         const $ = cheerio.load(resultHtml);
-        console.log('从 table 里面拿数据');
+        
+        $('div.ag-row').each((_index, _item) => {
 
+            const divs = $(_item).find('div');
+
+            const postID = $(divs[1]).text();
+            console.log("post id:" + postID);
+
+            const pickDate = $(divs[2]).text();
+            console.log(pickDate);
+
+            const pickRadius = $(divs[3]).text();
+            console.log(pickRadius);
+
+            const pickCity = $(divs[4]).text();
+            console.log(pickCity);
+
+            const pickState = $(divs[5]).text();
+            console.log(pickState);
+
+            const dropCity = $(divs[6]).text();
+            console.log(dropCity);
+
+            const dropState = $(divs[7]).text();
+            console.log(dropState);
+
+            const equipment = $(divs[8]).text();
+            console.log(equipment);
+
+            const distance = $(divs[9]).text();
+            console.log(distance);
+
+            console.log("\n");
+        });
+
+        // todo 点击左边的展开按钮就会显示extra信息, 但是我不知道怎么依次展开。。
 
         await browser.close();
         console.log('done');

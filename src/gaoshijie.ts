@@ -97,51 +97,169 @@ puppeteer
         // await browser.close();
         // console.log('done');
 
-        // werner
+        // werner ======================================================
+        // const page = await browser.newPage();
+        //
+        // page.once('load', () => console.log('Page loaded!'));
+        //
+        // const url = 'http://www.werner.com/content/carriers/available_loads/';
+        //
+        // await page.goto(url, { waitUntil: 'load' });
+        //
+        // await page.waitForSelector('#OriginState');
+        // await page.select('#OriginState', 'CA');
+        //
+        // await page.waitForSelector('#DestinState');
+        // await page.select('#DestinState', 'OR');
+        //
+        // await page.waitForSelector('#avail_loads_table');
+        // let content = await page.evaluate(() => {
+        //     return document.querySelector('#avail_loads_table').outerHTML;
+        // });
+        // console.log(content);
+        //
+        // const $ = cheerio.load(content);
+        // console.log('从 table 里面拿数据');
+        //
+        // // console.log($('tbody tr').length);
+        //
+        // $('tbody tr').each((_index, item) => {
+        //     // $(item).find('td').each((k, v) => {
+        //     //
+        //     //     console.log(k);
+        //     //     console.log($(v).text());
+        //     //
+        //     //     if (k == 6) {
+        //     //         const time = '1588242715'
+        //     //
+        //     //         const t = new Date( Number(time) * 1000 );
+        //     //         console.log(t)
+        //     //     }
+        //     // });
+        //
+        //     const tds = $(item).find('td');
+        //     console.log($(tds[0]).text());
+        //
+        //     console.log('\n');
+        // });
+        //
+        // await browser.close();
+        // console.log('done');
+
+
+
+        // https://carrierdashboard.tql.com/#/LoadSearch ======================================================
         const page = await browser.newPage();
 
-        page.once('load', () => console.log('Page loaded!'));
+        page.once('load', () => console.log('搜索页面加载完成。'));
 
-        const url = 'http://www.werner.com/content/carriers/available_loads/';
+        page.on('requestfinished', request => {
+            console.log('on request finished. url:' + request.url());
+        });
+
+        const url = 'https://carrierdashboard.tql.com/#/LoadSearch';
 
         await page.goto(url, { waitUntil: 'load' });
 
-        await page.waitForSelector('#OriginState');
-        await page.select('#OriginState', 'CA');
+        // 页面加载完成后,需要等一段时间,让 ajax 完成。
+        // https://lmservicesext.tql.com/carrierdashboard.web/api/Location/GetAllCities 这个ajax耗时挺久
+        await page.waitFor(10000);
+        console.log('sleep 10 秒,让页面加载完成后的 GetAllCities 这个 ajax 请求完成。');
 
-        await page.waitForSelector('#DestinState');
-        await page.select('#DestinState', 'OR');
+        // 先选择 states ,会触发一个ajax ,把这个state下面的city都加载出来
+        // 此时页面会出现一个 loading,结束时,loading 就消失了
+        // origin
+        await page.waitForSelector('#oStates');
 
-        await page.waitForSelector('#avail_loads_table');
-        let content = await page.evaluate(() => {
-            return document.querySelector('#avail_loads_table').outerHTML;
+        let originCityValue = await page.evaluate(() => {
+            return document.querySelectorAll("#oStates option").forEach(element => {if((element as HTMLElement).innerText == "CA"){return (element as HTMLInputElement).value}});
         });
-        console.log(content);
 
-        const $ = cheerio.load(content);
+        console.log('origin city value:' + originCityValue);
+        await page.select('#oStates', originCityValue);
+
+
+        // 等 ajax 完成
+        console.log('sleep 5 秒,等 ajax 获取所有的 origin cities');
+        page.waitFor(5000);
+
+        // 再输入city
+        await page.waitForSelector('#ocities');
+        await page.type('#ocities', 'Atwater', {delay: 1000});
+
+        // 此时应该出现智能提示
+        let originCities = await page.$$('#SLoCities ul li');
+        // 判断 originCities 的个数,如果为0或者大于1, 就放弃这个搜索任务吧
+        // 如果只有一个,就 click
+        if (originCities.length == 1) {
+            await originCities[0].click();
+            console.log('找到一个 origin city');
+        } else {
+            console.log('没有找到 origin city');
+            return;
+        }
+
+        // origin radius
+        await page.waitForSelector('#orgRadius');
+        // 取值范围: 25, 50, 75, 100, 150, 200, 250, 300
+        await page.select('#orgRadius', '150');
+
+        // destination
+        await page.waitForSelector('#dStates');
+        await page.select('#dStates', 'WA');
+
+        // 等 ajax 完成
+        page.waitFor(5000);
+        console.log('sleep 5 秒,等 ajax 获取所有 destination cities');
+
+        // 再输入city
+        await page.waitForSelector('#dcities');
+        await page.type('#dcities', 'Sumner');
+
+        // 此时应该出现智能提示
+        let destinationCities = await page.$$('#SLdCities ul li');
+        // 判断 orginCities 的个数,如果为0或者大于1, 就放弃这个搜索任务吧
+        // 如果只有一个,就 click
+        if (destinationCities.length == 1) {
+            await destinationCities[0].click();
+            console.log('找到一个 destination city');
+        } else {
+            console.log('没有找到 destination city');
+            return;
+        }
+
+        // destination radius
+        await page.waitForSelector('#destRadius');
+        // 取值范围: 25, 50, 75, 100, 150, 200, 250, 300
+        await page.select('#destRadius', '150');
+
+
+        // equipment
+        await page.waitForSelector('#TrailerTypes');
+        await page.select('#TrailerTypes', '0'); // 0 是 All 1 是 Reefer 2 是 Van
+
+        // date
+        await page.waitForSelector('#datepicker');
+        await page.type('#datepicker', '05/07/2020');
+
+        // 开始搜索
+        console.log('开始搜索');
+
+        let searchButton = await page.waitForSelector('#SLSrchBtn');
+        await searchButton.click();
+
+        // 等待搜索结果
+        console.log('等待搜索结果');
+        await page.waitForSelector('div.ag-body');
+
+        let resultHtml = await page.evaluate(() => {
+            return document.querySelector('div.ag-body').innerHTML;
+        });
+        console.log(resultHtml);
+
+        const $ = cheerio.load(resultHtml);
         console.log('从 table 里面拿数据');
 
-        // console.log($('tbody tr').length);
-
-        $('tbody tr').each((_index, item) => {
-            // $(item).find('td').each((k, v) => {
-            //
-            //     console.log(k);
-            //     console.log($(v).text());
-            //
-            //     if (k == 6) {
-            //         const time = '1588242715'
-            //
-            //         const t = new Date( Number(time) * 1000 );
-            //         console.log(t)
-            //     }
-            // });
-
-            const tds = $(item).find('td');
-            console.log($(tds[0]).text());
-
-            console.log('\n');
-        });
 
         await browser.close();
         console.log('done');

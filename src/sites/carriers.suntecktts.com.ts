@@ -67,7 +67,9 @@ export class Sunteck extends SearchSite {
 
         await this.page.select(
             '#load_board_search_consigneeRadius',
-            String(getRadiusFromValues(Number(task.criteria.destination_radius), [50, 100, 200, 300]))
+            String(
+                getRadiusFromValues(Number(task.criteria.destination_radius), [50, 100, 200, 300])
+            )
         );
 
         await this.page.click('[type=submit]');
@@ -122,7 +124,7 @@ export class Sunteck extends SearchSite {
                 phone,
                 email,
                 load
-            ] =  Array.from($(element).find('td')).map((el) => $(el).text());
+            ] = Array.from($(element).find('td')).map((el) => $(el).text());
 
             result.push({
                 origin_radius: '',

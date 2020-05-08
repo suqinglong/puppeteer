@@ -88,6 +88,7 @@ export class Werner extends SearchSite {
             );
             result.push({
                 date: dateformat(new Date(Date.parse(pickup)), 'yyyy-mm-dd HH:MM'),
+                pickup,
                 equipment,
                 origin: [originCity, originState].join(', '),
                 origin_radius: '',

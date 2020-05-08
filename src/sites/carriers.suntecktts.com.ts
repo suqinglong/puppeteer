@@ -122,11 +122,7 @@ export class Sunteck extends SearchSite {
                 phone,
                 email,
                 load
-            ] = Array.from(
-                $(element).find('td')
-            ).map((_index, el) => {
-                return $(el).text();
-            });
+            ] =  Array.from($(element).find('td')).map((el) => $(el).text());
 
             result.push({
                 origin_radius: '',

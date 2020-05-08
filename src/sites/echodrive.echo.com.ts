@@ -6,8 +6,8 @@ import { Trim, ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 
 export class Echo extends SearchSite {
-    public static siteName = 'Echo Driver';
-    protected debugPre = 'Echo Driver';
+    public static siteName = 'Echo';
+    protected debugPre = 'Echo';
     private loginPage = 'https://echodrive.echo.com/v2/login';
     private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
 

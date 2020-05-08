@@ -9,16 +9,7 @@ import { TQL } from './carrierdashboard.tql.com';
 import { SearchSite } from './search.site';
 import puppeteer from 'puppeteer';
 
-const sites = [
-    Echo,
-    DAT,
-    JBHunt,
-    CHRobinson,
-    Coyote,
-    Sunteck,
-    Werner,
-    TQL
-];
+const sites = [Echo, DAT, JBHunt, CHRobinson, Coyote, Sunteck, Werner, TQL];
 
 export class SiteManager {
     public static getSite(siteName: string): new (browser: puppeteer.Browser) => SearchSite {

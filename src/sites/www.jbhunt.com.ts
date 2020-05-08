@@ -6,8 +6,8 @@ import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 
 export class JBHunt extends SearchSite {
-    public static siteName = 'JB Hunt 360';
-    protected debugPre = 'JB Hunt 360';
+    public static siteName = 'JB Hunt';
+    protected debugPre = 'JB Hunt';
     private searchPage = 'https://www.jbhunt.com/loadboard/load-board/map';
 
     protected async search(task: ITASK) {

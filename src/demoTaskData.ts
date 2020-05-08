@@ -121,19 +121,19 @@ export const TaskData = {
     },
 
     TQL: {
-        task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
+        task_id: '06f3f3fb279ff7d831d1acc8a1bbda40',
         site: 'TQL',
         user_id: '3',
         email: 'ajgtransportation@gmail.com',
         password: 'KeepLoaded19',
-        time: time,
         criteria: {
-            origin: 'Atwater, CA',
-            origin_radius: '250',
-            destination: 'Sumner, WA',
-            destination_radius: '250',
-            pick_up_date: '2020-04-30',
+            origin: 'Sunrise, FL',
+            origin_radius: '100',
+            destination: 'Hazelwood, MO',
+            destination_radius: '100',
+            pick_up_date: '2020-05-8',
             equipment: 'Van'
-        }
+        },
+        time
     }
 };

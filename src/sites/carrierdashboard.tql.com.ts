@@ -25,7 +25,13 @@ export class TQL extends SearchSite {
         const [originCity, originState] = task.criteria.origin
             .split(',')
             .map((item) => item.trim());
-        await this.page.waitForSelector('#oStates');
+        await this.page.waitForSelector('#oStates', {
+          timeout: 20000
+        }).catch(e => {
+          throw this.generateError('search', 'wait for selector oStates')
+        });
+
+        this.log.log('select origin state')
         const originStateValue = await this.page.evaluate((originState) => {
             let value = '';
             document.querySelectorAll('#oStates option').forEach((element) => {
@@ -37,6 +43,7 @@ export class TQL extends SearchSite {
         }, originState);
         await this.page.select('#oStates', originStateValue);
         // select city
+        this.log.log('select origin city', originCity)
         await this.page.type('#ocities', originCity, { delay: 1000 });
         // wait for popup tip
         const originCities = await this.page.$$('#SLoCities ul li');
@@ -48,6 +55,7 @@ export class TQL extends SearchSite {
 
         // origin radius
         // 25, 50, 75, 100, 150, 200, 250, 300
+        this.log.log('select origin radius')
         const radiusValues = [25, 50, 75, 100, 150, 200, 250, 300];
         const originRadius = getRadiusFromValues(Number(task.criteria.origin_radius), radiusValues);
         const originRadiusValue = await this.page.evaluate((originRadius) => {
@@ -61,7 +69,9 @@ export class TQL extends SearchSite {
         }, String(originRadius));
         await this.page.select('#orgRadius', originRadiusValue);
 
+
         // destination
+        this.log.log('select origin destination state')
         const [destCity, destState] = task.criteria.destination
             .split(',')
             .map((item) => item.trim());
@@ -77,6 +87,7 @@ export class TQL extends SearchSite {
             return value;
         }, destState);
         await this.page.select('#dStates', destinationStateValue);
+        this.log.log('select origin destination city')
         await this.page.type('#dcities', destCity, { delay: 1000 });
         let destinationCities = await this.page.$$('#SLdCities ul li');
         if (destinationCities.length === 1) {
@@ -102,6 +113,7 @@ export class TQL extends SearchSite {
         await this.page.select('#destRadius', destRadiusValue);
 
         // equipment
+        this.log.log('select origin equipment')
         await this.page.waitForSelector('#TrailerTypes');
         await this.page.select(
             '#TrailerTypes',
@@ -109,19 +121,24 @@ export class TQL extends SearchSite {
         ); // 0 是 All 1 是 Reefer 2 是 Van
 
         // date
+        this.log.log('select origin date')
         await this.page.waitForSelector('#datepicker');
         await this.page.type('#datepicker', dateformat(task.criteria.pick_up_date, 'mm/dd/yyyy'));
 
         // click search button
+        this.log.log('click search button')
         await this.page.evaluate(() => {
             let btn: HTMLElement = document.querySelector('#SLSrchBtn') as HTMLElement;
             btn.click();
         });
 
+
+        this.log.log('waitForResponse')
         const response = await this.page.waitForResponse(
             'https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState'
         );
         const responseData = await response.json();
+        this.log.log('waitForResponse done')
         await PostSearchData(
             ModifyPostData(task, this.getDataFromResponse(responseData['PostedLoads']))
         ).then((res: any) => {

@@ -26,7 +26,7 @@ export class Werner extends SearchSite {
         await this.page.select('#OriginState', originState);
 
         await this.page.waitForSelector('#DestinState');
-        const [, destState] = task.criteria.origin.split(',').map((item) => item.trim());
+        const [, destState] = task.criteria.destination.split(',').map((item) => item.trim());
         await this.page.select('#DestinState', destState);
 
         await Promise.race([
@@ -38,12 +38,12 @@ export class Werner extends SearchSite {
             .then((raceResult) => {
                 if (raceResult === 'noData') {
                     this.log.log('There is no data');
-                    this.generateError('noData', 'There is no data');
+                    throw this.generateError('noData', 'There is no data');
                 }
             })
             .catch((e) => {
                 this.log.log('Promise race error', e);
-                this.generateError('search', 'Promise race error');
+                throw this.generateError('search', 'Promise race error');
             });
 
         // expend all child
@@ -58,7 +58,6 @@ export class Werner extends SearchSite {
         const content = await this.page.evaluate(() => {
             return document.querySelector('#avail_loads_table').outerHTML;
         });
-        this.log.log('result html', content);
         const $ = cheerio.load(content);
 
         await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {

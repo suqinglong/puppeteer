@@ -1,2 +1,2 @@
 import { TaskData } from './demoTaskData';
-export const TestData = TaskData['TQL'];
+export const TestData = TaskData['Werner'];

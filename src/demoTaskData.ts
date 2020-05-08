@@ -12,7 +12,7 @@ export const TaskData = {
             origin_radius: '100',
             destination: '',
             destination_radius: '100',
-            pick_up_date: '2020-04-24',
+            pick_up_date: '2020-05-08',
             equipment: 'Van'
         },
         time: time
@@ -29,7 +29,7 @@ export const TaskData = {
             origin_radius: '100',
             destination: 'New York, NY',
             destination_radius: '100',
-            pick_up_date: '2020-04-28',
+            pick_up_date: '2020-05-08',
             equipment: 'Van'
         },
         time: time
@@ -63,7 +63,7 @@ export const TaskData = {
             origin_radius: '250',
             destination: 'Sumner, WA',
             destination_radius: '250',
-            pick_up_date: '2020-04-27,2020-04-28',
+            pick_up_date: '2020-05-08',
             equipment: 'Van'
         },
         time: time

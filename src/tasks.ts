@@ -53,7 +53,7 @@ export class Tasks implements ITasksClass {
     private async developPrepare() {
         await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(TaskData['Werner']);
+            const taskResult = JSON.stringify(TaskData['Navisphere']);
             await SingletonTedis.pushTask(taskResult);
         }
     }

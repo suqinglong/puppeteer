@@ -1,16 +1,14 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './search.site';
-import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
 import { userAgent, viewPort } from '../settings';
-import { Log } from '../tools/log';
 import { TimeoutError } from 'puppeteer/Errors';
 
 export class PowerDatComSite extends SearchSite {
     public static siteName = 'DAT';
-    protected debugPre = 'Echo Driver';
+    protected debugPre = 'DAT';
     private loginPage = 'https://power.dat.com/login';
     private searchPage = 'https://power.dat.com/search/loads';
 

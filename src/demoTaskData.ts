@@ -52,9 +52,9 @@ export const TaskData = {
         time: time
     },
 
-    Navisphere: {
+    'CH Robinson': {
         task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
-        site: 'Navisphere',
+        site: 'CH Robinson',
         user_id: '3',
         email: 'brentprimelink',
         password: 'Annaleigh1',

@@ -8,8 +8,8 @@ import dateformat from 'dateformat';
 import { TimeoutError } from 'puppeteer/Errors';
 
 export class NavispherecarrierCom extends SearchSite {
-    public static siteName = 'Navisphere';
-    protected debugPre = 'Navisphere';
+    public static siteName = 'CH Robinson';
+    protected debugPre = 'CH Robinson';
     private loginPage = 'https://www.navispherecarrier.com/login';
     private host = 'https://www.navispherecarrier.com';
 

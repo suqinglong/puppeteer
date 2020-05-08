@@ -150,7 +150,7 @@ export class TQL extends SearchSite {
             });
         });
 
-        const responseData = await response.json();
+        const responseData = await (response as Response).json();
         this.log.log('waitForResponse done');
         await PostSearchData(
             ModifyPostData(task, this.getDataFromResponse(responseData['PostedLoads']))

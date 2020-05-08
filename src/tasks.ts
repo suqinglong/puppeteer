@@ -1,7 +1,7 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
-import { TaskData } from './demoTaskData';
+import { TestData } from './test.config';
 
 export class Tasks implements ITasksClass {
     private mode: IMode = getMode();
@@ -53,7 +53,7 @@ export class Tasks implements ITasksClass {
     private async developPrepare() {
         await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(TaskData['Navisphere']);
+            const taskResult = JSON.stringify(TestData);
             await SingletonTedis.pushTask(taskResult);
         }
     }

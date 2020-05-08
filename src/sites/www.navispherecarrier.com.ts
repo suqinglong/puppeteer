@@ -56,7 +56,7 @@ export class NavispherecarrierCom extends SearchSite {
     }
 
     protected async search(task: ITASK) {
-        this.log.log('begin search')
+        this.log.log('begin search');
         // check task origin
         if (
             task.criteria.origin.indexOf(',') === -1 ||

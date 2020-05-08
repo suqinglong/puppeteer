@@ -62,7 +62,9 @@ export class CarriersSunteckttsCom extends SearchSite {
         }
         await this.page.select('#load_board_search_shipperRadius', String(shipperRadius));
 
-        const [destCity, destState] = task.criteria.destination.split(',').map((item) => item.trim());
+        const [destCity, destState] = task.criteria.destination
+            .split(',')
+            .map((item) => item.trim());
         await this.page.type('#load_board_search_consigneeCity', destCity);
         await this.page.select('#load_board_search_consigneeState', destState);
         // 50, 100, 200, 300
@@ -83,11 +85,13 @@ export class CarriersSunteckttsCom extends SearchSite {
             (document.querySelector('#autoRefresh') as HTMLInputElement).checked = false;
         });
 
-        await this.page.waitForSelector('#js-load-board-results tbody tr[role=row]', {
-            timeout: 5000
-        }).catch(e => {
-            throw this.generateError('noData', 'have no data');
-        })
+        await this.page
+            .waitForSelector('#js-load-board-results tbody tr[role=row]', {
+                timeout: 5000
+            })
+            .catch((e) => {
+                throw this.generateError('noData', 'have no data');
+            });
 
         const resultHtml = await this.page.$eval(
             '#js-load-board-results',

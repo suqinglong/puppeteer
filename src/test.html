@@ -1,62 +1,229 @@
-<table id="js-load-board-results"
-    class="table table-striped table-hover table-sm nowrap dataTable no-footer dtr-inline collapsed" role="grid"
-    aria-describedby="js-load-board-results_info">
+<table
+    id="js-load-board-results"
+    class="table table-striped table-hover table-sm nowrap dataTable no-footer dtr-inline collapsed"
+    role="grid"
+    aria-describedby="js-load-board-results_info"
+>
     <thead>
         <tr role="row">
-            <th scope="col" class="sorting_asc" tabindex="0" aria-controls="js-load-board-results" rowspan="1"
-                colspan="1" aria-sort="ascending" aria-label="Ship Dt: activate to sort column descending"
-                data-column-index="0"><span class="text-uppercase">Ship Dt</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Method: activate to sort column ascending" data-column-index="1"><span
-                    class="text-uppercase">Method</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Equip: activate to sort column ascending" data-column-index="2"><span
-                    class="text-uppercase">Equip</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Equip Size: activate to sort column ascending" data-column-index="3"><span
-                    class="text-uppercase">Equip Size</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Ship City: activate to sort column ascending" data-column-index="4"><span
-                    class="text-uppercase">Ship City</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="S St: activate to sort column ascending" data-column-index="5"><span
-                    class="text-uppercase">S St</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Dest City: activate to sort column ascending" data-column-index="6"><span
-                    class="text-uppercase">Dest City</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="D St: activate to sort column ascending" data-column-index="7"><span
-                    class="text-uppercase">D St</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Deliv Dt: activate to sort column ascending" data-column-index="8"><span
-                    class="text-uppercase">Deliv Dt</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Stops: activate to sort column ascending" data-column-index="9"><span
-                    class="text-uppercase">Stops</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Pieces: activate to sort column ascending" data-column-index="10"><span
-                    class="text-uppercase">Pieces</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Weight: activate to sort column ascending" data-column-index="11"><span
-                    class="text-uppercase">Weight</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Carr Rate: activate to sort column ascending" data-column-index="12"><span
-                    class="text-uppercase">Carr Rate</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Miles: activate to sort column ascending" data-column-index="13"><span
-                    class="text-uppercase">Miles</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Contact: activate to sort column ascending" data-column-index="14"><span
-                    class="text-uppercase">Contact</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Phone: activate to sort column ascending" data-column-index="15"><span
-                    class="text-uppercase">Phone</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Email: activate to sort column ascending" data-column-index="16"><span
-                    class="text-uppercase">Email</span></th>
-            <th scope="col" class="sorting" tabindex="0" aria-controls="js-load-board-results" rowspan="1" colspan="1"
-                aria-label="Load #: activate to sort column ascending" data-column-index="17" style="display: none;">
-                <span class="text-uppercase">Load #</span></th>
+            <th
+                scope="col"
+                class="sorting_asc"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-sort="ascending"
+                aria-label="Ship Dt: activate to sort column descending"
+                data-column-index="0"
+            >
+                <span class="text-uppercase">Ship Dt</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Method: activate to sort column ascending"
+                data-column-index="1"
+            >
+                <span class="text-uppercase">Method</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Equip: activate to sort column ascending"
+                data-column-index="2"
+            >
+                <span class="text-uppercase">Equip</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Equip Size: activate to sort column ascending"
+                data-column-index="3"
+            >
+                <span class="text-uppercase">Equip Size</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Ship City: activate to sort column ascending"
+                data-column-index="4"
+            >
+                <span class="text-uppercase">Ship City</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="S St: activate to sort column ascending"
+                data-column-index="5"
+            >
+                <span class="text-uppercase">S St</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Dest City: activate to sort column ascending"
+                data-column-index="6"
+            >
+                <span class="text-uppercase">Dest City</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="D St: activate to sort column ascending"
+                data-column-index="7"
+            >
+                <span class="text-uppercase">D St</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Deliv Dt: activate to sort column ascending"
+                data-column-index="8"
+            >
+                <span class="text-uppercase">Deliv Dt</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Stops: activate to sort column ascending"
+                data-column-index="9"
+            >
+                <span class="text-uppercase">Stops</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Pieces: activate to sort column ascending"
+                data-column-index="10"
+            >
+                <span class="text-uppercase">Pieces</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Weight: activate to sort column ascending"
+                data-column-index="11"
+            >
+                <span class="text-uppercase">Weight</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Carr Rate: activate to sort column ascending"
+                data-column-index="12"
+            >
+                <span class="text-uppercase">Carr Rate</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Miles: activate to sort column ascending"
+                data-column-index="13"
+            >
+                <span class="text-uppercase">Miles</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Contact: activate to sort column ascending"
+                data-column-index="14"
+            >
+                <span class="text-uppercase">Contact</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Phone: activate to sort column ascending"
+                data-column-index="15"
+            >
+                <span class="text-uppercase">Phone</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Email: activate to sort column ascending"
+                data-column-index="16"
+            >
+                <span class="text-uppercase">Email</span>
+            </th>
+            <th
+                scope="col"
+                class="sorting"
+                tabindex="0"
+                aria-controls="js-load-board-results"
+                rowspan="1"
+                colspan="1"
+                aria-label="Load #: activate to sort column ascending"
+                data-column-index="17"
+                style="display: none;"
+            >
+                <span class="text-uppercase">Load #</span>
+            </th>
         </tr>
     </thead>
     <tbody>

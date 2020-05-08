@@ -4,7 +4,8 @@ import { WWWJbhuntCom } from './www.jbhunt.com';
 import { NavispherecarrierCom } from './www.navispherecarrier.com';
 import { ConnectCoyoteCom } from './connect.coyote.com';
 import { CarriersSunteckttsCom } from './carriers.suntecktts.com';
-import { WwwWernerCom } from './www.werner.com'
+import { WwwWernerCom } from './www.werner.com';
+import { CarrierdashboardTqlCom } from './carrierdashboard.tql.com';
 import { SearchSite } from './search.site';
 import puppeteer from 'puppeteer';
 
@@ -15,7 +16,8 @@ const sites = [
     NavispherecarrierCom,
     ConnectCoyoteCom,
     CarriersSunteckttsCom,
-    WwwWernerCom
+    WwwWernerCom,
+    CarrierdashboardTqlCom
 ];
 
 export class SiteManager {

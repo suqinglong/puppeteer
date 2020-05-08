@@ -67,7 +67,30 @@ export function createUrl(baseUrl: string, search: { [key: string]: string | boo
 }
 
 export function xlsxParse(file: string) {
-    return xlsx.parse(file)[0]['data']
+    return xlsx.parse(file)[0]['data'];
 }
 
+export function getRadiusFromValues(radius: number, radiusValues: Array<number>) {
+    let result = 0;
+    const len = radiusValues.length;
 
+    if (radiusValues.indexOf(radius) > -1) {
+        return radius;
+    }
+
+    if (radius < radiusValues[0]) {
+        return radiusValues[0];
+    }
+
+    if (radius > radiusValues[len - 1]) {
+        return radiusValues[len - 1];
+    }
+
+    for (let i = 0; i < len - 1; i++) {
+        if (radius > radiusValues[i] && radius < radiusValues[i + 1]) {
+            result = radiusValues[i + 1];
+            break;
+        }
+    }
+    return result;
+}

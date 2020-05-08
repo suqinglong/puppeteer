@@ -2,11 +2,11 @@
 // // const fs = require('fs');
 // const dateformat = require('dateformat');
 // console.log(dateformat('2020-04-21', 'mmm-dd'));
-const fs = require('fs')
-const xlsx = require('node-xlsx')
+const fs = require('fs');
+const xlsx = require('node-xlsx');
 
-const data = xlsx.parse('./download/Coyote/Available Loads Export.xlsx')
-console.log('data', data[0].data)
+const data = xlsx.parse('./download/Coyote/Available Loads Export.xlsx');
+console.log('data', data[0].data);
 
 // async function test(num) {
 //     return new Promise((resolve) => {

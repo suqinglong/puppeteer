@@ -48,7 +48,7 @@ export abstract class SearchSite implements ISite {
     }
 
     protected prepare() {
-        this.log = new Log(this.debugPre)
+        this.log = new Log(this.debugPre);
     }
 
     protected async login(task: ITASK) {}

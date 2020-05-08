@@ -146,16 +146,19 @@ puppeteer
         // await browser.close();
         // console.log('done');
 
-
-
         // https://carrierdashboard.tql.com/#/LoadSearch ======================================================
         const page = await browser.newPage();
 
         page.once('load', () => console.log('搜索页面加载完成。'));
 
-        page.on('requestfinished', request => {
-            console.log('on request finished. url:' + request.url() + ' method: ' + request.method());
-            if (request.url() == "https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState") {
+        page.on('requestfinished', (request) => {
+            console.log(
+                'on request finished. url:' + request.url() + ' method: ' + request.method()
+            );
+            if (
+                request.url() ===
+                'https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState'
+            ) {
                 console.log('post data:' + request.postData());
             }
         });
@@ -175,18 +178,17 @@ puppeteer
         await page.waitForSelector('#oStates');
 
         let originStateValue = await page.evaluate(() => {
-            let value = ''
-            document.querySelectorAll("#oStates option").forEach(element => {
-                if ((element as HTMLElement).innerText === "CA") {
-                    value = (element as HTMLInputElement).value
+            let value = '';
+            document.querySelectorAll('#oStates option').forEach((element) => {
+                if ((element as HTMLElement).innerText === 'CA') {
+                    value = (element as HTMLInputElement).value;
                 }
             });
-            return value
+            return value;
         });
 
         console.log('origin state value:' + originStateValue);
         await page.select('#oStates', originStateValue);
-
 
         // 等 ajax 完成
         console.log('sleep 8 秒,等 ajax 获取所有的 origin cities');
@@ -214,9 +216,9 @@ puppeteer
 
         let originRadiusValue = await page.evaluate(() => {
             let value = '';
-            document.querySelectorAll("#orgRadius option").forEach(element => {
-                if ((element as HTMLElement).innerText === "150") {
-                    value = (element as HTMLInputElement).value
+            document.querySelectorAll('#orgRadius option').forEach((element) => {
+                if ((element as HTMLElement).innerText === '150') {
+                    value = (element as HTMLInputElement).value;
                 }
             });
             return value;
@@ -228,13 +230,13 @@ puppeteer
         await page.waitForSelector('#dStates');
 
         let destinationStateValue = await page.evaluate(() => {
-            let value = ''
-            document.querySelectorAll("#dStates option").forEach(element => {
-                if ((element as HTMLElement).innerText === "WA") {
-                    value = (element as HTMLInputElement).value
+            let value = '';
+            document.querySelectorAll('#dStates option').forEach((element) => {
+                if ((element as HTMLElement).innerText === 'WA') {
+                    value = (element as HTMLInputElement).value;
                 }
             });
-            return value
+            return value;
         });
 
         console.log('destination state value:' + destinationStateValue);
@@ -269,16 +271,15 @@ puppeteer
 
         let destinationRadiusValue = await page.evaluate(() => {
             let value = '';
-            document.querySelectorAll("#destRadius option").forEach(element => {
-                if ((element as HTMLElement).innerText === "150") {
-                    value = (element as HTMLInputElement).value
+            document.querySelectorAll('#destRadius option').forEach((element) => {
+                if ((element as HTMLElement).innerText === '150') {
+                    value = (element as HTMLInputElement).value;
                 }
             });
             return value;
         });
 
         await page.select('#destRadius', destinationRadiusValue);
-
 
         // equipment
         await page.waitForSelector('#TrailerTypes');
@@ -303,19 +304,17 @@ puppeteer
         await page.waitFor(10000);
         await page.waitForSelector('div.ag-body');
 
-        const resultHtml = await page.$eval('div.ag-body', e => e.innerHTML);
-
+        const resultHtml = await page.$eval('div.ag-body', (e) => e.innerHTML);
 
         console.log(resultHtml);
 
         const $ = cheerio.load(resultHtml);
-        
-        $('div.ag-row').each((_index, _item) => {
 
+        $('div.ag-row').each((_index, _item) => {
             const divs = $(_item).find('div');
 
             const postID = $(divs[1]).text();
-            console.log("post id:" + postID);
+            console.log('post id:' + postID);
 
             const pickDate = $(divs[2]).text();
             console.log(pickDate);
@@ -341,7 +340,7 @@ puppeteer
             const distance = $(divs[9]).text();
             console.log(distance);
 
-            console.log("\n");
+            console.log('\n');
         });
 
         // todo 点击左边的展开按钮就会显示extra信息, 但是我不知道怎么依次展开。。

@@ -5,7 +5,7 @@ import { PostSearchData } from '../api';
 import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 
-export class WwwWernerCom extends SearchSite {
+export class Werner extends SearchSite {
     public static siteName = 'Werner';
     public needLogin = false;
     protected debugPre = 'Werner';

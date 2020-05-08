@@ -5,9 +5,9 @@ import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import cheerio from 'cheerio';
 
-export class CarriersSunteckttsCom extends SearchSite {
-    public static siteName = 'Carriers';
-    protected debugPre = 'Carriers';
+export class Sunteck extends SearchSite {
+    public static siteName = 'Sunteck';
+    protected debugPre = 'Sunteck';
     private loginPage = 'https://carriers.suntecktts.com/login';
     private searchPage = 'https://carriers.suntecktts.com/freight/';
 

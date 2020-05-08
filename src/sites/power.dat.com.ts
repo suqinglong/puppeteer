@@ -6,7 +6,7 @@ import { GetDataFromHtml } from '../tools/power.data.com';
 import { userAgent, viewPort } from '../settings';
 import { TimeoutError } from 'puppeteer/Errors';
 
-export class PowerDatComSite extends SearchSite {
+export class DAT extends SearchSite {
     public static siteName = 'DAT';
     protected debugPre = 'DAT';
     private loginPage = 'https://power.dat.com/login';

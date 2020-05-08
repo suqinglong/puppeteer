@@ -7,7 +7,7 @@ import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat';
 import { TimeoutError } from 'puppeteer/Errors';
 
-export class NavispherecarrierCom extends SearchSite {
+export class CHRobinson extends SearchSite {
     public static siteName = 'CH Robinson';
     protected debugPre = 'CH Robinson';
     private loginPage = 'https://www.navispherecarrier.com/login';

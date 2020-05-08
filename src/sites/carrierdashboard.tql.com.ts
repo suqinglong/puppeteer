@@ -4,7 +4,7 @@ import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';
 
-export class CarrierdashboardTqlCom extends SearchSite {
+export class TQL extends SearchSite {
     public static siteName = 'TQL';
     protected debugPre = 'TQL';
     private searchPage = 'https://carrierdashboard.tql.com/#/LoadSearch';

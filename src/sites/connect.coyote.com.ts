@@ -6,7 +6,7 @@ import { createUrl, xlsxParse, ModifyPostData } from '../tools/index';
 import fs from 'fs';
 import path from 'path';
 
-export class ConnectCoyoteCom extends SearchSite {
+export class Coyote extends SearchSite {
     public static siteName = 'Coyote';
     public debugPre = 'Coyote';
     private loginPage =

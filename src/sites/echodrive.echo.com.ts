@@ -5,7 +5,7 @@ import cheerio from 'cheerio';
 import { Trim, ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 
-export class EchodriveEchoCom extends SearchSite {
+export class Echo extends SearchSite {
     public static siteName = 'Echo Driver';
     protected debugPre = 'Echo Driver';
     private loginPage = 'https://echodrive.echo.com/v2/login';

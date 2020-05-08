@@ -1,23 +1,23 @@
-import { PowerDatComSite } from './power.dat.com';
-import { EchodriveEchoCom } from './echodrive.echo.com';
+import { DAT } from './power.dat.com';
+import { Echo } from './echodrive.echo.com';
 import { WWWJbhuntCom } from './www.jbhunt.com';
-import { NavispherecarrierCom } from './www.navispherecarrier.com';
-import { ConnectCoyoteCom } from './connect.coyote.com';
-import { CarriersSunteckttsCom } from './carriers.suntecktts.com';
-import { WwwWernerCom } from './www.werner.com';
-import { CarrierdashboardTqlCom } from './carrierdashboard.tql.com';
+import { CHRobinson } from './www.navispherecarrier.com';
+import { Coyote } from './connect.coyote.com';
+import { Sunteck } from './carriers.suntecktts.com';
+import { Werner } from './www.werner.com';
+import { TQL } from './carrierdashboard.tql.com';
 import { SearchSite } from './search.site';
 import puppeteer from 'puppeteer';
 
 const sites = [
-    EchodriveEchoCom,
-    PowerDatComSite,
+    Echo,
+    DAT,
     WWWJbhuntCom,
-    NavispherecarrierCom,
-    ConnectCoyoteCom,
-    CarriersSunteckttsCom,
-    WwwWernerCom,
-    CarrierdashboardTqlCom
+    CHRobinson,
+    Coyote,
+    Sunteck,
+    Werner,
+    TQL
 ];
 
 export class SiteManager {

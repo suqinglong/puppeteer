@@ -5,7 +5,7 @@ import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 
-export class WWWJbhuntCom extends SearchSite {
+export class JBHunt extends SearchSite {
     public static siteName = 'JB Hunt 360';
     protected debugPre = 'JB Hunt 360';
     private searchPage = 'https://www.jbhunt.com/loadboard/load-board/map';

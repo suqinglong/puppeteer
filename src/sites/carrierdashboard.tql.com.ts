@@ -134,9 +134,14 @@ export class TQL extends SearchSite {
 
 
         this.log.log('waitForResponse')
+        this.page.on('requestfinished', (request) => {
+          this.log.log('requestfinished event:', request.url())
+        })
         const response = await this.page.waitForResponse(
             'https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState'
-        );
+        ).catch(e => {
+          throw this.generateError('search', 'wait for reponse timeout')
+        })
         const responseData = await response.json();
         this.log.log('waitForResponse done')
         await PostSearchData(

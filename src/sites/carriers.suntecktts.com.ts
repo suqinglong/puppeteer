@@ -1,7 +1,7 @@
 import { SearchSite } from './search.site';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat';
-import { ModifyPostData } from '../tools/index';
+import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';
 import cheerio from 'cheerio';
 
@@ -53,29 +53,22 @@ export class Sunteck extends SearchSite {
         await this.page.type('#load_board_search_shipperCity', originCity);
         await this.page.select('#load_board_search_shipperState', originState);
         // 50, 100, 200, 300
-        let shipperRadius = 50;
-        const shipperRadiusN = Math.ceil(Number(task.criteria.origin_radius) / 100);
-        if (shipperRadiusN > 1 && shipperRadiusN < 300) {
-            shipperRadius = shipperRadiusN * 100;
-        } else {
-            throw this.generateError('search', 'shipperRadius too big');
-        }
-        await this.page.select('#load_board_search_shipperRadius', String(shipperRadius));
+
+        await this.page.select(
+            '#load_board_search_shipperRadius',
+            String(getRadiusFromValues(Number(task.criteria.origin_radius), [50, 100, 200, 300]))
+        );
 
         const [destCity, destState] = task.criteria.destination
             .split(',')
             .map((item) => item.trim());
         await this.page.type('#load_board_search_consigneeCity', destCity);
         await this.page.select('#load_board_search_consigneeState', destState);
-        // 50, 100, 200, 300
-        let consigneeRadius = 50;
-        const consigneeRadiusN = Math.ceil(Number(task.criteria.destination_radius) / 100);
-        if (consigneeRadiusN > 1 && consigneeRadiusN < 300) {
-            consigneeRadius = consigneeRadiusN * 100;
-        } else {
-            throw this.generateError('search', 'shipperRadius too big');
-        }
-        await this.page.select('#load_board_search_consigneeRadius', String(consigneeRadius));
+
+        await this.page.select(
+            '#load_board_search_consigneeRadius',
+            String(getRadiusFromValues(Number(task.criteria.destination_radius), [50, 100, 200, 300]))
+        );
 
         await this.page.click('[type=submit]');
         this.log.log('click search button');

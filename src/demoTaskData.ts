@@ -86,9 +86,9 @@ export const TaskData = {
         time: time
     },
 
-    Carriers: {
+    Sunteck: {
         task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
-        site: 'Carriers',
+        site: 'Sunteck',
         user_id: '3',
         email: 'ajgtransportation@gmail.com',
         password: 'KeepLoaded19',

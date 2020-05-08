@@ -82,7 +82,7 @@ export class Sunteck extends SearchSite {
             .waitForSelector('#js-load-board-results tbody tr[role=row]', {
                 timeout: 5000
             })
-            .catch((e) => {
+            .catch(() => {
                 throw this.generateError('noData', 'have no data');
             });
 
@@ -100,8 +100,8 @@ export class Sunteck extends SearchSite {
         });
     }
 
-    private getDataFromHtml($: CheerioStatic, task: ITASK): Array<any> {
-        const result = [];
+    private getDataFromHtml($: CheerioStatic, task: ITASK): Array<IResultHTMLData> {
+        const result: Array<IResultHTMLData> = [];
         $('tbody tr[role=row]').each((_number, element) => {
             let [
                 date,
@@ -123,14 +123,14 @@ export class Sunteck extends SearchSite {
                 email,
                 load
             ] = Array.from(
-                $(element)
-                    .find('td')
-                    .map((_index, el) => {
-                        return $(el).text();
-                    })
-            );
+                $(element).find('td')
+            ).map((_index, el) => {
+                return $(el).text();
+            });
 
             result.push({
+                origin_radius: '',
+                destination_radius: '',
                 date,
                 method,
                 equipment,
@@ -142,7 +142,7 @@ export class Sunteck extends SearchSite {
                 pieces,
                 weight,
                 carrRate,
-                miles,
+                distance: miles,
                 contact,
                 phone,
                 email,

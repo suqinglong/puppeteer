@@ -1,6 +1,6 @@
 import { DAT } from './power.dat.com';
 import { Echo } from './echodrive.echo.com';
-import { WWWJbhuntCom } from './www.jbhunt.com';
+import { JBHunt } from './www.jbhunt.com';
 import { CHRobinson } from './www.navispherecarrier.com';
 import { Coyote } from './connect.coyote.com';
 import { Sunteck } from './carriers.suntecktts.com';
@@ -12,7 +12,7 @@ import puppeteer from 'puppeteer';
 const sites = [
     Echo,
     DAT,
-    WWWJbhuntCom,
+    JBHunt,
     CHRobinson,
     Coyote,
     Sunteck,

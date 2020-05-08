@@ -236,6 +236,7 @@ export class NavispherecarrierCom extends SearchSite {
                 origin_radius,
                 destination,
                 dropOff,
+                destination_radius,
                 weight,
                 distance,
                 equipment,
@@ -254,7 +255,7 @@ export class NavispherecarrierCom extends SearchSite {
                 distance,
                 equipment,
                 endorsement,
-                destination_radius: ''
+                destination_radius
             });
         });
         return result;

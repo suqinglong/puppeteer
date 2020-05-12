@@ -1,5 +1,4 @@
-import { SearchSite } from './search.site';
-import { userAgent, viewPort } from '../settings';
+import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';
@@ -7,20 +6,9 @@ import { PostSearchData } from '../api';
 export class TQL extends SearchSite {
     public static siteName = 'TQL';
     protected debugPre = 'TQL';
-    private searchPage = 'https://carrierdashboard.tql.com/#/LoadSearch';
-    protected async search(task: ITASK) {
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page
-            .goto(this.searchPage, {
-                timeout: 20000
-            })
-            .catch(() => {
-                throw this.generateError('search', 'load search page timeout');
-            });
-        this.log.log('search loaded');
+    protected searchPage = 'https://carrierdashboard.tql.com/#/LoadSearch';
 
+    protected async search(task: ITASK) {
         // select origin state, city
         const [originCity, originState] = task.criteria.origin
             .split(',')
@@ -134,11 +122,7 @@ export class TQL extends SearchSite {
         });
 
         this.log.log('waitForResponse');
-        this.page.on('requestfinished', (request) => {
-            this.log.log('requestfinished event:', request.url());
-        });
-
-        const response = await new Promise((resolve) => {
+        const response = await new Promise((resolve, reject) => {
             this.page.on('response', (resp) => {
                 if (
                     resp.url() ===
@@ -148,6 +132,11 @@ export class TQL extends SearchSite {
                     resolve(resp);
                 }
             });
+            setTimeout(() => {
+                reject(this.generateError('search', 'wait for response'));
+            }, 10000);
+        }).catch((e) => {
+            throw this.generateError('search', 'wait for response');
         });
 
         const responseData = await (response as Response).json();

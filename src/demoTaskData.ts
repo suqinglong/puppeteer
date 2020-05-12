@@ -1,4 +1,7 @@
 const time = parseInt(String(Number(new Date()) / 1000), 10);
+import dateFormat from 'dateformat';
+
+const pickUpDate = dateFormat(new Date(), 'yyyy-mm-dd');
 
 export const TaskData = {
     'Echo Driver': {
@@ -132,6 +135,23 @@ export const TaskData = {
             destination: 'Hazelwood, MO',
             destination_radius: '100',
             pick_up_date: '2020-05-8',
+            equipment: 'Van'
+        },
+        time
+    },
+
+    'Uber Freight': {
+        task_id: '06f3f3fb279ff7d831d1acc8a1bbda40',
+        site: 'Uber Freight',
+        user_id: '3',
+        email: 'primelinkexpress@live.com',
+        password: 'Prime513@',
+        criteria: {
+            origin: 'Sunrise, FL',
+            origin_radius: '100',
+            destination: 'Lyndhurst, VA',
+            destination_radius: '100',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time

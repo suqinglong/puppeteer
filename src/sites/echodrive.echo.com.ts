@@ -1,4 +1,4 @@
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { SiteError } from '../error';
 import dateformat from 'dateformat';
 import cheerio from 'cheerio';
@@ -8,13 +8,10 @@ import { PostSearchData } from '../api';
 export class Echo extends SearchSite {
     public static siteName = 'Echo';
     protected debugPre = 'Echo';
-    private loginPage = 'https://echodrive.echo.com/v2/login';
-    private searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
+    protected loginPage = 'https://echodrive.echo.com/v2/login';
+    protected searchPage = 'https://echodrive.echo.com/v2/carrier/3275/availableLoads';
 
     protected async login(task: ITASK) {
-        console.log('EchodriveEchoCom  begin prepare');
-        this.page = await this.browser.newPage();
-        await this.page.goto(this.loginPage);
         await this.page.type('#email-input', task.email);
         await this.page.type('#password-input', task.password);
         await Promise.all([
@@ -29,8 +26,6 @@ export class Echo extends SearchSite {
     }
 
     protected async search(task: ITASK) {
-        this.page = await this.browser.newPage();
-        await this.page.goto(this.searchPage);
         await this.page.waitForSelector('.search-btn', {
             timeout: 5000
         });

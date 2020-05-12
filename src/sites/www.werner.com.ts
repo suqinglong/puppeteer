@@ -1,26 +1,15 @@
 import cheerio from 'cheerio';
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 
 export class Werner extends SearchSite {
     public static siteName = 'Werner';
-    public needLogin = false;
     protected debugPre = 'Werner';
-    private searchPage = 'http://65.247.121.34/content/carriers/available_loads/';
+    protected searchPage = 'http://65.247.121.34/content/carriers/available_loads/';
 
     protected async search(task: ITASK) {
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-
-        await this.page.goto(this.searchPage, {
-            timeout: 40000,
-            waitUntil: 'load'
-        });
-
         await this.page.waitForSelector('#OriginState');
         const [, originState] = task.criteria.origin.split(',').map((item) => item.trim());
         await this.page.select('#OriginState', originState);

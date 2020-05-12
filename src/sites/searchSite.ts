@@ -4,22 +4,25 @@ import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
 import { useScreenshot } from '../tools/index';
 import { Log } from '../tools/log';
+import { userAgent, viewPort } from '../settings';
 
 export abstract class SearchSite implements ISite {
     public static siteName: string;
-    public needLogin = true;
     protected debugPre = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
     protected isUseScreenshot = useScreenshot() === 'yes';
     protected log: Log;
+    protected loginPage: string;
+    protected searchPage: string;
 
     public constructor(browser: puppeteer.Browser) {
         this.browser = browser;
     }
 
     public async doLogin(task: ITASK) {
-        this.prepare();
+        if (!this.loginPage) return;
+        await this.loginPrepare(task);
         try {
             await this.login(task);
         } catch (e) {
@@ -30,7 +33,7 @@ export abstract class SearchSite implements ISite {
     }
 
     public async doSearch(task: ITASK) {
-        this.prepare();
+        await this.searchPrepare(task);
         try {
             await this.search(task);
         } catch (e) {
@@ -47,8 +50,22 @@ export abstract class SearchSite implements ISite {
         // this.page && this.page.close();
     }
 
-    protected prepare() {
+    protected async loginPrepare(task: ITASK) {
         this.log = new Log(this.debugPre);
+        this.log.log('loginPrepare');
+        this.page = await this.browser.newPage();
+        await this.page.setViewport(viewPort);
+        await this.page.setUserAgent(userAgent);
+        await this.page.goto(this.loginPage, { timeout: 20000 });
+    }
+
+    protected async searchPrepare(task: ITASK) {
+        this.log = new Log(this.debugPre);
+        this.log.log('searchPrepare');
+        this.page = await this.browser.newPage();
+        await this.page.setViewport(viewPort);
+        await this.page.setUserAgent(userAgent);
+        await this.page.goto(this.searchPage, { timeout: 20000 });
     }
 
     protected async login(task: ITASK) {}

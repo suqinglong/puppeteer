@@ -1,5 +1,5 @@
 import cheerio from 'cheerio';
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
@@ -9,20 +9,11 @@ import { TimeoutError } from 'puppeteer/Errors';
 export class DAT extends SearchSite {
     public static siteName = 'DAT';
     protected debugPre = 'DAT';
-    private loginPage = 'https://power.dat.com/login';
-    private searchPage = 'https://power.dat.com/search/loads';
+    protected loginPage = 'https://power.dat.com/login';
+    protected searchPage = 'https://power.dat.com/search/loads';
 
     public async login(task: ITASK) {
         this.log.log('login begin');
-
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-
-        await this.page.goto(this.loginPage, {
-            timeout: 10000,
-            waitUntil: 'load'
-        });
 
         await this.page.waitForSelector('#username');
         await this.page.type('#username', task.email);
@@ -44,14 +35,7 @@ export class DAT extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        // new page, goto search url, wait for loaded
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage, { waitUntil: 'load' }).catch((e) => {
-            this.log.log('search page loaded', e);
-            throw this.generateError('search', 'load search page');
-        });
+        this.log.log('search page loaded')
 
         // clear page popup
         await this.page.click('.carriers .search').catch((e) => {

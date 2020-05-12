@@ -16,19 +16,16 @@ export class Tasks implements ITasksClass {
             if (Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
                 continue;
             }
-            console.log('task', task);
+            console.log('get task', task);
             let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
-            console.log('have browserWSEndpoint', browserWSEndpoint);
             // if no browser then create
             if (!browserWSEndpoint) {
-                console.log('no browserWSEndpoint');
+                console.log('create browserWSEndpoint');
                 if (await SingletonTedis.getCreateBrowserLock(task.user_id)) {
                     browserWSEndpoint = await this.search.createBrowser(task);
-                    console.log('createBrowser end');
                     SingletonTedis.setBrowserKey(task.user_id, browserWSEndpoint);
                     await SingletonTedis.deleteBrowserLock(task.user_id);
                 } else {
-                    console.log('not getCreateBrowserLock');
                     while (true) {
                         browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
                         if (browserWSEndpoint) {

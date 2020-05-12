@@ -1,6 +1,6 @@
 import cheerio from 'cheerio';
 import puppeteer from 'puppeteer';
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
@@ -8,21 +8,9 @@ import { userAgent, viewPort, waitingTimeout } from '../settings';
 export class JBHunt extends SearchSite {
     public static siteName = 'JB Hunt';
     protected debugPre = 'JB Hunt';
-    private searchPage = 'https://www.jbhunt.com/loadboard/load-board/map';
+    protected searchPage = 'https://www.jbhunt.com/loadboard/load-board/map';
 
     protected async search(task: ITASK) {
-        this.page = await this.browser.newPage();
-        this.page.setDefaultNavigationTimeout(0);
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage, {
-            timeout: waitingTimeout()
-        });
-
-        this.page.on('close', (e) => {
-            this.log.log('close page', e);
-        });
-
         await this.page.click('p-dropdown[formcontrolname="equipmentType"]');
         await this.page.waitFor(500);
         await this.page.click('[role="option"][aria-label="Dry Van"]');

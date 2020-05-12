@@ -1,26 +1,20 @@
 import cheerio from 'cheerio';
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { userAgent, viewPort, waitingTimeout } from '../settings';
+import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 import { TimeoutError } from 'puppeteer/Errors';
 
 export class CHRobinson extends SearchSite {
     public static siteName = 'CH Robinson';
     protected debugPre = 'CH Robinson';
-    private loginPage = 'https://www.navispherecarrier.com/login';
+    protected loginPage = 'https://www.navispherecarrier.com/login';
+    protected searchPage = ''
     private host = 'https://www.navispherecarrier.com';
 
     protected async login(task: ITASK) {
-        this.log.log('login begin');
-
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-
-        await this.page.goto(this.loginPage, { waitUntil: 'load', timeout: waitingTimeout() });
         this.log.log('login page loaded');
 
         await this.page
@@ -55,8 +49,7 @@ export class CHRobinson extends SearchSite {
         await this.removeUserFromLogoutList(task);
     }
 
-    protected async search(task: ITASK) {
-        this.log.log('begin search');
+    protected async loginPrepare(task: ITASK) {
         // check task origin
         if (
             task.criteria.origin.indexOf(',') === -1 ||
@@ -91,17 +84,12 @@ export class CHRobinson extends SearchSite {
         Object.keys(search).forEach((key) => {
             searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
         });
-        const searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1);
-        this.log.log('searchPage', searchPage);
+        this.searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1);
+        await super.searchPrepare(task)
+    }
 
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(searchPage, {
-            timeout: waitingTimeout(),
-            waitUntil: 'load'
-        });
-
+    protected async search(task: ITASK) {
+        this.log.log('begin search');
         await this.page
             .waitForSelector('.loading-indicator', {
                 timeout: 10000,

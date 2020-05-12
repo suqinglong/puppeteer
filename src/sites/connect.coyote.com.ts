@@ -1,4 +1,4 @@
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 import { PostSearchData } from '../api';
@@ -9,18 +9,12 @@ import path from 'path';
 export class Coyote extends SearchSite {
     public static siteName = 'Coyote';
     public debugPre = 'Coyote';
-    private loginPage =
+    protected loginPage =
         'https://api.coyote.com/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fauthority%3Dhttps%253A%252F%252Fapi.coyote.com%26client_id%3Dcoyote_connect_client%26redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26response_type%3Did_token%2520token%26scope%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%2520openid%26post_logout_redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26acr_values%26state%3D%252F%26nonce%3Dhttps%253A%252F%252Fconnect.coyote.com';
     private downloadPath = `./download/Coyote`;
 
     protected async login(task: ITASK) {
-        this.log.log('login begin');
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.loginPage, { timeout: 20000 });
         this.log.log('login page loaded');
-
         await this.page
             .waitForSelector('#Username', {
                 timeout: 5000

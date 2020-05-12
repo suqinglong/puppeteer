@@ -1,4 +1,4 @@
-import { SearchSite } from './search.site';
+import { SearchSite } from './searchSite';
 import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
@@ -8,15 +8,11 @@ import cheerio from 'cheerio';
 export class Sunteck extends SearchSite {
     public static siteName = 'Sunteck';
     protected debugPre = 'Sunteck';
-    private loginPage = 'https://carriers.suntecktts.com/login';
-    private searchPage = 'https://carriers.suntecktts.com/freight/';
+    protected loginPage = 'https://carriers.suntecktts.com/login';
+    protected searchPage = 'https://carriers.suntecktts.com/freight/';
 
     protected async login(task: ITASK) {
         this.log.log('login begin');
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.loginPage, { timeout: waitingTimeout() });
         await this.page.waitForSelector('#_submit:not(:disabled)', {
             timeout: 20000
         });
@@ -29,13 +25,6 @@ export class Sunteck extends SearchSite {
     }
 
     protected async search(task: ITASK) {
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage, {
-            timeout: 20000
-        });
-
         const pickUpDate = dateformat(task.criteria.pick_up_date.split(',')[0], 'mm/dd/yyyy');
         await this.page
             .evaluate((pickUpDate: string) => {

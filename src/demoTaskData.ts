@@ -147,9 +147,9 @@ export const TaskData = {
         email: 'primelinkexpress@live.com',
         password: 'Prime513@',
         criteria: {
-            origin: 'Sunrise, FL',
+            origin: 'Linden, NJ',
             origin_radius: '100',
-            destination: 'Lyndhurst, VA',
+            destination: 'Lowell, IN',
             destination_radius: '100',
             pick_up_date: pickUpDate,
             equipment: 'Van'

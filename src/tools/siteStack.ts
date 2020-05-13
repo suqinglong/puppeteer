@@ -1,50 +1,77 @@
 import puppeteer from 'puppeteer';
+import { userAgent, viewPort } from '../settings';
 
-class SiteStack {
+export class SiteStack {
   private stack: Array<DetailPage> = []
   private stackDeep = 5
   private detailPages: Array<DetailPage> = []
+  private callback: Function
+  private results = []
+  private searchCount:number;
 
-
-  public siteStack(detailPages: Array<DetailPage>, stackDeep?: number) {
+  public constructor(detailPages: Array<DetailPage>, stackDeep: number, callback: (result: Array<IResultHTMLData>, isEnd:boolean) => void ) {
     this.detailPages = detailPages;
-    if (stackDeep) {
-      this.stackDeep = stackDeep
-    }
-    for (let i = 0; i < this.stackDeep; i++) {
-      this.stack.push()
-    }
-
+    this.stackDeep = stackDeep
+    this.callback = callback
+    this.searchCount = detailPages.length
     this.push()
+  }
+
+  public pushResult(result:string) {
+    this.results.push(result)
   }
 
   public remove(page: DetailPage) {
     this.stack.splice(this.stack.indexOf(page), 1)
+    this.searchCount--
+    this.callback(this.results, this.searchCount === 0)
+    this.results = []
     this.push()
   }
 
-  private  push() {
+  private push() {
     while (this.stack.length < this.stackDeep && this.detailPages.length > 0) {
       const newPage = this.detailPages.shift()
+      newPage.setSiteStack(this)
+      newPage.doSearch()
       this.stack.push(newPage)
     }
   }
 }
 
-abstract class DetailPage {
-  private searchUrl: string
+export abstract class DetailPage {
+  protected page: puppeteer.Page
+  protected searchPage: string
   private siteStack: SiteStack
-  private page: puppeteer.Page
-  public DetailPage(searchUrl: string, siteStack: SiteStack, page: puppeteer.Page) {
-    this.searchUrl = searchUrl
+  private browser: puppeteer.Browser
+
+  public constructor(searchPage: string, browser: puppeteer.Browser) {
+    this.searchPage = searchPage
+    this.browser = browser
+  }
+
+  public setSiteStack(siteStack: SiteStack) {
     this.siteStack = siteStack
-    this.page = page
   }
 
-  public searchEnd() {
+  public async doSearch() {
+    await this.searchPrepare()
+    const result = await this.search()
+    this.searchEnd(result)
+  }
+
+  private async searchEnd(result: any) {
     this.siteStack.remove(this)
+    this.siteStack.pushResult(result)
+    await this.page.close()
   }
 
-  public abstract async search()
+  private async searchPrepare() {
+    this.page = await this.browser.newPage();
+    await this.page.setViewport(viewPort);
+    await this.page.setUserAgent(userAgent);
+    await this.page.goto(this.searchPage, { timeout: 20000 });
+  }
 
+  protected abstract async search():Promise<any>
 }

@@ -1,7 +1,8 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData, getRadiusFromValues } from '../tools/index';
+import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
+import { SiteStack, DetailPage } from '../tools/siteStack';
 
 export class UberFreight extends SearchSite {
   public static siteName = 'Uber Freight';
@@ -72,7 +73,7 @@ export class UberFreight extends SearchSite {
     await this.page.waitForSelector('[data-baseweb="popover"] ul[role="listbox"] li[role="option"]')
     const selectedIndex = await this.page.evaluate((eqiupment) => {
       return Array.from(document.querySelectorAll('[data-baseweb="popover"] ul[role="listbox"] li[role="option"]')).findIndex(item => {
-        return item.textContent.indexOf(eqiupment) > -1
+        return item?.textContent.indexOf(eqiupment) > -1
       })
 
     }, task.criteria.equipment)
@@ -83,5 +84,115 @@ export class UberFreight extends SearchSite {
 
     await this.page.waitForSelector('[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"] button:not(:disabled)')
     this.page.click('[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"] button:not(:disabled)')
+
+    await this.page.waitForSelector('a[data-testid="load-table-row"]', {
+      timeout: 5000
+    }).catch(e => {
+      throw this.generateError('noData', 'no data')
+    })
+    await this.getDataFromHtml(task)
+  }
+
+  private async getDataFromHtml(task: ITASK) {
+    const links = await this.page.evaluate(() => {
+      return Array.from(document.querySelectorAll('a[data-testid="load-table-row"]')).map(item => {
+        return (item as HTMLLinkElement).href
+      })
+    })
+
+    this.log.log('links', links);
+
+    await (new Promise(resolve => {
+      const _s = new SiteStack(
+        links.map(link => {
+          return new MDetailPage(link, this.browser)
+        }), 5, async (result, isEnd) => {
+          this.log.log('result', result)
+          await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+            this.log.log(res.data);
+          });
+          if (isEnd) {
+            resolve()
+          }
+        }
+      )
+    }))
+
+    this.log.log('search end')
+  }
+}
+
+class MDetailPage extends DetailPage {
+  protected async search() {
+    await this.page.waitForSelector('section[data-baseweb="card"]', { timeout: 10000 })
+    const result = await this.page.evaluate(() => {
+      const cards = Array.from(document.querySelectorAll('section[data-baseweb="card"]'))
+
+      let result = {}
+      let pickData = {}
+      let dropOffData = {}
+      let bookData = {}
+
+      {
+        const pickupSection = cards[0]
+        const itemEls = Array.from(pickupSection.querySelectorAll('[data-baseweb=flex-grid-item]'))
+        const locationEl = itemEls[0]
+        const origin = locationEl.querySelector('[data-baseweb=typo-paragraphmedium]')?.textContent
+        const pickUpLocation = locationEl.querySelector('[data-baseweb=typo-paragraphsmall]:last-child')?.textContent
+
+        const timeEl = itemEls[1]
+        const date = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+        const pickUpTime = timeEl.querySelector('[data-baseweb=typo-paragraphsmall]:last-child')?.textContent
+
+        const facilityOwner = itemEls[2].querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+        const pickUpNotes = pickupSection.querySelector('[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]')?.textContent
+
+        pickData = { origin, pickUpLocation, date, pickUpTime, facilityOwner, pickUpNotes }
+      }
+
+      {
+        const dropOffSection = cards[1]
+        const itemEls = Array.from(dropOffSection.querySelectorAll('[data-baseweb=flex-grid-item]'))
+        const destEl = itemEls[0]
+        const destination = destEl.querySelector('[data-baseweb=typo-paragraphmedium]')?.textContent
+        const destLocation = destEl.querySelector('[data-baseweb=typo-paragraphsmall]:last-child')?.textContent
+
+        const timeEl = itemEls[1]
+        const dropOffDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+        const dropOffTime = timeEl.querySelector('[data-baseweb=typo-paragraphsmall]:last-child')?.textContent
+
+        const facilityOwner = itemEls[2].querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+        const dropOffNotes = dropOffSection.querySelector('[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]')?.textContent
+
+        dropOffData = { destination, destLocation, dropOffDate, dropOffTime, facilityOwner, dropOffNotes }
+      }
+
+      {
+        const bookInfo = cards[3]
+        const price = bookInfo.querySelector('h1')?.textContent
+        const bookInfoDate = bookInfo.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+        const items = Array.from(bookInfo.querySelectorAll('[data-baseweb="flex-grid"] [data-baseweb="flex-grid-item"]'))
+        const [
+          equipment, commodity,
+          weight, packagingType,
+          ratePerMile, distance,
+          loadId, specialAttention] = items.map(item => item.querySelector('[data-baseweb="typo-paragraphmedium"]').textContent)
+
+        bookData = {
+          price, bookInfoDate,
+          equipment, commodity,
+          weight, packagingType,
+          ratePerMile, distance,
+          loadId, specialAttention
+        }
+      }
+
+      result = { ...pickData, ...dropOffData, ...bookData, origin_radius: '', destination_radius: ''}
+      return result
+
+    }).catch(e => {
+      console.log('detail page error', this.searchPage, e)
+    })
+    return result
   }
 }

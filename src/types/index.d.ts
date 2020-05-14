@@ -67,6 +67,6 @@ interface ISearchClass {
     createBrowser: Function;
 }
 
-declare type IErrorType = 'logout' | 'other' | 'search' | 'noData';
+declare type IErrorType = 'logout' | 'other' | 'search' | 'noData' | 'timeout';
 declare type IMode = 'develop' | 'production';
 declare type IbrowserWSEndpoint = string;

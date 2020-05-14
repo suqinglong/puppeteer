@@ -61,7 +61,8 @@ export function Trim(str: string) {
 export function createUrl(baseUrl: string, search: { [key: string]: string | boolean | number }) {
     let searchQuery = '';
     Object.keys(search).forEach((key) => {
-        searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
+        const v = String(search[key])
+        searchQuery += `&${key}=${encodeURIComponent(v)}`;
     });
     return baseUrl + '?' + searchQuery.substr(1);
 }

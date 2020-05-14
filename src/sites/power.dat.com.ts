@@ -3,7 +3,6 @@ import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { GetDataFromHtml } from '../tools/power.data.com';
-import { userAgent, viewPort } from '../settings';
 import { TimeoutError } from 'puppeteer/Errors';
 
 export class DAT extends SearchSite {
@@ -35,7 +34,7 @@ export class DAT extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        this.log.log('search page loaded')
+        this.log.log('search page loaded');
 
         // clear page popup
         await this.page.click('.carriers .search').catch((e) => {

@@ -2,16 +2,29 @@
     "compilerOptions": {
         "module": "commonjs",
         "esModuleInterop": true,
-        "target": "es2018",
+        "target": "ES2019",
         "moduleResolution": "node",
         "baseUrl": ".",
         "outDir": "dist",
-        "typeRoots": ["src/types", "node_modules/@types"],
+        "typeRoots": [
+            "src/types",
+            "node_modules/@types"
+        ],
         "paths": {
-            "@/*": ["src/*"]
+            "@/*": [
+                "src/*"
+            ]
         },
-        "lib": ["esnext", "dom"]
+        "lib": [
+            "ES2019",
+            "esnext",
+            "dom"
+        ]
     },
-    "include": ["src/**/*.ts"],
-    "exclude": ["node_modules"]
+    "include": [
+        "src/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

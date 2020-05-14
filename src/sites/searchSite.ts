@@ -56,7 +56,9 @@ export abstract class SearchSite implements ISite {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.loginPage, { timeout: 20000 });
+        await this.page.goto(this.loginPage, { timeout: 20000 }).catch((e) => {
+            this.generateError('timeout', 'login page load timeout');
+        });
     }
 
     protected async searchPrepare(task: ITASK) {
@@ -65,7 +67,9 @@ export abstract class SearchSite implements ISite {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage, { timeout: 20000 });
+        await this.page.goto(this.searchPage, { timeout: 20000 }).catch((e) => {
+            this.generateError('timeout', 'search page load timeout');
+        });
     }
 
     protected async login(task: ITASK) {}

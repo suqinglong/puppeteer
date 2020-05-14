@@ -1,87 +1,1186 @@
-<html lang="en"><head><meta charset="utf-8"><title>Freight Fleet Management</title><link rel="preload" href="/freight/carriers/fleet/_static/client-main-4e8afcc012cc220c16c5.js" nonce="" as="script"><link rel="preload" href="/freight/carriers/fleet/_static/client-vendor-0697fe472535f30ccb5e.js" nonce="" as="script"><link rel="preload" href="/freight/carriers/fleet/_static/client-runtime-c17f4fa1b84d0bbdbb7f.js" nonce="" as="script"><script nonce="">window.performance && window.performance.mark && window.performance.mark('firstRenderStart');__ROUTE_PREFIX__ = "/freight/carriers/fleet";__FUSION_ASSET_PATH__ = "/freight/carriers/fleet/_static/";__NONCE__ = "9553b1cf-afb0-4c08-a46a-bca1f733133b"</script><script defer="" src="/freight/carriers/fleet/_static/client-main-4e8afcc012cc220c16c5.js" nonce=""></script><script defer="" src="/freight/carriers/fleet/_static/client-vendor-0697fe472535f30ccb5e.js" nonce=""></script><script defer="" src="/freight/carriers/fleet/_static/client-runtime-c17f4fa1b84d0bbdbb7f.js" nonce=""></script>
-    <script nonce="">
-      const messageCounts = {};
-      onerror = function(m, s, l, c, e) {
-        var _e = e || {};
-        messageCounts[m] = (messageCounts[m] || 0) + 1;
-        if (_e.__handled || messageCounts[m] > 3) return;
-        var error = {};
-        Object.getOwnPropertyNames(_e).forEach(function(key) {
-          error[key] = e[key];
-        });
-        var x = new XMLHttpRequest();
-        x.open('POST', '/freight/carriers/fleet/_errors');
-        x.setRequestHeader('Content-Type', 'application/json');
-        x.send(
-          JSON.stringify({
-            message: m,
-            source: s,
-            line: l,
-            col: c,
-            error: error,
-          })
-        );
-        _e.__handled = true;
-      };
-    </script>
-  <style class="_styletron_hydrate_" data-hydrate="keyframes">@keyframes ae{0%{margin-left:0}25%{width:48px}50%{margin-left:292px;width:8px}75%{width:64px}}</style><style class="_styletron_hydrate_">.ae{display:-webkit-box;display:-moz-box;display:-ms-flexbox;display:-webkit-flex;display:flex}.af{-webkit-box-align:center;align-items:center}.ag{-webkit-box-pack:center;justify-content:center}.ah{width:100%}.ai{height:100%}.aj{height:2px}.ak{width:300px}.al{animation-name:ae}.am{animation-duration:1.5s}.an{animation-timing-function:ease-in-out}.ao{animation-iteration-count:infinite}.ap{background-color:#1329FE}.aq{width:8px}</style><style>
-@font-face {
-  font-family: "UberMove-Regular";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/f65be663c33bad867056c6d2dc04ebe4.woff2") format("woff2"),url("/freight/carriers/fleet/_static/45248f2f9b0f70c9ecf0a34c8598d6d9.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMove-Light";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/7404c7d7199fe6fb0b47533ce4a3f10e.woff2") format("woff2"),url("/freight/carriers/fleet/_static/0ab57d33f0665bd8368c1eac0074c609.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMove-Medium";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/fcb52a268777aa859b5c53bc17630487.woff2") format("woff2"),url("/freight/carriers/fleet/_static/a2d761fb867329a576acd901b2657604.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMove-Bold";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/9a108ebece4e9b2966d49f4a394de874.woff2") format("woff2"),url("/freight/carriers/fleet/_static/8a00810f339f84b912093c24a74ccb66.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMoveText-Regular";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/a829752af51129e08130f943eaf3e568.woff2") format("woff2"),url("/freight/carriers/fleet/_static/2c945e254be87b34b97c753ddf9eb744.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMoveText-Light";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/db5e12b0d885c0dad8742ee0d7fd30b9.woff2") format("woff2"),url("/freight/carriers/fleet/_static/315903ee66148decf66b3d6709ace187.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMoveText-Medium";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/f2eaaf0bc08903f5915b809ee80b04c7.woff2") format("woff2"),url("/freight/carriers/fleet/_static/90012306e740f7bf0772b94a28cd9926.woff") format("woff");
-}
-@font-face {
-  font-family: "UberMoveText-Bold";
-  font-display: fallback;
-  src: url("/freight/carriers/fleet/_static/b394c46d580c3f0d9b2f850d816705b9.woff2") format("woff2"),url("/freight/carriers/fleet/_static/87e4ebe6df9854c4b89a8b5b56b9dfe4.woff") format("woff");
-}</style><meta data-rh="true" name="viewport" content="width=device-width, initial scale=1, shrink-to-fit=no, viewport-fit=cover"><link data-rh="true" rel="shortcut icon" type="image/x-icon" href="/freight/carriers/fleet/_static/17677bc2cadb48697a3d2da2efc65d8c.ico"><link data-rh="true" rel="icon" type="image/x-icon" href="/freight/carriers/fleet/_static/17677bc2cadb48697a3d2da2efc65d8c.ico"><link data-rh="true" rel="stylesheet" href="/freight/carriers/fleet/_static/ebaddeb837e85f72757701476439e133.css"><link data-rh="true" rel="stylesheet" href="/freight/carriers/fleet/_static/2ef5d1b86f9a4d3efa978031f7347f61.css"><style media="screen and (min-width: 769px)"></style><style type="text/css" data-styletron="">._style_4wJp4e {
-fill: currentColor !important
-}</style><style id="detectElementResize" type="text/css">@keyframes resizeanim { from { opacity: 0; } to { opacity: 0; } } .resize-triggers { animation: 1ms resizeanim; visibility: hidden; opacity: 0; } .resize-triggers, .resize-triggers > div, .contract-trigger:before { content: " "; display: block; position: absolute; top: 0; left: 0; height: 100%; width: 100%; overflow: hidden; z-index: -1; } .resize-triggers > div { background: #eee; overflow: auto; } .contract-trigger:before { width: 200%; height: 200%; }</style></head><body><div id="root"><div class=""><div class="ar as at au av"><div data-baseweb="header-navigation" role="navigation" class="aw ax ay az ae b0 b1 b2 b3 b4 b5 ah b6 b7 b8 ae b9 af ba bb bc bd be"><ul class="ae bf bg bh b6 b7 bi bj bk bl bm bn bo"><div class="bp az bq br ai ae af bs bt bu bv"><a class="bw bx by bz c0 c1 c2 c3 c4 active" aria-current="page" href="/freight/carriers/fleet/"><img src="/freight/carriers/fleet/_static/42febb777d86f392fbcd3345a34cc144.svg"></a><div data-baseweb="block" class="ci cj"><img src="/freight/carriers/fleet/_static/5f7e4f08b3913f5a478e04f9e713dab8.svg" alt="Plus Icon" class="cz d0 d1"><span class="d2 bv bs bu d3 d0">PRIMELINK EXPRESS INC</span></div></div></ul><ul class="ae bf bg c5 b6 b7 c6 ag bk bl bm bn bo"></ul><ul class="ae bf bg bh b6 b7 c7 c8 bk bl bm bn bo"><li data-baseweb="block" class="ci cj d4 cb ae af"><a class="d5 d6 d7 d8 d9 da db dc dd" href="/freight/carriers/fleet/search-loads/">Search</a></li><li data-baseweb="block" class="ci cj d4 cb ae af"><a class="d5 d6 d7 d8 d9 da db dc dd" href="/freight/carriers/fleet/saved-lanes">Saved Lanes</a></li><li data-baseweb="block" class="ci cj d4 cb ae af"><a class="d5 d6 d7 d8 d9 da db dc dd" href="/freight/carriers/fleet/mgmt">Fleet Management</a></li><li data-baseweb="block" class="ci cj d4 cb ae af"><a class="d5 d6 d7 d8 d9 da db dc dd" href="/freight/carriers/fleet/my-loads/">My Loads</a></li><button class="ae af c9 ca cb cc c0 br cd ce"><div data-baseweb="block" class=""><span class="bv bs bu cf cg ax ch ci cj">Gurmit</span></div><svg viewBox="0 0 64 64" width="16px" height="16px" class="ck _style_4wJp4e" data-baseweb="block"><path d="M53.151 24.575L36.888 40.84l-4.243 4.242a1 1 0 0 1-1.414 0l-4.243-4.242-16.263-16.264a1 1 0 0 1 0-1.414l4.243-4.242a1 1 0 0 1 1.414 0l15.556 15.556 15.557-15.556a1 1 0 0 1 1.414 0l4.242 4.242a1 1 0 0 1 0 1.414z"></path></svg></button></ul></div></div><div class="de co"><div class="ar as ah df dg cq h4"><div class="b8 ah ai"><div style="position: relative; width: 1440px; height: 357px; cursor: grab; touch-action: none; user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); outline: none;" tabindex="0"><div style="position: relative; width: 100%; height: 100%;"><div class="mapboxgl-map" style="position: absolute; width: 100%; height: 100%; overflow: hidden; visibility: inherit;"><div class="mapboxgl-canary" style="visibility: hidden;"></div><div class="mapboxgl-canvas-container"><canvas class="mapboxgl-canvas" tabindex="0" aria-label="Map" width="2880" height="714" style="position: absolute; width: 1440px; height: 357px; outline: none;"></canvas></div><div class="mapboxgl-control-container"><div class="mapboxgl-ctrl-top-left"></div><div class="mapboxgl-ctrl-top-right"></div><div class="mapboxgl-ctrl-bottom-left"><div class="mapboxgl-ctrl" style="display: none;"><a class="mapboxgl-ctrl-logo" target="_blank" rel="noopener" href="https://www.mapbox.com/" aria-label="Mapbox logo"></a></div></div><div class="mapboxgl-ctrl-bottom-right"></div></div></div><div style="overflow: visible; height: 0px; width: 0px;"><div class="overlays" style="position: absolute; width: 100%; height: 100%; overflow: hidden;"><div class="mapboxgl-marker " style="position: absolute; left: 1226px; top: 199.19px; cursor: auto;"><svg width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="9" fill="black"></circle><circle cx="12" cy="12" r="3" fill="white"></circle></svg></div><div class="mapboxgl-marker " style="position: absolute; left: 1254px; top: 205.19px; cursor: auto;"><span class="aw d6 d7 d8 h5 f2 f3 f4 f5 h6 fp ff fg fe h7 bs h8 h9">Linden, NJ</span></div><div class="mapboxgl-marker " style="position: absolute; left: 186px; top: 129.81px; cursor: auto;"><svg width="28px" height="28px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="18" height="18" fill="black"></rect><rect x="9" y="9" width="6" height="6" fill="white"></rect></svg></div><div class="mapboxgl-marker " style="position: absolute; left: 214px; top: 135.81px; cursor: auto;"><span class="aw d6 d7 d8 h5 f2 f3 f4 f5 h6 fp ff fg fe h7 bs h8 h9">Lowell, IN</span></div><div class="mapboxgl-ctrl mapboxgl-ctrl-group ar gs gt gu"><button class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-in" type="button" title="Zoom In"></button><button class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-out" type="button" title="Zoom Out"></button></div></div></div><div class="resize-triggers"><div class="expand-trigger"><div style="width: 1441px; height: 358px;"></div></div><div class="contract-trigger"></div></div></div></div></div></div><div class="ah df dg cq"></div><div data-baseweb="block" class="dj dk ah dl dm cm cl dn do"><div data-baseweb="block" class="dp"><section data-baseweb="card" class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"><div class="cv e7 cw e8 e9 ea eb ec"><div class="e8 br aw ax ay az ae"><div data-baseweb="block" class="ed af ae aq ee ef eg eh ei ej"></div><div data-baseweb="block" class="ae cy"><h5 data-baseweb="typo-headingsmall" class="br aw d7 ek el">Pickup </h5><div data-baseweb="flex-grid" class="ae em"><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Pickup Location</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Linden, NJ</p><p data-baseweb="typo-paragraphsmall" class="br aw ay d6 ch">1200 Fuller Rd<br>Linden, NJ 07036</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Pickup Time</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">May 13th</p><p data-baseweb="typo-paragraphsmall" class="br aw ay d6 ch">12:45 PM EDT</p></div><div data-baseweb="flex-grid-item" class="en eo es bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Facility Owner</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">AP Packaging</p></div></div><div data-baseweb="block" class="eq"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Notes</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Facility Provided Notes:
--------------------------------</p></div></div></div></div></section><section data-baseweb="card" class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"><div class="cv e7 cw e8 e9 ea eb ec"><div class="e8 br aw ax ay az ae"><div data-baseweb="block" class="ed af ae aq ee ef eg eh ei et"></div><div data-baseweb="block" class="ae cy"><h5 data-baseweb="typo-headingsmall" class="br aw d7 ek el">Dropoff </h5><div data-baseweb="flex-grid" class="ae em"><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Dropoff Location</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Lowell, IN</p><p data-baseweb="typo-paragraphsmall" class="br aw ay d6 ch">10653 W 181st Ave<br>Lowell, IN 46356</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Dropoff Time</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">May 14th</p><p data-baseweb="typo-paragraphsmall" class="br aw ay d6 ch">8:00 AM CDT – 4:00 PM CDT</p></div><div data-baseweb="flex-grid-item" class="en eo es bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Facility Owner</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Innovative Energy </p></div></div><div data-baseweb="block" class="eq"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Notes</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Facility Provided Notes:
--------------------------------</p></div></div></div></div></section><section data-baseweb="card" class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"><div class="cv e7 cw e8 e9 ea eb ec"><div class="e8 br aw ax ay az"><div data-baseweb="block" class="ae b9"><h5 data-baseweb="typo-headingsmall" class="br aw d7 ek el eu">Reload Options</h5></div><div data-baseweb="table" role="grid" aria-colcount="4" aria-rowcount="33" class="ev dv ew b2 b3 ex ey du ez f0 dw f1 at f2 f3 f4 f5 ae cy ai f6 ah f7 f8" style="overflow-x: auto;"><div role="row" class="b5 f9 ae fa ah b7"><div role="columnheader" class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj fk">Rate</div><div role="columnheader" class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj">Lane</div><div role="columnheader" class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj fk">Deadhead</div><div data-baseweb="block" class="ci cj ah"><div role="columnheader" class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj">Hours after delivery</div></div></div><div role="rowgroup" class="ah fl fm c5"><a role="row" class="ae af ah c9 b5 fn er cb ca c0 fo" href="/freight/carriers/fleet/load-details/0df018da-3b49-4299-a254-1307c1386da7"><div role="gridcell" class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk">$400</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">Chicago, IL<svg data-baseweb="icon" viewBox="0 0 24 24" title="Arrow Right" class="d9 fq fr fs cz"><title>Arrow Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"></path></svg>West Chester, OH</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk">44mi</div><div data-baseweb="block" class="ci cj c5"><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">1 hrs after delivery</div></div><svg data-baseweb="icon" viewBox="0 0 24 24" title="Chevron Right" size="24" color="black" class="d9 ft br bx fu"><title>Chevron Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"></path></svg></a><a role="row" class="ae af ah c9 b5 fn er cb ca c0 fo" href="/freight/carriers/fleet/load-details/f37d1993-4ecd-4078-90a6-689c12207ea6"><div role="gridcell" class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk">$1105</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">Lockport, IL<svg data-baseweb="icon" viewBox="0 0 24 24" title="Arrow Right" class="d9 fq fr fs cz"><title>Arrow Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"></path></svg>Carrollton, TX</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk">56mi</div><div data-baseweb="block" class="ci cj c5"><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">24 hrs after delivery</div></div><svg data-baseweb="icon" viewBox="0 0 24 24" title="Chevron Right" size="24" color="black" class="d9 ft br bx fu"><title>Chevron Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"></path></svg></a><a role="row" class="ae af ah c9 b5 fn er cb ca c0 fo" href="/freight/carriers/fleet/load-details/d21bd38f-7052-4129-bb2f-a89895500948"><div role="gridcell" class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk">$1105</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">Lockport, IL<svg data-baseweb="icon" viewBox="0 0 24 24" title="Arrow Right" class="d9 fq fr fs cz"><title>Arrow Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"></path></svg>Carrollton, TX</div><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk">56mi</div><div data-baseweb="block" class="ci cj c5"><div role="gridcell" class="aw ax ay az br ae c5 fp fe ff fg af bs bu">24 hrs after delivery</div></div><svg data-baseweb="icon" viewBox="0 0 24 24" title="Chevron Right" size="24" color="black" class="d9 ft br bx fu"><title>Chevron Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"></path></svg></a></div></div><button data-baseweb="button" class="fv fw af ag fx fy fz g0 fd fb g1 fc g2 g3 f9 da g4 g5 g6 g7 c0 g8 g9 ga gb bm bo bl aw ax d7 ch e2 e4 e1 e3 gc gd fg fe br b5 fo ge">See all 33 reload options</button></div></div></section><div data-baseweb="block" class="gf"><p data-baseweb="typo-paragraphsmall" class="db aw ay d6 ch gg">By booking this lead, carrier agrees to perform transportation services at the price above and subject to carrier's broker carrier agreement with Uber Freight and Uber Freight's <a href="https://www.uberfreight.com/terms-and-conditions" target="_blank" class="gh gi">terms and conditions</a> and <a href="https://www.uberfreight.com/privacy-policy" target="_blank" class="gh gi">privacy policy</a>.</p></div></div><div data-baseweb="block" class="gj bn ec"><section data-baseweb="card" class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"><div class="cv e7 cw e8"><h1 class="aw gk d7 gl br bn bm bo cu cb gm ca cc">$730</h1><div class="e8 br aw ax ay az"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Date</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">May 13th 12:45 PM<svg data-baseweb="icon" viewBox="0 0 24 24" title="Arrow Right" class="d9 fq fr fs cz d1"><title>Arrow Right</title><path fill-rule="evenodd" clip-rule="evenodd" d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"></path></svg>May 14th 8:00 AM</p><div data-baseweb="flex-grid" class="ae eh b1 em gn"><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Trailer</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Van</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Commodity</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">Packaging Material</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Weight</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">10000 lb</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Packaging type</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">26 Pallets</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Rate per mile</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">$0.93/mi</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Distance</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">781mi</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Load Id</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">9225186203</p></div><div data-baseweb="flex-grid-item" class="en eo bo bl"><p data-baseweb="typo-paragraphxsmall" class="db aw ay ep ch bu eq bl">Special attention</p><p data-baseweb="typo-paragraphmedium" class="br aw ay ax az er bl">N/A</p></div></div><div class="aw ax d7 ch"><button data-baseweb="button" class="fv fw af ag fx fy fz g0 fd fb g1 fc g2 g3 f9 da g4 g5 g6 g7 c0 g8 g9 ga bn go bo bl aw ax d7 ch e2 e4 e1 e3 gc gd fg fe gp ap gq gr ah">Book Load</button></div></div></div></section></div></div></div></div><div class=""></div></div>
-<script type="application/json" id="__FEATURE_TOGGLES__">
-{\u0022data\u0022:{\u0022freight_webportal_access\u0022:{\u0022enabled\u0022:true,\u0022metadata\u0022:{\u0022name\u0022:\u0022full_access\u0022,\u0022parameters\u0022:{}}},\u0022freight_webportal_flatbed_access\u0022:{\u0022enabled\u0022:true,\u0022metadata\u0022:{\u0022name\u0022:\u0022full_access\u0022,\u0022parameters\u0022:{}}}}}
-</script>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Freight Fleet Management</title>
+        <link
+            rel="preload"
+            href="/freight/carriers/fleet/_static/client-main-4e8afcc012cc220c16c5.js"
+            nonce=""
+            as="script"
+        />
+        <link
+            rel="preload"
+            href="/freight/carriers/fleet/_static/client-vendor-0697fe472535f30ccb5e.js"
+            nonce=""
+            as="script"
+        />
+        <link
+            rel="preload"
+            href="/freight/carriers/fleet/_static/client-runtime-c17f4fa1b84d0bbdbb7f.js"
+            nonce=""
+            as="script"
+        />
+        <script nonce="">
+            window.performance &&
+                window.performance.mark &&
+                window.performance.mark('firstRenderStart');
+            __ROUTE_PREFIX__ = '/freight/carriers/fleet';
+            __FUSION_ASSET_PATH__ = '/freight/carriers/fleet/_static/';
+            __NONCE__ = '9553b1cf-afb0-4c08-a46a-bca1f733133b';
+        </script>
+        <script
+            defer=""
+            src="/freight/carriers/fleet/_static/client-main-4e8afcc012cc220c16c5.js"
+            nonce=""
+        ></script>
+        <script
+            defer=""
+            src="/freight/carriers/fleet/_static/client-vendor-0697fe472535f30ccb5e.js"
+            nonce=""
+        ></script>
+        <script
+            defer=""
+            src="/freight/carriers/fleet/_static/client-runtime-c17f4fa1b84d0bbdbb7f.js"
+            nonce=""
+        ></script>
+        <script nonce="">
+            const messageCounts = {};
+            onerror = function (m, s, l, c, e) {
+                var _e = e || {};
+                messageCounts[m] = (messageCounts[m] || 0) + 1;
+                if (_e.__handled || messageCounts[m] > 3) return;
+                var error = {};
+                Object.getOwnPropertyNames(_e).forEach(function (key) {
+                    error[key] = e[key];
+                });
+                var x = new XMLHttpRequest();
+                x.open('POST', '/freight/carriers/fleet/_errors');
+                x.setRequestHeader('Content-Type', 'application/json');
+                x.send(
+                    JSON.stringify({
+                        message: m,
+                        source: s,
+                        line: l,
+                        col: c,
+                        error: error
+                    })
+                );
+                _e.__handled = true;
+            };
+        </script>
+        <style class="_styletron_hydrate_" data-hydrate="keyframes">
+            @keyframes ae {
+                0% {
+                    margin-left: 0;
+                }
+                25% {
+                    width: 48px;
+                }
+                50% {
+                    margin-left: 292px;
+                    width: 8px;
+                }
+                75% {
+                    width: 64px;
+                }
+            }
+        </style>
+        <style class="_styletron_hydrate_">
+            .ae {
+                display: -webkit-box;
+                display: -moz-box;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+            }
+            .af {
+                -webkit-box-align: center;
+                align-items: center;
+            }
+            .ag {
+                -webkit-box-pack: center;
+                justify-content: center;
+            }
+            .ah {
+                width: 100%;
+            }
+            .ai {
+                height: 100%;
+            }
+            .aj {
+                height: 2px;
+            }
+            .ak {
+                width: 300px;
+            }
+            .al {
+                animation-name: ae;
+            }
+            .am {
+                animation-duration: 1.5s;
+            }
+            .an {
+                animation-timing-function: ease-in-out;
+            }
+            .ao {
+                animation-iteration-count: infinite;
+            }
+            .ap {
+                background-color: #1329fe;
+            }
+            .aq {
+                width: 8px;
+            }
+        </style>
+        <style>
+            @font-face {
+                font-family: 'UberMove-Regular';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/f65be663c33bad867056c6d2dc04ebe4.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/45248f2f9b0f70c9ecf0a34c8598d6d9.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMove-Light';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/7404c7d7199fe6fb0b47533ce4a3f10e.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/0ab57d33f0665bd8368c1eac0074c609.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMove-Medium';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/fcb52a268777aa859b5c53bc17630487.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/a2d761fb867329a576acd901b2657604.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMove-Bold';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/9a108ebece4e9b2966d49f4a394de874.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/8a00810f339f84b912093c24a74ccb66.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMoveText-Regular';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/a829752af51129e08130f943eaf3e568.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/2c945e254be87b34b97c753ddf9eb744.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMoveText-Light';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/db5e12b0d885c0dad8742ee0d7fd30b9.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/315903ee66148decf66b3d6709ace187.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMoveText-Medium';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/f2eaaf0bc08903f5915b809ee80b04c7.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/90012306e740f7bf0772b94a28cd9926.woff')
+                        format('woff');
+            }
+            @font-face {
+                font-family: 'UberMoveText-Bold';
+                font-display: fallback;
+                src: url('/freight/carriers/fleet/_static/b394c46d580c3f0d9b2f850d816705b9.woff2')
+                        format('woff2'),
+                    url('/freight/carriers/fleet/_static/87e4ebe6df9854c4b89a8b5b56b9dfe4.woff')
+                        format('woff');
+            }
+        </style>
+        <meta
+            data-rh="true"
+            name="viewport"
+            content="width=device-width, initial scale=1, shrink-to-fit=no, viewport-fit=cover"
+        />
+        <link
+            data-rh="true"
+            rel="shortcut icon"
+            type="image/x-icon"
+            href="/freight/carriers/fleet/_static/17677bc2cadb48697a3d2da2efc65d8c.ico"
+        />
+        <link
+            data-rh="true"
+            rel="icon"
+            type="image/x-icon"
+            href="/freight/carriers/fleet/_static/17677bc2cadb48697a3d2da2efc65d8c.ico"
+        />
+        <link
+            data-rh="true"
+            rel="stylesheet"
+            href="/freight/carriers/fleet/_static/ebaddeb837e85f72757701476439e133.css"
+        />
+        <link
+            data-rh="true"
+            rel="stylesheet"
+            href="/freight/carriers/fleet/_static/2ef5d1b86f9a4d3efa978031f7347f61.css"
+        />
+        <style media="screen and (min-width: 769px)"></style>
+        <style type="text/css" data-styletron="">
+            ._style_4wJp4e {
+                fill: currentColor !important;
+            }
+        </style>
+        <style id="detectElementResize" type="text/css">
+            @keyframes resizeanim {
+                from {
+                    opacity: 0;
+                }
+                to {
+                    opacity: 0;
+                }
+            }
+            .resize-triggers {
+                animation: 1ms resizeanim;
+                visibility: hidden;
+                opacity: 0;
+            }
+            .resize-triggers,
+            .resize-triggers > div,
+            .contract-trigger:before {
+                content: ' ';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 100%;
+                overflow: hidden;
+                z-index: -1;
+            }
+            .resize-triggers > div {
+                background: #eee;
+                overflow: auto;
+            }
+            .contract-trigger:before {
+                width: 200%;
+                height: 200%;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root">
+            <div class="">
+                <div class="ar as at au av">
+                    <div
+                        data-baseweb="header-navigation"
+                        role="navigation"
+                        class="aw ax ay az ae b0 b1 b2 b3 b4 b5 ah b6 b7 b8 ae b9 af ba bb bc bd be"
+                    >
+                        <ul class="ae bf bg bh b6 b7 bi bj bk bl bm bn bo">
+                            <div class="bp az bq br ai ae af bs bt bu bv">
+                                <a
+                                    class="bw bx by bz c0 c1 c2 c3 c4 active"
+                                    aria-current="page"
+                                    href="/freight/carriers/fleet/"
+                                    ><img
+                                        src="/freight/carriers/fleet/_static/42febb777d86f392fbcd3345a34cc144.svg"
+                                /></a>
+                                <div data-baseweb="block" class="ci cj">
+                                    <img
+                                        src="/freight/carriers/fleet/_static/5f7e4f08b3913f5a478e04f9e713dab8.svg"
+                                        alt="Plus Icon"
+                                        class="cz d0 d1"
+                                    /><span class="d2 bv bs bu d3 d0">PRIMELINK EXPRESS INC</span>
+                                </div>
+                            </div>
+                        </ul>
+                        <ul class="ae bf bg c5 b6 b7 c6 ag bk bl bm bn bo"></ul>
+                        <ul class="ae bf bg bh b6 b7 c7 c8 bk bl bm bn bo">
+                            <li data-baseweb="block" class="ci cj d4 cb ae af">
+                                <a
+                                    class="d5 d6 d7 d8 d9 da db dc dd"
+                                    href="/freight/carriers/fleet/search-loads/"
+                                    >Search</a
+                                >
+                            </li>
+                            <li data-baseweb="block" class="ci cj d4 cb ae af">
+                                <a
+                                    class="d5 d6 d7 d8 d9 da db dc dd"
+                                    href="/freight/carriers/fleet/saved-lanes"
+                                    >Saved Lanes</a
+                                >
+                            </li>
+                            <li data-baseweb="block" class="ci cj d4 cb ae af">
+                                <a
+                                    class="d5 d6 d7 d8 d9 da db dc dd"
+                                    href="/freight/carriers/fleet/mgmt"
+                                    >Fleet Management</a
+                                >
+                            </li>
+                            <li data-baseweb="block" class="ci cj d4 cb ae af">
+                                <a
+                                    class="d5 d6 d7 d8 d9 da db dc dd"
+                                    href="/freight/carriers/fleet/my-loads/"
+                                    >My Loads</a
+                                >
+                            </li>
+                            <button class="ae af c9 ca cb cc c0 br cd ce">
+                                <div data-baseweb="block" class="">
+                                    <span class="bv bs bu cf cg ax ch ci cj">Gurmit</span>
+                                </div>
+                                <svg
+                                    viewBox="0 0 64 64"
+                                    width="16px"
+                                    height="16px"
+                                    class="ck _style_4wJp4e"
+                                    data-baseweb="block"
+                                >
+                                    <path
+                                        d="M53.151 24.575L36.888 40.84l-4.243 4.242a1 1 0 0 1-1.414 0l-4.243-4.242-16.263-16.264a1 1 0 0 1 0-1.414l4.243-4.242a1 1 0 0 1 1.414 0l15.556 15.556 15.557-15.556a1 1 0 0 1 1.414 0l4.242 4.242a1 1 0 0 1 0 1.414z"
+                                    ></path>
+                                </svg>
+                            </button>
+                        </ul>
+                    </div>
+                </div>
+                <div class="de co">
+                    <div class="ar as ah df dg cq h4">
+                        <div class="b8 ah ai">
+                            <div
+                                style="
+                                    position: relative;
+                                    width: 1440px;
+                                    height: 357px;
+                                    cursor: grab;
+                                    touch-action: none;
+                                    user-select: none;
+                                    -webkit-user-drag: none;
+                                    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                                    outline: none;
+                                "
+                                tabindex="0"
+                            >
+                                <div style="position: relative; width: 100%; height: 100%;">
+                                    <div
+                                        class="mapboxgl-map"
+                                        style="
+                                            position: absolute;
+                                            width: 100%;
+                                            height: 100%;
+                                            overflow: hidden;
+                                            visibility: inherit;
+                                        "
+                                    >
+                                        <div
+                                            class="mapboxgl-canary"
+                                            style="visibility: hidden;"
+                                        ></div>
+                                        <div class="mapboxgl-canvas-container">
+                                            <canvas
+                                                class="mapboxgl-canvas"
+                                                tabindex="0"
+                                                aria-label="Map"
+                                                width="2880"
+                                                height="714"
+                                                style="
+                                                    position: absolute;
+                                                    width: 1440px;
+                                                    height: 357px;
+                                                    outline: none;
+                                                "
+                                            ></canvas>
+                                        </div>
+                                        <div class="mapboxgl-control-container">
+                                            <div class="mapboxgl-ctrl-top-left"></div>
+                                            <div class="mapboxgl-ctrl-top-right"></div>
+                                            <div class="mapboxgl-ctrl-bottom-left">
+                                                <div class="mapboxgl-ctrl" style="display: none;">
+                                                    <a
+                                                        class="mapboxgl-ctrl-logo"
+                                                        target="_blank"
+                                                        rel="noopener"
+                                                        href="https://www.mapbox.com/"
+                                                        aria-label="Mapbox logo"
+                                                    ></a>
+                                                </div>
+                                            </div>
+                                            <div class="mapboxgl-ctrl-bottom-right"></div>
+                                        </div>
+                                    </div>
+                                    <div style="overflow: visible; height: 0px; width: 0px;">
+                                        <div
+                                            class="overlays"
+                                            style="
+                                                position: absolute;
+                                                width: 100%;
+                                                height: 100%;
+                                                overflow: hidden;
+                                            "
+                                        >
+                                            <div
+                                                class="mapboxgl-marker"
+                                                style="
+                                                    position: absolute;
+                                                    left: 1226px;
+                                                    top: 199.19px;
+                                                    cursor: auto;
+                                                "
+                                            >
+                                                <svg
+                                                    width="28px"
+                                                    height="28px"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <circle
+                                                        cx="12"
+                                                        cy="12"
+                                                        r="9"
+                                                        fill="black"
+                                                    ></circle>
+                                                    <circle
+                                                        cx="12"
+                                                        cy="12"
+                                                        r="3"
+                                                        fill="white"
+                                                    ></circle>
+                                                </svg>
+                                            </div>
+                                            <div
+                                                class="mapboxgl-marker"
+                                                style="
+                                                    position: absolute;
+                                                    left: 1254px;
+                                                    top: 205.19px;
+                                                    cursor: auto;
+                                                "
+                                            >
+                                                <span
+                                                    class="aw d6 d7 d8 h5 f2 f3 f4 f5 h6 fp ff fg fe h7 bs h8 h9"
+                                                    >Linden, NJ</span
+                                                >
+                                            </div>
+                                            <div
+                                                class="mapboxgl-marker"
+                                                style="
+                                                    position: absolute;
+                                                    left: 186px;
+                                                    top: 129.81px;
+                                                    cursor: auto;
+                                                "
+                                            >
+                                                <svg
+                                                    width="28px"
+                                                    height="28px"
+                                                    viewBox="0 0 24 24"
+                                                    fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <rect
+                                                        x="3"
+                                                        y="3"
+                                                        width="18"
+                                                        height="18"
+                                                        fill="black"
+                                                    ></rect>
+                                                    <rect
+                                                        x="9"
+                                                        y="9"
+                                                        width="6"
+                                                        height="6"
+                                                        fill="white"
+                                                    ></rect>
+                                                </svg>
+                                            </div>
+                                            <div
+                                                class="mapboxgl-marker"
+                                                style="
+                                                    position: absolute;
+                                                    left: 214px;
+                                                    top: 135.81px;
+                                                    cursor: auto;
+                                                "
+                                            >
+                                                <span
+                                                    class="aw d6 d7 d8 h5 f2 f3 f4 f5 h6 fp ff fg fe h7 bs h8 h9"
+                                                    >Lowell, IN</span
+                                                >
+                                            </div>
+                                            <div
+                                                class="mapboxgl-ctrl mapboxgl-ctrl-group ar gs gt gu"
+                                            >
+                                                <button
+                                                    class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-in"
+                                                    type="button"
+                                                    title="Zoom In"
+                                                ></button
+                                                ><button
+                                                    class="mapboxgl-ctrl-icon mapboxgl-ctrl-zoom-out"
+                                                    type="button"
+                                                    title="Zoom Out"
+                                                ></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resize-triggers">
+                                        <div class="expand-trigger">
+                                            <div style="width: 1441px; height: 358px;"></div>
+                                        </div>
+                                        <div class="contract-trigger"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ah df dg cq"></div>
+                    <div data-baseweb="block" class="dj dk ah dl dm cm cl dn do">
+                        <div data-baseweb="block" class="dp">
+                            <section
+                                data-baseweb="card"
+                                class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"
+                            >
+                                <div class="cv e7 cw e8 e9 ea eb ec">
+                                    <div class="e8 br aw ax ay az ae">
+                                        <div
+                                            data-baseweb="block"
+                                            class="ed af ae aq ee ef eg eh ei ej"
+                                        ></div>
+                                        <div data-baseweb="block" class="ae cy">
+                                            <h5
+                                                data-baseweb="typo-headingsmall"
+                                                class="br aw d7 ek el"
+                                            >
+                                                Pickup
+                                            </h5>
+                                            <div data-baseweb="flex-grid" class="ae em">
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo bo bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Pickup Location
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        Linden, NJ
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphsmall"
+                                                        class="br aw ay d6 ch"
+                                                    >
+                                                        1200 Fuller Rd<br />Linden, NJ 07036
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo bo bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Pickup Time
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        May 13th
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphsmall"
+                                                        class="br aw ay d6 ch"
+                                                    >
+                                                        12:45 PM EDT
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo es bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Facility Owner
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        AP Packaging
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div data-baseweb="block" class="eq">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Notes
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    Facility Provided Notes:
+                                                    -------------------------------
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section
+                                data-baseweb="card"
+                                class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"
+                            >
+                                <div class="cv e7 cw e8 e9 ea eb ec">
+                                    <div class="e8 br aw ax ay az ae">
+                                        <div
+                                            data-baseweb="block"
+                                            class="ed af ae aq ee ef eg eh ei et"
+                                        ></div>
+                                        <div data-baseweb="block" class="ae cy">
+                                            <h5
+                                                data-baseweb="typo-headingsmall"
+                                                class="br aw d7 ek el"
+                                            >
+                                                Dropoff
+                                            </h5>
+                                            <div data-baseweb="flex-grid" class="ae em">
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo bo bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Dropoff Location
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        Lowell, IN
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphsmall"
+                                                        class="br aw ay d6 ch"
+                                                    >
+                                                        10653 W 181st Ave<br />Lowell, IN 46356
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo bo bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Dropoff Time
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        May 14th
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphsmall"
+                                                        class="br aw ay d6 ch"
+                                                    >
+                                                        8:00 AM CDT – 4:00 PM CDT
+                                                    </p>
+                                                </div>
+                                                <div
+                                                    data-baseweb="flex-grid-item"
+                                                    class="en eo es bl"
+                                                >
+                                                    <p
+                                                        data-baseweb="typo-paragraphxsmall"
+                                                        class="db aw ay ep ch bu eq bl"
+                                                    >
+                                                        Facility Owner
+                                                    </p>
+                                                    <p
+                                                        data-baseweb="typo-paragraphmedium"
+                                                        class="br aw ay ax az er bl"
+                                                    >
+                                                        Innovative Energy
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div data-baseweb="block" class="eq">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Notes
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    Facility Provided Notes:
+                                                    -------------------------------
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            <section
+                                data-baseweb="card"
+                                class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"
+                            >
+                                <div class="cv e7 cw e8 e9 ea eb ec">
+                                    <div class="e8 br aw ax ay az">
+                                        <div data-baseweb="block" class="ae b9">
+                                            <h5
+                                                data-baseweb="typo-headingsmall"
+                                                class="br aw d7 ek el eu"
+                                            >
+                                                Reload Options
+                                            </h5>
+                                        </div>
+                                        <div
+                                            data-baseweb="table"
+                                            role="grid"
+                                            aria-colcount="4"
+                                            aria-rowcount="33"
+                                            class="ev dv ew b2 b3 ex ey du ez f0 dw f1 at f2 f3 f4 f5 ae cy ai f6 ah f7 f8"
+                                            style="overflow-x: auto;"
+                                        >
+                                            <div role="row" class="b5 f9 ae fa ah b7">
+                                                <div
+                                                    role="columnheader"
+                                                    class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj fk"
+                                                >
+                                                    Rate
+                                                </div>
+                                                <div
+                                                    role="columnheader"
+                                                    class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj"
+                                                >
+                                                    Lane
+                                                </div>
+                                                <div
+                                                    role="columnheader"
+                                                    class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj fk"
+                                                >
+                                                    Deadhead
+                                                </div>
+                                                <div data-baseweb="block" class="ci cj ah">
+                                                    <div
+                                                        role="columnheader"
+                                                        class="aw d6 d7 d8 ev fb ew b2 fc ex ey fd ez f0 dw f1 db ae b9 b1 fe ff fg fh ah fi fj"
+                                                    >
+                                                        Hours after delivery
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div role="rowgroup" class="ah fl fm c5">
+                                                <a
+                                                    role="row"
+                                                    class="ae af ah c9 b5 fn er cb ca c0 fo"
+                                                    href="/freight/carriers/fleet/load-details/0df018da-3b49-4299-a254-1307c1386da7"
+                                                    ><div
+                                                        role="gridcell"
+                                                        class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        $400
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                    >
+                                                        Chicago, IL<svg
+                                                            data-baseweb="icon"
+                                                            viewBox="0 0 24 24"
+                                                            title="Arrow Right"
+                                                            class="d9 fq fr fs cz"
+                                                        >
+                                                            <title>Arrow Right</title>
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                clip-rule="evenodd"
+                                                                d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"
+                                                            ></path></svg
+                                                        >West Chester, OH
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        44mi
+                                                    </div>
+                                                    <div data-baseweb="block" class="ci cj c5">
+                                                        <div
+                                                            role="gridcell"
+                                                            class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                        >
+                                                            1 hrs after delivery
+                                                        </div>
+                                                    </div>
+                                                    <svg
+                                                        data-baseweb="icon"
+                                                        viewBox="0 0 24 24"
+                                                        title="Chevron Right"
+                                                        size="24"
+                                                        color="black"
+                                                        class="d9 ft br bx fu"
+                                                    >
+                                                        <title>Chevron Right</title>
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"
+                                                        ></path></svg></a
+                                                ><a
+                                                    role="row"
+                                                    class="ae af ah c9 b5 fn er cb ca c0 fo"
+                                                    href="/freight/carriers/fleet/load-details/f37d1993-4ecd-4078-90a6-689c12207ea6"
+                                                    ><div
+                                                        role="gridcell"
+                                                        class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        $1105
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                    >
+                                                        Lockport, IL<svg
+                                                            data-baseweb="icon"
+                                                            viewBox="0 0 24 24"
+                                                            title="Arrow Right"
+                                                            class="d9 fq fr fs cz"
+                                                        >
+                                                            <title>Arrow Right</title>
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                clip-rule="evenodd"
+                                                                d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"
+                                                            ></path></svg
+                                                        >Carrollton, TX
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        56mi
+                                                    </div>
+                                                    <div data-baseweb="block" class="ci cj c5">
+                                                        <div
+                                                            role="gridcell"
+                                                            class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                        >
+                                                            24 hrs after delivery
+                                                        </div>
+                                                    </div>
+                                                    <svg
+                                                        data-baseweb="icon"
+                                                        viewBox="0 0 24 24"
+                                                        title="Chevron Right"
+                                                        size="24"
+                                                        color="black"
+                                                        class="d9 ft br bx fu"
+                                                    >
+                                                        <title>Chevron Right</title>
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"
+                                                        ></path></svg></a
+                                                ><a
+                                                    role="row"
+                                                    class="ae af ah c9 b5 fn er cb ca c0 fo"
+                                                    href="/freight/carriers/fleet/load-details/d21bd38f-7052-4129-bb2f-a89895500948"
+                                                    ><div
+                                                        role="gridcell"
+                                                        class="aw ax d7 az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        $1105
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                    >
+                                                        Lockport, IL<svg
+                                                            data-baseweb="icon"
+                                                            viewBox="0 0 24 24"
+                                                            title="Arrow Right"
+                                                            class="d9 fq fr fs cz"
+                                                        >
+                                                            <title>Arrow Right</title>
+                                                            <path
+                                                                fill-rule="evenodd"
+                                                                clip-rule="evenodd"
+                                                                d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"
+                                                            ></path></svg
+                                                        >Carrollton, TX
+                                                    </div>
+                                                    <div
+                                                        role="gridcell"
+                                                        class="aw ax ay az br ae c5 fp fe ff fg af bs bu fk"
+                                                    >
+                                                        56mi
+                                                    </div>
+                                                    <div data-baseweb="block" class="ci cj c5">
+                                                        <div
+                                                            role="gridcell"
+                                                            class="aw ax ay az br ae c5 fp fe ff fg af bs bu"
+                                                        >
+                                                            24 hrs after delivery
+                                                        </div>
+                                                    </div>
+                                                    <svg
+                                                        data-baseweb="icon"
+                                                        viewBox="0 0 24 24"
+                                                        title="Chevron Right"
+                                                        size="24"
+                                                        color="black"
+                                                        class="d9 ft br bx fu"
+                                                    >
+                                                        <title>Chevron Right</title>
+                                                        <path
+                                                            fill-rule="evenodd"
+                                                            clip-rule="evenodd"
+                                                            d="M9.29289 7.29289C8.90237 7.68342 8.90237 8.31658 9.29289 8.70711L12.5858 12L9.29289 15.2929C8.90237 15.6834 8.90237 16.3166 9.29289 16.7071C9.68342 17.0976 10.3166 17.0976 10.7071 16.7071L14.7071 12.7071C14.8946 12.5196 15 12.2652 15 12C15 11.7348 14.8946 11.4804 14.7071 11.2929L10.7071 7.29289C10.3166 6.90237 9.68342 6.90237 9.29289 7.29289Z"
+                                                        ></path></svg
+                                                ></a>
+                                            </div>
+                                        </div>
+                                        <button
+                                            data-baseweb="button"
+                                            class="fv fw af ag fx fy fz g0 fd fb g1 fc g2 g3 f9 da g4 g5 g6 g7 c0 g8 g9 ga gb bm bo bl aw ax d7 ch e2 e4 e1 e3 gc gd fg fe br b5 fo ge"
+                                        >
+                                            See all 33 reload options
+                                        </button>
+                                    </div>
+                                </div>
+                            </section>
+                            <div data-baseweb="block" class="gf">
+                                <p data-baseweb="typo-paragraphsmall" class="db aw ay d6 ch gg">
+                                    By booking this lead, carrier agrees to perform transportation
+                                    services at the price above and subject to carrier's broker
+                                    carrier agreement with Uber Freight and Uber Freight's
+                                    <a
+                                        href="https://www.uberfreight.com/terms-and-conditions"
+                                        target="_blank"
+                                        class="gh gi"
+                                        >terms and conditions</a
+                                    >
+                                    and
+                                    <a
+                                        href="https://www.uberfreight.com/privacy-policy"
+                                        target="_blank"
+                                        class="gh gi"
+                                        >privacy policy</a
+                                    >.
+                                </p>
+                            </div>
+                        </div>
+                        <div data-baseweb="block" class="gj bn ec">
+                            <section
+                                data-baseweb="card"
+                                class="dq dr ds dt du dv dw b3 dx dy dz e0 e1 e2 e3 e4 at b8 e5 e6"
+                            >
+                                <div class="cv e7 cw e8">
+                                    <h1 class="aw gk d7 gl br bn bm bo cu cb gm ca cc">$730</h1>
+                                    <div class="e8 br aw ax ay az">
+                                        <p
+                                            data-baseweb="typo-paragraphxsmall"
+                                            class="db aw ay ep ch bu eq bl"
+                                        >
+                                            Date
+                                        </p>
+                                        <p
+                                            data-baseweb="typo-paragraphmedium"
+                                            class="br aw ay ax az er bl"
+                                        >
+                                            May 13th 12:45 PM<svg
+                                                data-baseweb="icon"
+                                                viewBox="0 0 24 24"
+                                                title="Arrow Right"
+                                                class="d9 fq fr fs cz d1"
+                                            >
+                                                <title>Arrow Right</title>
+                                                <path
+                                                    fill-rule="evenodd"
+                                                    clip-rule="evenodd"
+                                                    d="M6 12C6 12.5523 6.44772 13 7 13H14.5858L12.2929 15.2929C11.9024 15.6834 11.9024 16.3166 12.2929 16.7071C12.6834 17.0976 13.3166 17.0976 13.7071 16.7071L17.7071 12.7071C17.8946 12.5196 18 12.2652 18 12C18 11.7348 17.8946 11.4804 17.7071 11.2929L13.7071 7.29289C13.3166 6.90237 12.6834 6.90237 12.2929 7.29289C11.9024 7.68342 11.9024 8.31658 12.2929 8.70711L14.5858 11H7C6.44772 11 6 11.4477 6 12Z"
+                                                ></path></svg
+                                            >May 14th 8:00 AM
+                                        </p>
+                                        <div data-baseweb="flex-grid" class="ae eh b1 em gn">
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Trailer
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    Van
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Commodity
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    Packaging Material
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Weight
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    10000 lb
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Packaging type
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    26 Pallets
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Rate per mile
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    $0.93/mi
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Distance
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    781mi
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Load Id
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    9225186203
+                                                </p>
+                                            </div>
+                                            <div data-baseweb="flex-grid-item" class="en eo bo bl">
+                                                <p
+                                                    data-baseweb="typo-paragraphxsmall"
+                                                    class="db aw ay ep ch bu eq bl"
+                                                >
+                                                    Special attention
+                                                </p>
+                                                <p
+                                                    data-baseweb="typo-paragraphmedium"
+                                                    class="br aw ay ax az er bl"
+                                                >
+                                                    N/A
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="aw ax d7 ch">
+                                            <button
+                                                data-baseweb="button"
+                                                class="fv fw af ag fx fy fz g0 fd fb g1 fc g2 g3 f9 da g4 g5 g6 g7 c0 g8 g9 ga bn go bo bl aw ax d7 ch e2 e4 e1 e3 gc gd fg fe gp ap gq gr ah"
+                                            >
+                                                Book Load
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=""></div>
+        </div>
+        <script type="application/json" id="__FEATURE_TOGGLES__">
+            {
+                "\"data\"": {
+                    "\"freight_webportal_access\"": {
+                        "\"enabled\"": true,
+                        "\"metadata\"": { "\"name\"": "full_access", "\"parameters\"": {} }
+                    },
+                    "\"freight_webportal_flatbed_access\"": {
+                        "\"enabled\"": true,
+                        "\"metadata\"": { "\"name\"": "full_access", "\"parameters\"": {} }
+                    }
+                }
+            }
+        </script>
 
-  <script type="application/json" id="__REDUX_STATE__">
-    {\u0022initState\u0022:{\u0022build\u0022:{\u0022gitSha\u0022:\u002216260d4712a84b58ae2cdf6fdd5efd1878d08270\u0022},\u0022user\u0022:{\u0022uuid\u0022:\u0022fb70659a-6c8a-4477-9f16-713804360376\u0022},\u0022locale\u0022:\u0022en\u0022},\u0022activateUser\u0022:{\u0022isVerified\u0022:false,\u0022isNewUser\u0022:false},\u0022carrier\u0022:{\u0022carrierInfo\u0022:{\u0022carrierUUID\u0022:\u0022\u0022,\u0022carrierName\u0022:\u0022\u0022,\u0022userLocaleInfo\u0022:{\u0022countryCode\u0022:\u0022US\u0022},\u0022firstName\u0022:\u0022\u0022},\u0022isCarrierLoaded\u0022:false,\u0022isCarrierLoading\u0022:false,\u0022isCarrierLoadingError\u0022:false,\u0022isDispatcher\u0022:false,\u0022isFleetUser\u0022:false,\u0022isOwner\u0022:false,\u0022isActive\u0022:false},\u0022fleet\u0022:{\u0022fleet\u0022:[],\u0022isFleetLoaded\u0022:false,\u0022isFleetLoading\u0022:false,\u0022isFleetLoadingError\u0022:false},\u0022loads\u0022:{\u0022activeLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false},\u0022hasLoaded\u0022:false,\u0022isLoadMatchesLoaded\u0022:false,\u0022isLoadMatchesLoading\u0022:false,\u0022isLoadMatchesLoadingError\u0022:false,\u0022isLoadingError\u0022:false,\u0022lastUpdatedTime\u0022:null,\u0022matchedLoads\u0022:{},\u0022matchedLoadsFilter\u0022:{\u0022dropoffLocation\u0022:null,\u0022dropoffTime\u0022:null,\u0022distance\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:10000,\u0022absoluteMax\u0022:10000}},\u0022pastLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false},\u0022tenderedLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false}},\u0022loadDetails\u0022:{\u0022loads\u0022:{},\u0022errorType\u0022:null,\u0022hasLoadDetailsLoaded\u0022:false,\u0022isLoadDetailsLoading\u0022:false,\u0022isLoadDetailsLoadingError\u0022:false,\u0022isOfferJobLoading\u0022:false,\u0022isOfferJobLoaded\u0022:false},\u0022loadBoard\u0022:{\u0022isLoading\u0022:false,\u0022isSearching\u0022:false,\u0022results\u0022:[],\u0022filterValues\u0022:{\u0022pickupDate\u0022:\u0022\u0022,\u0022pickupLocation\u0022:null,\u0022pickupRadius\u0022:200,\u0022dropoffDate\u0022:\u0022\u0022,\u0022dropoffLocation\u0022:null,\u0022dropoffRadius\u0022:200,\u0022trailerType\u0022:\u0022Any Trailer\u0022,\u0022distance\u0022:{\u0022isLocal\u0022:true,\u0022isShort\u0022:true,\u0022isLong\u0022:true},\u0022weight\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:50000,\u0022absoluteMax\u0022:50000},\u0022rate\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:0,\u0022absoluteMax\u0022:0}},\u0022lastSearchedDate\u0022:null},\u0022modal\u0022:{\u0022modalType\u0022:\u0022\u0022,\u0022modalProps\u0022:{},\u0022isLoading\u0022:false},\u0022notification\u0022:{\u0022notificationType\u0022:\u0022\u0022,\u0022notificationProps\u0022:{}},\u0022territories\u0022:{\u0022territories\u0022:[],\u0022isTerritoriesLoaded\u0022:false,\u0022isTerritoriesLoading\u0022:false,\u0022isTerritoriesLoadingError\u0022:false},\u0022session\u0022:{\u0022isLoggedOut\u0022:false},\u0022truckPost\u0022:{\u0022activeTruckPost\u0022:\u0022\u0022,\u0022isArcOrder\u0022:false,\u0022lastOpenMatchLoadTime\u0022:\u00221970-01-01T00:00:00.000Z\u0022,\u0022isTruckPostsLoaded\u0022:false,\u0022isTruckPostsLoading\u0022:false,\u0022isTruckPostsLoadingError\u0022:false,\u0022isTruckPostsSaved\u0022:false,\u0022isTruckPostsSaving\u0022:false,\u0022isTruckPostsSavingError\u0022:false,\u0022shouldEraseTruckPosts\u0022:false,\u0022shouldSaveTruckPosts\u0022:false,\u0022sortedField\u0022:\u0022\u0022,\u0022truckPosts\u0022:[],\u0022activeSearch\u0022:{\u0022uuid\u0022:\u0022\u0022,\u0022posterUUID\u0022:\u0022\u0022,\u0022sourceLocation\u0022:{\u0022name\u0022:\u0022\u0022},\u0022maxPickupDeadhead\u0022:200,\u0022maxDropoffDeadhead\u0022:200,\u0022destinationLocation\u0022:{\u0022name\u0022:\u0022\u0022},\u0022equipmentType\u0022:\u0022Any Trailer\u0022,\u0022repeatDays\u0022:{\u0022SUNDAY\u0022:true,\u0022MONDAY\u0022:true,\u0022TUESDAY\u0022:true,\u0022WEDNESDAY\u0022:true,\u0022THURSDAY\u0022:true,\u0022FRIDAY\u0022:true,\u0022SATURDAY\u0022:true}}}}
-  </script>
+        <script type="application/json" id="__REDUX_STATE__">
+            {\u0022initState\u0022:{\u0022build\u0022:{\u0022gitSha\u0022:\u002216260d4712a84b58ae2cdf6fdd5efd1878d08270\u0022},\u0022user\u0022:{\u0022uuid\u0022:\u0022fb70659a-6c8a-4477-9f16-713804360376\u0022},\u0022locale\u0022:\u0022en\u0022},\u0022activateUser\u0022:{\u0022isVerified\u0022:false,\u0022isNewUser\u0022:false},\u0022carrier\u0022:{\u0022carrierInfo\u0022:{\u0022carrierUUID\u0022:\u0022\u0022,\u0022carrierName\u0022:\u0022\u0022,\u0022userLocaleInfo\u0022:{\u0022countryCode\u0022:\u0022US\u0022},\u0022firstName\u0022:\u0022\u0022},\u0022isCarrierLoaded\u0022:false,\u0022isCarrierLoading\u0022:false,\u0022isCarrierLoadingError\u0022:false,\u0022isDispatcher\u0022:false,\u0022isFleetUser\u0022:false,\u0022isOwner\u0022:false,\u0022isActive\u0022:false},\u0022fleet\u0022:{\u0022fleet\u0022:[],\u0022isFleetLoaded\u0022:false,\u0022isFleetLoading\u0022:false,\u0022isFleetLoadingError\u0022:false},\u0022loads\u0022:{\u0022activeLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false},\u0022hasLoaded\u0022:false,\u0022isLoadMatchesLoaded\u0022:false,\u0022isLoadMatchesLoading\u0022:false,\u0022isLoadMatchesLoadingError\u0022:false,\u0022isLoadingError\u0022:false,\u0022lastUpdatedTime\u0022:null,\u0022matchedLoads\u0022:{},\u0022matchedLoadsFilter\u0022:{\u0022dropoffLocation\u0022:null,\u0022dropoffTime\u0022:null,\u0022distance\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:10000,\u0022absoluteMax\u0022:10000}},\u0022pastLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false},\u0022tenderedLoads\u0022:{\u0022data\u0022:null,\u0022error\u0022:\u0022\u0022,\u0022isLoading\u0022:false}},\u0022loadDetails\u0022:{\u0022loads\u0022:{},\u0022errorType\u0022:null,\u0022hasLoadDetailsLoaded\u0022:false,\u0022isLoadDetailsLoading\u0022:false,\u0022isLoadDetailsLoadingError\u0022:false,\u0022isOfferJobLoading\u0022:false,\u0022isOfferJobLoaded\u0022:false},\u0022loadBoard\u0022:{\u0022isLoading\u0022:false,\u0022isSearching\u0022:false,\u0022results\u0022:[],\u0022filterValues\u0022:{\u0022pickupDate\u0022:\u0022\u0022,\u0022pickupLocation\u0022:null,\u0022pickupRadius\u0022:200,\u0022dropoffDate\u0022:\u0022\u0022,\u0022dropoffLocation\u0022:null,\u0022dropoffRadius\u0022:200,\u0022trailerType\u0022:\u0022Any Trailer\u0022,\u0022distance\u0022:{\u0022isLocal\u0022:true,\u0022isShort\u0022:true,\u0022isLong\u0022:true},\u0022weight\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:50000,\u0022absoluteMax\u0022:50000},\u0022rate\u0022:{\u0022appliedMin\u0022:0,\u0022appliedMax\u0022:0,\u0022absoluteMax\u0022:0}},\u0022lastSearchedDate\u0022:null},\u0022modal\u0022:{\u0022modalType\u0022:\u0022\u0022,\u0022modalProps\u0022:{},\u0022isLoading\u0022:false},\u0022notification\u0022:{\u0022notificationType\u0022:\u0022\u0022,\u0022notificationProps\u0022:{}},\u0022territories\u0022:{\u0022territories\u0022:[],\u0022isTerritoriesLoaded\u0022:false,\u0022isTerritoriesLoading\u0022:false,\u0022isTerritoriesLoadingError\u0022:false},\u0022session\u0022:{\u0022isLoggedOut\u0022:false},\u0022truckPost\u0022:{\u0022activeTruckPost\u0022:\u0022\u0022,\u0022isArcOrder\u0022:false,\u0022lastOpenMatchLoadTime\u0022:\u00221970-01-01T00:00:00.000Z\u0022,\u0022isTruckPostsLoaded\u0022:false,\u0022isTruckPostsLoading\u0022:false,\u0022isTruckPostsLoadingError\u0022:false,\u0022isTruckPostsSaved\u0022:false,\u0022isTruckPostsSaving\u0022:false,\u0022isTruckPostsSavingError\u0022:false,\u0022shouldEraseTruckPosts\u0022:false,\u0022shouldSaveTruckPosts\u0022:false,\u0022sortedField\u0022:\u0022\u0022,\u0022truckPosts\u0022:[],\u0022activeSearch\u0022:{\u0022uuid\u0022:\u0022\u0022,\u0022posterUUID\u0022:\u0022\u0022,\u0022sourceLocation\u0022:{\u0022name\u0022:\u0022\u0022},\u0022maxPickupDeadhead\u0022:200,\u0022maxDropoffDeadhead\u0022:200,\u0022destinationLocation\u0022:{\u0022name\u0022:\u0022\u0022},\u0022equipmentType\u0022:\u0022Any Trailer\u0022,\u0022repeatDays\u0022:{\u0022SUNDAY\u0022:true,\u0022MONDAY\u0022:true,\u0022TUESDAY\u0022:true,\u0022WEDNESDAY\u0022:true,\u0022THURSDAY\u0022:true,\u0022FRIDAY\u0022:true,\u0022SATURDAY\u0022:true}}}}
+        </script>
 
-    <script type="application/json" id="__TRANSLATIONS__">
-      {\u0022localeCode\u0022:\u0022en\u0022,\u0022translations\u0022:{\u0022activate_user.create_new_password\u0022:\u0022Now that you've verified your carrier, let's finish setting up your account. Click the set password button below to create a new password for your account.\u0022,\u0022activate_user.failure_instructions\u0022:\u0022Please contact us to get help activating your account.\u0022,\u0022activate_user.login_button_copy\u0022:\u0022LOG IN TO UBER FREIGHT APP\u0022,\u0022activate_user.login_instructions\u0022:\u0022Now that you've verified your carrier, it's time to use the Uber Freight web portal. Tap the button below to log in.\u0022,\u0022activate_user.title_failure\u0022:\u0022Sorry, the verification was not successful.\u0022,\u0022activate_user.title_verified\u0022:\u0022You're verified!\u0022,\u0022article.to\u0022:\u0022to\u0022,\u0022assign_driver_modal.add_driver_caption\u0022:\u0022Don't see who you're looking for? Add a driver in the ${link} tab.\u0022,\u0022assign_driver_modal.assign\u0022:\u0022Assign\u0022,\u0022assign_driver_modal.assign_driver\u0022:\u0022Assign Driver\u0022,\u0022assign_driver_modal.assigned\u0022:\u0022Assigned\u0022,\u0022assign_driver_modal.fleet_management\u0022:\u0022Fleet Management\u0022,\u0022assign_driver_modal.no_drivers\u0022:\u0022No drivers matching the search.\u0022,\u0022assign_driver_modal.search_for_driver\u0022:\u0022Search for a driver\u0022,\u0022authorization.not_an_owner\u0022:\u0022It looks like you don't have permission to access Uber Freight.\u0022,\u0022book_confirmation_modal.assign_a_driver\u0022:\u0022Assign a driver\u0022,\u0022book_confirmation_modal.book_another_load\u0022:\u0022Book another load\u0022,\u0022book_confirmation_modal.booking_load\u0022:\u0022Booking load…\u0022,\u0022book_confirmation_modal.download_ratecon_msg\u0022:\u0022Download RateCon PDF\u0022,\u0022book_confirmation_modal.equipment_cancel_button\u0022:\u0022Cancel\u0022,\u0022book_confirmation_modal.equipment_confirm_button\u0022:\u0022Confirm\u0022,\u0022book_confirmation_modal.flatbed_equipment_confirmation_message\u0022:\u0022Before booking, confirm that you can provide the equipment required by the shipper:\u0022,\u0022book_confirmation_modal.flatbed_equipment_required\u0022:\u0022Equipment required\u0022,\u0022book_confirmation_modal.flatbed_equipment_warning_message\u0022:\u0022If you arrive without these items, you may be turned away at the facility.\u0022,\u0022book_confirmation_modal.flatbed_straps\u0022:\u0022Straps\u0022,\u0022book_confirmation_modal.flatbed_tarp\u0022:\u0022${length} tarp\u0022,\u0022book_confirmation_modal.flatbed_trailer\u0022:\u0022${length} flatbed trailer\u0022,\u0022book_confirmation_modal.go_to_my_loads\u0022:\u0022Go to My Loads\u0022,\u0022book_confirmation_modal.got_it\u0022:\u0022Got it\u0022,\u0022book_confirmation_modal.load_booked\u0022:\u0022Load booked\u0022,\u0022book_confirmation_modal.load_confirmation_actions_msg\u0022:\u0022${downloadLink} Please assign a driver to this load.\u0022,\u0022book_confirmation_modal.load_confirmation_msg\u0022:\u0022RateCon has been sent to your email.\u0022,\u0022booking.available.book_load\u0022:\u0022Book your load set\u0022,\u0022booking.available.book_number_of_loads\u0022:\u0022Book ${loadCount} loads\u0022,\u0022booking.available.confirm\u0022:\u0022Confirm that\u0022,\u0022booking.available.confirm_load_booking\u0022:\u0022would like to book ${loadCount} loads. After booking, these loads will display in the Uber Freight app.\u0022,\u0022booking.available.confirm_load_booking_full_sentence\u0022:\u0022Confirm that you would like to book ${loadCount} loads. After booking, these loads will display in the Uber Freight app.\u0022,\u0022booking.available.linehaul_label\u0022:\u0022Linehaul\u0022,\u0022booking.available.loads_label\u0022:\u0022Loads\u0022,\u0022booking.available.note_load_visibility\u0022:\u0022Note: these loads are not visible in the app until you book them.\u0022,\u0022booking.available.overview_label\u0022:\u0022Overview\u0022,\u0022booking.book_offer_error.error_booking_bundle\u0022:\u0022Error while booking bundle\u0022,\u0022booking.book_offer_error.error_booking_please_refresh\u0022:\u0022Apologies, there was an error while booking the load bundle. Please refresh the page and try again.\u0022,\u0022booking.booking_in_progress\u0022:\u0022Booking Bundle...\u0022,\u0022booking.confirmed.confirmation\u0022:\u0022You are now confirmed\u0022,\u0022booking.confirmed.download_app\u0022:\u0022Please download and open the Uber Freight app on your phone to check the details of the load set. A booking confirmation will also be sent to your email.\u0022,\u0022booking.confirmed.view_app\u0022:\u0022View the Uber Freight App\u0022,\u0022booking.fetch_offer_error.error_fetching_bundle\u0022:\u0022Error while fetching bundle\u0022,\u0022booking.fetch_offer_error.error_fetching_please_refresh\u0022:\u0022Apologies, there was an error while fetching the load bundle. Please refresh the page and try again.\u0022,\u0022booking.help_text.email_assistance\u0022:\u0022If you need assistance, please email\u0022,\u0022booking.loading_in_progress\u0022:\u0022Loading Bundle...\u0022,\u0022booking.loadinginprogress\u0022:\u0022Loading Bundle...\u0022,\u0022booking.unavailable.download_app\u0022:\u0022Whether you want to stay local or drive over the road, finding the right load has never been easier. Download the Uber Freight app today.\u0022,\u0022booking.unavailable.load_not_available\u0022:\u0022Load set no longer available\u0022,\u0022booking.unavailable.loads_already_booked\u0022:\u0022Apologies, this set of loads has already been booked.\u0022,\u0022booking.unavailable.more_loads_available\u0022:\u0022We have other loads available in the Uber Freight App\u0022,\u0022booking.unavailable.view_more_loads\u0022:\u0022View more loads in the app\u0022,\u0022booking_in_progress\u0022:\u0022Booking...\u0022,\u0022create_user.add_member\u0022:\u0022Add a member\u0022,\u0022create_user.email_error\u0022:\u0022Invalid email\u0022,\u0022create_user.email_exists_error\u0022:\u0022This email address is already in use\u0022,\u0022create_user.email_label\u0022:\u0022Email address\u0022,\u0022create_user.first_name_error\u0022:\u0022First name cannot be empty\u0022,\u0022create_user.first_name_field_label\u0022:\u0022First name\u0022,\u0022create_user.first_name_label\u0022:\u0022First name\u0022,\u0022create_user.last_name_error\u0022:\u0022Last name cannot be empty\u0022,\u0022create_user.last_name_label\u0022:\u0022Last name\u0022,\u0022create_user.mobile_phone_error\u0022:\u0022Invalid phone number\u0022,\u0022create_user.mobile_phone_label\u0022:\u0022Mobile phone number\u0022,\u0022create_user.subheading\u0022:\u0022We will email the driver and ask them to verify the account.  After that is done, you can start dispatching your driver.\u0022,\u0022create_user.title\u0022:\u0022Add a member\u0022,\u0022cta.add_new\u0022:\u0022Add new\u0022,\u0022cta.call_us\u0022:\u0022Call us\u0022,\u0022cta.contact_us\u0022:\u0022Contact us\u0022,\u0022cta.done\u0022:\u0022Done\u0022,\u0022cta.email_us\u0022:\u0022Email us\u0022,\u0022cta.go_to_saved_lanes\u0022:\u0022Go To Saved Lanes\u0022,\u0022cta.go_to_search\u0022:\u0022Go to Search\u0022,\u0022cta.new\u0022:\u0022New\u0022,\u0022cta.set_password\u0022:\u0022Set Password\u0022,\u0022days_of_week.friday\u0022:\u0022Friday\u0022,\u0022days_of_week.monday\u0022:\u0022Monday\u0022,\u0022days_of_week.saturday\u0022:\u0022Saturday\u0022,\u0022days_of_week.sunday\u0022:\u0022Sunday\u0022,\u0022days_of_week.thursday\u0022:\u0022Thursday\u0022,\u0022days_of_week.tuesday\u0022:\u0022Tuesday\u0022,\u0022days_of_week.wednesday\u0022:\u0022Wednesday\u0022,\u0022decline_load_modal.booked_another_load\u0022:\u0022Already booked another load\u0022,\u0022decline_load_modal.equpment_issues\u0022:\u0022Equipment issues\u0022,\u0022decline_load_modal.other\u0022:\u0022Other\u0022,\u0022decline_load_modal.pickup_too_early\u0022:\u0022Pickup too early or late\u0022,\u0022decline_load_modal.rate_too_low\u0022:\u0022Rate too low\u0022,\u0022decline_load_modal.send_feedback\u0022:\u0022Send feedback\u0022,\u0022decline_load_modal.skip_for_now\u0022:\u0022Skip for now\u0022,\u0022decline_load_modal.tell_us_more\u0022:\u0022Please tell us more...\u0022,\u0022decline_load_modal.why_decline_load\u0022:\u0022Why are you declining this load?\u0022,\u0022documents.pod_upload_modal_body\u0022:\u0022Please upload the POD file (JPEG or PDF) to get paid for this load.  Make sure all signatures are visible.\u0022,\u0022documents.pod_upload_modal_title\u0022:\u0022Upload POD (Proof of Delivery)\u0022,\u0022documents.pod_upload_success\u0022:\u0022You're proof of delivery has been submitted.  Once approved, payment should reach your carrier's account in 7-10 days\u0022,\u0022documents.upload_failure\u0022:\u0022There was an issue uploading your file.  Please try again later.\u0022,\u0022documents.upload_pod\u0022:\u0022Upload POD\u0022,\u0022documents.upload_progress_message\u0022:\u0022Uploading... hang tight.\u0022,\u0022driver_card.arrived_at_dropoff\u0022:\u0022Arrived at dropoff\u0022,\u0022driver_card.arrived_at_pickup\u0022:\u0022Arrived at pickup\u0022,\u0022driver_card.booked_for_caption\u0022:\u0022Booked by ${userName}\u0022,\u0022driver_card.booked_for_driver_name\u0022:\u0022Booked for ${driverName}\u0022,\u0022driver_card.change_driver\u0022:\u0022Change driver\u0022,\u0022driver_card.left_dropoff\u0022:\u0022Left dropoff\u0022,\u0022driver_card.left_pickup\u0022:\u0022Left pickup\u0022,\u0022driver_card.minutes_to_decline_caption\u0022:\u0022${driverName} has ${minutesLeftToDecline} minutes to decline\u0022,\u0022driver_card.tender_expired\u0022:\u0022Your reservation ended at ${time}\u0022,\u0022driver_card.tender_expired_available_to_all\u0022:\u0022This load is now available to all carriers.\u0022,\u0022driver_card.time_until_pickup\u0022:\u0022${days} ${hours} ${minutes} time until pickup\u0022,\u0022email_us\u0022:\u0022Email us\u0022,\u0022fleetEmployeeInfo.booking_permissions\u0022:\u0022Booking Permissions\u0022,\u0022fleetEmployeeInfo.name\u0022:\u0022Name\u0022,\u0022fleetEmployeeInfo.price_visibility\u0022:\u0022Rate Visibility\u0022,\u0022fleetEmployeeInfo.role\u0022:\u0022Role\u0022,\u0022fleetEmployeeInfo.status\u0022:\u0022Status\u0022,\u0022freightFleet.freight_fleet\u0022:\u0022Freight Fleet Management\u0022,\u0022freightUserRole.dispatcher\u0022:\u0022Dispatcher\u0022,\u0022freightUserRole.dispatcher_driver\u0022:\u0022Dispatcher \u0026 Driver\u0022,\u0022freightUserRole.driver\u0022:\u0022Driver\u0022,\u0022freightUserStatus.pending\u0022:\u0022Pending\u0022,\u0022freightUserStatus.verified\u0022:\u0022Verified\u0022,\u0022help.contact_support\u0022:\u0022Contact us for support.\u0022,\u0022loadDetails.card.bookLoad\u0022:\u0022Book Load\u0022,\u0022loadDetails.card.commodity\u0022:\u0022Commodity\u0022,\u0022loadDetails.card.date\u0022:\u0022Date\u0022,\u0022loadDetails.card.distance\u0022:\u0022Distance\u0022,\u0022loadDetails.card.dropoffLocation\u0022:\u0022Dropoff Location\u0022,\u0022loadDetails.card.dropoffNumber\u0022:\u0022Dropoff #\u0022,\u0022loadDetails.card.dropoffTime\u0022:\u0022Dropoff Time\u0022,\u0022loadDetails.card.dropoffTitle\u0022:\u0022Dropoff\u0022,\u0022loadDetails.card.facilityOwner\u0022:\u0022Facility Owner\u0022,\u0022loadDetails.card.loadId\u0022:\u0022Load Id\u0022,\u0022loadDetails.card.notes\u0022:\u0022Notes\u0022,\u0022loadDetails.card.packagingType\u0022:\u0022Packaging type\u0022,\u0022loadDetails.card.pickupLocation\u0022:\u0022Pickup Location\u0022,\u0022loadDetails.card.pickupNumber\u0022:\u0022Pickup #\u0022,\u0022loadDetails.card.pickupTime\u0022:\u0022Pickup Time\u0022,\u0022loadDetails.card.pickupTitle\u0022:\u0022Pickup\u0022,\u0022loadDetails.card.ratePerMile\u0022:\u0022Rate per mile\u0022,\u0022loadDetails.card.reloadOptions\u0022:\u0022Reload Options\u0022,\u0022loadDetails.card.see_all_reload_options\u0022:\u0022See all ${loadLength} reload options\u0022,\u0022loadDetails.card.trailer\u0022:\u0022Trailer\u0022,\u0022loadDetails.card.weight\u0022:\u0022Weight\u0022,\u0022loadDetails.deadhead\u0022:\u0022Deadhead\u0022,\u0022loadDetails.delivery\u0022:\u0022Delivery\u0022,\u0022loadDetails.deliveryTime\u0022:\u0022Delivery Time\u0022,\u0022loadDetails.distance\u0022:\u0022Distance\u0022,\u0022loadDetails.equipment\u0022:\u0022Equipment\u0022,\u0022loadDetails.hoursAfterDelivery\u0022:\u0022Hours after delivery\u0022,\u0022loadDetails.lane\u0022:\u0022Lane\u0022,\u0022loadDetails.pickup\u0022:\u0022Pickup\u0022,\u0022loadDetails.pickupTime\u0022:\u0022Pickup Time\u0022,\u0022loadDetails.rate\u0022:\u0022Rate\u0022,\u0022loadDetails.weight\u0022:\u0022Weight\u0022,\u0022load_details.card.rate_per_distance\u0022:\u0022Rate per ${distanceUnit}\u0022,\u0022load_details.decline_load\u0022:\u0022Decline\u0022,\u0022load_details.equipment_type.any_trailer\u0022:\u0022Any Trailer\u0022,\u0022load_details.equipment_type.box\u0022:\u0022Box\u0022,\u0022load_details.equipment_type.conestoga\u0022:\u0022Conestoga\u0022,\u0022load_details.equipment_type.container\u0022:\u0022Container\u0022,\u0022load_details.equipment_type.deck\u0022:\u0022Deck\u0022,\u0022load_details.equipment_type.flatbed\u0022:\u0022Flatbed\u0022,\u0022load_details.equipment_type.frigo\u0022:\u0022Frigo\u0022,\u0022load_details.equipment_type.jumbo\u0022:\u0022Jumbo\u0022,\u0022load_details.equipment_type.mega_trailer\u0022:\u0022Mega Trailer\u0022,\u0022load_details.equipment_type.power_only\u0022:\u0022Power Only\u0022,\u0022load_details.equipment_type.reefer\u0022:\u0022Reefer\u0022,\u0022load_details.equipment_type.road_train\u0022:\u0022Road Train\u0022,\u0022load_details.equipment_type.tanker\u0022:\u0022Tanker\u0022,\u0022load_details.equipment_type.tautliner\u0022:\u0022Tautliner\u0022,\u0022load_details.equipment_type.tilt\u0022:\u0022Tilt\u0022,\u0022load_details.equipment_type.van\u0022:\u0022Van\u0022,\u0022load_details.flatbed.straps\u0022:\u0022Straps\u0022,\u0022load_details.flatbed.tarp_size\u0022:\u0022Tarp size\u0022,\u0022load_details.flatbed.trailer_length\u0022:\u0022Trailer length\u0022,\u0022load_details.job_changed_error\u0022:\u0022Load details have changed.  Please refresh this page to get the latest information.\u0022,\u0022load_details.legal_footer\u0022:\u0022By booking this lead, carrier agrees to perform transportation services at the price above and subject to carrier's broker carrier agreement with Uber Freight and Uber Freight's ${termsAndConditions} and ${privacyPolicy}.\u0022,\u0022load_details.not_applicable\u0022:\u0022n/a\u0022,\u0022load_details.privacy_policy\u0022:\u0022privacy policy\u0022,\u0022load_details.reefer.maximum_temp\u0022:\u0022Maximum temp.\u0022,\u0022load_details.reefer.minimum_temp\u0022:\u0022Minimum temp.\u0022,\u0022load_details.reefer.operating_instructions\u0022:\u0022Operating instructions\u0022,\u0022load_details.reefer.pre_cool_temp\u0022:\u0022Pre-cool temp.\u0022,\u0022load_details.reefer.trailer_washout\u0022:\u0022Trailer washout\u0022,\u0022load_details.status.delivered\u0022:\u0022Delivered\u0022,\u0022load_details.status.dispatched\u0022:\u0022Dispatched\u0022,\u0022load_details.status.in_progress\u0022:\u0022In Progress\u0022,\u0022load_details.staus.driver_assigned\u0022:\u0022Driver Assigned\u0022,\u0022load_details.terms_and_conditions\u0022:\u0022terms and conditions\u0022,\u0022load_filter.location_placeholder\u0022:\u0022City, State, or Zip code\u0022,\u0022load_filters.additional\u0022:\u0022Additional\u0022,\u0022load_filters.apply\u0022:\u0022Apply\u0022,\u0022load_filters.clear\u0022:\u0022Clear\u0022,\u0022load_filters.distance_over\u0022:\u0022Over ${number}${distanceUnit}\u0022,\u0022load_filters.distance_to\u0022:\u0022${number1} to ${number2}${distanceUnit}\u0022,\u0022load_filters.distance_up_to\u0022:\u0022Up to ${number}${distanceUnit}\u0022,\u0022load_filters.local\u0022:\u0022Local\u0022,\u0022load_filters.long\u0022:\u0022Long\u0022,\u0022load_filters.short\u0022:\u0022Short\u0022,\u0022load_table.available_loads_caption\u0022:\u0022${numLoads} available loads\u0022,\u0022load_table.delivery_date\u0022:\u0022Delivery date\u0022,\u0022load_table.delivery_location\u0022:\u0022Delivery location\u0022,\u0022load_table.delivery_radius\u0022:\u0022Delivery radius\u0022,\u0022load_table.last_updated_caption\u0022:\u0022Last updated at ${lastUpdatedDate}\u0022,\u0022load_table.no_results\u0022:\u0022No results\u0022,\u0022load_table.pickup_date\u0022:\u0022Pickup date\u0022,\u0022load_table.pickup_location\u0022:\u0022Pickup location\u0022,\u0022load_table.search\u0022:\u0022Search\u0022,\u0022load_unavailable.text\u0022:\u0022Please search again to view and book loads.\u0022,\u0022load_unavailable.title\u0022:\u0022Sorry, this load is no longer available.\u0022,\u0022loaddetails.card.attention\u0022:\u0022Special attention\u0022,\u0022loaddetails.card.lane_id\u0022:\u0022Lane Id\u0022,\u0022loaddetails.card.rateperkm\u0022:\u0022Rate per km\u0022,\u0022loadmatching.add_truck_post\u0022:\u0022Add Truck Post\u0022,\u0022loadmatching.auto_refresh_interval\u0022:\u0022Load matches are refreshed every two minutes\u0022,\u0022loadmatching.auto_refresh_tick\u0022:\u0022Last updated at ${time}\u0022,\u0022loadmatching.welcome_content\u0022:\u0022Add trucks to your trucklist, and we will automatically find load matches for your trucks\u0022,\u0022manageFleet.add_member\u0022:\u0022Add Member\u0022,\u0022manageFleet.can_book_load\u0022:\u0022Can book\u0022,\u0022manageFleet.can_not_book_load\u0022:\u0022Can’t book\u0022,\u0022manageFleet.can_not_see_price\u0022:\u0022Can’t see rate\u0022,\u0022manageFleet.can_see_price\u0022:\u0022Can see rate\u0022,\u0022manageFleet.members\u0022:\u0022${memberCount} members\u0022,\u0022manageFleet.no_members\u0022:\u0022There are no members in this fleet.\u0022,\u0022manageFleet.permissions\u0022:\u0022Permissions\u0022,\u0022manageFleet.unauthorized\u0022:\u0022Unauthorized\u0022,\u0022manageFleet.unknown\u0022:\u0022Unknown\u0022,\u0022manageFleet.welcome_content\u0022:\u0022Once you add a driver to your fleet, they will be displayed on a dashboard here.\u0022,\u0022manageFleet.welcome_title\u0022:\u0022Add a member to your fleet\u0022,\u0022managefleet.email_address\u0022:\u0022Email\u0022,\u0022managefleet.phone_number\u0022:\u0022Phone\u0022,\u0022matched_load.any\u0022:\u0022Any\u0022,\u0022matched_load.anywhere\u0022:\u0022Anywhere\u0022,\u0022matched_loads.truck_available_date\u0022:\u0022on ${emptyDate}\u0022,\u0022matched_loads.truck_available_location\u0022:\u0022Empty in ${sourceLocation}\u0022,\u0022memberActions.cancel\u0022:\u0022Cancel\u0022,\u0022memberActions.edit_details\u0022:\u0022Edit Details\u0022,\u0022memberActions.removal_confirmation\u0022:\u0022Remove ${fullName}?\u0022,\u0022memberActions.removal_confirmation_warning\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the member to your fleet again.\u0022,\u0022memberActions.remove\u0022:\u0022Remove\u0022,\u0022memberActions.remove_driver\u0022:\u0022Remove Driver\u0022,\u0022memberActions.save\u0022:\u0022Save\u0022,\u0022memberListDropdown.remove_driver\u0022:\u0022Remove Driver\u0022,\u0022memberListDropdown.remove_user\u0022:\u0022Remove Driver\u0022,\u0022modal.cancelButton\u0022:\u0022Cancel\u0022,\u0022modal.removeMember.body\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the driver to your fleet again.\u0022,\u0022modal.removeMember.remove\u0022:\u0022Remove\u0022,\u0022modalButton.cancel\u0022:\u0022Cancel\u0022,\u0022my_loads.assigned\u0022:\u0022Assigned\u0022,\u0022my_loads.booked_by\u0022:\u0022Booked By\u0022,\u0022my_loads.booked_loads\u0022:\u0022Booked\u0022,\u0022my_loads.delivery_radius\u0022:\u0022Delivery radius\u0022,\u0022my_loads.document_status\u0022:\u0022Document Status\u0022,\u0022my_loads.load_status\u0022:\u0022Load Status\u0022,\u0022my_loads.my_loads\u0022:\u0022My Loads\u0022,\u0022my_loads.on_trip\u0022:\u0022On trip\u0022,\u0022my_loads.past_loads\u0022:\u0022Past\u0022,\u0022my_loads.payment_status\u0022:\u0022Payment Status\u0022,\u0022my_loads.pending_driver_acceptance\u0022:\u0022Pending driver acceptance\u0022,\u0022my_loads.tendered_loads\u0022:\u0022Offered\u0022,\u0022my_loads.unassigned\u0022:\u0022Unassigned\u0022,\u0022my_loads.upcoming\u0022:\u0022Upcoming\u0022,\u0022navHeader.book\u0022:\u0022Book\u0022,\u0022navHeader.plus_icon\u0022:\u0022Plus Icon\u0022,\u0022navHeader.toggle_menu\u0022:\u0022Toggle drop down menu\u0022,\u0022navHeader.uber_freight_plus\u0022:\u0022Uber Freight Plus\u0022,\u0022navHeader.view_privacy\u0022:\u0022View Privacy Policy\u0022,\u0022navHeader.view_terms\u0022:\u0022View Terms \u0026 Conditions\u0022,\u0022navheader.contact_support\u0022:\u0022Contact Support\u0022,\u0022navheader.loadMatching\u0022:\u0022Load Matching\u0022,\u0022navheader.manage_fleet\u0022:\u0022Fleet Management\u0022,\u0022navheader.preferred_lanes\u0022:\u0022Saved Lanes\u0022,\u0022navheader.sign_out\u0022:\u0022Sign Out\u0022,\u0022navheader.uber_freight_logo\u0022:\u0022Uber Freight Logo\u0022,\u0022navheader.uber_fright_logo\u0022:\u0022Uber Freight Logo\u0022,\u0022navheader.uber_fright_plus\u0022:\u0022Uber Fright Plus\u0022,\u0022notification.assign_failure\u0022:\u0022There was an issue assigning the driver to the load, please try again.\u0022,\u0022notification.assign_success\u0022:\u0022Successfully assigned the driver.\u0022,\u0022notification.book_failure\u0022:\u0022The load could not be booked. Please try again.\u0022,\u0022notification.create_user_failure\u0022:\u0022There was a problem adding a new member to your fleet.  Please contact ${phoneNumber} for support with your request.\u0022,\u0022notification.create_user_success\u0022:\u0022${fullName} was successfully added to your Fleet!\u0022,\u0022notification.decline_load_success\u0022:\u0022Decline Successful\u0022,\u0022notification.edit_failure\u0022:\u0022We couldn’t update ${fullName}’s profile\u0022,\u0022notification.edit_success\u0022:\u0022${fullName}’s profile has been updated\u0022,\u0022notification.existing_non_rider_account\u0022:\u0022${fullName} has already created and activated an account with Uber.  Please contact us to add this driver. ${phoneNumber}\u0022,\u0022notification.existing_uber_freight_account\u0022:\u0022${fullName} has already created and activated an account with Uber Freight.  Once they verify their account, ${fullName} will be added to your fleet.\u0022,\u0022notification.remove_failure\u0022:\u0022We couldn’t remove ${fullName} from your fleet\u0022,\u0022notification.remove_success\u0022:\u0022${fullName} has been removed from your fleet\u0022,\u0022notifications.search_failure\u0022:\u0022Could not retrieve loads. Please try again.\u0022,\u0022permissions.account_error\u0022:\u0022Account error\u0022,\u0022preferred_lanes.add_new_lane_success\u0022:\u0022This lane has been saved.  Use the Saved Lanes tab to find all matching loads.\u0022,\u0022recurrence.daily\u0022:\u0022Daily\u0022,\u0022recurrence.label\u0022:\u0022Pickup availability\u0022,\u0022recurrence_modal.anywhere\u0022:\u0022anywhere\u0022,\u0022recurrence_modal.subheading\u0022:\u0022Select your available pickup days for this\u0022,\u0022recurrence_modal.title\u0022:\u0022Pickup availability\u0022,\u0022recurrence_selection.lane\u0022:\u0022lane\u0022,\u0022refresh_truck_posts\u0022:\u0022Refresh Matches\u0022,\u0022removeMemberModal.bodyText\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the driver to your fleet again.\u0022,\u0022removeMemberModal.remove\u0022:\u0022Remove\u0022,\u0022saved_lane_does_not_exist\u0022:\u0022The saved lane you are attempting to view no longer exists\u0022,\u0022saved_lanes.save_error_notification\u0022:\u0022There was a problem saving your lane.  Please try again later.\u0022,\u0022saved_lanes_unsubscribe_message\u0022:\u0022We won't send you anything about Saved Lanes from now on.  Please contact us if you'd like to receive these emails again.\u0022,\u0022search_loads.add_preferred_lane\u0022:\u0022Save this lane\u0022,\u0022search_loads.default_instructions\u0022:\u0022Enter pickup location to see loads\u0022,\u0022tendered_loads.available\u0022:\u0022Reserved\u0022,\u0022tendered_loads.expired\u0022:\u0022Reservation expired\u0022,\u0022tendered_loads.no_loads_heading\u0022:\u0022No load offers yet\u0022,\u0022tendered_loads.no_loads_subheading_primary\u0022:\u0022You can use this tab to accept or decline reserved loads.\u0022,\u0022tendered_loads.no_loads_subheading_secondary\u0022:\u0022If you want to commit to loads for a lane, contact your dedicated ops representative.\u0022,\u0022tenderedloads.timeleft\u0022:\u0022Time left\u0022,\u0022total_matched\u0022:\u0022${count} matched loads\u0022,\u0022truck_post.download_csv_template\u0022:\u0022Download CSV template\u0022,\u0022truck_post.driver_name\u0022:\u0022Driver name\u0022,\u0022truck_post.dropoff_date\u0022:\u0022Dropoff date\u0022,\u0022truck_post.dropoff_location\u0022:\u0022Dropoff location\u0022,\u0022truck_post.edit_truck_posts\u0022:\u0022Edit truck list\u0022,\u0022truck_post.empty_date\u0022:\u0022Empty date\u0022,\u0022truck_post.empty_location\u0022:\u0022Empty location\u0022,\u0022truck_post.empty_location_error\u0022:\u0022Source location cannot be blank\u0022,\u0022truck_post.load_matches\u0022:\u0022Load matches\u0022,\u0022truck_post.load_matching_intro_heading\u0022:\u0022Introducing Load Matching\u0022,\u0022truck_post.load_matching_intro_instruction_text_1\u0022:\u0022Add your trucks' empty location and update it regularly\u0022,\u0022truck_post.load_matching_intro_instruction_text_2\u0022:\u0022Get loads matched to your trucks instantly\u0022,\u0022truck_post.load_matching_intro_instruction_text_3\u0022:\u0022Book loads easily and assign them to your drivers\u0022,\u0022truck_post.load_matching_intro_instruction_title_1\u0022:\u0022Fill out your truck list\u0022,\u0022truck_post.load_matching_intro_instruction_title_2\u0022:\u0022Review load matches\u0022,\u0022truck_post.load_matching_intro_instruction_title_3\u0022:\u0022Book and assign loads\u0022,\u0022truck_post.load_matching_intro_subheading\u0022:\u0022Load Matching is a way for you to get loads matched to your trucks instantly.\u0022,\u0022truck_post.matches_loads\u0022:\u0022Update matched loads\u0022,\u0022truck_post.pickup_date\u0022:\u0022Pickup date\u0022,\u0022truck_post.pickup_radius\u0022:\u0022Pickup radius\u0022,\u0022truck_post.pickup_radius_error\u0022:\u0022Pickup radius must be less than 450 mi\u0022,\u0022truck_post.source_location\u0022:\u0022Source Location\u0022,\u0022truck_post.source_location_error\u0022:\u0022Source location must not be empty\u0022,\u0022truck_post.trailer_type\u0022:\u0022Trailer type\u0022,\u0022truck_post.truck_number\u0022:\u0022Truck number\u0022,\u0022truck_post.truck_post_description\u0022:\u0022Fill in your empty truck information and we’ll automatically match them with loads.\u0022,\u0022truck_post.truck_post_header\u0022:\u0022Get loads matched to your trucks\u0022,\u0022truck_post.upload_csv_content\u0022:\u0022Uploading your CSV to add new trucks or update trucks information.\u0022,\u0022truck_post.upload_csv_title\u0022:\u0022Upload CSV File\u0022,\u0022truck_post.upload_csv_warning\u0022:\u0022The new CSV file will replace the existing trucklist you have.\u0022,\u0022truckpost.matches\u0022:\u0022Matches\u0022,\u0022unsubscribe_header\u0022:\u0022You've been unsubscribed\u0022,\u0022userSession.loading\u0022:\u0022Loading fleet information…\u0022,\u0022userSession.no\u0022:\u0022No\u0022,\u0022userSession.unkonwn_error\u0022:\u0022It looks like you don’t have permission to manage this carrier.\nPlease log out and try again using your fleet manager login details if you have multiple accounts with Uber.\u0022,\u0022userSession.yes\u0022:\u0022Yes\u0022}}
-    </script>
-  
-      <script id="__ROUTER_DATA__" type="application/json">
-        {\u0022title\u0022:\u0022/load-details/12fdad58-1987-46a9-955f-dead3bac2d91\u0022,\u0022page\u0022:\u0022/load-details/12fdad58-1987-46a9-955f-dead3bac2d91\u0022}
-      </script>
-    <div data-baseweb="toaster" class="cq ar cr cs ae ct cu cv cw as cx bj cy"></div><div class="mapboxgl-map" style="display: none;"></div></body></html>
+        <script type="application/json" id="__TRANSLATIONS__">
+            {\u0022localeCode\u0022:\u0022en\u0022,\u0022translations\u0022:{\u0022activate_user.create_new_password\u0022:\u0022Now that you've verified your carrier, let's finish setting up your account. Click the set password button below to create a new password for your account.\u0022,\u0022activate_user.failure_instructions\u0022:\u0022Please contact us to get help activating your account.\u0022,\u0022activate_user.login_button_copy\u0022:\u0022LOG IN TO UBER FREIGHT APP\u0022,\u0022activate_user.login_instructions\u0022:\u0022Now that you've verified your carrier, it's time to use the Uber Freight web portal. Tap the button below to log in.\u0022,\u0022activate_user.title_failure\u0022:\u0022Sorry, the verification was not successful.\u0022,\u0022activate_user.title_verified\u0022:\u0022You're verified!\u0022,\u0022article.to\u0022:\u0022to\u0022,\u0022assign_driver_modal.add_driver_caption\u0022:\u0022Don't see who you're looking for? Add a driver in the ${link} tab.\u0022,\u0022assign_driver_modal.assign\u0022:\u0022Assign\u0022,\u0022assign_driver_modal.assign_driver\u0022:\u0022Assign Driver\u0022,\u0022assign_driver_modal.assigned\u0022:\u0022Assigned\u0022,\u0022assign_driver_modal.fleet_management\u0022:\u0022Fleet Management\u0022,\u0022assign_driver_modal.no_drivers\u0022:\u0022No drivers matching the search.\u0022,\u0022assign_driver_modal.search_for_driver\u0022:\u0022Search for a driver\u0022,\u0022authorization.not_an_owner\u0022:\u0022It looks like you don't have permission to access Uber Freight.\u0022,\u0022book_confirmation_modal.assign_a_driver\u0022:\u0022Assign a driver\u0022,\u0022book_confirmation_modal.book_another_load\u0022:\u0022Book another load\u0022,\u0022book_confirmation_modal.booking_load\u0022:\u0022Booking load…\u0022,\u0022book_confirmation_modal.download_ratecon_msg\u0022:\u0022Download RateCon PDF\u0022,\u0022book_confirmation_modal.equipment_cancel_button\u0022:\u0022Cancel\u0022,\u0022book_confirmation_modal.equipment_confirm_button\u0022:\u0022Confirm\u0022,\u0022book_confirmation_modal.flatbed_equipment_confirmation_message\u0022:\u0022Before booking, confirm that you can provide the equipment required by the shipper:\u0022,\u0022book_confirmation_modal.flatbed_equipment_required\u0022:\u0022Equipment required\u0022,\u0022book_confirmation_modal.flatbed_equipment_warning_message\u0022:\u0022If you arrive without these items, you may be turned away at the facility.\u0022,\u0022book_confirmation_modal.flatbed_straps\u0022:\u0022Straps\u0022,\u0022book_confirmation_modal.flatbed_tarp\u0022:\u0022${length} tarp\u0022,\u0022book_confirmation_modal.flatbed_trailer\u0022:\u0022${length} flatbed trailer\u0022,\u0022book_confirmation_modal.go_to_my_loads\u0022:\u0022Go to My Loads\u0022,\u0022book_confirmation_modal.got_it\u0022:\u0022Got it\u0022,\u0022book_confirmation_modal.load_booked\u0022:\u0022Load booked\u0022,\u0022book_confirmation_modal.load_confirmation_actions_msg\u0022:\u0022${downloadLink} Please assign a driver to this load.\u0022,\u0022book_confirmation_modal.load_confirmation_msg\u0022:\u0022RateCon has been sent to your email.\u0022,\u0022booking.available.book_load\u0022:\u0022Book your load set\u0022,\u0022booking.available.book_number_of_loads\u0022:\u0022Book ${loadCount} loads\u0022,\u0022booking.available.confirm\u0022:\u0022Confirm that\u0022,\u0022booking.available.confirm_load_booking\u0022:\u0022would like to book ${loadCount} loads. After booking, these loads will display in the Uber Freight app.\u0022,\u0022booking.available.confirm_load_booking_full_sentence\u0022:\u0022Confirm that you would like to book ${loadCount} loads. After booking, these loads will display in the Uber Freight app.\u0022,\u0022booking.available.linehaul_label\u0022:\u0022Linehaul\u0022,\u0022booking.available.loads_label\u0022:\u0022Loads\u0022,\u0022booking.available.note_load_visibility\u0022:\u0022Note: these loads are not visible in the app until you book them.\u0022,\u0022booking.available.overview_label\u0022:\u0022Overview\u0022,\u0022booking.book_offer_error.error_booking_bundle\u0022:\u0022Error while booking bundle\u0022,\u0022booking.book_offer_error.error_booking_please_refresh\u0022:\u0022Apologies, there was an error while booking the load bundle. Please refresh the page and try again.\u0022,\u0022booking.booking_in_progress\u0022:\u0022Booking Bundle...\u0022,\u0022booking.confirmed.confirmation\u0022:\u0022You are now confirmed\u0022,\u0022booking.confirmed.download_app\u0022:\u0022Please download and open the Uber Freight app on your phone to check the details of the load set. A booking confirmation will also be sent to your email.\u0022,\u0022booking.confirmed.view_app\u0022:\u0022View the Uber Freight App\u0022,\u0022booking.fetch_offer_error.error_fetching_bundle\u0022:\u0022Error while fetching bundle\u0022,\u0022booking.fetch_offer_error.error_fetching_please_refresh\u0022:\u0022Apologies, there was an error while fetching the load bundle. Please refresh the page and try again.\u0022,\u0022booking.help_text.email_assistance\u0022:\u0022If you need assistance, please email\u0022,\u0022booking.loading_in_progress\u0022:\u0022Loading Bundle...\u0022,\u0022booking.loadinginprogress\u0022:\u0022Loading Bundle...\u0022,\u0022booking.unavailable.download_app\u0022:\u0022Whether you want to stay local or drive over the road, finding the right load has never been easier. Download the Uber Freight app today.\u0022,\u0022booking.unavailable.load_not_available\u0022:\u0022Load set no longer available\u0022,\u0022booking.unavailable.loads_already_booked\u0022:\u0022Apologies, this set of loads has already been booked.\u0022,\u0022booking.unavailable.more_loads_available\u0022:\u0022We have other loads available in the Uber Freight App\u0022,\u0022booking.unavailable.view_more_loads\u0022:\u0022View more loads in the app\u0022,\u0022booking_in_progress\u0022:\u0022Booking...\u0022,\u0022create_user.add_member\u0022:\u0022Add a member\u0022,\u0022create_user.email_error\u0022:\u0022Invalid email\u0022,\u0022create_user.email_exists_error\u0022:\u0022This email address is already in use\u0022,\u0022create_user.email_label\u0022:\u0022Email address\u0022,\u0022create_user.first_name_error\u0022:\u0022First name cannot be empty\u0022,\u0022create_user.first_name_field_label\u0022:\u0022First name\u0022,\u0022create_user.first_name_label\u0022:\u0022First name\u0022,\u0022create_user.last_name_error\u0022:\u0022Last name cannot be empty\u0022,\u0022create_user.last_name_label\u0022:\u0022Last name\u0022,\u0022create_user.mobile_phone_error\u0022:\u0022Invalid phone number\u0022,\u0022create_user.mobile_phone_label\u0022:\u0022Mobile phone number\u0022,\u0022create_user.subheading\u0022:\u0022We will email the driver and ask them to verify the account.  After that is done, you can start dispatching your driver.\u0022,\u0022create_user.title\u0022:\u0022Add a member\u0022,\u0022cta.add_new\u0022:\u0022Add new\u0022,\u0022cta.call_us\u0022:\u0022Call us\u0022,\u0022cta.contact_us\u0022:\u0022Contact us\u0022,\u0022cta.done\u0022:\u0022Done\u0022,\u0022cta.email_us\u0022:\u0022Email us\u0022,\u0022cta.go_to_saved_lanes\u0022:\u0022Go To Saved Lanes\u0022,\u0022cta.go_to_search\u0022:\u0022Go to Search\u0022,\u0022cta.new\u0022:\u0022New\u0022,\u0022cta.set_password\u0022:\u0022Set Password\u0022,\u0022days_of_week.friday\u0022:\u0022Friday\u0022,\u0022days_of_week.monday\u0022:\u0022Monday\u0022,\u0022days_of_week.saturday\u0022:\u0022Saturday\u0022,\u0022days_of_week.sunday\u0022:\u0022Sunday\u0022,\u0022days_of_week.thursday\u0022:\u0022Thursday\u0022,\u0022days_of_week.tuesday\u0022:\u0022Tuesday\u0022,\u0022days_of_week.wednesday\u0022:\u0022Wednesday\u0022,\u0022decline_load_modal.booked_another_load\u0022:\u0022Already booked another load\u0022,\u0022decline_load_modal.equpment_issues\u0022:\u0022Equipment issues\u0022,\u0022decline_load_modal.other\u0022:\u0022Other\u0022,\u0022decline_load_modal.pickup_too_early\u0022:\u0022Pickup too early or late\u0022,\u0022decline_load_modal.rate_too_low\u0022:\u0022Rate too low\u0022,\u0022decline_load_modal.send_feedback\u0022:\u0022Send feedback\u0022,\u0022decline_load_modal.skip_for_now\u0022:\u0022Skip for now\u0022,\u0022decline_load_modal.tell_us_more\u0022:\u0022Please tell us more...\u0022,\u0022decline_load_modal.why_decline_load\u0022:\u0022Why are you declining this load?\u0022,\u0022documents.pod_upload_modal_body\u0022:\u0022Please upload the POD file (JPEG or PDF) to get paid for this load.  Make sure all signatures are visible.\u0022,\u0022documents.pod_upload_modal_title\u0022:\u0022Upload POD (Proof of Delivery)\u0022,\u0022documents.pod_upload_success\u0022:\u0022You're proof of delivery has been submitted.  Once approved, payment should reach your carrier's account in 7-10 days\u0022,\u0022documents.upload_failure\u0022:\u0022There was an issue uploading your file.  Please try again later.\u0022,\u0022documents.upload_pod\u0022:\u0022Upload POD\u0022,\u0022documents.upload_progress_message\u0022:\u0022Uploading... hang tight.\u0022,\u0022driver_card.arrived_at_dropoff\u0022:\u0022Arrived at dropoff\u0022,\u0022driver_card.arrived_at_pickup\u0022:\u0022Arrived at pickup\u0022,\u0022driver_card.booked_for_caption\u0022:\u0022Booked by ${userName}\u0022,\u0022driver_card.booked_for_driver_name\u0022:\u0022Booked for ${driverName}\u0022,\u0022driver_card.change_driver\u0022:\u0022Change driver\u0022,\u0022driver_card.left_dropoff\u0022:\u0022Left dropoff\u0022,\u0022driver_card.left_pickup\u0022:\u0022Left pickup\u0022,\u0022driver_card.minutes_to_decline_caption\u0022:\u0022${driverName} has ${minutesLeftToDecline} minutes to decline\u0022,\u0022driver_card.tender_expired\u0022:\u0022Your reservation ended at ${time}\u0022,\u0022driver_card.tender_expired_available_to_all\u0022:\u0022This load is now available to all carriers.\u0022,\u0022driver_card.time_until_pickup\u0022:\u0022${days} ${hours} ${minutes} time until pickup\u0022,\u0022email_us\u0022:\u0022Email us\u0022,\u0022fleetEmployeeInfo.booking_permissions\u0022:\u0022Booking Permissions\u0022,\u0022fleetEmployeeInfo.name\u0022:\u0022Name\u0022,\u0022fleetEmployeeInfo.price_visibility\u0022:\u0022Rate Visibility\u0022,\u0022fleetEmployeeInfo.role\u0022:\u0022Role\u0022,\u0022fleetEmployeeInfo.status\u0022:\u0022Status\u0022,\u0022freightFleet.freight_fleet\u0022:\u0022Freight Fleet Management\u0022,\u0022freightUserRole.dispatcher\u0022:\u0022Dispatcher\u0022,\u0022freightUserRole.dispatcher_driver\u0022:\u0022Dispatcher \u0026 Driver\u0022,\u0022freightUserRole.driver\u0022:\u0022Driver\u0022,\u0022freightUserStatus.pending\u0022:\u0022Pending\u0022,\u0022freightUserStatus.verified\u0022:\u0022Verified\u0022,\u0022help.contact_support\u0022:\u0022Contact us for support.\u0022,\u0022loadDetails.card.bookLoad\u0022:\u0022Book Load\u0022,\u0022loadDetails.card.commodity\u0022:\u0022Commodity\u0022,\u0022loadDetails.card.date\u0022:\u0022Date\u0022,\u0022loadDetails.card.distance\u0022:\u0022Distance\u0022,\u0022loadDetails.card.dropoffLocation\u0022:\u0022Dropoff Location\u0022,\u0022loadDetails.card.dropoffNumber\u0022:\u0022Dropoff #\u0022,\u0022loadDetails.card.dropoffTime\u0022:\u0022Dropoff Time\u0022,\u0022loadDetails.card.dropoffTitle\u0022:\u0022Dropoff\u0022,\u0022loadDetails.card.facilityOwner\u0022:\u0022Facility Owner\u0022,\u0022loadDetails.card.loadId\u0022:\u0022Load Id\u0022,\u0022loadDetails.card.notes\u0022:\u0022Notes\u0022,\u0022loadDetails.card.packagingType\u0022:\u0022Packaging type\u0022,\u0022loadDetails.card.pickupLocation\u0022:\u0022Pickup Location\u0022,\u0022loadDetails.card.pickupNumber\u0022:\u0022Pickup #\u0022,\u0022loadDetails.card.pickupTime\u0022:\u0022Pickup Time\u0022,\u0022loadDetails.card.pickupTitle\u0022:\u0022Pickup\u0022,\u0022loadDetails.card.ratePerMile\u0022:\u0022Rate per mile\u0022,\u0022loadDetails.card.reloadOptions\u0022:\u0022Reload Options\u0022,\u0022loadDetails.card.see_all_reload_options\u0022:\u0022See all ${loadLength} reload options\u0022,\u0022loadDetails.card.trailer\u0022:\u0022Trailer\u0022,\u0022loadDetails.card.weight\u0022:\u0022Weight\u0022,\u0022loadDetails.deadhead\u0022:\u0022Deadhead\u0022,\u0022loadDetails.delivery\u0022:\u0022Delivery\u0022,\u0022loadDetails.deliveryTime\u0022:\u0022Delivery Time\u0022,\u0022loadDetails.distance\u0022:\u0022Distance\u0022,\u0022loadDetails.equipment\u0022:\u0022Equipment\u0022,\u0022loadDetails.hoursAfterDelivery\u0022:\u0022Hours after delivery\u0022,\u0022loadDetails.lane\u0022:\u0022Lane\u0022,\u0022loadDetails.pickup\u0022:\u0022Pickup\u0022,\u0022loadDetails.pickupTime\u0022:\u0022Pickup Time\u0022,\u0022loadDetails.rate\u0022:\u0022Rate\u0022,\u0022loadDetails.weight\u0022:\u0022Weight\u0022,\u0022load_details.card.rate_per_distance\u0022:\u0022Rate per ${distanceUnit}\u0022,\u0022load_details.decline_load\u0022:\u0022Decline\u0022,\u0022load_details.equipment_type.any_trailer\u0022:\u0022Any Trailer\u0022,\u0022load_details.equipment_type.box\u0022:\u0022Box\u0022,\u0022load_details.equipment_type.conestoga\u0022:\u0022Conestoga\u0022,\u0022load_details.equipment_type.container\u0022:\u0022Container\u0022,\u0022load_details.equipment_type.deck\u0022:\u0022Deck\u0022,\u0022load_details.equipment_type.flatbed\u0022:\u0022Flatbed\u0022,\u0022load_details.equipment_type.frigo\u0022:\u0022Frigo\u0022,\u0022load_details.equipment_type.jumbo\u0022:\u0022Jumbo\u0022,\u0022load_details.equipment_type.mega_trailer\u0022:\u0022Mega Trailer\u0022,\u0022load_details.equipment_type.power_only\u0022:\u0022Power Only\u0022,\u0022load_details.equipment_type.reefer\u0022:\u0022Reefer\u0022,\u0022load_details.equipment_type.road_train\u0022:\u0022Road Train\u0022,\u0022load_details.equipment_type.tanker\u0022:\u0022Tanker\u0022,\u0022load_details.equipment_type.tautliner\u0022:\u0022Tautliner\u0022,\u0022load_details.equipment_type.tilt\u0022:\u0022Tilt\u0022,\u0022load_details.equipment_type.van\u0022:\u0022Van\u0022,\u0022load_details.flatbed.straps\u0022:\u0022Straps\u0022,\u0022load_details.flatbed.tarp_size\u0022:\u0022Tarp size\u0022,\u0022load_details.flatbed.trailer_length\u0022:\u0022Trailer length\u0022,\u0022load_details.job_changed_error\u0022:\u0022Load details have changed.  Please refresh this page to get the latest information.\u0022,\u0022load_details.legal_footer\u0022:\u0022By booking this lead, carrier agrees to perform transportation services at the price above and subject to carrier's broker carrier agreement with Uber Freight and Uber Freight's ${termsAndConditions} and ${privacyPolicy}.\u0022,\u0022load_details.not_applicable\u0022:\u0022n/a\u0022,\u0022load_details.privacy_policy\u0022:\u0022privacy policy\u0022,\u0022load_details.reefer.maximum_temp\u0022:\u0022Maximum temp.\u0022,\u0022load_details.reefer.minimum_temp\u0022:\u0022Minimum temp.\u0022,\u0022load_details.reefer.operating_instructions\u0022:\u0022Operating instructions\u0022,\u0022load_details.reefer.pre_cool_temp\u0022:\u0022Pre-cool temp.\u0022,\u0022load_details.reefer.trailer_washout\u0022:\u0022Trailer washout\u0022,\u0022load_details.status.delivered\u0022:\u0022Delivered\u0022,\u0022load_details.status.dispatched\u0022:\u0022Dispatched\u0022,\u0022load_details.status.in_progress\u0022:\u0022In Progress\u0022,\u0022load_details.staus.driver_assigned\u0022:\u0022Driver Assigned\u0022,\u0022load_details.terms_and_conditions\u0022:\u0022terms and conditions\u0022,\u0022load_filter.location_placeholder\u0022:\u0022City, State, or Zip code\u0022,\u0022load_filters.additional\u0022:\u0022Additional\u0022,\u0022load_filters.apply\u0022:\u0022Apply\u0022,\u0022load_filters.clear\u0022:\u0022Clear\u0022,\u0022load_filters.distance_over\u0022:\u0022Over ${number}${distanceUnit}\u0022,\u0022load_filters.distance_to\u0022:\u0022${number1} to ${number2}${distanceUnit}\u0022,\u0022load_filters.distance_up_to\u0022:\u0022Up to ${number}${distanceUnit}\u0022,\u0022load_filters.local\u0022:\u0022Local\u0022,\u0022load_filters.long\u0022:\u0022Long\u0022,\u0022load_filters.short\u0022:\u0022Short\u0022,\u0022load_table.available_loads_caption\u0022:\u0022${numLoads} available loads\u0022,\u0022load_table.delivery_date\u0022:\u0022Delivery date\u0022,\u0022load_table.delivery_location\u0022:\u0022Delivery location\u0022,\u0022load_table.delivery_radius\u0022:\u0022Delivery radius\u0022,\u0022load_table.last_updated_caption\u0022:\u0022Last updated at ${lastUpdatedDate}\u0022,\u0022load_table.no_results\u0022:\u0022No results\u0022,\u0022load_table.pickup_date\u0022:\u0022Pickup date\u0022,\u0022load_table.pickup_location\u0022:\u0022Pickup location\u0022,\u0022load_table.search\u0022:\u0022Search\u0022,\u0022load_unavailable.text\u0022:\u0022Please search again to view and book loads.\u0022,\u0022load_unavailable.title\u0022:\u0022Sorry, this load is no longer available.\u0022,\u0022loaddetails.card.attention\u0022:\u0022Special attention\u0022,\u0022loaddetails.card.lane_id\u0022:\u0022Lane Id\u0022,\u0022loaddetails.card.rateperkm\u0022:\u0022Rate per km\u0022,\u0022loadmatching.add_truck_post\u0022:\u0022Add Truck Post\u0022,\u0022loadmatching.auto_refresh_interval\u0022:\u0022Load matches are refreshed every two minutes\u0022,\u0022loadmatching.auto_refresh_tick\u0022:\u0022Last updated at ${time}\u0022,\u0022loadmatching.welcome_content\u0022:\u0022Add trucks to your trucklist, and we will automatically find load matches for your trucks\u0022,\u0022manageFleet.add_member\u0022:\u0022Add Member\u0022,\u0022manageFleet.can_book_load\u0022:\u0022Can book\u0022,\u0022manageFleet.can_not_book_load\u0022:\u0022Can’t book\u0022,\u0022manageFleet.can_not_see_price\u0022:\u0022Can’t see rate\u0022,\u0022manageFleet.can_see_price\u0022:\u0022Can see rate\u0022,\u0022manageFleet.members\u0022:\u0022${memberCount} members\u0022,\u0022manageFleet.no_members\u0022:\u0022There are no members in this fleet.\u0022,\u0022manageFleet.permissions\u0022:\u0022Permissions\u0022,\u0022manageFleet.unauthorized\u0022:\u0022Unauthorized\u0022,\u0022manageFleet.unknown\u0022:\u0022Unknown\u0022,\u0022manageFleet.welcome_content\u0022:\u0022Once you add a driver to your fleet, they will be displayed on a dashboard here.\u0022,\u0022manageFleet.welcome_title\u0022:\u0022Add a member to your fleet\u0022,\u0022managefleet.email_address\u0022:\u0022Email\u0022,\u0022managefleet.phone_number\u0022:\u0022Phone\u0022,\u0022matched_load.any\u0022:\u0022Any\u0022,\u0022matched_load.anywhere\u0022:\u0022Anywhere\u0022,\u0022matched_loads.truck_available_date\u0022:\u0022on ${emptyDate}\u0022,\u0022matched_loads.truck_available_location\u0022:\u0022Empty in ${sourceLocation}\u0022,\u0022memberActions.cancel\u0022:\u0022Cancel\u0022,\u0022memberActions.edit_details\u0022:\u0022Edit Details\u0022,\u0022memberActions.removal_confirmation\u0022:\u0022Remove ${fullName}?\u0022,\u0022memberActions.removal_confirmation_warning\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the member to your fleet again.\u0022,\u0022memberActions.remove\u0022:\u0022Remove\u0022,\u0022memberActions.remove_driver\u0022:\u0022Remove Driver\u0022,\u0022memberActions.save\u0022:\u0022Save\u0022,\u0022memberListDropdown.remove_driver\u0022:\u0022Remove Driver\u0022,\u0022memberListDropdown.remove_user\u0022:\u0022Remove Driver\u0022,\u0022modal.cancelButton\u0022:\u0022Cancel\u0022,\u0022modal.removeMember.body\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the driver to your fleet again.\u0022,\u0022modal.removeMember.remove\u0022:\u0022Remove\u0022,\u0022modalButton.cancel\u0022:\u0022Cancel\u0022,\u0022my_loads.assigned\u0022:\u0022Assigned\u0022,\u0022my_loads.booked_by\u0022:\u0022Booked By\u0022,\u0022my_loads.booked_loads\u0022:\u0022Booked\u0022,\u0022my_loads.delivery_radius\u0022:\u0022Delivery radius\u0022,\u0022my_loads.document_status\u0022:\u0022Document Status\u0022,\u0022my_loads.load_status\u0022:\u0022Load Status\u0022,\u0022my_loads.my_loads\u0022:\u0022My Loads\u0022,\u0022my_loads.on_trip\u0022:\u0022On trip\u0022,\u0022my_loads.past_loads\u0022:\u0022Past\u0022,\u0022my_loads.payment_status\u0022:\u0022Payment Status\u0022,\u0022my_loads.pending_driver_acceptance\u0022:\u0022Pending driver acceptance\u0022,\u0022my_loads.tendered_loads\u0022:\u0022Offered\u0022,\u0022my_loads.unassigned\u0022:\u0022Unassigned\u0022,\u0022my_loads.upcoming\u0022:\u0022Upcoming\u0022,\u0022navHeader.book\u0022:\u0022Book\u0022,\u0022navHeader.plus_icon\u0022:\u0022Plus Icon\u0022,\u0022navHeader.toggle_menu\u0022:\u0022Toggle drop down menu\u0022,\u0022navHeader.uber_freight_plus\u0022:\u0022Uber Freight Plus\u0022,\u0022navHeader.view_privacy\u0022:\u0022View Privacy Policy\u0022,\u0022navHeader.view_terms\u0022:\u0022View Terms \u0026 Conditions\u0022,\u0022navheader.contact_support\u0022:\u0022Contact Support\u0022,\u0022navheader.loadMatching\u0022:\u0022Load Matching\u0022,\u0022navheader.manage_fleet\u0022:\u0022Fleet Management\u0022,\u0022navheader.preferred_lanes\u0022:\u0022Saved Lanes\u0022,\u0022navheader.sign_out\u0022:\u0022Sign Out\u0022,\u0022navheader.uber_freight_logo\u0022:\u0022Uber Freight Logo\u0022,\u0022navheader.uber_fright_logo\u0022:\u0022Uber Freight Logo\u0022,\u0022navheader.uber_fright_plus\u0022:\u0022Uber Fright Plus\u0022,\u0022notification.assign_failure\u0022:\u0022There was an issue assigning the driver to the load, please try again.\u0022,\u0022notification.assign_success\u0022:\u0022Successfully assigned the driver.\u0022,\u0022notification.book_failure\u0022:\u0022The load could not be booked. Please try again.\u0022,\u0022notification.create_user_failure\u0022:\u0022There was a problem adding a new member to your fleet.  Please contact ${phoneNumber} for support with your request.\u0022,\u0022notification.create_user_success\u0022:\u0022${fullName} was successfully added to your Fleet!\u0022,\u0022notification.decline_load_success\u0022:\u0022Decline Successful\u0022,\u0022notification.edit_failure\u0022:\u0022We couldn’t update ${fullName}’s profile\u0022,\u0022notification.edit_success\u0022:\u0022${fullName}’s profile has been updated\u0022,\u0022notification.existing_non_rider_account\u0022:\u0022${fullName} has already created and activated an account with Uber.  Please contact us to add this driver. ${phoneNumber}\u0022,\u0022notification.existing_uber_freight_account\u0022:\u0022${fullName} has already created and activated an account with Uber Freight.  Once they verify their account, ${fullName} will be added to your fleet.\u0022,\u0022notification.remove_failure\u0022:\u0022We couldn’t remove ${fullName} from your fleet\u0022,\u0022notification.remove_success\u0022:\u0022${fullName} has been removed from your fleet\u0022,\u0022notifications.search_failure\u0022:\u0022Could not retrieve loads. Please try again.\u0022,\u0022permissions.account_error\u0022:\u0022Account error\u0022,\u0022preferred_lanes.add_new_lane_success\u0022:\u0022This lane has been saved.  Use the Saved Lanes tab to find all matching loads.\u0022,\u0022recurrence.daily\u0022:\u0022Daily\u0022,\u0022recurrence.label\u0022:\u0022Pickup availability\u0022,\u0022recurrence_modal.anywhere\u0022:\u0022anywhere\u0022,\u0022recurrence_modal.subheading\u0022:\u0022Select your available pickup days for this\u0022,\u0022recurrence_modal.title\u0022:\u0022Pickup availability\u0022,\u0022recurrence_selection.lane\u0022:\u0022lane\u0022,\u0022refresh_truck_posts\u0022:\u0022Refresh Matches\u0022,\u0022removeMemberModal.bodyText\u0022:\u0022Are you sure you want to remove ${fullName} from your fleet? This action cannot be undone and you will have to add the driver to your fleet again.\u0022,\u0022removeMemberModal.remove\u0022:\u0022Remove\u0022,\u0022saved_lane_does_not_exist\u0022:\u0022The saved lane you are attempting to view no longer exists\u0022,\u0022saved_lanes.save_error_notification\u0022:\u0022There was a problem saving your lane.  Please try again later.\u0022,\u0022saved_lanes_unsubscribe_message\u0022:\u0022We won't send you anything about Saved Lanes from now on.  Please contact us if you'd like to receive these emails again.\u0022,\u0022search_loads.add_preferred_lane\u0022:\u0022Save this lane\u0022,\u0022search_loads.default_instructions\u0022:\u0022Enter pickup location to see loads\u0022,\u0022tendered_loads.available\u0022:\u0022Reserved\u0022,\u0022tendered_loads.expired\u0022:\u0022Reservation expired\u0022,\u0022tendered_loads.no_loads_heading\u0022:\u0022No load offers yet\u0022,\u0022tendered_loads.no_loads_subheading_primary\u0022:\u0022You can use this tab to accept or decline reserved loads.\u0022,\u0022tendered_loads.no_loads_subheading_secondary\u0022:\u0022If you want to commit to loads for a lane, contact your dedicated ops representative.\u0022,\u0022tenderedloads.timeleft\u0022:\u0022Time left\u0022,\u0022total_matched\u0022:\u0022${count} matched loads\u0022,\u0022truck_post.download_csv_template\u0022:\u0022Download CSV template\u0022,\u0022truck_post.driver_name\u0022:\u0022Driver name\u0022,\u0022truck_post.dropoff_date\u0022:\u0022Dropoff date\u0022,\u0022truck_post.dropoff_location\u0022:\u0022Dropoff location\u0022,\u0022truck_post.edit_truck_posts\u0022:\u0022Edit truck list\u0022,\u0022truck_post.empty_date\u0022:\u0022Empty date\u0022,\u0022truck_post.empty_location\u0022:\u0022Empty location\u0022,\u0022truck_post.empty_location_error\u0022:\u0022Source location cannot be blank\u0022,\u0022truck_post.load_matches\u0022:\u0022Load matches\u0022,\u0022truck_post.load_matching_intro_heading\u0022:\u0022Introducing Load Matching\u0022,\u0022truck_post.load_matching_intro_instruction_text_1\u0022:\u0022Add your trucks' empty location and update it regularly\u0022,\u0022truck_post.load_matching_intro_instruction_text_2\u0022:\u0022Get loads matched to your trucks instantly\u0022,\u0022truck_post.load_matching_intro_instruction_text_3\u0022:\u0022Book loads easily and assign them to your drivers\u0022,\u0022truck_post.load_matching_intro_instruction_title_1\u0022:\u0022Fill out your truck list\u0022,\u0022truck_post.load_matching_intro_instruction_title_2\u0022:\u0022Review load matches\u0022,\u0022truck_post.load_matching_intro_instruction_title_3\u0022:\u0022Book and assign loads\u0022,\u0022truck_post.load_matching_intro_subheading\u0022:\u0022Load Matching is a way for you to get loads matched to your trucks instantly.\u0022,\u0022truck_post.matches_loads\u0022:\u0022Update matched loads\u0022,\u0022truck_post.pickup_date\u0022:\u0022Pickup date\u0022,\u0022truck_post.pickup_radius\u0022:\u0022Pickup radius\u0022,\u0022truck_post.pickup_radius_error\u0022:\u0022Pickup radius must be less than 450 mi\u0022,\u0022truck_post.source_location\u0022:\u0022Source Location\u0022,\u0022truck_post.source_location_error\u0022:\u0022Source location must not be empty\u0022,\u0022truck_post.trailer_type\u0022:\u0022Trailer type\u0022,\u0022truck_post.truck_number\u0022:\u0022Truck number\u0022,\u0022truck_post.truck_post_description\u0022:\u0022Fill in your empty truck information and we’ll automatically match them with loads.\u0022,\u0022truck_post.truck_post_header\u0022:\u0022Get loads matched to your trucks\u0022,\u0022truck_post.upload_csv_content\u0022:\u0022Uploading your CSV to add new trucks or update trucks information.\u0022,\u0022truck_post.upload_csv_title\u0022:\u0022Upload CSV File\u0022,\u0022truck_post.upload_csv_warning\u0022:\u0022The new CSV file will replace the existing trucklist you have.\u0022,\u0022truckpost.matches\u0022:\u0022Matches\u0022,\u0022unsubscribe_header\u0022:\u0022You've been unsubscribed\u0022,\u0022userSession.loading\u0022:\u0022Loading fleet information…\u0022,\u0022userSession.no\u0022:\u0022No\u0022,\u0022userSession.unkonwn_error\u0022:\u0022It looks like you don’t have permission to manage this carrier.\nPlease log out and try again using your fleet manager login details if you have multiple accounts with Uber.\u0022,\u0022userSession.yes\u0022:\u0022Yes\u0022}}
+        </script>
+
+        <script id="__ROUTER_DATA__" type="application/json">
+            {\u0022title\u0022:\u0022/load-details/12fdad58-1987-46a9-955f-dead3bac2d91\u0022,\u0022page\u0022:\u0022/load-details/12fdad58-1987-46a9-955f-dead3bac2d91\u0022}
+        </script>
+        <div data-baseweb="toaster" class="cq ar cr cs ae ct cu cv cw as cx bj cy"></div>
+        <div class="mapboxgl-map" style="display: none;"></div>
+    </body>
+</html>

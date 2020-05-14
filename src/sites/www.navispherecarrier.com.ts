@@ -11,7 +11,7 @@ export class CHRobinson extends SearchSite {
     public static siteName = 'CH Robinson';
     protected debugPre = 'CH Robinson';
     protected loginPage = 'https://www.navispherecarrier.com/login';
-    protected searchPage = ''
+    protected searchPage = '';
     private host = 'https://www.navispherecarrier.com';
 
     protected async login(task: ITASK) {
@@ -65,7 +65,7 @@ export class CHRobinson extends SearchSite {
         const [destinationCity, destinationStateProvinceCode] = task.criteria.destination
             .split(',')
             .map((item) => item.trim());
-        const pickupStart = dateformat(task.criteria.pick_up_date, "yyyy-mm-dd'T'HH:MM:ss");
+        const pickupStart = dateformat(task.criteria.pick_up_date, "yyyy-mm-dd'T'HH:MM:ss") as string;
         const search = {
             originCountryCode: 'US',
             originStateProvinceCode,
@@ -85,7 +85,7 @@ export class CHRobinson extends SearchSite {
             searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
         });
         this.searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1);
-        await super.searchPrepare(task)
+        await super.searchPrepare(task);
     }
 
     protected async search(task: ITASK) {

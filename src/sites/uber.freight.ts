@@ -318,8 +318,8 @@ class UberDetailPage extends DetailPage {
                 };
                 return result;
             })
-            .catch((e) => {
-                console.log('detail page error', this.searchPage, e);
+            .catch((e:Error) => {
+                throw new SiteError('search', 'UberDetailPage: ' + e.message)
             });
         return result as IResultHTMLData;
     }

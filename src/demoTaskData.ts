@@ -155,5 +155,22 @@ export const TaskData = {
             equipment: 'Van'
         },
         time
+    },
+
+    Landstar: {
+        task_id: '06f3f3fb279ff7d831d1acc8a1bbda40',
+        site: 'Landstar',
+        user_id: '3',
+        email: 'ajgtranspo',
+        password: 'Loaded2020',
+        criteria: {
+            origin: 'Atwater, CA',
+            origin_radius: '500',
+            destination: 'Sumner, WA',
+            destination_radius: '500',
+            pick_up_date: pickUpDate,
+            equipment: 'Van'
+        },
+        time
     }
 };

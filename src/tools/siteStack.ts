@@ -66,7 +66,7 @@ export abstract class DetailPage {
 
     public async doSearch() {
         await this.searchPrepare();
-        const result = await this.search();
+        const result = await this.search()
         this.searchEnd({ ...result, ...this.originalData });
     }
 

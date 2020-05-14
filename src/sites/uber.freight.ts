@@ -188,7 +188,6 @@ class UberDetailPage extends DetailPage {
                     'UberDetailPage waitForSelector section[data-baseweb="card"]'
                 );
             });
-        await this.page.waitFor(1000);
         const result = await this.page
             .evaluate(() => {
                 const cards = Array.from(document.querySelectorAll('section[data-baseweb="card"]'));
@@ -272,7 +271,7 @@ class UberDetailPage extends DetailPage {
                 }
 
                 {
-                    const bookInfo = cards[3];
+                    const bookInfo = cards[cards.length - 1];
                     const price = bookInfo.querySelector('h1')?.textContent;
                     const bookInfoDate = bookInfo.querySelector(
                         '[data-baseweb="typo-paragraphmedium"]'
@@ -293,7 +292,7 @@ class UberDetailPage extends DetailPage {
                         specialAttention
                     ] = items.map(
                         (item) =>
-                            item.querySelector('[data-baseweb="typo-paragraphmedium"]').textContent
+                            item.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
                     );
 
                     bookData = {

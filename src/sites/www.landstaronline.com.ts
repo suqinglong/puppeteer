@@ -2,7 +2,6 @@ import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';
-import { SiteStack, DetailPage } from '../tools/siteStack';
 import cheerio from 'cheerio'
 
 export class Landstar extends SearchSite {

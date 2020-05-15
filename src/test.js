@@ -1,12 +1,13 @@
 // const cheerio = require('cheerio');
 // // const fs = require('fs');
-// const dateformat = require('dateformat');
+const dateformat = require('dateformat');
 // console.log(dateformat('2020-04-21', 'mmm-dd'));
 const fs = require('fs');
 const xlsx = require('node-xlsx');
 
-const data = xlsx.parse('./download/Coyote/Available Loads Export.xlsx');
-console.log('data', data[0].data);
+new Date()
+
+console.log(dateformat('May 19 2020 11:00 AM MDT', 'mm/dd/yyyy HH:MM'))
 
 // async function test(num) {
 //     return new Promise((resolve) => {

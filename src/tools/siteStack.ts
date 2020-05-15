@@ -71,8 +71,8 @@ export abstract class DetailPage {
     }
 
     private async searchEnd(result: IResultHTMLData) {
-        this.siteStack.remove(this);
         this.siteStack.pushResult(result);
+        this.siteStack.remove(this);
         await this.page.close();
     }
 

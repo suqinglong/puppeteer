@@ -164,6 +164,7 @@ export class UberFreight extends SearchSite {
                 }),
                 5,
                 async (result, isEnd) => {
+                    this.log.log('result', result)
                     await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
                         this.log.log(res.data);
                     });
@@ -321,6 +322,7 @@ class UberDetailPage extends DetailPage {
             .catch((e:Error) => {
                 throw new SiteError('search', 'UberDetailPage: ' + e.message)
             });
+            result['date'] = dateformat((result['date'] as string).replace('th', '') + " " + (new Date()).getFullYear() + " " + result['pickUpTime'], 'yyyy-mm-dd HH:MM');
         return result as IResultHTMLData;
     }
 }

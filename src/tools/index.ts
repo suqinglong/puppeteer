@@ -1,5 +1,6 @@
 import minimist from 'minimist';
 import xlsx from 'node-xlsx';
+import dateformat from 'dateformat'
 
 export function getMode(): IMode {
     let args = minimist(process.argv.slice(2));
@@ -28,7 +29,7 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
         'distance'
     ];
 
-    return dataArr.map((data) => {
+    const result =  dataArr.map((data) => {
         let extroData: any = {};
         Object.keys(data).forEach((key) => {
             if (keys.indexOf(key) === -1 && data[key]) {
@@ -38,7 +39,7 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
 
         return {
             task_id: task.task_id,
-            date: data.date,
+            date: formateDate(data.date),
             source: task.site,
             equipment: data.equipment,
             origin: data.origin,
@@ -49,6 +50,9 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
             extra: JSON.stringify(extroData)
         };
     });
+
+    console.log('ModifyPostData', result)
+    return result
 }
 
 export function Trim(str: string) {
@@ -94,4 +98,8 @@ export function getRadiusFromValues(radius: number, radiusValues: Array<number>)
         }
     }
     return result;
+}
+
+export function formateDate(time:string):string {
+    return dateformat(time, 'yyyy-mm-dd HH:MM:ss')
 }

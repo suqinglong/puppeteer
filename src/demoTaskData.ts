@@ -1,7 +1,7 @@
 const time = parseInt(String(Number(new Date()) / 1000), 10);
 import dateFormat from 'dateformat';
 
-const pickUpDate = dateFormat(new Date(), 'yyyy-mm-dd');
+const pickUpDate = dateFormat(new Date(Number(new Date()) + 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {
     'Echo Driver': {
@@ -38,18 +38,18 @@ export const TaskData = {
         time: time
     },
 
-    'JB Hunt 360': {
+    'JB Hunt': {
         task_id: '0b5b9b2bb3397bc8c399c4c8f58a5bee',
-        site: 'JB Hunt 360',
+        site: 'JB Hunt',
         user_id: '3',
-        email: 'brent@primelinkexpress.com',
-        password: 'Annaleigh1',
+        email: 'dispatch@ajgtransport.com',
+        password: 'Alwaysloaded400',
         criteria: {
             origin: 'New York, NY',
-            origin_radius: '100',
+            origin_radius: '110',
             destination: 'New York, NY',
-            destination_radius: '100',
-            pick_up_date: '2020-04-24',
+            destination_radius: '110',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time: time

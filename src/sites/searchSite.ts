@@ -22,7 +22,6 @@ export abstract class SearchSite implements ISite {
 
     public async doLogin(task: ITASK) {
         if (!this.loginPage) {
-            this.log.log('no need login')
             return;
         }
         await this.loginPrepare(task);

@@ -165,9 +165,9 @@ export const TaskData = {
         password: 'Loaded2020',
         criteria: {
             origin: 'Atwater, CA',
-            origin_radius: '500',
+            origin_radius: '250',
             destination: 'Sumner, WA',
-            destination_radius: '500',
+            destination_radius: '250',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

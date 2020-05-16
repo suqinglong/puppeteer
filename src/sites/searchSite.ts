@@ -21,11 +21,14 @@ export abstract class SearchSite implements ISite {
     }
 
     public async doSearch(task: ITASK) {
+        this.log = new Log(this.debugPre);
+        this.log.log('search begin')
         try {
             await this.beforeSearch(task);
             await this.search(task);
             await this.afterSearch();
             await this.page.close();
+            this.log.log('search end')
         } catch (e) {
             await this.screenshot('search error');
             this.log.log('search error', e);
@@ -33,8 +36,6 @@ export abstract class SearchSite implements ISite {
     }
 
     protected async beforeSearch(task: ITASK) {
-        this.log = new Log(this.debugPre);
-        this.log.log('beforeSearch');
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
@@ -63,12 +64,18 @@ export abstract class SearchSite implements ISite {
     }
 
     protected async doLogin(task: ITASK) {
+        this.log.log('login begin')
         try {
             await this.beforeLogin(task);
-            this.log.log('login begin')
+            // if not in login page, then go to login page.
+            if (this.page.url().indexOf(this.loginPage) === -1 && this.page.url().indexOf('/login') === -1) {
+                this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
+                await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
+                    throw this.generateError('timeout', 'login page load timeout');
+                });
+            }
             await this.login(task);
             this.log.log('login success')
-            await this.page.close();
         } catch (e) {
             await this.screenshot('login error');
             await this.markUserUnableToLogin(task);
@@ -80,23 +87,13 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async beforeLogin(task: ITASK) {
-        this.log.log('beforeLogin');
-        if (this.page.url().indexOf(this.loginPage) === -1 && this.page.url().indexOf('/login') === -1) {
-            this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
-            await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
-                throw this.generateError('timeout', 'login page load timeout');
-            });
-        }
-    }
-
+    protected async beforeLogin(task: ITASK) { }
+    protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
         return !isUserUnableToLogin && this.loginPage && this.page.url().indexOf(this.searchPage) === -1
     }
-
-    protected async login(task: ITASK) { }
 
     protected generateError(type: IErrorType, msg: string) {
         return new SiteError(type, `${this.debugPre}: ${msg}`);

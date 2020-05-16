@@ -12,8 +12,6 @@ export class UberFreight extends SearchSite {
     protected searchPage = 'https://www.uberfreight.com/freight/carriers/fleet/search-loads/#_';
 
     protected async login(task: ITASK) {
-        this.log.log('login loaded');
-
         // input email
         await this.page.waitFor('#useridInput', { timeout: 10000 });
         await this.page.type('#useridInput', task.email);
@@ -28,12 +26,9 @@ export class UberFreight extends SearchSite {
         await this.page.waitForSelector('.icon_profile.icon', {
             timeout: 10000
         });
-
-        this.log.log('login success');
     }
 
     protected async search(task: ITASK) {
-        this.log.log('search page loaded');
         await this.page.waitForSelector(
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"]',
             {

@@ -11,7 +11,9 @@ export class JBHunt extends SearchSite {
 
 
     protected async search(task: ITASK) {
-        await this.page.waitForSelector('.grouped-inputs:nth-child(1) p-autocomplete input[aria-autocomplete="list"]')
+        await this.page.waitForSelector('ucl-loading-spinner', {
+            hidden: true
+        })
 
         // origin
         this.log.log('type origin')

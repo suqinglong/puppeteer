@@ -45,7 +45,7 @@ export const TaskData = {
         email: 'dispatch@ajgtransport.com',
         password: 'Alwaysloaded400',
         criteria: {
-            origin: 'New York, NY',
+            origin: 'Atwater, CA',
             origin_radius: '110',
             destination: 'New York, NY',
             destination_radius: '110',

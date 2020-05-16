@@ -23,8 +23,11 @@ export class UberFreight extends SearchSite {
         await this.page.waitForSelector('#password', { timeout: 10000 });
         await this.page.type('#password', task.password);
         await this.page.click('form.push--top-small button');
-
-        await this.page.waitForSelector('.icon_profile.icon');
+        
+        this.log.log('waiting logining')
+        await this.page.waitForSelector('.icon_profile.icon', {
+            timeout: 10000
+        });
 
         this.log.log('login success');
     }

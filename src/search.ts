@@ -9,6 +9,7 @@ export class Search implements ISearchClass {
     private mode: IMode = getMode();
     private settings = this.mode === 'develop' ? (useDev() === 'yes' ? Settings : {}) : {};
 
+    // create browser for one user, this browser will be found by endpoint stored in redis.
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
             ...this.settings,
@@ -20,20 +21,19 @@ export class Search implements ISearchClass {
                 height: 1080
             }
         });
-        const SiteClass = SiteManager.getSite(task.site);
-        const site = new SiteClass(browser) as SearchSite;
-        await site.doLogin(task); // new page and login
         return browser.wsEndpoint();
     }
 
+    // do task 
+    // 1.  go search page
+    // 1.1 charge if need to login
+    // 1.2 if need login and not loged, do login
+    // 1.3 search and get result
     public async doTask(task: ITASK, browserWSEndpoint: IbrowserWSEndpoint) {
         console.log('Search doTask');
         const browser = await puppeteer.connect({ browserWSEndpoint });
         const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
-        if (await SingletonTedis.isUserLogoutSite(task.user_id, task.site)) {
-            await site.doLogin(task);
-        }
         await site.doSearch(task);
     }
 }

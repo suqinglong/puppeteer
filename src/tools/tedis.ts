@@ -3,10 +3,10 @@ import { Tedis } from 'tedis';
 export class SingletonTedis {
     private static instance: Tedis;
 
-    // add user to logout list
-    public static async addUserToLogoutList(userId: string, siteName: string) {
+    // mark user unable to login with 1 minute expired time
+    public static async markUserUnableToLogin(userId: string, site: string) {
         const r = this.getInstance();
-        await r.set(this.getUserInfoKey(userId, siteName), '1');
+        await r.setex(this.getUserLoginStatusKey(userId, site), 600, '1');
     }
 
     public static getInstance(): Tedis {
@@ -19,16 +19,10 @@ export class SingletonTedis {
         return SingletonTedis.instance;
     }
 
-    // check if user logout at a site
-    public static async isUserLogoutSite(userId: string, siteName: string): Promise<boolean> {
+    // check if user be able to login at a site
+    public static async isUserUnableToLogin(userId: string, site: string): Promise<boolean> {
         const r = this.getInstance();
-        return (await r.get(this.getUserInfoKey(userId, siteName))) === '1';
-    }
-
-    // remove user to lougout list
-    public static async removeUserFromLogoutList(userId: string, siteName: string) {
-        const r = this.getInstance();
-        await r.del(this.getUserInfoKey(userId, siteName));
+        return (await r.get(this.getUserLoginStatusKey(userId, site))) === '1';
     }
 
     public static async deleteKeys() {
@@ -77,7 +71,7 @@ export class SingletonTedis {
         console.log('push task', taskResult);
     }
 
-    private static getUserInfoKey(userId: string, siteName: string): string {
-        return `${userId}-${siteName.replace(/\s/g, '').toLowerCase()}:user_info_key`;
+    private static getUserLoginStatusKey(userId: string, site: string): string {
+        return `${userId}-${site.replace(/\s/g, '').toLowerCase()}:user_info_key`;
     }
 }

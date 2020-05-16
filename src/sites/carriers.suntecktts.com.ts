@@ -20,7 +20,6 @@ export class Sunteck extends SearchSite {
         await this.page.type('#password', task.password);
         await this.page.click('#_submit');
         await this.page.waitForSelector('#load_search_form', { timeout: 10000 });
-        await this.removeUserFromLogoutList(task);
         this.log.log('login success');
     }
 

@@ -46,10 +46,9 @@ export class CHRobinson extends SearchSite {
         await this.screenshot('endlogin');
 
         this.log.log('login success');
-        await this.removeUserFromLogoutList(task);
     }
 
-    protected async beforeLogin(task: ITASK) {
+    protected async beforeSearch(task: ITASK) {
         // check task origin
         if (
             task.criteria.origin.indexOf(',') === -1 ||

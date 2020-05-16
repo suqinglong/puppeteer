@@ -54,7 +54,6 @@ interface IPostData {
 }
 
 interface ISite {
-    doLogin: Function;
     doSearch: Function;
 }
 
@@ -67,6 +66,6 @@ interface ISearchClass {
     createBrowser: Function;
 }
 
-declare type IErrorType = 'logout' | 'other' | 'search' | 'noData' | 'timeout';
+declare type IErrorType = 'logout' | 'other' | 'search' | 'noData' | 'timeout' | 'unableToLogin';
 declare type IMode = 'develop' | 'production';
 declare type IbrowserWSEndpoint = string;

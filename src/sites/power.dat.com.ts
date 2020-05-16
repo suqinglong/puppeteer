@@ -12,8 +12,6 @@ export class DAT extends SearchSite {
     protected searchPage = 'https://power.dat.com/search/loads';
 
     public async login(task: ITASK) {
-        this.log.log('login begin');
-
         await this.page.waitForSelector('#username');
         await this.page.type('#username', task.email);
 
@@ -25,12 +23,7 @@ export class DAT extends SearchSite {
             let btn: HTMLElement = document.querySelector('#login') as HTMLElement;
             btn.click();
         });
-
         await this.page.waitForSelector('li.carriers, a.search', { timeout: 10000 });
-
-        await this.removeUserFromLogoutList(task);
-        this.log.log('login success');
-        await this.screenshot('login success');
     }
 
     public async search(task: ITASK) {

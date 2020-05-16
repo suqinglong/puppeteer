@@ -22,7 +22,6 @@ export class Echo extends SearchSite {
             }),
             this.page.click('#loading-button-component')
         ]);
-        await this.removeUserFromLogoutList(task);
     }
 
     protected async search(task: ITASK) {

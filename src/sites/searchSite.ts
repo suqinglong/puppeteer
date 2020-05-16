@@ -4,7 +4,7 @@ import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
 import { useScreenshot } from '../tools/index';
 import { Log } from '../tools/log';
-import { userAgent, viewPort } from '../settings';
+import { userAgent, viewPort, pageWaitTime } from '../settings';
 
 export abstract class SearchSite implements ISite {
     public static siteName: string;
@@ -20,21 +20,6 @@ export abstract class SearchSite implements ISite {
         this.browser = browser;
     }
 
-    public async doLogin(task: ITASK) {
-        if (!this.loginPage) {
-            return;
-        }
-        try {
-            await this.beforeLogin(task);
-            await this.login(task);
-            await this.page.close();
-        } catch (e) {
-            await this.screenshot('login error');
-            await this.addUserToLogoutList(task);
-            this.log.log('login error', e);
-        }
-    }
-
     public async doSearch(task: ITASK) {
         try {
             await this.beforeSearch(task);
@@ -42,29 +27,9 @@ export abstract class SearchSite implements ISite {
             await this.afterSearch();
             await this.page.close();
         } catch (e) {
-            if (e instanceof SiteError && e.type === 'logout') {
-                await this.addUserToLogoutList(task);
-                await this.notifyLoginFaild(task);
-            }
             await this.screenshot('search error');
             this.log.log('search error', e);
         }
-    }
-
-    // run after search and before page closed
-    protected async afterSearch() {
-
-    }
-
-    protected async beforeLogin(task: ITASK) {
-        this.log = new Log(this.debugPre);
-        this.log.log('beforeLogin');
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.loginPage, { timeout: 20000 }).catch((e) => {
-            throw this.generateError('timeout', 'login page load timeout');
-        });
     }
 
     protected async beforeSearch(task: ITASK) {
@@ -73,9 +38,62 @@ export abstract class SearchSite implements ISite {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
-        await this.page.goto(this.searchPage, { timeout: 20000 }).catch((e) => {
+
+        await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
             throw this.generateError('timeout', 'search page load timeout');
         });
+
+        // need login and has not login
+        if (await this.shouldLogin(task)) {
+            this.log.log('need login')
+            await this.doLogin(task)
+        } else {
+            this.log.log('need not login')
+        }
+
+        // go to login page
+        await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
+            throw this.generateError('timeout', 'search page load timeout');
+        });
+    }
+
+    // run after search and before page closed
+    protected async afterSearch() {
+
+    }
+
+    protected async doLogin(task: ITASK) {
+        try {
+            await this.beforeLogin(task);
+            this.log.log('login begin')
+            await this.login(task);
+            this.log.log('login success')
+            await this.page.close();
+        } catch (e) {
+            await this.screenshot('login error');
+            await this.markUserUnableToLogin(task);
+            this.log.log('login error', e);
+
+            if (e.type !== 'timeout') {
+                throw this.generateError('unableToLogin', 'login faild')
+            }
+        }
+    }
+
+    protected async beforeLogin(task: ITASK) {
+        this.log.log('beforeLogin');
+        if (this.page.url().indexOf(this.loginPage) === -1 && this.page.url().indexOf('/login') === -1) {
+            this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
+            await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
+                throw this.generateError('timeout', 'login page load timeout');
+            });
+        }
+    }
+
+
+    protected async shouldLogin(task: ITASK): Promise<boolean> {
+        const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
+        return !isUserUnableToLogin && this.loginPage && this.page.url().indexOf(this.searchPage) === -1
     }
 
     protected async login(task: ITASK) { }
@@ -103,18 +121,13 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async addUserToLogoutList(task: ITASK) {
-        await SingletonTedis.addUserToLogoutList(task.user_id, task.site);
-        // notify server this site has problem
+    // user can't login, may be the account and password doesn't match
+    protected async markUserUnableToLogin(task: ITASK) {
+        await SingletonTedis.markUserUnableToLogin(task.user_id, task.site);
+        // notify server this site has login problem
         await AddNotification(task.user_id, `${task.site} logout`);
-    }
-
-    protected async notifyLoginFaild(task: ITASK) {
+        // change load srouce status to inactive
         await InactiveLoadSource(task.user_id, task.site);
-    }
-
-    protected async removeUserFromLogoutList(task: ITASK) {
-        await SingletonTedis.removeUserFromLogoutList(task.user_id, task.site);
     }
 
     protected async sleep(num: number) {

@@ -15,8 +15,6 @@ export class CHRobinson extends SearchSite {
     private host = 'https://www.navispherecarrier.com';
 
     protected async login(task: ITASK) {
-        this.log.log('login page loaded');
-
         await this.page
             .waitForSelector('#Username', {
                 timeout: 5000
@@ -41,11 +39,6 @@ export class CHRobinson extends SearchSite {
         });
 
         await this.page.waitForSelector('div.find-loads', { timeout: 10000 });
-        console.log('login succeed.');
-
-        await this.screenshot('endlogin');
-
-        this.log.log('login success');
     }
 
     protected async beforeSearch(task: ITASK) {

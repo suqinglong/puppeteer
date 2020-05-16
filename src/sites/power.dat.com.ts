@@ -27,8 +27,6 @@ export class DAT extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        this.log.log('search page loaded');
-
         // clear page popup
         await this.page.click('.carriers .search').catch((e) => {
             throw this.generateError('logout', 'logout');
@@ -191,7 +189,6 @@ export class DAT extends SearchSite {
         await PostSearchData(ModifyPostData(task, items)).then((res: any) => {
             this.log.log(res.data);
         });
-        this.log.log('search end');
     }
 
     protected async afterSearch() {

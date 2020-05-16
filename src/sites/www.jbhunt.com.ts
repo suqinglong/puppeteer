@@ -11,7 +11,6 @@ export class JBHunt extends SearchSite {
 
 
     protected async search(task: ITASK) {
-        this.log.log('search begin')
         await this.page.waitForSelector('.grouped-inputs:nth-child(1) p-autocomplete input[aria-autocomplete="list"]')
 
         // origin
@@ -77,8 +76,6 @@ export class JBHunt extends SearchSite {
         } else {
             throw this.generateError('noData', 'no data')
         }
-
-        this.log.log('search done')
     }
 
     private getDataFromResponse(data:Array<any>):Array<IResultHTMLData> {

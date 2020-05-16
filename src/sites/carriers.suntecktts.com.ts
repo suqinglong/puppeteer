@@ -12,7 +12,6 @@ export class Sunteck extends SearchSite {
     protected searchPage = 'https://carriers.suntecktts.com/freight/';
 
     protected async login(task: ITASK) {
-        this.log.log('login begin');
         await this.page.waitForSelector('#_submit:not(:disabled)', {
             timeout: 20000
         });
@@ -20,7 +19,6 @@ export class Sunteck extends SearchSite {
         await this.page.type('#password', task.password);
         await this.page.click('#_submit');
         await this.page.waitForSelector('#load_search_form', { timeout: 10000 });
-        this.log.log('login success');
     }
 
     protected async search(task: ITASK) {

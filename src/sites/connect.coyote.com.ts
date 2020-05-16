@@ -14,7 +14,6 @@ export class Coyote extends SearchSite {
     private downloadPath = `./download/Coyote`;
 
     protected async login(task: ITASK) {
-        this.log.log('login page loaded');
         await this.page
             .waitForSelector('#Username', {
                 timeout: 5000
@@ -34,8 +33,9 @@ export class Coyote extends SearchSite {
         });
         await this.page.click('#login-form-submit');
 
-        await this.page.waitForSelector('#filter-bar-region');
-        this.log.log('login success');
+        await this.page.waitForSelector('#filter-bar-region', {
+            timeout: 10000
+        });
     }
 
     protected async search(task: ITASK) {

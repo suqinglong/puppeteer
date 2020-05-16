@@ -28,7 +28,6 @@ export class Echo extends SearchSite {
         await this.page.waitForSelector('.search-btn', {
             timeout: 5000
         });
-        console.log('EchodriveEchoCom  EchodriveEchoCom search');
         await this.page.type('.origin-input input', task.criteria.origin);
         await this.page.type('.dho-input input', task.criteria.origin_radius);
         await this.page.type('.destination-input input', task.criteria.destination);

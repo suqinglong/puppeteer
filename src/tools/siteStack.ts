@@ -1,5 +1,7 @@
 import puppeteer from 'puppeteer';
 import { userAgent, viewPort } from '../settings';
+import { Log } from './log';
+import { SiteError } from '../error';
 
 export class SiteStack {
     private stack: Array<DetailPage> = [];
@@ -8,6 +10,7 @@ export class SiteStack {
     private callback: Function;
     private results = [];
     private searchCount: number;
+    private resolve: Function
 
     public constructor(
         detailPages: Array<DetailPage>,
@@ -21,16 +24,28 @@ export class SiteStack {
         this.push();
     }
 
+    public async search() {
+        return new Promise(resolve => {
+            this.resolve = resolve
+        })
+    }
+
     public pushResult(result: IResultHTMLData) {
         this.results.push(result);
     }
 
-    public remove(page: DetailPage) {
+    public async remove(page: DetailPage) {
         this.stack.splice(this.stack.indexOf(page), 1);
+        await this.callback(this.results);
         this.searchCount--;
-        this.callback(this.results, this.searchCount === 0);
-        this.results = [];
-        this.push();
+        console.log('SiteStack await callback end', this.searchCount)
+        if (this.searchCount === 0) {
+            console.log('SiteStack await callback resolve')
+            this.resolve()
+        } else {
+            this.results = [];
+            this.push();
+        }
     }
 
     private push() {
@@ -46,9 +61,12 @@ export class SiteStack {
 export abstract class DetailPage {
     protected page: puppeteer.Page;
     protected searchPage: string;
+    protected log: Log
+    protected debugPre: string;
     private siteStack: SiteStack;
     private browser: puppeteer.Browser;
     private originalData = {};
+
 
     public constructor(searchPage: string, browser: puppeteer.Browser, originalData: Object) {
         this.searchPage = searchPage;
@@ -65,14 +83,19 @@ export abstract class DetailPage {
     }
 
     public async doSearch() {
+        this.log = new Log(this.debugPre + ":" + this.searchPage)
         await this.beforeSearch();
         const result = await this.search()
-        this.searchEnd({ ...result, ...this.originalData });
+        await this.searchEnd({ ...result, ...this.originalData });
+    }
+
+    protected generateError(type: IErrorType, msg: string) {
+        return new SiteError(type, `${this.debugPre}: ${msg}`);
     }
 
     private async searchEnd(result: IResultHTMLData) {
         this.siteStack.pushResult(result);
-        this.siteStack.remove(this);
+        await this.siteStack.remove(this);
         await this.page.close();
     }
 
@@ -83,5 +106,5 @@ export abstract class DetailPage {
         await this.page.goto(this.searchPage, { timeout: 20000 });
     }
 
-    protected abstract async search(): Promise<IResultHTMLData>;
+    protected abstract async search(): Promise<any>;
 }

@@ -15,7 +15,7 @@ export const TaskData = {
             origin_radius: '100',
             destination: '',
             destination_radius: '100',
-            pick_up_date: '2020-05-08',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time: time
@@ -32,7 +32,7 @@ export const TaskData = {
             origin_radius: '100',
             destination: 'New York, NY',
             destination_radius: '100',
-            pick_up_date: '2020-05-08',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time: time
@@ -63,10 +63,10 @@ export const TaskData = {
         password: 'Annaleigh1',
         criteria: {
             origin: 'Atwater, CA',
-            origin_radius: '250',
+            origin_radius: '150',
             destination: 'Sumner, WA',
-            destination_radius: '250',
-            pick_up_date: '2020-05-08',
+            destination_radius: '150',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time: time
@@ -83,7 +83,7 @@ export const TaskData = {
             origin_radius: '250',
             destination: 'Sumner, WA',
             destination_radius: '250',
-            pick_up_date: '2020-04-27',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time: time
@@ -101,7 +101,7 @@ export const TaskData = {
             origin_radius: '250',
             destination: 'Shakopee, MN',
             destination_radius: '250',
-            pick_up_date: '2020-05-07',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         }
     },
@@ -118,7 +118,7 @@ export const TaskData = {
             origin_radius: '250',
             destination: 'Sumner, WA',
             destination_radius: '250',
-            pick_up_date: '2020-04-30,2020-04-32',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         }
     },
@@ -134,7 +134,7 @@ export const TaskData = {
             origin_radius: '100',
             destination: 'Hazelwood, MO',
             destination_radius: '100',
-            pick_up_date: '2020-05-8',
+            pick_up_date: pickUpDate,
             equipment: 'Van'
         },
         time

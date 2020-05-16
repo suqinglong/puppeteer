@@ -51,7 +51,7 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
         };
     });
 
-    console.log('ModifyPostData', result)
+    // console.log('ModifyPostData', result)
     return result
 }
 

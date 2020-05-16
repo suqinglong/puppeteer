@@ -1,11 +1,9 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
-import { SiteError } from '../error';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
-import { TimeoutError } from 'puppeteer/Errors';
+import { SiteStack, DetailPage } from '../tools/siteStack';
 
 export class CHRobinson extends SearchSite {
     public static siteName = 'CH Robinson';
@@ -13,6 +11,13 @@ export class CHRobinson extends SearchSite {
     protected loginPage = 'https://www.navispherecarrier.com/login';
     protected searchPage = '';
     private host = 'https://www.navispherecarrier.com';
+
+    protected async shouldLogin(): Promise<boolean> {
+        const userToken = await this.page.evaluate(() => {
+            return localStorage.getItem('navisphere_carrier.user_token')
+        })
+        return !userToken
+    }
 
     protected async login(task: ITASK) {
         await this.page
@@ -57,7 +62,10 @@ export class CHRobinson extends SearchSite {
         const [destinationCity, destinationStateProvinceCode] = task.criteria.destination
             .split(',')
             .map((item) => item.trim());
+            // &pickupStart=2020-05-17T08%3A00%3A00
+            // &pickupStart=2020-05-17T08%3A00%3A00&pickupEnd=2020-05-18T08%3A00%3A00
         const pickupStart = dateformat(task.criteria.pick_up_date, "yyyy-mm-dd'T'HH:MM:ss") as string;
+        const pickupEnd =  dateformat(new Date(Date.parse(pickupStart) + 24 * 3600 * 1000), "yyyy-mm-dd'T'HH:MM:ss") as string
         const search = {
             originCountryCode: 'US',
             originStateProvinceCode,
@@ -68,7 +76,7 @@ export class CHRobinson extends SearchSite {
             destinationCity,
             destinationRadiusMiles: task.criteria.destination_radius,
             pickupStart,
-            // pickupEnd,
+            pickupEnd,
             mode: task.criteria.equipment.substr(0, 1).toUpperCase()
         };
 
@@ -81,7 +89,6 @@ export class CHRobinson extends SearchSite {
     }
 
     protected async search(task: ITASK) {
-        this.log.log('begin search');
         await this.page
             .waitForSelector('.loading-indicator', {
                 timeout: 10000,
@@ -89,7 +96,7 @@ export class CHRobinson extends SearchSite {
             })
             .catch((e) => {
                 this.log.log('wait loading', e);
-                throw new SiteError('logout', 'wait loading');
+                throw this.generateError('timeout', 'wait loading');
             });
 
         await this.page
@@ -98,7 +105,7 @@ export class CHRobinson extends SearchSite {
             })
             .catch((e) => {
                 this.log.log('wait for data-table');
-                throw new SiteError('noData', 'no data');
+                throw this.generateError('noData', 'no data');
             });
 
         const resultHtml = await this.page.$eval('.data-table', (res) => res.outerHTML);
@@ -106,48 +113,88 @@ export class CHRobinson extends SearchSite {
         const resultData = this.getDataFromHtml($, task.task_id);
 
         const detailNumbers = resultData.map((item) => item['loadNumber']) as Array<string>;
-        for (let i = 0, len = detailNumbers.length; i < len; i++) {
-            const detailData = await this.goToDetailPage(detailNumbers[i]);
-            const { pickUpData, dropOffData, requirementData, contactData } = detailData;
-            const item = resultData[i];
-            item['pickUpData'] = pickUpData;
-            item['dropOffData'] = dropOffData;
-            item['requirementData'] = requirementData;
-            item['contactData'] = contactData;
-        }
+        let linksAndData = detailNumbers.map((id, index) => {
+            return {
+                link: `https://www.navispherecarrier.com/find-load-details/${id}`,
+                data: {
+                    ...resultData[index]
+                }
+            }
+        })
 
-        this.log.log('resultData', ModifyPostData(task, resultData));
-        await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
-            this.log.log(res.data);
-        });
+        this.log.log('links', linksAndData.map(item => item.link))
+
+        const detailPages = linksAndData.map((item) => {
+            return new CHRobinsonDetailPage(item.link, this.browser, item.data);
+        })
+
+        const siteStack = new SiteStack(
+            detailPages,
+            5,
+            async (result) => {
+                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+                    this.log.log(res.data);
+                });
+            }
+        );
+        await siteStack.search()
+        this.log.log('siteStack search end')
     }
 
-    private async goToDetailPage(id: string): Promise<any> {
-        this.log.log('goToDetailPage', id);
-        const page = await this.browser.newPage();
-        await page.setViewport(viewPort);
-        await page.setUserAgent(userAgent);
-        await page.goto(`https://www.navispherecarrier.com/find-load-details/${id}`);
-        await page
-            .waitForSelector('.loading-indicator', {
-                timeout: 10000,
-                hidden: true
+    private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
+        const result: any = [];
+        $('tbody tr').each((_index, item) => {
+            const resultItem = [];
+            $(item)
+                .find('td')
+                .each((_tdIndex, tdItem) => {
+                    resultItem.push($(tdItem).text());
+                });
+            let [
+                loadNumber,
+                origin,
+                date,
+                origin_radius,
+                destination,
+                dropOff,
+                destination_radius,
+                weight,
+                distance,
+                equipment,
+                endorsement
+            ] = resultItem;
+            date = dateformat(date.substr(0, 10), 'yyyy-mm-dd HH:MM:ss');
+            loadNumber = (loadNumber as String).match(/\d+/)[0];
+            result.push({
+                loadNumber,
+                origin,
+                date,
+                origin_radius,
+                destination,
+                dropOff,
+                weight,
+                distance,
+                equipment,
+                endorsement,
+                destination_radius
+            });
+        });
+        return result;
+    }
+}
+
+
+class CHRobinsonDetailPage extends DetailPage {
+    protected debugPre = 'CHRobinsonDetailPage'
+    protected async search(): Promise<any> {
+        await this.page
+            .waitForSelector('.card-view-component', {
+                timeout: 5000
             })
             .catch((e) => {
-                this.pageScreenshot(page, `goToDetailPage${id}`);
-                if (e instanceof TimeoutError) {
-                    this.log.log('goToDetailPage timeout:', e);
-                } else {
-                    this.log.log('goToDetailPage:', e);
-                    throw new SiteError('search', 'goToDetailPage wait loading');
-                }
+                this.log.log('goToDetailPage timeout:', e);
             });
-        const $ = cheerio.load(await page.content());
-        await page.close();
-        return this.getDetailDataFromHtml($);
-    }
-
-    private getDetailDataFromHtml($: CheerioStatic): any {
+        const $ = cheerio.load(await this.page.content());
         let pickUpData = {};
         let dropOffData = {};
         $('.data-table tbody tr').each((_index, tr) => {
@@ -198,46 +245,5 @@ export class CHRobinson extends SearchSite {
         });
 
         return { pickUpData, dropOffData, requirementData, contactData };
-    }
-
-    private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
-        const result: any = [];
-        $('tbody tr').each((_index, item) => {
-            const resultItem = [];
-            $(item)
-                .find('td')
-                .each((_tdIndex, tdItem) => {
-                    resultItem.push($(tdItem).text());
-                });
-            let [
-                loadNumber,
-                origin,
-                date,
-                origin_radius,
-                destination,
-                dropOff,
-                destination_radius,
-                weight,
-                distance,
-                equipment,
-                endorsement
-            ] = resultItem;
-            date = dateformat(date.substr(0, 10), 'yyyy-mm-dd HH:MM:ss');
-            loadNumber = (loadNumber as String).match(/\d+/)[0];
-            result.push({
-                loadNumber,
-                origin,
-                date,
-                origin_radius,
-                destination,
-                dropOff,
-                weight,
-                distance,
-                equipment,
-                endorsement,
-                destination_radius
-            });
-        });
-        return result;
     }
 }

@@ -92,7 +92,8 @@ export abstract class SearchSite implements ISite {
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
-        return !isUserUnableToLogin && this.loginPage && this.page.url().indexOf(this.searchPage) === -1
+        this.log.log('isUserUnableToLogin', isUserUnableToLogin, this.loginPage, this.page.url())
+        return !isUserUnableToLogin && this.loginPage && (this.page.url().indexOf(this.searchPage) === -1)
     }
 
     protected generateError(type: IErrorType, msg: string) {

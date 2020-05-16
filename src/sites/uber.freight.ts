@@ -153,25 +153,21 @@ export class UberFreight extends SearchSite {
 
         this.log.log('links', linksAndData);
 
-        await new Promise((resolve) => {
-            const _s = new SiteStack(
-                linksAndData.map((item) => {
-                    return new UberDetailPage(item.link, this.browser, item.data);
-                }),
-                5,
-                async (result, isEnd) => {
-                    this.log.log('result', result)
-                    await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                        this.log.log(res.data);
-                    });
-                    if (isEnd) {
-                        resolve();
-                    }
-                }
-            );
-        });
+        const detailPages = linksAndData.map((item) => {
+            return new UberDetailPage(item.link, this.browser, item.data);
+        })
 
-        this.log.log('search end');
+        const siteStack = new SiteStack(
+            detailPages,
+            5,
+            async (result) => {
+                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+                    this.log.log(res.data);
+                });
+            }
+        );
+
+        await siteStack.search()
     }
 }
 

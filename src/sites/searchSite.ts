@@ -24,9 +24,10 @@ export abstract class SearchSite implements ISite {
         if (!this.loginPage) {
             return;
         }
-        await this.loginPrepare(task);
         try {
+            await this.beforeLogin(task);
             await this.login(task);
+            await this.page.close();
         } catch (e) {
             await this.screenshot('login error');
             await this.addUserToLogoutList(task);
@@ -35,9 +36,11 @@ export abstract class SearchSite implements ISite {
     }
 
     public async doSearch(task: ITASK) {
-        await this.searchPrepare(task);
         try {
+            await this.beforeSearch(task);
             await this.search(task);
+            await this.afterSearch();
+            await this.page.close();
         } catch (e) {
             if (e instanceof SiteError && e.type === 'logout') {
                 await this.addUserToLogoutList(task);
@@ -48,33 +51,34 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    public async closePage() {
-        // this.page && this.page.close();
+    // run after search and before page closed
+    protected async afterSearch() {
+
     }
 
-    protected async loginPrepare(task: ITASK) {
+    protected async beforeLogin(task: ITASK) {
         this.log = new Log(this.debugPre);
-        this.log.log('loginPrepare');
+        this.log.log('beforeLogin');
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
         await this.page.goto(this.loginPage, { timeout: 20000 }).catch((e) => {
-            this.generateError('timeout', 'login page load timeout');
+            throw this.generateError('timeout', 'login page load timeout');
         });
     }
 
-    protected async searchPrepare(task: ITASK) {
+    protected async beforeSearch(task: ITASK) {
         this.log = new Log(this.debugPre);
-        this.log.log('searchPrepare');
+        this.log.log('beforeSearch');
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
         await this.page.goto(this.searchPage, { timeout: 20000 }).catch((e) => {
-            this.generateError('timeout', 'search page load timeout');
+            throw this.generateError('timeout', 'search page load timeout');
         });
     }
 
-    protected async login(task: ITASK) {}
+    protected async login(task: ITASK) { }
 
     protected generateError(type: IErrorType, msg: string) {
         return new SiteError(type, `${this.debugPre}: ${msg}`);
@@ -101,6 +105,7 @@ export abstract class SearchSite implements ISite {
 
     protected async addUserToLogoutList(task: ITASK) {
         await SingletonTedis.addUserToLogoutList(task.user_id, task.site);
+        // notify server this site has problem
         await AddNotification(task.user_id, `${task.site} logout`);
     }
 

@@ -201,9 +201,8 @@ export class DAT extends SearchSite {
         this.log.log('search end');
     }
 
-    public async closePage() {
+    protected async afterSearch() {
         await this.cleanSearch();
-        await this.page.close();
     }
 
     private async getDetailData(n: number) {

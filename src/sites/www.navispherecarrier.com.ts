@@ -49,7 +49,7 @@ export class CHRobinson extends SearchSite {
         await this.removeUserFromLogoutList(task);
     }
 
-    protected async loginPrepare(task: ITASK) {
+    protected async beforeLogin(task: ITASK) {
         // check task origin
         if (
             task.criteria.origin.indexOf(',') === -1 ||
@@ -85,7 +85,7 @@ export class CHRobinson extends SearchSite {
             searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
         });
         this.searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1);
-        await super.searchPrepare(task);
+        await super.beforeSearch(task);
     }
 
     protected async search(task: ITASK) {

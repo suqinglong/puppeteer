@@ -23,7 +23,6 @@ export class Search implements ISearchClass {
         const SiteClass = SiteManager.getSite(task.site);
         const site = new SiteClass(browser) as SearchSite;
         await site.doLogin(task); // new page and login
-        await site.closePage();
         return browser.wsEndpoint();
     }
 
@@ -36,6 +35,5 @@ export class Search implements ISearchClass {
             await site.doLogin(task);
         }
         await site.doSearch(task);
-        await site.closePage();
     }
 }

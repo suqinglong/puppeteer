@@ -65,7 +65,7 @@ export abstract class DetailPage {
     }
 
     public async doSearch() {
-        await this.searchPrepare();
+        await this.beforeSearch();
         const result = await this.search()
         this.searchEnd({ ...result, ...this.originalData });
     }
@@ -76,7 +76,7 @@ export abstract class DetailPage {
         await this.page.close();
     }
 
-    private async searchPrepare() {
+    private async beforeSearch() {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);

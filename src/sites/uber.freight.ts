@@ -23,9 +23,7 @@ export class UberFreight extends SearchSite {
         await this.page.click('form.push--top-small button');
         
         this.log.log('waiting logining')
-        await this.page.waitForSelector('.icon_profile.icon', {
-            timeout: 10000
-        });
+        await this.page.waitForNavigation({timeout: 10000})
     }
 
     protected async search(task: ITASK) {

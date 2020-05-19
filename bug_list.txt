@@ -361,3 +361,216 @@ firstPickupLocation:{ "appointmentBegin": "2020-05-15 00:01:00", "appointmentEnd
 有
 stops:[object Object],[object Object]__typename:ElasticLoad
 这些。
+
+
+
+
+
+2020-05-19
+==============
+
+get task {
+  task_id: '18ea408b59d6eede24c8b3f054bf92d5',
+  site: 'Landstar',
+  user_id: '3',
+  email: 'ajgtranspo',
+  password: 'Loaded2020',
+  criteria: {
+    origin: 'Atwater, CA',
+    origin_radius: '100',
+    destination: 'Sumner, WA',
+    destination_radius: '100',
+    pick_up_date: '2020-05-19',
+    equipment: 'Van'
+  },
+  time: 1589896618
+}
+create browserWSEndpoint
+Search doTask
+Landstar: search begin
+Landstar: need login
+Landstar: login begin
+Landstar: login success
+screenshot: Landstar-search error.png
+Landstar: search error TypeError: Invalid date
+    at Object.default (/home/ubuntu/puppeteer/node_modules/dateformat/lib/dateformat.js:39:17)
+    at formateDate (/home/ubuntu/puppeteer/dist/tools/index.js:101:32)
+    at /home/ubuntu/puppeteer/dist/tools/index.js:44:19
+    at Array.map (<anonymous>)
+    at Object.ModifyPostData (/home/ubuntu/puppeteer/dist/tools/index.js:35:28)
+    at Landstar.search (/home/ubuntu/puppeteer/dist/sites/www.landstaronline.com.js:110:44)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Landstar.doSearch (/home/ubuntu/puppeteer/dist/sites/searchSite.js:24:13)
+    at async Search.doTask (/home/ubuntu/puppeteer/dist/search.js:39:9)
+
+
+
+landstar 搜索报错。 看截图,搜索是成功了的,数据已经出来了。
+
+
+
+
+Uber Freight: { success: true, data: null }
+SiteStack await callback end 4
+(node:15090) UnhandledPromiseRejectionWarning: TypeError: Invalid date
+    at Object.default (/home/ubuntu/puppeteer/node_modules/dateformat/lib/dateformat.js:39:17)
+    at UberDetailPage.search (/home/ubuntu/puppeteer/dist/sites/uber.freight.js:195:46)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async UberDetailPage.doSearch (/home/ubuntu/puppeteer/dist/tools/siteStack.js:66:24)
+(node:15090) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:15090) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+(node:15090) UnhandledPromiseRejectionWarning: TypeError: Invalid date
+    at Object.default (/home/ubuntu/puppeteer/node_modules/dateformat/lib/dateformat.js:39:17)
+    at UberDetailPage.search (/home/ubuntu/puppeteer/dist/sites/uber.freight.js:195:46)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async UberDetailPage.doSearch (/home/ubuntu/puppeteer/dist/tools/siteStack.js:66:24)
+(node:15090) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 2)
+(node:15090) UnhandledPromiseRejectionWarning: TypeError: Invalid date
+    at Object.default (/home/ubuntu/puppeteer/node_modules/dateformat/lib/dateformat.js:39:17)
+    at UberDetailPage.search (/home/ubuntu/puppeteer/dist/sites/uber.freight.js:195:46)
+    at runMicrotasks (<anonymous>)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async UberDetailPage.doSearch (/home/ubuntu/puppeteer/dist/tools/siteStack.js:66:24)
+(node:15090) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 3)
+Uber Freight: { success: true, data: null }
+SiteStack await callback end 3
+
+
+Uber 也是这个错误,应该都是日期格式化的问题。
+
+
+
+
+
+
+当报了上面两个错误后,再次搜索,daemon不 work 了,在 daemon.log 里面也看不到日志了。 得想办法做到一个网站搜索出错, daemon 也能处理别的task
+
+
+
+
+
+get task {
+  task_id: '6fe54e3a095d0e59cee89bf3063cf778',
+  site: 'Coyote',
+  user_id: '3',
+  email: 'dispatch@ajgtransport.com',
+  password: 'KeepLoaded20!',
+  criteria: {
+    origin: 'Atwater, CA',
+    origin_radius: '100',
+    destination: 'Sumner, WA',
+    destination_radius: '100',
+    pick_up_date: '2020-05-19',
+    equipment: 'Van'
+  },
+  time: 1589897200
+}
+Search doTask
+Coyote: search begin
+searchTimeout Coyote: search page load timeout
+screenshot: Coyote-search error.png
+Coyote: search error SiteError {
+  type: 'searchTimeout',
+  msg: 'Coyote: search page load timeout'
+}
+
+
+
+查看了一个截图,是白屏, 而且这个日志是很快打出来的,不像是加载半天,加载超时导致的。
+
+
+
+
+
+get task {
+  task_id: '6fe54e3a095d0e59cee89bf3063cf778',
+  site: 'Sunteck',
+  user_id: '3',
+  email: 'ajgtransportation@gmail.com',
+  password: 'KeepLoaded19',
+  criteria: {
+    origin: 'Atwater, CA',
+    origin_radius: '100',
+    destination: 'Sumner, WA',
+    destination_radius: '100',
+    pick_up_date: '2020-05-19',
+    equipment: 'Van'
+  },
+  time: 1589897200
+}
+Search doTask
+Sunteck: search begin
+Sunteck: need login
+Sunteck: login begin
+screenshot: Sunteck-login error.png
+Sunteck: login error TimeoutError: waiting for selector "#load_search_form" failed: timeout 10000ms exceeded
+    at new WaitTask (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/DOMWorld.js:549:28)
+    at DOMWorld._waitForSelectorOrXPath (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/DOMWorld.js:478:22)
+    at DOMWorld.waitForSelector (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/DOMWorld.js:432:17)
+    at Frame.waitForSelector (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/FrameManager.js:627:47)
+    at Frame.<anonymous> (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/helper.js:112:23)
+    at Page.waitForSelector (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/Page.js:1122:29)
+    at Sunteck.login (/home/ubuntu/puppeteer/dist/sites/carriers.suntecktts.com.js:25:25)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Sunteck.doLogin (/home/ubuntu/puppeteer/dist/sites/searchSite.js:68:13)
+    at async Sunteck.beforeSearch (/home/ubuntu/puppeteer/dist/sites/searchSite.js:44:13)
+  -- ASYNC --
+    at Frame.<anonymous> (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/helper.js:111:15)
+    at Page.waitForSelector (/home/ubuntu/puppeteer/node_modules/puppeteer/lib/Page.js:1122:29)
+    at Sunteck.login (/home/ubuntu/puppeteer/dist/sites/carriers.suntecktts.com.js:25:25)
+    at processTicksAndRejections (internal/process/task_queues.js:97:5)
+    at async Sunteck.doLogin (/home/ubuntu/puppeteer/dist/sites/searchSite.js:68:13)
+    at async Sunteck.beforeSearch (/home/ubuntu/puppeteer/dist/sites/searchSite.js:44:13)
+    at async Sunteck.doSearch (/home/ubuntu/puppeteer/dist/sites/searchSite.js:23:13)
+    at async Search.doTask (/home/ubuntu/puppeteer/dist/search.js:39:9)
+    at async Tasks.getTask (/home/ubuntu/puppeteer/dist/tasks.js:42:13) {
+  name: 'TimeoutError'
+}
+unableToLogin Sunteck: login faild
+screenshot: Sunteck-search error.png
+Sunteck: search error SiteError { type: 'unableToLogin', msg: 'Sunteck: login faild' }
+
+
+查看了 Sunteck-login error.png 和  Sunteck-search error.png ,两个网页都是登录成功后的搜索页面,可能是对方网站改变前端了? 没有我们要找的
+html element ?
+
+
+
+
+
+
+get task {
+  task_id: '4000689264e0ff5ad60ef90ab78b9178',
+  site: 'JB Hunt',
+  user_id: '3',
+  email: 'dispatch@ajgtransport.com',
+  password: 'Alwaysloaded400',
+  criteria: {
+    origin: 'Atwater, CA',
+    origin_radius: '100',
+    destination: 'Sumner, WA',
+    destination_radius: '100',
+    pick_up_date: '2020-05-19',
+    equipment: 'Van'
+  },
+  time: 1589897806
+}
+Search doTask
+JB Hunt: search begin
+JB Hunt: need not login
+JB Hunt: type origin
+JB Hunt: type destination
+JB Hunt: type equipment
+JB Hunt: click search btn
+JB Hunt: has result
+noData JB Hunt: no data
+screenshot: JB Hunt-search error.png
+JB Hunt: search error SiteError { type: 'noData', msg: 'JB Hunt: no data' }
+
+
+JB Hunt 第一次搜索时,有结果,是正确 的。第二次相同 的条件 再次搜索时,报以上错误。截图是搜索页面刚打开的样子,搜索条件还没有填充。
+
+

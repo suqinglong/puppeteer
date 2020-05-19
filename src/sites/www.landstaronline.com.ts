@@ -24,9 +24,7 @@ export class Landstar extends SearchSite {
         await this.page.waitForSelector('#Submit');
         await this.page.click('#Submit');
 
-        await this.page.waitForSelector('#dashboard', { timeout: 10000 }).catch(e => {
-            throw this.generateError('timeout', 'login timeout')
-        })
+        await this.page.waitForSelector('#dashboard', { timeout: 10000 })
     }
 
     protected async search(task: ITASK) {

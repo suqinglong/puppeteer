@@ -96,7 +96,7 @@ export class CHRobinson extends SearchSite {
             })
             .catch((e) => {
                 this.log.log('wait loading', e);
-                throw this.generateError('timeout', 'wait loading');
+                throw this.generateError('search', 'wait loading');
             });
 
         await this.page

@@ -23,6 +23,10 @@ export abstract class SearchSite implements ISite {
     public async doSearch(task: ITASK) {
         this.log = new Log(this.debugPre);
         this.log.log('search begin')
+        const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
+        if (isUserUnableToLogin) {
+            return this.log.log('user unable to login')
+        }
         try {
             await this.beforeSearch(task);
             await this.search(task);
@@ -41,7 +45,7 @@ export abstract class SearchSite implements ISite {
         await this.page.setUserAgent(userAgent);
 
         await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
-            throw this.generateError('timeout', 'search page load timeout');
+            throw this.generateError('searchTimeout', 'search page load timeout');
         });
 
         // need login and has not login
@@ -52,9 +56,9 @@ export abstract class SearchSite implements ISite {
             this.log.log('need not login')
         }
 
-        // go to login page
+        // go to search page
         await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
-            throw this.generateError('timeout', 'search page load timeout');
+            throw this.generateError('searchTimeout', 'search page load timeout');
         });
     }
 
@@ -71,18 +75,19 @@ export abstract class SearchSite implements ISite {
             if (this.page.url().indexOf(this.loginPage) === -1 && this.page.url().indexOf('/login') === -1) {
                 this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
                 await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
-                    throw this.generateError('timeout', 'login page load timeout');
+                    throw this.generateError('loginTimeout', 'login page load timeout');
                 });
             }
             await this.login(task);
             this.log.log('login success')
         } catch (e) {
             await this.screenshot('login error');
-            await this.markUserUnableToLogin(task);
             this.log.log('login error', e);
-
-            if (e.type !== 'timeout') {
+            if (e.type !== 'loginTimeout') {
+                await this.markUserUnableToLogin(task);
                 throw this.generateError('unableToLogin', 'login faild')
+            } else {
+                throw this.generateError('loginTimeout', 'login timeout')
             }
         }
     }
@@ -91,9 +96,7 @@ export abstract class SearchSite implements ISite {
     protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
-        const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
-        this.log.log('isUserUnableToLogin', isUserUnableToLogin, this.loginPage, this.page.url())
-        return !isUserUnableToLogin && this.loginPage && (this.page.url().indexOf(this.searchPage) === -1)
+        return this.loginPage && (this.page.url().indexOf(this.searchPage) === -1)
     }
 
     protected generateError(type: IErrorType, msg: string) {
@@ -123,7 +126,7 @@ export abstract class SearchSite implements ISite {
     protected async markUserUnableToLogin(task: ITASK) {
         await SingletonTedis.markUserUnableToLogin(task.user_id, task.site);
         // notify server this site has login problem
-        await AddNotification(task.user_id, `${task.site} logout`);
+        await AddNotification(task.user_id, `${task.site} unable to login`);
         // change load srouce status to inactive
         await InactiveLoadSource(task.user_id, task.site);
     }

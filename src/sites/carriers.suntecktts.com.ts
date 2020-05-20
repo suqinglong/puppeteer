@@ -17,7 +17,7 @@ export class Sunteck extends SearchSite {
         await this.page.type('#username', task.email);
         await this.page.type('#password', task.password);
         await this.page.click('#_submit');
-        await this.page.waitForSelector('#load_search_form', { timeout: 10000 });
+        await this.page.waitForSelector('[name=load_board_search]', { timeout: 10000 });
     }
 
     protected async search(task: ITASK) {
@@ -77,10 +77,9 @@ export class Sunteck extends SearchSite {
             '#js-load-board-results',
             (input) => input.outerHTML
         );
-        this.log.log('resultHtml', resultHtml);
+        
         const $ = cheerio.load(resultHtml);
         const resultData = this.getDataFromHtml($, task);
-        this.log.log('data', ModifyPostData(task, resultData));
 
         await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
             this.log.log(res.data);

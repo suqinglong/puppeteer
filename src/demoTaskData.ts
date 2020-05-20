@@ -97,9 +97,9 @@ export const TaskData = {
         password: 'KeepLoaded19',
         time: time,
         criteria: {
-            origin: 'Concordia, KS',
+            origin: 'Lakeland, FL',
             origin_radius: '250',
-            destination: 'Shakopee, MN',
+            destination: 'Augusta, GA',
             destination_radius: '250',
             pick_up_date: pickUpDate,
             equipment: 'Van'

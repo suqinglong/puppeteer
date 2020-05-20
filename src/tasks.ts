@@ -1,7 +1,7 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
-import {prePareTestData} from './test.config';
+import { prePareTestData } from './test.config';
 
 export class Tasks implements ITasksClass {
     private mode: IMode = getMode();
@@ -9,34 +9,45 @@ export class Tasks implements ITasksClass {
 
     public async getTask() {
         await this.developPrepare();
+        let count = 0
         while (true) {
-            const taskResult = await SingletonTedis.getTask();
-            if (!taskResult) continue;
-            const task: ITASK = JSON.parse(taskResult) as ITASK;
-            if (Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
-                continue;
+            try {
+                await this.sleep(1000);
+                console.log('\n\n\n')
+                const taskResult = await SingletonTedis.getTask()
+                if (!taskResult) continue;
+                const task: ITASK = JSON.parse(taskResult) as ITASK;
+                if (Number(new Date()) - Number(task.time) * 1000 > 100 * 1000) {
+                    continue;
+                }
+                console.log('---- get task ----', task);
+                await this.search.doTask(task, await this.getBrowserWSEndpoint(task));
+            } catch (e) {
+                console.log('getTask error', e)
             }
-            console.log('\n\n\n\n\n\n---- get task ----', task);
-            let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
-            // if no browser then create
-            if (!browserWSEndpoint) {
-                console.log('create browserWSEndpoint');
-                if (await SingletonTedis.getCreateBrowserLock(task.user_id)) {
-                    browserWSEndpoint = await this.search.createBrowser(task);
-                    SingletonTedis.setBrowserKey(task.user_id, browserWSEndpoint);
-                    await SingletonTedis.deleteBrowserLock(task.user_id);
-                } else {
-                    while (true) {
-                        browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
-                        if (browserWSEndpoint) {
-                            break;
-                        }
-                        await this.sleep(1000);
+        }
+    }
+
+    private async getBrowserWSEndpoint(task: ITASK): Promise<string> {
+        let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
+        // if no browser then create
+        if (!browserWSEndpoint) {
+            console.log('create browserWSEndpoint');
+            if (await SingletonTedis.getCreateBrowserLock(task.user_id)) {
+                browserWSEndpoint = await this.search.createBrowser(task);
+                SingletonTedis.setBrowserKey(task.user_id, browserWSEndpoint);
+                await SingletonTedis.deleteBrowserLock(task.user_id);
+            } else {
+                while (true) {
+                    browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
+                    await this.sleep(100);
+                    if (browserWSEndpoint) {
+                        break;
                     }
                 }
             }
-            await this.search.doTask(task, String(browserWSEndpoint));
         }
+        return String(browserWSEndpoint)
     }
 
     private async sleep(num: number) {

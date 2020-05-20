@@ -50,8 +50,9 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
             extra: JSON.stringify(extroData)
         };
     });
-
-    // console.log('ModifyPostData', result)
+    if (getMode() === 'develop') {
+        console.log('ModifyPostData', result)
+    }
     return result
 }
 

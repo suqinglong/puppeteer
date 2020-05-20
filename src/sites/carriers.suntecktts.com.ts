@@ -1,5 +1,4 @@
 import { SearchSite } from './searchSite';
-import { userAgent, viewPort, waitingTimeout } from '../settings';
 import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';

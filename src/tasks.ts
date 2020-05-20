@@ -1,7 +1,7 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
-import { TestData } from './test.config';
+import {prePareTestData} from './test.config';
 
 export class Tasks implements ITasksClass {
     private mode: IMode = getMode();
@@ -16,7 +16,7 @@ export class Tasks implements ITasksClass {
             if (Number(new Date()) - Number(task.time) * 1000 > 30 * 1000) {
                 continue;
             }
-            console.log('get task', task);
+            console.log('\n\n\n\n\n\n---- get task ----', task);
             let browserWSEndpoint = await SingletonTedis.getBrowserKey(task.user_id);
             // if no browser then create
             if (!browserWSEndpoint) {
@@ -48,10 +48,9 @@ export class Tasks implements ITasksClass {
     }
 
     private async developPrepare() {
-        await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
-            const taskResult = JSON.stringify(TestData);
-            await SingletonTedis.pushTask(taskResult);
+            // do something
+            await prePareTestData()
         }
     }
 }

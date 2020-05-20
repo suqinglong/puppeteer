@@ -18,12 +18,22 @@ export class JBHunt extends SearchSite {
         // origin
         this.log.log('type origin')
         await this.page.type('.grouped-inputs:nth-child(1) p-autocomplete input[aria-autocomplete="list"]', task.criteria.origin, {
-            delay: 10
+            delay: 100
         })
-        await this.page.waitForSelector('.grouped-inputs:nth-child(1) .ui-autocomplete-items [role="option"]').catch(e => {
+        await this.page.waitForSelector('.grouped-inputs:nth-child(1) .ui-autocomplete-items [role="option"]:nth-child(1)', {
+            timeout: 5000
+        }).catch(() => {
             throw this.generateError('search', 'no origin matched')
         })
-        await this.page.click('.grouped-inputs:nth-child(1) .ui-autocomplete-items [role="option"]:nth-child(1)')
+        const isOriginPass = await this.page.evaluate(() => {
+            const option = document.querySelector('.grouped-inputs:nth-child(1) .ui-autocomplete-items [role="option"]:nth-child(1)')
+            if (option) {
+                (option as HTMLElement).click()
+                return true
+            }
+            return false
+        })
+        this.log.log('isOriginPass', isOriginPass)
         await this.page.focus('.grouped-inputs:nth-child(1) [formcontrolname="deadheadOrigin"]')
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace')
@@ -33,12 +43,23 @@ export class JBHunt extends SearchSite {
         // destination
         this.log.log('type destination')
         await this.page.type('.grouped-inputs:nth-child(2) p-autocomplete input[aria-autocomplete="list"]', task.criteria.destination, {
-            delay: 10
+            delay: 100
         })
-        await this.page.waitForSelector('.grouped-inputs:nth-child(2) .ui-autocomplete-items [role="option"]').catch(e => {
+        await this.page.waitForSelector('.grouped-inputs:nth-child(2) .ui-autocomplete-items [role="option"]:nth-child(1)', {
+            timeout: 5000
+        }).catch(() => {
             throw this.generateError('search', 'no destination matched')
         })
-        await this.page.click('.grouped-inputs:nth-child(2) .ui-autocomplete-items [role="option"]:nth-child(1)')
+        const isDestPass = await this.page.evaluate(() => {
+            const option = document.querySelector('.grouped-inputs:nth-child(2) .ui-autocomplete-items [role="option"]:nth-child(1)')
+            if (option) {
+                (option as HTMLElement).click()
+                return true
+            }
+            return false
+        })
+        this.log.log('isDestPass', isDestPass)
+
         await this.page.focus('.grouped-inputs:nth-child(2) [formcontrolname="deadheadDestination"]')
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace')
@@ -80,15 +101,15 @@ export class JBHunt extends SearchSite {
         }
     }
 
-    private getDataFromResponse(data:Array<any>):Array<IResultHTMLData> {
-        const result:Array<IResultHTMLData> = data.map(item => {
+    private getDataFromResponse(data: Array<any>): Array<IResultHTMLData> {
+        const result: Array<IResultHTMLData> = data.map(item => {
             return {
-                ... item,
+                ...item,
                 date: item.firstPickupDate,
                 equipment: item.equipment?.type,
-                origin: [item.firstPickupLocation?.location?.city , item.firstPickupLocation?.location?.state].join(', '),
+                origin: [item.firstPickupLocation?.location?.city, item.firstPickupLocation?.location?.state].join(', '),
                 origin_radius: item.deadheadOrigin + ' miles',
-                destination: [item.lastDeliveryLocation?.location?.city , item.lastDeliveryLocation?.location?.state].join(', '),
+                destination: [item.lastDeliveryLocation?.location?.city, item.lastDeliveryLocation?.location?.state].join(', '),
                 destination_radius: item.deadheadDestination + ' miles',
                 distance: item.totalMiles
             }

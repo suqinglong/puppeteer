@@ -18,7 +18,3 @@ export const viewPort = {
     height: 1080,
     deviceScaleFactor: 3
 };
-
-export function waitingTimeout() {
-    return getMode() === 'develop' ? 0 : 3000;
-}

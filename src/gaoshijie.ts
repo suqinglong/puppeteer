@@ -350,6 +350,7 @@ puppeteer
         // await browser.close();
         // console.log('done');
 
+/*
 
 
         // http://www.landstaronline.com/public/login.aspx ======================================================
@@ -586,6 +587,189 @@ puppeteer
 
                     });
 
+                }
+
+            }
+
+            await page.screenshot({path: '/home/ubuntu/screenshot/gaoshijie.png'});
+
+            console.log("当前url: " + page.url());
+        }
+
+        await browser.close();
+        console.log('done');
+
+*/
+
+
+
+
+        // https://www.allenlund.com/carriers/search-loads.php ======================================================
+        const page = await browser.newPage();
+
+        page.once('load', () => console.log('页面加载完成。'));
+
+        // debug 用的,可以看到点击按钮有没有成功发出请求
+        page.on('requestfinished', (request) => {
+            console.log(
+                'on request finished. url:' + request.url() + ' method: ' + request.method()
+            );
+            if (request.method() == "POST") {
+                console.log(" post data: " + request.postData());
+            }
+        });
+
+        const loginUrl = 'https://www.allenlund.com/';
+
+        await page.goto(loginUrl, { waitUntil: 'load' });
+
+        // 用户名
+        await page.waitForSelector('#login_user');
+        await page.type('#login_user', '187173');
+
+        // 密码
+        await page.waitForSelector('input[name="login_pass"]');
+        await page.type('input[name="login_pass"]', 'Loaded2020!');
+
+        // 点击登录
+        // 点击登录后,触发跳转,会跳转几次,最终会跳转到 http://spportal.landstaronline.com/
+        await page.waitForSelector('input[type="submit"]');
+        await page.click('input[type="submit"]');
+
+        // 登录成功后,会跳转到 https://www.allenlund.com/carriers/carrier-profile.php 页面
+        let login = false;
+        try {
+            await page.waitForSelector('table.company-info', {timeout: 5000});
+            console.log("登录成功。");
+
+            const url_ = page.url();
+            console.log("登录成功后的url是: " + url_);
+
+            login = true;
+        } catch (e) {
+            if (e instanceof TimeoutError) {
+                console.log("登录失败。");
+                // todo 打日志、截图、调用接口上报
+            }
+        }
+
+        if (login) {
+            const searchUrl = 'https://www.allenlund.com/carriers/search-loads.php';
+
+            await page.goto(searchUrl, { waitUntil: 'load' });
+
+            // equipment
+            await page.waitForSelector('select[name="equipment_type"]');
+            await page.select('select[name="equipment_type"]', 'V'); // V 表示 Van, R 表示 Reefer
+
+            // origin city
+            await page.waitForSelector('input[name="city1"]');
+            await page.type('input[name="city1"]', 'TULARE'); // 大小写不敏感
+
+            // origin state
+            await page.waitForSelector('input[name="state1"]');
+            await page.type('input[name="state1"]', 'CA');
+
+            // origin radius
+            // 输入了这个就查询不出来结果了,可能是网站问题
+            // await page.waitForSelector('input[name="radius1"]');
+            // await page.type('input[name="radius1"]', '100');
+
+            // destination city
+            await page.waitForSelector('input[name="city2"]');
+            await page.type('input[name="city2"]', 'MORRIS'); // 大小写不敏感
+
+            // destination state
+            await page.waitForSelector('input[name="state2"]');
+            await page.type('input[name="state2"]', 'IL');
+
+            // destination radius
+            // 输入了这个就查询不出来结果了,可能是网站问题
+            // await page.waitForSelector('input[name="radius2"]');
+            // await page.type('input[name="radius2"]', '100');
+
+            await page.waitForSelector('input[name="search"]');
+            console.log("点击搜索");
+
+            // 点击后会post提交,然后加载页面
+            await page.click('input[name="search"]');
+            // await page.evaluate(() => {
+            //     let btn: HTMLElement = document.querySelector('#searchButton') as HTMLElement;
+            //     btn.click();
+            // });
+
+            console.log('查看搜索结果');
+
+            let success = false;
+            try {
+                // 这个就是存放搜索结果的地方
+                await page.waitForSelector('div.tbl-margin table', {timeout: 5000});
+                console.log('搜索成功。');
+
+                success = true;
+            } catch (e) {
+                if (e instanceof TimeoutError) {
+                    console.log("搜索失败。");
+                }
+            }
+
+            if (success) {
+
+                // 判断有没有数据
+                const hasData = await page.$eval("div.tbl-margin table > tbody > tr:nth-child(2)",
+                    (e) => e.querySelectorAll('td').length > 1);
+
+                console.log(hasData);
+
+                if (hasData) {
+                    const resultHtml = await page.$eval('div.tbl-margin table > tbody', (e) => e.outerHTML);
+
+                    console.log(resultHtml);
+
+                    const $ = cheerio.load(resultHtml);
+
+                    console.log($('tr').length);
+
+                    $('tr').each((_index, _item) => {
+                        console.log(_index, _item);
+                        if (_index == 0) {
+                            return;
+                        }
+
+                        const tds = $(_item).find('td');
+
+                        let postingID = $(tds[1]).text().trim();
+                        console.log("postingID: " + postingID);
+
+                        let pickupDate = $(tds[2]).text().trim();
+                        console.log("pickupDate: " + pickupDate);
+
+                        let equipment = $(tds[3]).text().trim();
+                        console.log("equipment: " + equipment);
+
+
+                        let originCity = $(tds[4]).text().trim();
+                        console.log("originCity: " + originCity);
+
+
+                        let originState = $(tds[5]).text().trim();
+                        console.log("originState: " + originState);
+
+
+                        let destinationCity = $(tds[6]).text().trim();
+                        console.log("destinationCity: " + destinationCity);
+
+                        let destinationState = $(tds[7]).text().trim();
+                        console.log("destinationState: " + destinationState);
+
+                        let contact = $(tds[8]).text().trim();
+                        console.log("contact: " + contact);
+
+                    });
+
+
+                } else {
+                    console.log("Nothing found.");
                 }
 
             }

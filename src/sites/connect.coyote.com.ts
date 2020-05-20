@@ -1,5 +1,4 @@
 import { SearchSite } from './searchSite';
-import { userAgent, viewPort } from '../settings';
 import dateformat from 'dateformat';
 import { PostSearchData } from '../api';
 import { createUrl, xlsxParse, ModifyPostData } from '../tools/index';
@@ -11,7 +10,20 @@ export class Coyote extends SearchSite {
     public debugPre = 'Coyote';
     protected loginPage =
         'https://api.coyote.com/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fauthority%3Dhttps%253A%252F%252Fapi.coyote.com%26client_id%3Dcoyote_connect_client%26redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26response_type%3Did_token%2520token%26scope%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%2520openid%26post_logout_redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26acr_values%26state%3D%252F%26nonce%3Dhttps%253A%252F%252Fconnect.coyote.com';
+    protected searchPage;
     private downloadPath = `./download/Coyote`;
+
+    protected async shouldLogin(): Promise<boolean> {
+        const whichPage = await Promise.race([
+            this.page.waitForSelector('#export-to-excel').then(() => 'searchPage').catch(e => {
+                // console.log(e)
+            }),
+            this.page.waitForSelector('#Username').then(() => 'loginPage').catch(e => {
+                // console.log(e)
+            })
+        ])
+        return whichPage === 'loginPage'
+    }
 
     protected async login(task: ITASK) {
         await this.page
@@ -33,13 +45,12 @@ export class Coyote extends SearchSite {
         });
         await this.page.click('#login-form-submit');
 
-        await this.page.waitForSelector('#filter-bar-region', {
-            timeout: 10000
+        await this.page.waitForSelector('#header-user-region', {
+            timeout: 60000
         });
     }
 
-    protected async search(task: ITASK) {
-        this.log.log('begin search');
+    protected async beforeSearch(task: ITASK) {
         // "https://connect.coyote.com/available-loads-v3"
         // ?DDH=100&ODH=100&applyPreferredEquipmentTypeSearch=false&destination=Easley%2C%20SC&equipmentType=van&fromDate=05%2F06%2F2020&includeHiddenLoads=false&isMapViewEnabled=false&origin=Easley%2C%20SC&pageNumber=1&pickupApptFromDate=05%2F06%2F2020&pickupApptToDate=05%2F13%2F2020&salt=1588747616092&savedLoadsOnly=false&sortColumnName=pickup%20date&toDate=06%2F17%2F2020
         const search = {
@@ -57,16 +68,15 @@ export class Coyote extends SearchSite {
             savedLoadsOnly: false,
             sortColumnName: 'pickup date'
         };
-        const searchUrl = createUrl('https://connect.coyote.com/available-loads-v3', search);
-        this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
-        await this.page.goto(searchUrl, { timeout: 20000 });
+        this.searchPage = createUrl('https://connect.coyote.com/available-loads-v3', search);
+        await super.beforeSearch(task)
+    }
+
+    protected async search(task: ITASK) {
         await (this.page as any)._client.send('Page.setDownloadBehavior', {
             behavior: 'allow',
             downloadPath: this.downloadPath
         });
-        this.log.log('search loaded');
 
         await this.page.waitForSelector('#export-to-excel:not(:disabled)', {
             timeout: 10000
@@ -136,7 +146,6 @@ export class Coyote extends SearchSite {
                 Weight: item[14] + item[15]
             });
         });
-        this.log.log('result', result);
         return result;
     }
 }

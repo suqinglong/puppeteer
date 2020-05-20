@@ -17,7 +17,7 @@ export class Tasks implements ITasksClass {
                 const taskResult = await SingletonTedis.getTask()
                 if (!taskResult) continue;
                 const task: ITASK = JSON.parse(taskResult) as ITASK;
-                if (Number(new Date()) - Number(task.time) * 1000 > 100 * 1000) {
+                if (Number(new Date()) - Number(task.time) * 1000 > 200 * 1000) {
                     continue;
                 }
                 console.log('---- get task ----', task);

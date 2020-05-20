@@ -52,14 +52,13 @@ export abstract class SearchSite implements ISite {
         if (await this.shouldLogin(task)) {
             this.log.log('need login')
             await this.doLogin(task)
+            // go to search page
+            await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
+                throw this.generateError('searchTimeout', 'search page load timeout');
+            });
         } else {
             this.log.log('need not login')
         }
-
-        // go to search page
-        await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
-            throw this.generateError('searchTimeout', 'search page load timeout');
-        });
     }
 
     // run after search and before page closed
@@ -72,7 +71,7 @@ export abstract class SearchSite implements ISite {
         try {
             await this.beforeLogin(task);
             // if not in login page, then go to login page.
-            if (this.page.url().indexOf(this.loginPage) === -1 && this.page.url().indexOf('/login') === -1) {
+            if (!this.isSamePath(this.page.url(), this.loginPage) || !/login/i.test(this.page.url())) {
                 this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
                 await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
                     throw this.generateError('loginTimeout', 'login page load timeout');
@@ -96,6 +95,7 @@ export abstract class SearchSite implements ISite {
     protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
+        console.log('shouldLogin', '\n', this.page.url(), '\n\n', this.searchPage)
         return this.loginPage && (this.page.url().indexOf(this.searchPage) === -1)
     }
 
@@ -137,6 +137,13 @@ export abstract class SearchSite implements ISite {
                 resolve();
             }, num);
         });
+    }
+
+    private isSamePath(url1:string, url2:string) {
+        const path1 = url1.match(/(.+)(?:\?|#).*/)[1]
+        const path2 = url2.match(/(.+)(?:\?|#).*/)[1]
+        console.log('path', path1, path2)
+        return path1 && path1 === path2
     }
 
     protected abstract async search(task: ITASK);

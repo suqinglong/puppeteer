@@ -2,10 +2,10 @@ import { TaskData } from './demoTaskData';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
-const count = 2
-const sourceLoad = 'Sunteck'
+const count = 5
+const sourceLoad = 'Coyote'
 const isRandom = true
-const sourceLoads = ['JB Hunt', 'Sunteck']
+const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote']
 
 export async function prePareTestData () {
   if (getMode() === 'develop') {

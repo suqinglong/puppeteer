@@ -481,7 +481,8 @@ Coyote: search error SiteError {
 
 查看了一个截图,是白屏, 而且这个日志是很快打出来的,不像是加载半天,加载超时导致的。
 
-
+# todo
+Coyote 多进程下载目录会不会冲突
 
 
 

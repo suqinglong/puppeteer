@@ -172,5 +172,21 @@ export const TaskData = {
             equipment: 'Van'
         },
         time
+    },
+    Allenlund: {
+        task_id: '06f3f3fb279ff7d831d1acc8a1bbda40',
+        site: 'Allenlund',
+        user_id: '3',
+        email: '187173',
+        password: 'Loaded2020!',
+        criteria: {
+            origin: 'Atwater, CA',
+            origin_radius: '250',
+            destination: 'Sumner, WA',
+            destination_radius: '250',
+            pick_up_date: pickUpDate,
+            equipment: 'Van'
+        },
+        time
     }
 };

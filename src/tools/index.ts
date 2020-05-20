@@ -102,5 +102,9 @@ export function getRadiusFromValues(radius: number, radiusValues: Array<number>)
 }
 
 export function formateDate(time:string):string {
+    try {
     return dateformat(time, 'yyyy-mm-dd HH:MM:ss')
+    }catch(e) {
+        console.log('formateDate:', time)
+    }
 }

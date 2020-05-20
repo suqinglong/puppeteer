@@ -1,3 +1,3 @@
 const dateformat = require('dateformat');
 
-console.log(dateformat('05/21/20 12:30'))
+console.log(dateformat('May 20, 2020'))

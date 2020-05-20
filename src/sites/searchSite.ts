@@ -31,7 +31,7 @@ export abstract class SearchSite implements ISite {
             await this.beforeSearch(task);
             await this.search(task);
             await this.afterSearch();
-            await this.page.close();
+            // await this.page.close();
             this.log.log('search end')
         } catch (e) {
             await this.screenshot('search error');
@@ -71,7 +71,7 @@ export abstract class SearchSite implements ISite {
         try {
             await this.beforeLogin(task);
             // if not in login page, then go to login page.
-            if (!this.isSamePath(this.page.url(), this.loginPage) || !/login/i.test(this.page.url())) {
+            if (!this.isSamePath(this.page.url(), this.loginPage)) {
                 this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
                 await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
                     throw this.generateError('loginTimeout', 'login page load timeout');
@@ -141,7 +141,6 @@ export abstract class SearchSite implements ISite {
     private isSamePath(url1:string, url2:string) {
         const path1 = url1.split('?')[0]
         const path2 = url2.split('?')[0]
-        console.log('path', path1, path2)
         return path1 && (path1 === path2)
     }
 

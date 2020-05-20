@@ -9,9 +9,10 @@ import { TQL } from './carrierdashboard.tql.com';
 import { SearchSite } from './searchSite';
 import { UberFreight } from './uber.freight';
 import { Landstar } from './www.landstaronline.com';
+import { Allenlund } from './www.allenlund.com'
 import puppeteer from 'puppeteer';
 
-const sites = [Echo, DAT, JBHunt, CHRobinson, Coyote, Sunteck, Werner, TQL, UberFreight, Landstar];
+const sites = [Echo, DAT, JBHunt, CHRobinson, Coyote, Sunteck, Werner, TQL, UberFreight, Landstar, Allenlund];
 
 export class SiteManager {
     public static getSite(siteName: string): new (browser: puppeteer.Browser) => SearchSite {

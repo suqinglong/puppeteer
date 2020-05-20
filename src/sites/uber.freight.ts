@@ -172,6 +172,7 @@ export class UberFreight extends SearchSite {
 }
 
 class UberDetailPage extends DetailPage {
+    protected debugPre = 'UberDetailPage'
     protected async search(): Promise<IResultHTMLData> {
         await this.page
             .waitForSelector('section[data-baseweb="card"]', { timeout: 10000 })
@@ -314,7 +315,8 @@ class UberDetailPage extends DetailPage {
             .catch((e:Error) => {
                 throw new SiteError('search', 'UberDetailPage: ' + e.message)
             });
-            result['date'] = dateformat((result['date'] as string).replace('th', '') + " " + (new Date()).getFullYear() + " " + result['pickUpTime'], 'yyyy-mm-dd HH:MM');
+            this.log.log(result['date'], result['pickUpTime'])
+            result['date'] = dateformat((result['date'] as string).replace(/(\d{2})(\w{2})/, '\$1') + " " + (new Date()).getFullYear() + " " + result['pickUpTime'], 'yyyy-mm-dd HH:MM');
         return result as IResultHTMLData;
     }
 }

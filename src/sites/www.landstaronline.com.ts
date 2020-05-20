@@ -131,7 +131,12 @@ export class Landstar extends SearchSite {
             const contact = t[1].trim();
 
             t = $(tds[3]).text().trim().split("\n");
-            const date = t[0].trim();
+            let date = t[0].trim(); // 05/21/20 12:30 05/21/20 12:30
+            const dateMatch = date.match(/\d{2}\/\d{2}\/\d{2}\s\d{2}:\d{2}/)
+            if (dateMatch[0]) {
+                date = dateMatch[0]
+            }
+            this.log.log('date:', date)
             const deliveryDate = t[1].trim();
 
             t = $(tds[4]).text().trim().split("\n");

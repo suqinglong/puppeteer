@@ -45,7 +45,7 @@ export abstract class SearchSite implements ISite {
         await this.page.setUserAgent(userAgent);
 
         await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
-            throw this.generateError('searchTimeout', 'search page load timeout');
+            throw this.generateError('searchTimeout', 'search page load timeout 1');
         });
 
         // need login and has not login
@@ -54,7 +54,7 @@ export abstract class SearchSite implements ISite {
             await this.doLogin(task)
             // go to search page
             await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
-                throw this.generateError('searchTimeout', 'search page load timeout');
+                throw this.generateError('searchTimeout', 'search page load timeout 2');
             });
         } else {
             this.log.log('need not login')
@@ -95,8 +95,7 @@ export abstract class SearchSite implements ISite {
     protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
-        console.log('shouldLogin', '\n', this.page.url(), '\n\n', this.searchPage)
-        return this.loginPage && (this.page.url().indexOf(this.searchPage) === -1)
+        return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage)
     }
 
     protected generateError(type: IErrorType, msg: string) {
@@ -140,10 +139,10 @@ export abstract class SearchSite implements ISite {
     }
 
     private isSamePath(url1:string, url2:string) {
-        const path1 = url1.match(/(.+)(?:\?|#).*/)[1]
-        const path2 = url2.match(/(.+)(?:\?|#).*/)[1]
+        const path1 = url1.split('?')[0]
+        const path2 = url2.split('?')[0]
         console.log('path', path1, path2)
-        return path1 && path1 === path2
+        return path1 && (path1 === path2)
     }
 
     protected abstract async search(task: ITASK);

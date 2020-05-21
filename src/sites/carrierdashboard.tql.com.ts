@@ -17,7 +17,7 @@ export class TQL extends SearchSite {
             .waitForSelector('#oStates', {
                 timeout: 20000
             })
-            .catch((e) => {
+            .catch(() => {
                 throw this.generateError('search', 'wait for selector oStates');
             });
 
@@ -156,7 +156,7 @@ export class TQL extends SearchSite {
     private getDataFromResponse(data: Array<any>): Array<IResultHTMLData> {
         const result: Array<IResultHTMLData> = data.map((item) => {
             return {
-                postID: item.PostIdReferenceNumber,
+                postId: item.PostIdReferenceNumber,
                 date: dateformat(item.LoadDate, 'mm/dd/yyyy'),
                 origin_radius: item.OriginDistance,
                 origin: [item.Origin.City, item.Origin.StateCode].join(', '),
@@ -164,14 +164,13 @@ export class TQL extends SearchSite {
                 destination_radius: item.DestinationDistance,
                 distance: item.Miles,
                 equipment: (item.TrailerType && item.TrailerType.TrailerType) || '',
-                drop_date: item.DeliveryDate,
-                trailer_size: (item.TrailerSize && item.TrailerSize.TrailerSize) || '',
+                dropDate: item.DeliveryDate,
+                trailerSize: (item.TrailerSize && item.TrailerSize.TrailerSize) || '',
                 weight: item.Weight,
                 mode: item.Mode,
                 comments: ''
             };
         });
-        this.log.log('result', result);
         return result;
     }
 }

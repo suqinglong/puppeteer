@@ -11,7 +11,7 @@ export class Coyote extends SearchSite {
     protected loginPage =
         'https://api.coyote.com/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fauthority%3Dhttps%253A%252F%252Fapi.coyote.com%26client_id%3Dcoyote_connect_client%26redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26response_type%3Did_token%2520token%26scope%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%2520openid%26post_logout_redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26acr_values%26state%3D%252F%26nonce%3Dhttps%253A%252F%252Fconnect.coyote.com';
     protected searchPage;
-    private downloadPath = `./download/Coyote`;
+    private downloadPath: string;
 
     protected async shouldLogin(): Promise<boolean> {
         const whichPage = await Promise.race([
@@ -57,6 +57,7 @@ export class Coyote extends SearchSite {
     }
 
     protected async beforeSearch(task: ITASK) {
+        this.downloadPath = `./download/coyote_${task.task_id}`
         // "https://connect.coyote.com/available-loads-v3"
         // ?DDH=100&ODH=100&applyPreferredEquipmentTypeSearch=false&destination=Easley%2C%20SC&equipmentType=van&fromDate=05%2F06%2F2020&includeHiddenLoads=false&isMapViewEnabled=false&origin=Easley%2C%20SC&pageNumber=1&pickupApptFromDate=05%2F06%2F2020&pickupApptToDate=05%2F13%2F2020&salt=1588747616092&savedLoadsOnly=false&sortColumnName=pickup%20date&toDate=06%2F17%2F2020
         const search = {
@@ -136,20 +137,20 @@ export class Coyote extends SearchSite {
                 destination,
                 origin_radius,
                 destination_radius,
-                'Load ID': item[0],
-                Mode: item[1],
+                loadId: item[0],
+                mode: item[1],
                 equipment: item[2],
                 // 'Shipper City Location': item[3],
                 // 'Shipper State Location': item[4],
                 // 'Shipper Country Code': item[5],
-                'Pickup Date': item[6],
+                pickupDate: item[6],
                 // 'Consignee City Location': item[7],
                 // 'Consignee State Location': item[8],
                 // 'Consignee Country Code': item[9],
-                'Delivery Date': item[10],
-                Stops: item[11],
-                dstance: item[12] + item[13],
-                Weight: item[14] + item[15]
+                deliveryDate: item[10],
+                stops: item[11],
+                distance: item[12] + item[13],
+                weight: item[14] + item[15]
             });
         });
         return result;

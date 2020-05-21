@@ -89,7 +89,7 @@ export class Allenlund extends SearchSite {
             trs.forEach((tr) => {
                 let [
                     ,
-                    postingID,
+                    postingId,
                     date,
                     equipment,
                     originCity,
@@ -103,7 +103,7 @@ export class Allenlund extends SearchSite {
                 if (contact && !tr.classList.contains('highlight-row')) {
                     console.log('date:', date, contact);
                     result.push({
-                        postingID,
+                        postingId,
                         equipment,
                         date,
                         origin: [originCity, originState].join(', '),

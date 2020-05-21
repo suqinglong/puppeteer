@@ -3,7 +3,7 @@ import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
 const count = 1;
-const sourceLoad = 'TQL';
+const sourceLoad = 'Coyote';
 const isRandom = false;
 const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson', 'TQL'];
 
@@ -19,7 +19,7 @@ export async function prePareTestData() {
             }
             console.log('source: ', source, 'random: ', random);
             let data = TaskData[source] as ITASK;
-            data.task_id = 'taskid:' + i;
+            data.task_id = 'taskid_' + new Date() + '___' + i;
             await SingletonTedis.pushTask(JSON.stringify(data));
         }
     }

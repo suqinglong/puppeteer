@@ -36,28 +36,28 @@ export class Allenlund extends SearchSite {
             task.criteria.equipment.substr(0, 1).toUpperCase()
         ); // V 表示 Van, R 表示 Reefer
 
-        // // origin city
-        // const [originCity, originState] = task.criteria.origin.split(',').map((item) => item.trim());
-        // await page.waitForSelector('input[name="city1"]');
-        // await page.type('input[name="city1"]', originCity); // 大小写不敏感
+        // origin city
+        const [originCity, originState] = task.criteria.origin.split(',').map((item) => item.trim());
+        await page.waitForSelector('input[name="city1"]');
+        await page.type('input[name="city1"]', originCity); // 大小写不敏感
 
-        // // origin state
-        // await page.waitForSelector('input[name="state1"]');
-        // await page.type('input[name="state1"]', originState);
+        // origin state
+        await page.waitForSelector('input[name="state1"]');
+        await page.type('input[name="state1"]', originState);
 
-        // // origin radius
-        // // 输入了这个就查询不出来结果了,可能是网站问题
-        // // await page.waitForSelector('input[name="radius1"]');
-        // // await page.type('input[name="radius1"]', '100');
+        // origin radius
+        // 输入了这个就查询不出来结果了,可能是网站问题
+        // await page.waitForSelector('input[name="radius1"]');
+        // await page.type('input[name="radius1"]', '100');
 
-        // // destination city
-        // const [destinationCity, destinationState] = task.criteria.destination.split(',').map((item) => item.trim());
-        // await page.waitForSelector('input[name="city2"]');
-        // await page.type('input[name="city2"]', destinationCity); // 大小写不敏感
+        // destination city
+        const [destinationCity, destinationState] = task.criteria.destination.split(',').map((item) => item.trim());
+        await page.waitForSelector('input[name="city2"]');
+        await page.type('input[name="city2"]', destinationCity); // 大小写不敏感
 
-        // // destination state
-        // await page.waitForSelector('input[name="state2"]');
-        // await page.type('input[name="state2"]', destinationState);
+        // destination state
+        await page.waitForSelector('input[name="state2"]');
+        await page.type('input[name="state2"]', destinationState);
 
         // destination radius
         // 输入了这个就查询不出来结果了,可能是网站问题

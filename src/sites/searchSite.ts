@@ -34,7 +34,7 @@ export abstract class SearchSite implements ISite {
             await this.beforeSearch(task);
             await this.search(task);
             await this.afterSearch();
-            // await this.page.close();
+            await this.page.close();
             this.log.log('search end');
         } catch (e) {
             await this.screenshot('search error');

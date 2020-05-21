@@ -143,7 +143,6 @@ export class DAT extends SearchSite {
             '.searchResultsTable',
             (input) => input.outerHTML
         );
-        this.log.log('resultHtml1', resultHtml1);
 
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = resultSubItems.length;
@@ -185,7 +184,6 @@ export class DAT extends SearchSite {
             return GetDataFromHtml(task, $(item), $);
         });
 
-        this.log.log('post data:', items);
         await PostSearchData(ModifyPostData(task, items)).then((res: any) => {
             this.log.log(res.data);
         });

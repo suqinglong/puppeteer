@@ -3,9 +3,9 @@ import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
 const count = 1;
-const sourceLoad = 'Coyote';
+const sourceLoad = 'DAT';
 const isRandom = false;
-const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson', 'TQL'];
+const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson', 'TQL', 'DAT'];
 
 export async function prePareTestData() {
     if (getMode() === 'develop') {

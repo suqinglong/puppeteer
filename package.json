@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "memoryTest": "node ./dist/memoryTest.js",
     "build": "rm -rf ./dist/* && tsc",
     "test": "yarn build && node ./dist/index.js --mode=develop --usedev=no --useScreenshot=yes",
     "testDemo": "yarn build && node ./dist/index.js --mode=develop --usedev=yes", 

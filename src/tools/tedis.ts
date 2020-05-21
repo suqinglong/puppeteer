@@ -62,7 +62,7 @@ export class SingletonTedis {
 
     public static async getTask() {
         const r = this.getInstance();
-        const result = await r.blpop(0, 'search_tasks')
+        const result = await r.blpop(0, 'search_tasks');
         return result?.[1];
     }
 

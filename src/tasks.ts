@@ -8,13 +8,12 @@ export class Tasks implements ITasksClass {
     private search = new Search();
 
     public async getTask() {
-        await this.developPrepare();
-        let count = 0
+        await this.prepare();
         while (true) {
             try {
                 await this.sleep(1000);
-                console.log('\n\n\n')
-                const taskResult = await SingletonTedis.getTask()
+                console.log('\n\n\n');
+                const taskResult = await SingletonTedis.getTask();
                 if (!taskResult) continue;
                 const task: ITASK = JSON.parse(taskResult) as ITASK;
                 if (Number(new Date()) - Number(task.time) * 1000 > 200 * 1000) {
@@ -23,7 +22,7 @@ export class Tasks implements ITasksClass {
                 console.log('---- get task ----', task);
                 await this.search.doTask(task, await this.getBrowserWSEndpoint(task));
             } catch (e) {
-                console.log('getTask error', e)
+                console.log('getTask error', e);
             }
         }
     }
@@ -47,7 +46,7 @@ export class Tasks implements ITasksClass {
                 }
             }
         }
-        return String(browserWSEndpoint)
+        return String(browserWSEndpoint);
     }
 
     private async sleep(num: number) {
@@ -58,10 +57,11 @@ export class Tasks implements ITasksClass {
         });
     }
 
-    private async developPrepare() {
+    private async prepare() {
+        await SingletonTedis.deleteKeys();
         if (this.mode === 'develop') {
             // do something
-            await prePareTestData()
+            await prePareTestData();
         }
     }
 }

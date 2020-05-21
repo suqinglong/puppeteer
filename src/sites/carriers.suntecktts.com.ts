@@ -77,7 +77,7 @@ export class Sunteck extends SearchSite {
             '#js-load-board-results',
             (input) => input.outerHTML
         );
-        
+
         const $ = cheerio.load(resultHtml);
         const resultData = this.getDataFromHtml($, task);
 

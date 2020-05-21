@@ -22,17 +22,20 @@ export abstract class SearchSite implements ISite {
 
     public async doSearch(task: ITASK) {
         this.log = new Log(this.debugPre);
-        this.log.log('search begin')
-        const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(task.user_id, task.site)
+        this.log.log('search begin');
+        const isUserUnableToLogin = await SingletonTedis.isUserUnableToLogin(
+            task.user_id,
+            task.site
+        );
         if (isUserUnableToLogin) {
-            return this.log.log('user unable to login')
+            return this.log.log('user unable to login');
         }
         try {
             await this.beforeSearch(task);
             await this.search(task);
             await this.afterSearch();
             // await this.page.close();
-            this.log.log('search end')
+            this.log.log('search end');
         } catch (e) {
             await this.screenshot('search error');
             this.log.log('search error', e);
@@ -50,52 +53,54 @@ export abstract class SearchSite implements ISite {
 
         // need login and has not login
         if (await this.shouldLogin(task)) {
-            this.log.log('need login')
-            await this.doLogin(task)
+            this.log.log('need login');
+            await this.doLogin(task);
             // go to search page
             await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
                 throw this.generateError('searchTimeout', 'search page load timeout 2');
             });
         } else {
-            this.log.log('need not login')
+            this.log.log('need not login');
         }
     }
 
     // run after search and before page closed
-    protected async afterSearch() {
-
-    }
+    protected async afterSearch() {}
 
     protected async doLogin(task: ITASK) {
-        this.log.log('login begin')
+        this.log.log('login begin');
         try {
             await this.beforeLogin(task);
             // if not in login page, then go to login page.
             if (!this.isSamePath(this.page.url(), this.loginPage)) {
-                this.log.log('not redirect to login page, goto login page', this.page.url(), this.loginPage)
+                this.log.log(
+                    'not redirect to login page, goto login page',
+                    this.page.url(),
+                    this.loginPage
+                );
                 await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
                     throw this.generateError('loginTimeout', 'login page load timeout');
                 });
             }
             await this.login(task);
-            this.log.log('login success')
+            this.log.log('login success');
         } catch (e) {
             await this.screenshot('login error');
             this.log.log('login error', e);
             if (e.type !== 'loginTimeout') {
                 await this.markUserUnableToLogin(task);
-                throw this.generateError('unableToLogin', 'login faild')
+                throw this.generateError('unableToLogin', 'login faild');
             } else {
-                throw this.generateError('loginTimeout', 'login timeout')
+                throw this.generateError('loginTimeout', 'login timeout');
             }
         }
     }
 
-    protected async beforeLogin(task: ITASK) { }
-    protected async login(task: ITASK) { }
+    protected async beforeLogin(task: ITASK) {}
+    protected async login(task: ITASK) {}
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
-        return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage)
+        return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage);
     }
 
     protected generateError(type: IErrorType, msg: string) {
@@ -138,10 +143,10 @@ export abstract class SearchSite implements ISite {
         });
     }
 
-    private isSamePath(url1:string, url2:string) {
-        const path1 = url1.split('?')[0]
-        const path2 = url2.split('?')[0]
-        return path1 && (path1 === path2)
+    private isSamePath(url1: string, url2: string) {
+        const path1 = url1.split('?')[0];
+        const path2 = url2.split('?')[0];
+        return path1 && path1 === path2;
     }
 
     protected abstract async search(task: ITASK);

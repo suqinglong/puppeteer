@@ -1,6 +1,6 @@
 import minimist from 'minimist';
 import xlsx from 'node-xlsx';
-import dateformat from 'dateformat'
+import dateformat from 'dateformat';
 
 export function getMode(): IMode {
     let args = minimist(process.argv.slice(2));
@@ -29,7 +29,7 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
         'distance'
     ];
 
-    const result =  dataArr.map((data) => {
+    const result = dataArr.map((data) => {
         let extroData: any = {};
         Object.keys(data).forEach((key) => {
             if (keys.indexOf(key) === -1 && data[key]) {
@@ -51,9 +51,9 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
         };
     });
     if (getMode() === 'develop') {
-        console.log('ModifyPostData', result)
+        console.log('ModifyPostData', result);
     }
-    return result
+    return result;
 }
 
 export function Trim(str: string) {
@@ -66,7 +66,7 @@ export function Trim(str: string) {
 export function createUrl(baseUrl: string, search: { [key: string]: string | boolean | number }) {
     let searchQuery = '';
     Object.keys(search).forEach((key) => {
-        const v = String(search[key])
+        const v = String(search[key]);
         searchQuery += `&${key}=${encodeURIComponent(v)}`;
     });
     return baseUrl + '?' + searchQuery.substr(1);
@@ -101,10 +101,10 @@ export function getRadiusFromValues(radius: number, radiusValues: Array<number>)
     return result;
 }
 
-export function formateDate(time:string):string {
+export function formateDate(time: string): string {
     try {
-    return dateformat(time, 'yyyy-mm-dd HH:MM:ss')
-    }catch(e) {
-        console.log('formateDate:', time)
+        return dateformat(time, 'yyyy-mm-dd HH:MM:ss');
+    } catch (e) {
+        console.log('formateDate:', time);
     }
 }

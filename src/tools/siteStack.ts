@@ -10,7 +10,7 @@ export class SiteStack {
     private callback: Function;
     private results = [];
     private searchCount: number;
-    private resolve: Function
+    private resolve: Function;
 
     public constructor(
         detailPages: Array<DetailPage>,
@@ -25,9 +25,9 @@ export class SiteStack {
     }
 
     public async search() {
-        return new Promise(resolve => {
-            this.resolve = resolve
-        })
+        return new Promise((resolve) => {
+            this.resolve = resolve;
+        });
     }
 
     public pushResult(result: IResultHTMLData) {
@@ -38,10 +38,10 @@ export class SiteStack {
         this.stack.splice(this.stack.indexOf(page), 1);
         await this.callback(this.results);
         this.searchCount--;
-        console.log('SiteStack await callback end', this.searchCount)
+        console.log('SiteStack await callback end', this.searchCount);
         if (this.searchCount === 0) {
-            console.log('SiteStack await callback resolve')
-            this.resolve()
+            console.log('SiteStack await callback resolve');
+            this.resolve();
         } else {
             this.results = [];
             this.push();
@@ -61,12 +61,11 @@ export class SiteStack {
 export abstract class DetailPage {
     protected page: puppeteer.Page;
     protected searchPage: string;
-    protected log: Log
+    protected log: Log;
     protected debugPre: string;
     private siteStack: SiteStack;
     private browser: puppeteer.Browser;
     private originalData = {};
-
 
     public constructor(searchPage: string, browser: puppeteer.Browser, originalData: Object) {
         this.searchPage = searchPage;
@@ -83,9 +82,9 @@ export abstract class DetailPage {
     }
 
     public async doSearch() {
-        this.log = new Log(this.debugPre + ":" + this.searchPage)
+        this.log = new Log(this.debugPre + ':' + this.searchPage);
         await this.beforeSearch();
-        const result = await this.search()
+        const result = await this.search();
         await this.searchEnd({ ...result, ...this.originalData });
     }
 

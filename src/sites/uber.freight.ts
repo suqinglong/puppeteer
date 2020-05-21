@@ -21,9 +21,9 @@ export class UberFreight extends SearchSite {
         await this.page.waitForSelector('#password', { timeout: 10000 });
         await this.page.type('#password', task.password);
         await this.page.click('form.push--top-small button');
-        
-        this.log.log('waiting logining')
-        await this.page.waitForNavigation({timeout: 10000})
+
+        this.log.log('waiting logining');
+        await this.page.waitForNavigation({ timeout: 10000 });
     }
 
     protected async search(task: ITASK) {
@@ -155,24 +155,20 @@ export class UberFreight extends SearchSite {
 
         const detailPages = linksAndData.map((item) => {
             return new UberDetailPage(item.link, this.browser, item.data);
-        })
+        });
 
-        const siteStack = new SiteStack(
-            detailPages,
-            5,
-            async (result) => {
-                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                    this.log.log(res.data);
-                });
-            }
-        );
+        const siteStack = new SiteStack(detailPages, 5, async (result) => {
+            await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+                this.log.log(res.data);
+            });
+        });
 
-        await siteStack.search()
+        await siteStack.search();
     }
 }
 
 class UberDetailPage extends DetailPage {
-    protected debugPre = 'UberDetailPage'
+    protected debugPre = 'UberDetailPage';
     protected async search(): Promise<IResultHTMLData> {
         await this.page
             .waitForSelector('section[data-baseweb="card"]', { timeout: 10000 })
@@ -312,11 +308,18 @@ class UberDetailPage extends DetailPage {
                 };
                 return result;
             })
-            .catch((e:Error) => {
-                throw new SiteError('search', 'UberDetailPage: ' + e.message)
+            .catch((e: Error) => {
+                throw new SiteError('search', 'UberDetailPage: ' + e.message);
             });
-            this.log.log(result['date'], result['pickUpTime'])
-            result['date'] = dateformat((result['date'] as string).replace(/(\d{2})(\w{2})/, '\$1') + " " + (new Date()).getFullYear() + " " + result['pickUpTime'], 'yyyy-mm-dd HH:MM');
+        this.log.log(result['date'], result['pickUpTime']);
+        result['date'] = dateformat(
+            (result['date'] as string).replace(/(\d{2})(\w{2})/, '$1') +
+                ' ' +
+                new Date().getFullYear() +
+                ' ' +
+                result['pickUpTime'],
+            'yyyy-mm-dd HH:MM'
+        );
         return result as IResultHTMLData;
     }
 }

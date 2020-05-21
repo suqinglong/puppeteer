@@ -2,7 +2,7 @@ import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
 import { ModifyPostData, getRadiusFromValues } from '../tools/index';
 import { PostSearchData } from '../api';
-import cheerio from 'cheerio'
+import cheerio from 'cheerio';
 
 export class Landstar extends SearchSite {
     public static siteName = 'Landstar';
@@ -24,18 +24,56 @@ export class Landstar extends SearchSite {
         await this.page.waitForSelector('#Submit');
         await this.page.click('#Submit');
 
-        await this.page.waitForSelector('#dashboard', { timeout: 10000 })
+        await this.page.waitForSelector('#dashboard', { timeout: 10000 });
     }
 
     protected async search(task: ITASK) {
         const page = this.page;
         // origin radius
         await page.waitForSelector('#OriginRadius');
-        await page.select('#OriginRadius', String(getRadiusFromValues(Number(task.criteria.origin_radius), [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500]))); // 可选值:0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500
+        await page.select(
+            '#OriginRadius',
+            String(
+                getRadiusFromValues(Number(task.criteria.origin_radius), [
+                    0,
+                    25,
+                    50,
+                    75,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450,
+                    500
+                ])
+            )
+        ); // 可选值:0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500
 
         // destination radius
         await page.waitForSelector('#DestinationRadius');
-        await page.select('#DestinationRadius', String(getRadiusFromValues(Number(task.criteria.destination_radius), [0, 25, 50, 75, 100, 150, 200, 250, 300, 350, 400, 450, 500])));
+        await page.select(
+            '#DestinationRadius',
+            String(
+                getRadiusFromValues(Number(task.criteria.destination_radius), [
+                    0,
+                    25,
+                    50,
+                    75,
+                    100,
+                    150,
+                    200,
+                    250,
+                    300,
+                    350,
+                    400,
+                    450,
+                    500
+                ])
+            )
+        );
 
         // 限制只搜索美国,不搜索加拿大
         await page.waitForSelector('#OriginRestrictResults');
@@ -55,14 +93,16 @@ export class Landstar extends SearchSite {
         await page.waitForSelector('#ui-id-1 li', { timeout: 5000 });
         let originOptions = await page.$$('#ui-id-1 li');
         let originOptionIndex = await page.evaluate((v) => {
-            return Array.from(document.querySelectorAll('#ui-id-1 li')).findIndex(item => item.textContent.indexOf(v) > -1)
-        }, task.criteria.origin.toUpperCase() + ', US')
+            return Array.from(document.querySelectorAll('#ui-id-1 li')).findIndex(
+                (item) => item.textContent.indexOf(v) > -1
+            );
+        }, task.criteria.origin.toUpperCase() + ', US');
         if (originOptionIndex > -1) {
             await originOptions[originOptionIndex].click();
         } else if (originOptions.length > 0) {
             await originOptions[0].click();
         } else {
-            throw this.generateError('search', 'no origin matched')
+            throw this.generateError('search', 'no origin matched');
         }
 
         // destination
@@ -72,29 +112,35 @@ export class Landstar extends SearchSite {
         await page.waitForSelector('#ui-id-2 li', { timeout: 5000 });
         let destinationOptions = await page.$$('#ui-id-2 li');
         let destinationOptionIndex = await page.evaluate((v) => {
-            return Array.from(document.querySelectorAll('#ui-id-1 li')).findIndex(item => item.textContent.indexOf(v) > -1)
-        }, task.criteria.destination.toUpperCase() + ', US')
+            return Array.from(document.querySelectorAll('#ui-id-1 li')).findIndex(
+                (item) => item.textContent.indexOf(v) > -1
+            );
+        }, task.criteria.destination.toUpperCase() + ', US');
 
         if (destinationOptionIndex > -1) {
             await destinationOptions[destinationOptionIndex].click();
         } else if (destinationOptions.length > 0) {
             await destinationOptions[0].click();
         } else {
-            throw this.generateError('search', 'no destination matched')
+            throw this.generateError('search', 'no destination matched');
         }
 
         // 选择 equipment
         const search_equipment = task.criteria.equipment.toUpperCase(); // 可选的值是 VAN 和 REFR ,注意不是 REEFER
         await page.evaluate((search_equipment) => {
-            const i = (document.querySelector('#ddArrowTrailerTypes') as HTMLElement);
+            const i = document.querySelector('#ddArrowTrailerTypes') as HTMLElement;
             i.click();
-            document.querySelectorAll('#treeDivmultiSelectTrailerTypes > ul>li').forEach((element) => {
-                const name = (element.querySelector('div span.k-in') as HTMLElement).innerText;
-                if (name === search_equipment) {
-                    const checkbox = element.querySelector('div span.k-checkbox input') as HTMLElement;
-                    checkbox.click();
-                }
-            });
+            document
+                .querySelectorAll('#treeDivmultiSelectTrailerTypes > ul>li')
+                .forEach((element) => {
+                    const name = (element.querySelector('div span.k-in') as HTMLElement).innerText;
+                    if (name === search_equipment) {
+                        const checkbox = element.querySelector(
+                            'div span.k-checkbox input'
+                        ) as HTMLElement;
+                        checkbox.click();
+                    }
+                });
             i.click();
         }, search_equipment);
 
@@ -104,14 +150,14 @@ export class Landstar extends SearchSite {
             btn.click();
         });
 
-        await page.waitForSelector('#ResultsTabs', { timeout: 5000 }).catch(e => {
-            throw this.generateError('noData', 'no data ResultsTabs timeout')
+        await page.waitForSelector('#ResultsTabs', { timeout: 5000 }).catch((e) => {
+            throw this.generateError('noData', 'no data ResultsTabs timeout');
         });
 
         const resultHtml = await page.$eval('div#Loads', (e) => e.outerHTML);
         const $ = cheerio.load(resultHtml);
         if ($('tbody tr').length === 1) {
-            throw this.generateError('noData', 'no data')
+            throw this.generateError('noData', 'no data');
         }
 
         await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
@@ -120,48 +166,55 @@ export class Landstar extends SearchSite {
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {
-        const result: Array<IResultHTMLData> = []
+        const result: Array<IResultHTMLData> = [];
         $('tbody tr.t-master-row').each((_index, _item) => {
-
             const tds = $(_item).find('td');
 
-
-            let t = $(tds[2]).text().trim().split("\n");
+            let t = $(tds[2]).text().trim().split('\n');
             const agency = t[0].trim();
             const contact = t[1].trim();
 
-            t = $(tds[3]).text().trim().split("\n");
+            t = $(tds[3]).text().trim().split('\n');
             let date = t[0].trim(); // 05/21/20 12:30 05/21/20 12:30
-            const dateMatch = date.match(/\d{2}\/\d{2}\/\d{2}\s\d{2}:\d{2}/)
+            const dateMatch = date.match(/\d{2}\/\d{2}\/\d{2}\s\d{2}:\d{2}/);
             if (dateMatch[0]) {
-                date = dateMatch[0]
+                date = dateMatch[0];
             }
-            this.log.log('date:', date)
+            this.log.log('date:', date);
             const deliveryDate = t[1].trim();
 
-            t = $(tds[4]).text().trim().split("\n");
+            t = $(tds[4]).text().trim().split('\n');
             const origin = t[0].trim();
             const destination = t[2].trim();
 
-
-            t = $(tds[5]).text().trim().split("\n");
+            t = $(tds[5]).text().trim().split('\n');
             const origin_radius = t[0].trim();
             const destination_radius = t[1].trim();
 
             const equipment = $(tds[6]).text().trim();
             const distance = $(tds[8]).text().trim();
 
-            t = $(tds[9]).text().trim().split("\n");
+            t = $(tds[9]).text().trim().split('\n');
             const weight = t[0].trim();
             const weightType = t[1].trim();
 
             const cmdtyCode = $(tds[10]).text().trim();
             result.push({
-                agency, contact, date, deliveryDate, origin, destination,
-                origin_radius, destination_radius, equipment, distance,
-                weight, weightType, cmdtyCode
-            })
+                agency,
+                contact,
+                date,
+                deliveryDate,
+                origin,
+                destination,
+                origin_radius,
+                destination_radius,
+                equipment,
+                distance,
+                weight,
+                weightType,
+                cmdtyCode
+            });
         });
-        return result
+        return result;
     }
 }

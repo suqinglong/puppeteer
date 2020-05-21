@@ -1,8 +1,7 @@
 import puppeteer from 'puppeteer';
 import cheerio from 'cheerio';
 import dateformat from 'dateformat';
-
-const {TimeoutError} = require('puppeteer/Errors');
+import { TimeoutError } from 'puppeteer/Errors';
 
 puppeteer
     .launch({
@@ -350,7 +349,7 @@ puppeteer
         // await browser.close();
         // console.log('done');
 
-/*
+        /*
 
 
         // http://www.landstaronline.com/public/login.aspx ======================================================
@@ -601,9 +600,6 @@ puppeteer
 
 */
 
-
-
-
         // https://www.allenlund.com/carriers/search-loads.php ======================================================
         const page = await browser.newPage();
 
@@ -614,8 +610,8 @@ puppeteer
             console.log(
                 'on request finished. url:' + request.url() + ' method: ' + request.method()
             );
-            if (request.method() == "POST") {
-                console.log(" post data: " + request.postData());
+            if (request.method() === 'POST') {
+                console.log(' post data: ' + request.postData());
             }
         });
 
@@ -639,16 +635,16 @@ puppeteer
         // 登录成功后,会跳转到 https://www.allenlund.com/carriers/carrier-profile.php 页面
         let login = false;
         try {
-            await page.waitForSelector('table.company-info', {timeout: 5000});
-            console.log("登录成功。");
+            await page.waitForSelector('table.company-info', { timeout: 5000 });
+            console.log('登录成功。');
 
             const url_ = page.url();
-            console.log("登录成功后的url是: " + url_);
+            console.log('登录成功后的url是: ' + url_);
 
             login = true;
         } catch (e) {
             if (e instanceof TimeoutError) {
-                console.log("登录失败。");
+                console.log('登录失败。');
                 // todo 打日志、截图、调用接口上报
             }
         }
@@ -689,7 +685,7 @@ puppeteer
             // await page.type('input[name="radius2"]', '100');
 
             await page.waitForSelector('input[name="search"]');
-            console.log("点击搜索");
+            console.log('点击搜索');
 
             // 点击后会post提交,然后加载页面
             await page.click('input[name="search"]');
@@ -703,26 +699,30 @@ puppeteer
             let success = false;
             try {
                 // 这个就是存放搜索结果的地方
-                await page.waitForSelector('div.tbl-margin table', {timeout: 5000});
+                await page.waitForSelector('div.tbl-margin table', { timeout: 5000 });
                 console.log('搜索成功。');
 
                 success = true;
             } catch (e) {
                 if (e instanceof TimeoutError) {
-                    console.log("搜索失败。");
+                    console.log('搜索失败。');
                 }
             }
 
             if (success) {
-
                 // 判断有没有数据
-                const hasData = await page.$eval("div.tbl-margin table > tbody > tr:nth-child(2)",
-                    (e) => e.querySelectorAll('td').length > 1);
+                const hasData = await page.$eval(
+                    'div.tbl-margin table > tbody > tr:nth-child(2)',
+                    (e) => e.querySelectorAll('td').length > 1
+                );
 
                 console.log(hasData);
 
                 if (hasData) {
-                    const resultHtml = await page.$eval('div.tbl-margin table > tbody', (e) => e.outerHTML);
+                    const resultHtml = await page.$eval(
+                        'div.tbl-margin table > tbody',
+                        (e) => e.outerHTML
+                    );
 
                     console.log(resultHtml);
 
@@ -732,51 +732,44 @@ puppeteer
 
                     $('tr').each((_index, _item) => {
                         console.log(_index, _item);
-                        if (_index == 0) {
+                        if (_index === 0) {
                             return;
                         }
 
                         const tds = $(_item).find('td');
 
                         let postingID = $(tds[1]).text().trim();
-                        console.log("postingID: " + postingID);
+                        console.log('postingID: ' + postingID);
 
                         let pickupDate = $(tds[2]).text().trim();
-                        console.log("pickupDate: " + pickupDate);
+                        console.log('pickupDate: ' + pickupDate);
 
                         let equipment = $(tds[3]).text().trim();
-                        console.log("equipment: " + equipment);
-
+                        console.log('equipment: ' + equipment);
 
                         let originCity = $(tds[4]).text().trim();
-                        console.log("originCity: " + originCity);
-
+                        console.log('originCity: ' + originCity);
 
                         let originState = $(tds[5]).text().trim();
-                        console.log("originState: " + originState);
-
+                        console.log('originState: ' + originState);
 
                         let destinationCity = $(tds[6]).text().trim();
-                        console.log("destinationCity: " + destinationCity);
+                        console.log('destinationCity: ' + destinationCity);
 
                         let destinationState = $(tds[7]).text().trim();
-                        console.log("destinationState: " + destinationState);
+                        console.log('destinationState: ' + destinationState);
 
                         let contact = $(tds[8]).text().trim();
-                        console.log("contact: " + contact);
-
+                        console.log('contact: ' + contact);
                     });
-
-
                 } else {
-                    console.log("Nothing found.");
+                    console.log('Nothing found.');
                 }
-
             }
 
-            await page.screenshot({path: '/home/ubuntu/screenshot/gaoshijie.png'});
+            await page.screenshot({ path: '/home/ubuntu/screenshot/gaoshijie.png' });
 
-            console.log("当前url: " + page.url());
+            console.log('当前url: ' + page.url());
         }
 
         await browser.close();

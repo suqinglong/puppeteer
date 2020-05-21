@@ -14,9 +14,9 @@ export class CHRobinson extends SearchSite {
 
     protected async shouldLogin(): Promise<boolean> {
         const userToken = await this.page.evaluate(() => {
-            return localStorage.getItem('navisphere_carrier.user_token')
-        })
-        return !userToken
+            return localStorage.getItem('navisphere_carrier.user_token');
+        });
+        return !userToken;
     }
 
     protected async login(task: ITASK) {
@@ -62,10 +62,16 @@ export class CHRobinson extends SearchSite {
         const [destinationCity, destinationStateProvinceCode] = task.criteria.destination
             .split(',')
             .map((item) => item.trim());
-            // &pickupStart=2020-05-17T08%3A00%3A00
-            // &pickupStart=2020-05-17T08%3A00%3A00&pickupEnd=2020-05-18T08%3A00%3A00
-        const pickupStart = dateformat(task.criteria.pick_up_date, "yyyy-mm-dd'T'HH:MM:ss") as string;
-        const pickupEnd =  dateformat(new Date(Date.parse(pickupStart) + 24 * 3600 * 1000), "yyyy-mm-dd'T'HH:MM:ss") as string
+        // &pickupStart=2020-05-17T08%3A00%3A00
+        // &pickupStart=2020-05-17T08%3A00%3A00&pickupEnd=2020-05-18T08%3A00%3A00
+        const pickupStart = dateformat(
+            task.criteria.pick_up_date,
+            "yyyy-mm-dd'T'HH:MM:ss"
+        ) as string;
+        const pickupEnd = dateformat(
+            new Date(Date.parse(pickupStart) + 24 * 3600 * 1000),
+            "yyyy-mm-dd'T'HH:MM:ss"
+        ) as string;
         const search = {
             originCountryCode: 'US',
             originStateProvinceCode,
@@ -119,26 +125,25 @@ export class CHRobinson extends SearchSite {
                 data: {
                     ...resultData[index]
                 }
-            }
-        })
+            };
+        });
 
-        this.log.log('links', linksAndData.map(item => item.link))
+        this.log.log(
+            'links',
+            linksAndData.map((item) => item.link)
+        );
 
         const detailPages = linksAndData.map((item) => {
             return new CHRobinsonDetailPage(item.link, this.browser, item.data);
-        })
+        });
 
-        const siteStack = new SiteStack(
-            detailPages,
-            5,
-            async (result) => {
-                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                    this.log.log(res.data);
-                });
-            }
-        );
-        await siteStack.search()
-        this.log.log('siteStack search end')
+        const siteStack = new SiteStack(detailPages, 5, async (result) => {
+            await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+                this.log.log(res.data);
+            });
+        });
+        await siteStack.search();
+        this.log.log('siteStack search end');
     }
 
     private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
@@ -183,9 +188,8 @@ export class CHRobinson extends SearchSite {
     }
 }
 
-
 class CHRobinsonDetailPage extends DetailPage {
-    protected debugPre = 'CHRobinsonDetailPage'
+    protected debugPre = 'CHRobinsonDetailPage';
     protected async search(): Promise<any> {
         await this.page
             .waitForSelector('.card-view-component', {

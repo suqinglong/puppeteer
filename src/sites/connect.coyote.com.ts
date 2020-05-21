@@ -15,14 +15,20 @@ export class Coyote extends SearchSite {
 
     protected async shouldLogin(): Promise<boolean> {
         const whichPage = await Promise.race([
-            this.page.waitForSelector('#export-to-excel').then(() => 'searchPage').catch(e => {
-                // console.log(e)
-            }),
-            this.page.waitForSelector('#Username').then(() => 'loginPage').catch(e => {
-                // console.log(e)
-            })
-        ])
-        return whichPage === 'loginPage'
+            this.page
+                .waitForSelector('#export-to-excel')
+                .then(() => 'searchPage')
+                .catch((e) => {
+                    // console.log(e)
+                }),
+            this.page
+                .waitForSelector('#Username')
+                .then(() => 'loginPage')
+                .catch((e) => {
+                    // console.log(e)
+                })
+        ]);
+        return whichPage === 'loginPage';
     }
 
     protected async login(task: ITASK) {
@@ -69,7 +75,7 @@ export class Coyote extends SearchSite {
             sortColumnName: 'pickup date'
         };
         this.searchPage = createUrl('https://connect.coyote.com/available-loads-v3', search);
-        await super.beforeSearch(task)
+        await super.beforeSearch(task);
     }
 
     protected async search(task: ITASK) {

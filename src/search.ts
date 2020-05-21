@@ -24,7 +24,7 @@ export class Search implements ISearchClass {
         return browser.wsEndpoint();
     }
 
-    // do task 
+    // do task
     // 1.  go search page
     // 1.1 charge if need to login
     // 1.2 if need login and not loged, do login

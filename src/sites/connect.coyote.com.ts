@@ -95,9 +95,10 @@ export class Coyote extends SearchSite {
         
         await this.page.waitFor(20);
         const filePath = await new Promise((resolve) => {
-            fs.watch(this.downloadPath, (eventType, filename) => {
+                const watcher = fs.watch(this.downloadPath, (eventType, filename) => {
                 this.log.log('fs.watch', eventType, filename);
                 if (filename === 'Available Loads Export.xlsx') {
+                    watcher.close()
                     resolve(path.join(this.downloadPath, filename));
                 }
             });

@@ -60,7 +60,7 @@ export abstract class SearchSite implements ISite {
                 throw this.generateError('searchTimeout', 'search page load timeout 2');
             });
         } else {
-            this.log.log('need\'t login');
+            this.log.log("need't login");
         }
     }
 

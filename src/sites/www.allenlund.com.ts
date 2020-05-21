@@ -37,7 +37,9 @@ export class Allenlund extends SearchSite {
         ); // V 表示 Van, R 表示 Reefer
 
         // origin city
-        const [originCity, originState] = task.criteria.origin.split(',').map((item) => item.trim());
+        const [originCity, originState] = task.criteria.origin
+            .split(',')
+            .map((item) => item.trim());
         await page.waitForSelector('input[name="city1"]');
         await page.type('input[name="city1"]', originCity); // 大小写不敏感
 
@@ -51,7 +53,9 @@ export class Allenlund extends SearchSite {
         // await page.type('input[name="radius1"]', '100');
 
         // destination city
-        const [destinationCity, destinationState] = task.criteria.destination.split(',').map((item) => item.trim());
+        const [destinationCity, destinationState] = task.criteria.destination
+            .split(',')
+            .map((item) => item.trim());
         await page.waitForSelector('input[name="city2"]');
         await page.type('input[name="city2"]', destinationCity); // 大小写不敏感
 

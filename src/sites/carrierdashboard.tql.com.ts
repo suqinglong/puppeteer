@@ -31,9 +31,9 @@ export class TQL extends SearchSite {
             });
             return value;
         }, originState);
-        console.log('originStateValue')
+        console.log('originStateValue');
         await this.page.select('#oStates', originStateValue);
-        await this.page.waitFor(1000)
+        await this.page.waitFor(1000);
         // select city
         this.log.log('select origin city', originCity);
         await this.page.type('#ocities', originCity, { delay: 100 });
@@ -78,7 +78,7 @@ export class TQL extends SearchSite {
             return value;
         }, destState);
         await this.page.select('#dStates', destinationStateValue);
-        await this.page.waitFor(1000)
+        await this.page.waitFor(1000);
         this.log.log('select origin destination city');
         await this.page.type('#dcities', destCity, { delay: 100 });
         let destinationCities = await this.page.$$('#SLdCities ul li');
@@ -125,7 +125,7 @@ export class TQL extends SearchSite {
         });
 
         this.log.log('waitForResponse');
-        let st
+        let st;
         const response = await new Promise((resolve, reject) => {
             this.page.on('response', (resp) => {
                 if (
@@ -133,7 +133,7 @@ export class TQL extends SearchSite {
                         'https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState' &&
                     resp.request().method() === 'POST'
                 ) {
-                    clearTimeout(st)
+                    clearTimeout(st);
                     resolve(resp);
                 }
             });

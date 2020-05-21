@@ -57,8 +57,8 @@ export class Coyote extends SearchSite {
     }
 
     protected async beforeSearch(task: ITASK) {
-        this.downloadPath = `./download/coyote_${task.task_id}`
-        fs.mkdirSync(this.downloadPath)
+        this.downloadPath = `./download/coyote_${task.task_id}`;
+        fs.mkdirSync(this.downloadPath);
         // "https://connect.coyote.com/available-loads-v3"
         // ?DDH=100&ODH=100&applyPreferredEquipmentTypeSearch=false&destination=Easley%2C%20SC&equipmentType=van&fromDate=05%2F06%2F2020&includeHiddenLoads=false&isMapViewEnabled=false&origin=Easley%2C%20SC&pageNumber=1&pickupApptFromDate=05%2F06%2F2020&pickupApptToDate=05%2F13%2F2020&salt=1588747616092&savedLoadsOnly=false&sortColumnName=pickup%20date&toDate=06%2F17%2F2020
         const search = {
@@ -92,13 +92,13 @@ export class Coyote extends SearchSite {
         await this.page.evaluate(() => {
             (document.querySelector('#export-to-excel') as HTMLElement).click();
         });
-        
+
         await this.page.waitFor(20);
         const filePath = await new Promise((resolve) => {
-                const watcher = fs.watch(this.downloadPath, (eventType, filename) => {
+            const watcher = fs.watch(this.downloadPath, (eventType, filename) => {
                 this.log.log('fs.watch', eventType, filename);
                 if (filename === 'Available Loads Export.xlsx') {
-                    watcher.close()
+                    watcher.close();
                     resolve(path.join(this.downloadPath, filename));
                 }
             });

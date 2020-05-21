@@ -138,9 +138,11 @@ export class CHRobinson extends SearchSite {
         });
 
         const siteStack = new SiteStack(detailPages, 5, async (result) => {
-            await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                this.log.log(res.data);
-            });
+            if (result.length > 0) {
+                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+                    this.log.log(res.data);
+                });
+            }
         });
         await siteStack.search();
         this.log.log('siteStack search end');

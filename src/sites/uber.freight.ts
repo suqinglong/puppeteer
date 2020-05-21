@@ -9,7 +9,7 @@ export class UberFreight extends SearchSite {
     public static siteName = 'Uber Freight';
     protected debugPre = 'Uber Freight';
     protected loginPage = 'https://auth.uber.com/login/session';
-    protected searchPage = 'https://www.uberfreight.com/freight/carriers/fleet/search-loads/#_';
+    protected searchPage = 'https://www.uberfreight.com/freight/carriers/fleet/search-loads/';
 
     protected async login(task: ITASK) {
         // input email

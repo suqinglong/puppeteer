@@ -2,8 +2,8 @@ import { TaskData } from './demoTaskData';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
-const count = 1;
-const sourceLoad = 'Allenlund';
+const count = 2;
+const sourceLoad = 'Uber Freight';
 const isRandom = false;
 const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson'];
 

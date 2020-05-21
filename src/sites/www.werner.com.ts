@@ -3,7 +3,7 @@ import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import dateformat from 'dateformat';
-import { SiteError } from '@/error';
+import { SiteError } from '../error';
 
 export class Werner extends SearchSite {
     public static siteName = 'Werner';

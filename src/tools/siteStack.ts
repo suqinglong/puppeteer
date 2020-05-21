@@ -82,10 +82,15 @@ export abstract class DetailPage {
     }
 
     public async doSearch() {
+        try {
         this.log = new Log(this.debugPre + ':' + this.searchPage);
         await this.beforeSearch();
         const result = await this.search();
         await this.searchEnd({ ...result, ...this.originalData });
+        } catch(e) {
+            this.log.log('do search error', e)
+            throw this.generateError('search', 'detail page error')
+        }
     }
 
     protected generateError(type: IErrorType, msg: string) {

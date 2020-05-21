@@ -2,10 +2,10 @@ import { TaskData } from './demoTaskData';
 import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
-const count = 2;
-const sourceLoad = 'Uber Freight';
+const count = 1;
+const sourceLoad = 'TQL';
 const isRandom = false;
-const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson'];
+const sourceLoads = ['JB Hunt', 'Sunteck', 'Coyote', 'Uber Freight', 'Landstar', 'CH Robinson', 'TQL'];
 
 export async function prePareTestData() {
     if (getMode() === 'develop') {

@@ -26,18 +26,20 @@ export class TQL extends SearchSite {
             let value = '';
             document.querySelectorAll('#oStates option').forEach((element) => {
                 if ((element as HTMLElement).innerText === originState) {
-                    value = (element as HTMLInputElement).value;
+                    value = (element as HTMLOptionElement).value;
                 }
             });
             return value;
         }, originState);
+        console.log('originStateValue')
         await this.page.select('#oStates', originStateValue);
+        await this.page.waitFor(1000)
         // select city
         this.log.log('select origin city', originCity);
-        await this.page.type('#ocities', originCity, { delay: 1000 });
+        await this.page.type('#ocities', originCity, { delay: 100 });
         // wait for popup tip
         const originCities = await this.page.$$('#SLoCities ul li');
-        if (originCities.length === 1) {
+        if (originCities.length >= 1) {
             await originCities[0].click();
         } else {
             throw this.generateError('search', 'no origin city match');
@@ -76,10 +78,11 @@ export class TQL extends SearchSite {
             return value;
         }, destState);
         await this.page.select('#dStates', destinationStateValue);
+        await this.page.waitFor(1000)
         this.log.log('select origin destination city');
-        await this.page.type('#dcities', destCity, { delay: 1000 });
+        await this.page.type('#dcities', destCity, { delay: 100 });
         let destinationCities = await this.page.$$('#SLdCities ul li');
-        if (destinationCities.length === 1) {
+        if (destinationCities.length >= 1) {
             await destinationCities[0].click();
         } else {
             throw this.generateError('search', 'no dest city match');
@@ -122,6 +125,7 @@ export class TQL extends SearchSite {
         });
 
         this.log.log('waitForResponse');
+        let st
         const response = await new Promise((resolve, reject) => {
             this.page.on('response', (resp) => {
                 if (
@@ -129,13 +133,14 @@ export class TQL extends SearchSite {
                         'https://lmservicesext.tql.com/carrierdashboard.web/api/SearchLoads/SearchAvailableLoadsByState' &&
                     resp.request().method() === 'POST'
                 ) {
+                    clearTimeout(st)
                     resolve(resp);
                 }
             });
-            setTimeout(() => {
+            st = setTimeout(() => {
                 reject(this.generateError('search', 'wait for response'));
             }, 10000);
-        }).catch((e) => {
+        }).catch(() => {
             throw this.generateError('search', 'wait for response');
         });
 

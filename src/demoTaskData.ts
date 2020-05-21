@@ -130,9 +130,9 @@ export const TaskData = {
         email: 'ajgtransportation@gmail.com',
         password: 'KeepLoaded19',
         criteria: {
-            origin: 'Sunrise, FL',
+            origin: 'Tulare, CA',
             origin_radius: '100',
-            destination: 'Hazelwood, MO',
+            destination: 'Morris, IL',
             destination_radius: '100',
             pick_up_date: pickUpDate,
             equipment: 'Van'

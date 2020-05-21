@@ -3,6 +3,7 @@ import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import dateformat from 'dateformat';
+import { SiteError } from '@/error';
 
 export class Werner extends SearchSite {
     public static siteName = 'Werner';
@@ -20,9 +21,7 @@ export class Werner extends SearchSite {
 
         await Promise.race([
             this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData'),
-            (await this.page.waitForSelector('#avail_loads_table tr[role="row"]')).evaluateHandle(
-                () => 'haveData'
-            )
+            this.page.waitForSelector('#avail_loads_table tr[role="row"]').then(() => 'haveData')
         ])
             .then((raceResult) => {
                 if (raceResult === 'noData') {
@@ -31,8 +30,10 @@ export class Werner extends SearchSite {
                 }
             })
             .catch((e) => {
-                this.log.log('Promise race error', e);
-                throw this.generateError('search', 'Promise race error');
+                if (!(e instanceof SiteError)) {
+                    this.log.log('Promise race error', e);
+                    throw this.generateError('search', 'Promise race error');
+                }
             });
 
         // expend all child

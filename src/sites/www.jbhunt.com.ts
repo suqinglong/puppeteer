@@ -104,7 +104,7 @@ export class JBHunt extends SearchSite {
         });
         await this.page.waitForSelector('.loadboard-input .ui-dropdown-items');
         let equipment = task.criteria.equipment.toLowerCase()
-        if (equipment === 'reef') {
+        if (equipment === 'reefer') {
             equipment = 'refrigerated'
         }
         const equipmentOptionIndex = await this.page.evaluate((equipment) => {

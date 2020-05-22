@@ -11,7 +11,7 @@ interface ITASK {
         origin_radius: string;
         destination_radius: string;
         pick_up_date: string;
-        equipment: 'Van' | 'Reef';
+        equipment: 'Van' | 'Reefer';
     };
 }
 
@@ -21,7 +21,7 @@ interface IQuery {
     origin_radius: string;
     destination_radius: string;
     pick_up_date: string;
-    equipment: 'Van' | 'Reef';
+    equipment: 'Van' | 'Reefer';
 }
 
 interface IResultData {

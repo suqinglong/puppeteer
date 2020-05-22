@@ -86,9 +86,15 @@ export class Coyote extends SearchSite {
             downloadPath: this.downloadPath
         });
 
-        await this.page.waitForSelector('#export-to-excel:not(:disabled)', {
-            timeout: 10000
-        });
+        await Promise.race(
+            [this.page.waitForSelector('#export-to-excel:not(:disabled)', {
+                timeout: 10000
+            }),
+            this.page.waitForSelector('.alert__title.alert--empty').then(() => {
+                throw this.generateError('noData', 'no data')
+            })]
+        )
+
         await this.page.evaluate(() => {
             (document.querySelector('#export-to-excel') as HTMLElement).click();
         });
@@ -133,13 +139,7 @@ export class Coyote extends SearchSite {
                 loadId: item[0],
                 mode: item[1],
                 equipment: item[2],
-                // 'Shipper City Location': item[3],
-                // 'Shipper State Location': item[4],
-                // 'Shipper Country Code': item[5],
                 pickupDate: item[6],
-                // 'Consignee City Location': item[7],
-                // 'Consignee State Location': item[8],
-                // 'Consignee Country Code': item[9],
                 deliveryDate: item[10],
                 stops: item[11],
                 distance: item[12] + item[13],

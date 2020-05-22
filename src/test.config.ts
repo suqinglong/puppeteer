@@ -3,7 +3,7 @@ import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
 const count = 1;
-const sourceLoad = 'JB Hunt';
+const sourceLoad = 'Coyote';
 const isRandom = false;
 const sourceLoads = [
     'JB Hunt',

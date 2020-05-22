@@ -103,13 +103,17 @@ export class JBHunt extends SearchSite {
             ) as HTMLElement).click();
         });
         await this.page.waitForSelector('.loadboard-input .ui-dropdown-items');
+        let equipment = task.criteria.equipment.toLowerCase()
+        if (equipment === 'reef') {
+            equipment = 'refrigerated'
+        }
         const equipmentOptionIndex = await this.page.evaluate((equipment) => {
             return Array.from(
                 document.querySelectorAll('.loadboard-input .ui-dropdown-items p-dropdownitem')
             ).findIndex((item) => {
                 return item.textContent.toLowerCase().indexOf(equipment) > -1;
             });
-        }, task.criteria.equipment.toLowerCase());
+        }, equipment);
         await this.page.click(
             `.loadboard-input .ui-dropdown-items p-dropdownitem:nth-child(${
                 equipmentOptionIndex + 1

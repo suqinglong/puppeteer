@@ -1,7 +1,7 @@
 const time = parseInt(String(Number(new Date()) / 1000), 10);
 import dateFormat from 'dateformat';
 
-const pickUpDate = dateFormat(new Date(Number(new Date()) + 24 * 3600 * 1000), 'yyyy-mm-dd');
+const pickUpDate = dateFormat(new Date(Number(new Date()) + 3 * 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {
     'Echo Driver': {
@@ -46,9 +46,9 @@ export const TaskData = {
         password: 'Alwaysloaded400',
         criteria: {
             origin: 'Atwater, CA',
-            origin_radius: '110',
-            destination: 'New York, NY',
-            destination_radius: '110',
+            origin_radius: '100',
+            destination: 'Sumner, WA',
+            destination_radius: '100',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

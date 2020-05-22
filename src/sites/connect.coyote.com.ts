@@ -90,8 +90,13 @@ export class Coyote extends SearchSite {
             [this.page.waitForSelector('#export-to-excel:not(:disabled)', {
                 timeout: 10000
             }),
-            this.page.waitForSelector('.alert__title.alert--empty').then(() => {
-                throw this.generateError('noData', 'no data')
+            new Promise(() => {
+                this.page.$eval('.alert__title.alert--empty', input => input.textContent).then((res:string) => {
+                    if (res === 'No loads found') {
+                        throw this.generateError('noData', 'no data')
+                        
+                    }
+                })
             })]
         )
 

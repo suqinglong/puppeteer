@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
 import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
-import { useScreenshot } from '../tools/index';
+import { useScreenshot, getMode } from '../tools/index';
 import { Log } from '../tools/log';
 import { userAgent, viewPort, pageWaitTime } from '../settings';
 
@@ -39,7 +39,9 @@ export abstract class SearchSite implements ISite {
             this.log.log('search error', e);
         }
         try {
-            await this.page.close();
+            if (getMode() === 'production') {
+                await this.page.close();
+            }
             this.log.log('search end and page closed');
         } catch(e) {
             this.log.log('page close error', e);

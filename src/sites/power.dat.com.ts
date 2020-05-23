@@ -106,7 +106,7 @@ export class DAT extends SearchSite {
         });
 
         const resultSubItems = Array.from(resultItems);
-        const resultSubItemsLength = resultSubItems.length;
+        const resultSubItemsLength = 2// resultSubItems.length;
         const expendCountPerTime = 2
         this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
@@ -136,23 +136,29 @@ export class DAT extends SearchSite {
 
             await new Promise((resolve, reject) => {
                 let si: NodeJS.Timeout
+                let st: NodeJS.Timeout
 
                 si = setInterval(async () => {
-                    await this.page.evaluate((element: HTMLElement) => {
+                    const hasNumber = await this.page.evaluate((element: HTMLElement) => {
                         const clickEl = element.querySelector('.age') as HTMLElement
                         clickEl.style.color = 'red'
                         clickEl.click()
+                        return !!element.querySelector('.widget-numbers')
                     }, element)
-                }, 500)
 
-                this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`,
-                    { timeout: 8000 }).then(() => {
+                    if (hasNumber) {
+                        clearTimeout(st)
                         clearInterval(si)
                         resolve()
-                    }).catch(() => {
-                        clearInterval(si)
-                        reject(this.generateError('search', 'detail not extend'))
-                    })
+                    }
+                }, 1000)
+
+                st = setTimeout(() => {
+                    clearTimeout(st)
+                    clearInterval(si)
+                    reject(this.generateError('search', 'detail not extend'))
+                }, 5000);
+
             }).catch(() => {
                 throw this.generateError('search', 'error in extend detail')
             })

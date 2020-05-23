@@ -239,6 +239,9 @@ export class DAT extends SearchSite {
                 this.log.log(res.data);
             });
         } catch (e) {
+            this.log.log(await this.page.evaluate((el: HTMLElement) => {
+                return el.outerHTML
+            }, element))
             this.log.log('pass this detail')
         }
     }

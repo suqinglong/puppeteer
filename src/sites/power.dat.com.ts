@@ -150,128 +150,123 @@ export class DAT extends SearchSite {
                     }
                     return true
                 })
-                console.log('id', id, 'result', result)
                 return result
             }, element)
 
             this.log.log('***************** index', index)
 
-            // if (index > -1) {
-            //     await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
-            //         delay: 100
-            //     })
-            // }
+            if (index > -1) {
+                await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
+                    delay: 100
+                })
+            }
 
-            // await new Promise((resolve) => {
-            //     let si: NodeJS.Timeout
-            //     let st: NodeJS.Timeout
-            //     let n = 0
+            await new Promise((resolve) => {
+                let si: NodeJS.Timeout
+                let st: NodeJS.Timeout
+                let n = 0
 
-            //     si = setInterval(async () => {
-            //         const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
-            //             const clickEl = element.querySelector('.avail') as HTMLElement
-            //             clickEl.style.color = 'red'
-            //             clickEl.setAttribute('n', String(n))
-            //             clickEl.click()
-            //             return !!element.querySelector('.widget-numbers')
-            //         }, element, n++)
+                si = setInterval(async () => {
+                    const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
+                        const clickEl = element.querySelector('.avail') as HTMLElement
+                        clickEl.style.color = 'red'
+                        clickEl.setAttribute('n', String(n))
+                        clickEl.click()
+                        return !!element.querySelector('.widget-numbers')
+                    }, element, n++)
 
-            //         if (hasNumber) {
-            //             clearTimeout(st)
-            //             clearInterval(si)
-            //             resolve()
-            //         }
-            //     }, 1000)
+                    if (hasNumber) {
+                        clearTimeout(st)
+                        clearInterval(si)
+                        resolve()
+                    }
+                }, 1000)
 
-            //     st = setTimeout(() => {
-            //         clearTimeout(st)
-            //         clearInterval(si)
-            //         resolve()
-            //     }, 10000);
+                st = setTimeout(() => {
+                    clearTimeout(st)
+                    clearInterval(si)
+                    resolve()
+                }, 10000);
 
-            // }).catch((e) => {
-            //     this.log.log(e)
-            //     throw this.generateError('search', 'error in extend detail')
-            // })
+            }).catch((e) => {
+                this.log.log(e)
+                throw this.generateError('search', 'error in extend detail')
+            })
 
-            // if (index > -1) {
-            //     await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
-            // }
+            if (index > -1) {
+                await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+            }
 
-            // this.log.log(await this.page.evaluate((el: HTMLElement) => {
-            //     return el.outerHTML
-            // }, element))
+            const result = await element.evaluate((el: HTMLElement) => {
+                const result = {}
+                const dataItemClass = [
+                    '.age',
+                    ['.avail', 'pickUp'],
+                    ['.truck', 'equipment'],
+                    '.fp',
+                    ['.do', 'origin_radius'],
+                    '.origin',
+                    '.trip',
+                    ['.dest', 'destination'],
+                    ['.dd', 'destination_radius'],
+                    '.company',
+                    '.contact',
+                    '.length',
+                    '.weight',
+                    '.cs',
+                    '.dtp',
+                    '.factorable',
+                    '.rate'
+                ];
 
-            // const result = await element.evaluate((el: HTMLElement) => {
-            //     const result = {}
-            //     const dataItemClass = [
-            //         '.age',
-            //         ['.avail', 'pickUp'],
-            //         ['.truck', 'equipment'],
-            //         '.fp',
-            //         ['.do', 'origin_radius'],
-            //         '.origin',
-            //         '.trip',
-            //         ['.dest', 'destination'],
-            //         ['.dd', 'destination_radius'],
-            //         '.company',
-            //         '.contact',
-            //         '.length',
-            //         '.weight',
-            //         '.cs',
-            //         '.dtp',
-            //         '.factorable',
-            //         '.rate'
-            //     ];
+                dataItemClass.forEach((item) => {
+                    let key: string;
+                    let selector: string;
+                    if (Array.isArray(item)) {
+                        [selector, key] = item;
+                    } else {
+                        selector = item;
+                        key = item.substr(1);
+                    }
+                    if (key === 'factorable') {
+                        result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no'
+                    } else {
+                        result[key] = el.querySelector(selector).textContent
+                    }
+                });
 
-            //     dataItemClass.forEach((item) => {
-            //         let key: string;
-            //         let selector: string;
-            //         if (Array.isArray(item)) {
-            //             [selector, key] = item;
-            //         } else {
-            //             selector = item;
-            //             key = item.substr(1);
-            //         }
-            //         if (key === 'factorable') {
-            //             result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no'
-            //         } else {
-            //             result[key] = el.querySelector(selector).textContent
-            //         }
-            //     });
+                // details
 
-            //     // details
+                el.querySelectorAll('.resultDetails dl').forEach(dl => {
+                    const dtDdNodes = dl.querySelectorAll('dt, dd')
+                    let key = ''
+                    dtDdNodes.forEach(item => {
+                        if (item.tagName === 'DT') {
+                            key = item.textContent.trim().replace(':', '').toLowerCase()
+                        } else if (item.tagName === 'DD') {
+                            result[key] = result[key] ? result[key] + " " + item.textContent : item.textContent
+                        }
+                    })
+                })
 
-            //     el.querySelectorAll('.resultDetails dl').forEach(dl => {
-            //         const dtDdNodes = dl.querySelectorAll('dt, dd')
-            //         let key = ''
-            //         dtDdNodes.forEach(item => {
-            //             if (item.tagName === 'DT') {
-            //                 key = item.textContent.trim().replace(':', '').toLowerCase()
-            //             } else if (item.tagName === 'DD') {
-            //                 result[key] = result[key] ? result[key] + " " + item.textContent : item.textContent
-            //             }
-            //         })
-            //     })
+                const rateview = {}
+                rateview['title'] = el.querySelector('.fm-rateview-widget-title').textContent + ' (' + el.querySelector('.widget-title-incl-text').textContent + ')'
+                rateview['num'] = el.querySelector('.widget-numbers-num').textContent
+                rateview['range'] = el.querySelector('.widget-numbers-range').textContent
+                result['rateview'] = rateview
+                return result
+            }, element)
 
-            //     const rateview = {}
-            //     rateview['title'] = el.querySelector('.fm-rateview-widget-title').textContent + ' (' + el.querySelector('.widget-title-incl-text').textContent + ')'
-            //     rateview['num'] = el.querySelector('.widget-numbers-num').textContent
-            //     rateview['range'] = el.querySelector('.widget-numbers-range').textContent
-            //     result['rateview'] = rateview
-            //     return result
-            // }, element)
+            for (let key in result) {
+                if (typeof result[key] === 'string') {
+                    result[key] = result[key].replace(/[\t\n]+/g, '').trim()
+                }
+            }
+            result['date'] = result['age'] + ' ' + result['pickUp'] + ' ' + (new Date()).getFullYear()
 
-            // for (let key in result) {
-            //     if (typeof result[key] === 'string') {
-            //         result[key] = result[key].replace(/[\t\n]+/g, '').trim()
-            //     }
-            // }
-            // result['date'] = result['age'] + ' ' + result['pickUp'] + ' ' + (new Date()).getFullYear()
-
-            // await PostSearchData(ModifyPostData(task, [result])).then((res: any) => {
-            //     this.log.log(res.data);
-            // });
+            await PostSearchData(ModifyPostData(task, [result])).then((res: any) => {
+                this.log.log(res.data);
+            });
         } catch (e) {
             this.log.log('pass this detail', e)
         }

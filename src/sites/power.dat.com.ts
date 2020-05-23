@@ -137,14 +137,16 @@ export class DAT extends SearchSite {
             await new Promise((resolve, reject) => {
                 let si: NodeJS.Timeout
                 let st: NodeJS.Timeout
+                let n = 0
 
                 si = setInterval(async () => {
-                    const hasNumber = await this.page.evaluate((element: HTMLElement) => {
+                    const hasNumber = await this.page.evaluate((element: HTMLElement, n:number) => {
                         const clickEl = element.querySelector('.age') as HTMLElement
                         clickEl.style.color = 'red'
+                        clickEl.setAttribute('n', String(n))
                         clickEl.click()
                         return !!element.querySelector('.widget-numbers')
-                    }, element)
+                    }, element, n++)
 
                     if (hasNumber) {
                         clearTimeout(st)

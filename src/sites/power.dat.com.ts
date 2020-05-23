@@ -167,6 +167,9 @@ export class DAT extends SearchSite {
                 let n = 0
 
                 si = setInterval(async () => {
+                    await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
+                        delay: 100
+                    })
                     const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
                         const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'
@@ -194,7 +197,9 @@ export class DAT extends SearchSite {
             })
 
             if (index > -1) {
-                await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+                await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`).catch(e => {
+                    this.log.log('wait for resultItem .widget-numbers')
+                })
             }
 
             const result = await element.evaluate((el: HTMLElement) => {

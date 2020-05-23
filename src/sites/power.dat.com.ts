@@ -100,9 +100,8 @@ export class DAT extends SearchSite {
 
 
         this.log.log('have result');
-        const resultItems = await this.page.$$('.resultItem').catch((e) => {
-            this.log.log('$$ .resultItem', e);
-            throw this.generateError('search', '$$ .resultItem');
+        const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
+            throw this.generateError('search', '$$ .resultItem.exactMatch');
         });
 
         await this.page.waitFor(2000)

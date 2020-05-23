@@ -105,6 +105,10 @@ export class DAT extends SearchSite {
             throw this.generateError('search', '$$ .resultItem.exactMatch');
         });
 
+        this.page.on('error', (e) => {
+            this.log.log('error', e)
+        })
+
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = 2// resultSubItems.length;
         const expendCountPerTime = 2

@@ -40,8 +40,6 @@ export class DAT extends SearchSite {
         })
 
         this.log.log('select equipment', task.criteria.equipment.toLowerCase())
-        await this.page.waitFor(200)
-
         if (task.criteria.equipment) {
             await this.page.focus('.searchListTable .equipSelect input#s2id_autogen2')
             for (let i = 0; i < 10; i++) {
@@ -67,19 +65,38 @@ export class DAT extends SearchSite {
 
         this.log.log('type origin')
         if (task.criteria.origin) {
-            await this.page.type('.searchListTable .origin input', task.criteria.origin)
+            await this.page.type('.searchListTable .origin input', task.criteria.origin, {
+                delay: 100
+            })
         }
+
+        
 
         this.log.log('type destination')
         if (task.criteria.destination) {
-            await this.page.type('.searchListTable .dest input', task.criteria.destination)
+            await this.page.type('.searchListTable .dest input', task.criteria.destination, {
+                delay: 100
+            })
         }
 
-        this.log.log('type origin_radius')
-        await this.page.type('.searchListTable .dho input', task.criteria.origin_radius)
+        this.log.log('type origin_radius', task.criteria.origin_radius)
+        await this.page.focus('.searchListTable .dho input');
+        for (let i = 0; i < 10; i++) {
+            await this.page.keyboard.press('Backspace');
+        }
+        await this.page.type('.searchListTable .dho input', task.criteria.origin_radius, {
+            delay: 100
+        })
 
-        this.log.log('type destination_radius')
-        await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius)
+        
+        this.log.log('type destination_radius', task.criteria.destination_radius)
+        await this.page.focus('.searchListTable .dhd input');
+        for (let i = 0; i < 10; i++) {
+            await this.page.keyboard.press('Backspace');
+        }
+        await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius, {
+            delay: 100
+        })
 
 
         this.log.log('type pick_up_date')
@@ -89,7 +106,31 @@ export class DAT extends SearchSite {
         }
         const date = task.criteria.pick_up_date.substr(5).replace('-', '/');
         await this.page.type('.searchListTable .avail input', date)
-        await this.page.keyboard.press('Enter');
+
+
+
+
+        this.log.log('type origin_radius', task.criteria.origin_radius)
+        await this.page.focus('.searchListTable .dho input');
+        for (let i = 0; i < 10; i++) {
+            await this.page.keyboard.press('Backspace');
+        }
+        await this.page.type('.searchListTable .dho input', task.criteria.origin_radius, {
+            delay: 100
+        })
+
+        
+        this.log.log('type destination_radius', task.criteria.destination_radius)
+        await this.page.focus('.searchListTable .dhd input');
+        for (let i = 0; i < 10; i++) {
+            await this.page.keyboard.press('Backspace');
+        }
+        await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius, {
+            delay: 100
+        })
+
+
+        await this.page.click('button.search')
 
         this.log.log('wait result');
         await this.page
@@ -137,22 +178,6 @@ export class DAT extends SearchSite {
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
         try {
-            // const index = await this.page.evaluate((element: HTMLElement) => {
-            //     const resultTable = document.querySelector('table.searchResultsTable')
-            //     const id = element.querySelector('.resultSummary').getAttribute('id')
-            //     let result = -1
-            //     Array.from(resultTable.children).every((item, index) => {
-            //         if (item.querySelector('.resultSummary')?.getAttribute('id') === id) {
-            //             result = index
-            //             return false
-            //         }
-            //         return true
-            //     })
-            //     return result
-            // }, element)
-
-            // this.log.log('***************** index', index)
-
             await new Promise((resolve) => {
                 let si: NodeJS.Timeout
                 let st: NodeJS.Timeout

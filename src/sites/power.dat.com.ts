@@ -145,7 +145,7 @@ export class DAT extends SearchSite {
                 Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
-            this.log.log('***************** index', index, await this.page.$eval('table.searchResultsTable', input => input.outerHTML))
+            this.log.log('***************** index', index)
 
             // if (index > -1) {
             //     await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {

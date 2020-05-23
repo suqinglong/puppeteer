@@ -112,7 +112,7 @@ export class DAT extends SearchSite {
         })
 
         this.page.on('console', msg => {
-            this.log.log('msg', msg)
+            this.log.log('msg', msg.text())
         })
 
         const resultSubItems = Array.from(resultItems);
@@ -141,8 +141,17 @@ export class DAT extends SearchSite {
             await this.page.waitFor(1000)
             const index = await this.page.evaluate((element: HTMLElement) => {
                 const resultTable = document.querySelector('table.searchResultsTable')
-                console.log('resultSummary', element.querySelector('.resultSummary').getAttribute('id'))
-                Array.from(resultTable.children).findIndex(item => item === element)
+                const id = element.querySelector('.resultSummary').getAttribute('id')
+                let result = -1
+                Array.from(resultTable.children).every((item, index) => {
+                    if (item.querySelector('.resultSummary').getAttribute('id') === id) {
+                        result = index
+                        return false
+                    }
+                    return true
+                })
+                console.log('id', id, 'result', result)
+                return result
             }, element)
 
             this.log.log('***************** index', index)

@@ -112,7 +112,7 @@ export class DAT extends SearchSite {
         })
 
         this.page.on('request', (res) => {
-          console.log('request', res.url())
+            console.log('request', res.url())
         })
 
         const resultSubItems = Array.from(resultItems);
@@ -142,12 +142,14 @@ export class DAT extends SearchSite {
             await this.page.waitFor(200)
             const index = await this.page.evaluate((element: HTMLElement) => {
                 const resultTable = document.querySelector('table.searchResultsTable')
-                return Array.from(resultTable.children).findIndex(item => item === element) + 1
+                return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
-            await this.page.click(`.resultItem:nth-child(${index}) .age`, {
-                delay: 100
-            })
+            if (index > -1) {
+                await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
+                    delay: 100
+                })
+            }
 
             await new Promise((resolve, reject) => {
                 let si: NodeJS.Timeout
@@ -155,7 +157,7 @@ export class DAT extends SearchSite {
                 let n = 0
 
                 si = setInterval(async () => {
-                    const hasNumber = await this.page.evaluate((element: HTMLElement, n:number) => {
+                    const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
                         const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))

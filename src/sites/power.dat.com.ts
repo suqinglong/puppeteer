@@ -137,21 +137,21 @@ export class DAT extends SearchSite {
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
         try {
-            const index = await this.page.evaluate((element: HTMLElement) => {
-                const resultTable = document.querySelector('table.searchResultsTable')
-                const id = element.querySelector('.resultSummary').getAttribute('id')
-                let result = -1
-                Array.from(resultTable.children).every((item, index) => {
-                    if (item.querySelector('.resultSummary')?.getAttribute('id') === id) {
-                        result = index
-                        return false
-                    }
-                    return true
-                })
-                return result
-            }, element)
+            // const index = await this.page.evaluate((element: HTMLElement) => {
+            //     const resultTable = document.querySelector('table.searchResultsTable')
+            //     const id = element.querySelector('.resultSummary').getAttribute('id')
+            //     let result = -1
+            //     Array.from(resultTable.children).every((item, index) => {
+            //         if (item.querySelector('.resultSummary')?.getAttribute('id') === id) {
+            //             result = index
+            //             return false
+            //         }
+            //         return true
+            //     })
+            //     return result
+            // }, element)
 
-            this.log.log('***************** index', index)
+            // this.log.log('***************** index', index)
 
             await new Promise((resolve) => {
                 let si: NodeJS.Timeout
@@ -184,12 +184,6 @@ export class DAT extends SearchSite {
                 this.log.log(e)
                 throw this.generateError('search', 'error in extend detail')
             })
-
-            if (index > -1) {
-                await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`).catch(e => {
-                    this.log.log('wait for resultItem .widget-numbers')
-                })
-            }
 
             const result = await element.evaluate((el: HTMLElement) => {
                 const result = {}

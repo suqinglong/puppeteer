@@ -159,7 +159,7 @@ export class DAT extends SearchSite {
                     clearTimeout(st)
                     clearInterval(si)
                     reject(this.generateError('search', 'detail not extend'))
-                }, 5000);
+                }, 10000);
 
             }).catch((e) => {
                 this.log.log(e)

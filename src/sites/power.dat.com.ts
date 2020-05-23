@@ -111,11 +111,16 @@ export class DAT extends SearchSite {
             }
         })
 
+        this.page.on('request', (res) => {
+          console.log('request', res.url())
+        })
+
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = 2// resultSubItems.length;
         const expendCountPerTime = 2
         this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
+        await this.page.waitFor(2000)
         while (extendIndex < resultSubItemsLength) {
             const extendsPromises = []
             for (let i = 0; i < expendCountPerTime; i++) {
@@ -251,6 +256,7 @@ export class DAT extends SearchSite {
                 this.log.log(res.data);
             });
         } catch (e) {
+            this.log.log(e)
             this.log.log(await this.page.evaluate((el: HTMLElement) => {
                 return el.outerHTML
             }, element))

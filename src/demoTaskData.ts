@@ -28,9 +28,9 @@ export const TaskData = {
         email: 'haulistix',
         password: 'Shostakovich5',
         criteria: {
-            origin: 'New York, NY',
-            origin_radius: '100',
-            destination: 'New York, NY',
+            origin: 'Bloomfield, CT',
+            origin_radius: '127',
+            destination: 'Linden, NJ',
             destination_radius: '100',
             pick_up_date: pickUpDate,
             equipment: 'Van'

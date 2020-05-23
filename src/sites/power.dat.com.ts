@@ -116,7 +116,7 @@ export class DAT extends SearchSite {
         })
 
         const resultSubItems = Array.from(resultItems);
-        const resultSubItemsLength = resultSubItems.length;
+        const resultSubItemsLength = 2; // resultSubItems.length;
         const expendCountPerTime = 2
         this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
@@ -144,7 +144,7 @@ export class DAT extends SearchSite {
                 const id = element.querySelector('.resultSummary').getAttribute('id')
                 let result = -1
                 Array.from(resultTable.children).every((item, index) => {
-                    if (item.querySelector('.resultSummary').getAttribute('id') === id) {
+                    if (item.querySelector('.resultSummary')?.getAttribute('id') === id) {
                         result = index
                         return false
                     }

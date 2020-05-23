@@ -116,7 +116,7 @@ export class DAT extends SearchSite {
         })
 
         const resultSubItems = Array.from(resultItems);
-        const resultSubItemsLength = 2; // resultSubItems.length;
+        const resultSubItemsLength = resultSubItems.length;
         const expendCountPerTime = 2
         this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
@@ -136,9 +136,7 @@ export class DAT extends SearchSite {
     }
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
-
         try {
-            await this.page.waitFor(1000)
             const index = await this.page.evaluate((element: HTMLElement) => {
                 const resultTable = document.querySelector('table.searchResultsTable')
                 const id = element.querySelector('.resultSummary').getAttribute('id')
@@ -167,9 +165,11 @@ export class DAT extends SearchSite {
                 let n = 0
 
                 si = setInterval(async () => {
-                    await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
-                        delay: 100
-                    })
+                    if (index > -1) {
+                        await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
+                            delay: 100
+                        })
+                    }
                     const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
                         const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'

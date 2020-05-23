@@ -153,23 +153,12 @@ export class DAT extends SearchSite {
 
             this.log.log('***************** index', index)
 
-            if (index > -1) {
-                await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
-                    delay: 100
-                })
-            }
-
             await new Promise((resolve) => {
                 let si: NodeJS.Timeout
                 let st: NodeJS.Timeout
                 let n = 0
 
                 si = setInterval(async () => {
-                    if (index > -1) {
-                        await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
-                            delay: 100
-                        })
-                    }
                     const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
                         const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'

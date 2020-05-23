@@ -101,17 +101,14 @@ export class DAT extends SearchSite {
             });
         await this.page.click('.carriers .search')
 
-
-        this.log.log('have result');
         const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
             throw this.generateError('search', '$$ .resultItem.exactMatch');
         });
 
-        await this.page.waitFor(2000)
-
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = resultSubItems.length;
         const expendCountPerTime = 2
+        this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
         while (extendIndex < resultSubItemsLength) {
             const extendsPromises = []
@@ -137,22 +134,28 @@ export class DAT extends SearchSite {
                 return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
+            await new Promise((resolve, reject) => {
+                let si: NodeJS.Timeout
 
-            const st = setInterval(() => {
-                this.page.evaluate((element: HTMLElement) => {
-                    const clickEl = element.querySelector('.age') as HTMLElement
-                    clickEl.style.color = 'red'
-                    clickEl.click()
-                    console.log('clickEl', clickEl)
-                }, element)
-            }, 300)
+                si = setInterval(async () => {
+                    await this.page.evaluate((element: HTMLElement) => {
+                        const clickEl = element.querySelector('.age') as HTMLElement
+                        clickEl.style.color = 'red'
+                        clickEl.click()
+                    }, element)
+                }, 500)
 
-            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`, {
-                timeout: 3000
-            }).finally(() => {
-                clearInterval(st)
+                this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`,
+                    { timeout: 8000 }).then(() => {
+                        clearInterval(si)
+                        resolve()
+                    }).catch(() => {
+                        clearInterval(si)
+                        reject(this.generateError('search', 'detail not extend'))
+                    })
+            }).catch(() => {
+                throw this.generateError('search', 'error in extend detail')
             })
-
 
             const result = await element.evaluate((el: HTMLElement) => {
                 const result = {}

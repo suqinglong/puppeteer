@@ -141,7 +141,7 @@ export class DAT extends SearchSite {
 
                 si = setInterval(async () => {
                     const hasNumber = await this.page.evaluate((element: HTMLElement, n:number) => {
-                        const clickEl = element.querySelector('.age') as HTMLElement
+                        const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()

@@ -55,7 +55,7 @@ export class DAT extends SearchSite {
             const selectIndex = await this.page.evaluate((equipment: string) => {
                 let result = 1
                 document.querySelectorAll('body > .select2-drop ul.select2-results li.select2-result-selectable').forEach((el, index) => {
-                    if (el.querySelector('.select2-formatresult-code').textContent === equipment) {
+                    if (el.querySelector('.select2-formatresult-code')?.textContent === equipment) {
                         result = index + 1
                     }
                 })
@@ -236,7 +236,7 @@ export class DAT extends SearchSite {
                     if (key === 'factorable') {
                         result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no'
                     } else {
-                        result[key] = el.querySelector(selector).textContent
+                        result[key] = el.querySelector(selector)?.textContent
                     }
                 });
 
@@ -247,17 +247,17 @@ export class DAT extends SearchSite {
                     let key = ''
                     dtDdNodes.forEach(item => {
                         if (item.tagName === 'DT') {
-                            key = item.textContent.trim().replace(':', '').toLowerCase()
+                            key = item?.textContent.trim().replace(':', '').toLowerCase()
                         } else if (item.tagName === 'DD') {
-                            result[key] = result[key] ? result[key] + " " + item.textContent : item.textContent
+                            result[key] = result[key] ? result[key] + " " + item?.textContent : item?.textContent
                         }
                     })
                 })
 
                 const rateview = {}
-                rateview['title'] = el.querySelector('.fm-rateview-widget-title').textContent + ' (' + el.querySelector('.widget-title-incl-text').textContent + ')'
-                rateview['num'] = el.querySelector('.widget-numbers-num').textContent
-                rateview['range'] = el.querySelector('.widget-numbers-range').textContent
+                rateview['title'] = el.querySelector('.fm-rateview-widget-title')?.textContent + ' (' + el.querySelector('.widget-title-incl-text')?.textContent + ')'
+                rateview['num'] = el.querySelector('.widget-numbers-num')?.textContent
+                rateview['range'] = el.querySelector('.widget-numbers-range')?.textContent
                 result['rateview'] = rateview
                 return result
             }, element)

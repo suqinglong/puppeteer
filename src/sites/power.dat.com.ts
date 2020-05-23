@@ -105,8 +105,10 @@ export class DAT extends SearchSite {
             throw this.generateError('search', '$$ .resultItem.exactMatch');
         });
 
-        this.page.on('error', (e) => {
-            this.log.log('error', e)
+        this.page.on('response', async (res) => {
+            if (res.url().indexOf('/search/matches/take') > -1) {
+                this.log.log(res.url(), await res.json())
+            }
         })
 
         const resultSubItems = Array.from(resultItems);
@@ -138,7 +140,9 @@ export class DAT extends SearchSite {
                 return Array.from(resultTable.children).findIndex(item => item === element) + 1
             }, element)
 
-            await this.page.click(`.resultItem:nth-child(${index}) .age`)
+            await this.page.click(`.resultItem:nth-child(${index}) .age`, {
+                delay: 1000
+            })
 
             await new Promise((resolve, reject) => {
                 let si: NodeJS.Timeout

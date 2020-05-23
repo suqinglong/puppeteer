@@ -182,13 +182,14 @@ export class DAT extends SearchSite {
                     clearTimeout(st)
                     clearInterval(si)
                     resolve()
-                    throw this.generateError('search', 'detail not extend')
                 }, 10000);
 
             }).catch((e) => {
                 this.log.log(e)
                 throw this.generateError('search', 'error in extend detail')
             })
+
+            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
 
             this.log.log(await this.page.evaluate((el: HTMLElement) => {
                 return el.outerHTML

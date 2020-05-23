@@ -151,6 +151,8 @@ export class DAT extends SearchSite {
                 return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
+            this.log.log('index', index)
+
             if (index > -1) {
                 await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {
                     delay: 100
@@ -189,7 +191,9 @@ export class DAT extends SearchSite {
                 throw this.generateError('search', 'error in extend detail')
             })
 
-            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+            if (index > -1) {
+                await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+            }
 
             this.log.log(await this.page.evaluate((el: HTMLElement) => {
                 return el.outerHTML

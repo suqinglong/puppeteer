@@ -159,9 +159,14 @@ export class DAT extends SearchSite {
                     reject(this.generateError('search', 'detail not extend'))
                 }, 5000);
 
-            }).catch(() => {
+            }).catch((e) => {
+                this.log.log(e)
                 throw this.generateError('search', 'error in extend detail')
             })
+
+            this.log.log(await this.page.evaluate((el: HTMLElement) => {
+                return el.outerHTML
+            }, element))
 
             const result = await element.evaluate((el: HTMLElement) => {
                 const result = {}

@@ -28,10 +28,10 @@ export const TaskData = {
         email: 'haulistix',
         password: 'Shostakovich5',
         criteria: {
-            origin: 'Bloomfield, CT',
-            origin_radius: '127',
-            destination: 'Linden, NJ',
-            destination_radius: '100',
+            origin: 'Hauppauge, NY',
+            origin_radius: '15',
+            destination: 'Windsor, CT',
+            destination_radius: '15',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

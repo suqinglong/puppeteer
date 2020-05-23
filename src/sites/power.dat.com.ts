@@ -105,24 +105,14 @@ export class DAT extends SearchSite {
             throw this.generateError('search', '$$ .resultItem.exactMatch');
         });
 
-        this.page.on('response', async (res) => {
-            if (res.url().indexOf('/search/matches/take') > -1) {
-                this.log.log(res.url(), await res.json())
-            }
-        })
-
         this.page.on('request', (res) => {
             if (res.url().indexOf('/search/matches/take') > -1) {
                 this.log.log('request', res.url())
             }
         })
 
-        this.page.on('error', e => {
-            this.log.log(e)
-        })
-
         const resultSubItems = Array.from(resultItems);
-        const resultSubItemsLength = 2// resultSubItems.length;
+        const resultSubItemsLength = resultSubItems.length;
         const expendCountPerTime = 2
         this.log.log('have result:', resultSubItemsLength);
         let extendIndex = 0
@@ -151,7 +141,7 @@ export class DAT extends SearchSite {
                 return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
-            this.log.log('index', index)
+            this.log.log('***************** index', index)
 
             if (index > -1) {
                 await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {

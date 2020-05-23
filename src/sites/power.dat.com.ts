@@ -112,7 +112,13 @@ export class DAT extends SearchSite {
         })
 
         this.page.on('request', (res) => {
-            console.log('request', res.url())
+            if (res.url().indexOf('/search/matches/take') > -1) {
+                this.log.log('request', res.url())
+            }
+        })
+
+        this.page.on('error', e => {
+            this.log.log(e)
         })
 
         const resultSubItems = Array.from(resultItems);
@@ -175,7 +181,8 @@ export class DAT extends SearchSite {
                 st = setTimeout(() => {
                     clearTimeout(st)
                     clearInterval(si)
-                    reject(this.generateError('search', 'detail not extend'))
+                    resolve()
+                    throw this.generateError('search', 'detail not extend')
                 }, 10000);
 
             }).catch((e) => {

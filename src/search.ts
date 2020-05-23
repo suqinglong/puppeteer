@@ -19,7 +19,8 @@ export class Search implements ISearchClass {
                 deviceScaleFactor: 2,
                 width: 1920,
                 height: 1080
-            }
+            },
+            dumpio: false
         });
         return browser.wsEndpoint();
     }

@@ -141,7 +141,7 @@ export class DAT extends SearchSite {
             }, element)
 
             await this.page.click(`.resultItem:nth-child(${index}) .age`, {
-                delay: 1000
+                delay: 100
             })
 
             await new Promise((resolve, reject) => {

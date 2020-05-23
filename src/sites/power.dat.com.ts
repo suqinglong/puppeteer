@@ -135,13 +135,13 @@ export class DAT extends SearchSite {
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
 
         try {
-            await this.page.waitFor(200)
+            await this.page.waitFor(1000)
             const index = await this.page.evaluate((element: HTMLElement) => {
                 const resultTable = document.querySelector('table.searchResultsTable')
                 return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
 
-            this.log.log('***************** index', index)
+            this.log.log('***************** index', index, await this.page.$eval('table.searchResultsTable', input => input.outerHTML))
 
             if (index > -1) {
                 await this.page.click(`.resultItem:nth-child(${index + 1}) .age`, {

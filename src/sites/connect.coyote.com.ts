@@ -90,15 +90,17 @@ export class Coyote extends SearchSite {
             [this.page.waitForSelector('#export-to-excel:not(:disabled)', {
                 timeout: 10000
             }),
-            new Promise(() => {
+            new Promise((resolve) => {
                 this.page.$eval('.alert__title.alert--empty', input => input.textContent).then((res:string) => {
                     if (res === 'No loads found') {
-                        throw this.generateError('noData', 'no data')
-                        
+                        resolve()
+                        throw this.generateError('noData', 'no data element found')
                     }
                 })
             })]
-        )
+        ).catch(() => {
+            throw this.generateError('noData', 'no data')
+        })
 
         await this.page.evaluate(() => {
             (document.querySelector('#export-to-excel') as HTMLElement).click();

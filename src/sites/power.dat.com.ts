@@ -1,9 +1,7 @@
-import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { GetDataFromHtml } from '../tools/power.data.com';
-import { TimeoutError } from 'puppeteer/Errors';
+import { ElementHandle } from 'puppeteer';
 
 export class DAT extends SearchSite {
     public static siteName = 'DAT';
@@ -27,99 +25,67 @@ export class DAT extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        // clear page popup
-        await this.page.click('.carriers .search').catch((e) => {
-            throw this.generateError('logout', 'logout');
-        });
-
+        await this.page.click('.carriers .search')
         // create new search
         await this.page.waitForSelector('.newSearch', {
             timeout: 5000
         });
-        await this.page
-            .click('.newSearch', {
-                delay: 100
-            })
-            .catch((e) => {
-                throw this.generateError('search', 'newSearch button click');
-            });
 
-        await this.page
-            .waitForSelector('.searchListTable .origin input', {
-                timeout: 5000,
-                visible: true
-            })
-            .catch((e) => {
-                this.log.log('waitForSelector searchListTable', e);
-                throw this.generateError('search', 'waitForSelector searchListTable');
-            });
+        await this.page.click('.newSearch', { delay: 100 })
 
-        if (task.criteria.origin) {
-            await this.page
-                .type('.searchListTable .origin input', task.criteria.origin)
-                .catch((e) => {
-                    this.log.log('type origin', e);
-                    throw this.generateError('search', 'wait for selector origin');
-                });
-        }
+        this.log.log('wait for origin input')
+        await this.page.waitForSelector('.searchListTable .origin input', {
+            timeout: 10000,
+            visible: true
+        })
 
-        if (task.criteria.destination) {
-            await this.page
-                .type('.searchListTable .dest input', task.criteria.destination)
-                .catch((e) => {
-                    this.log.log('type dest', e);
-                    throw this.generateError('search', 'wait for selector destination');
-                });
-        }
+        this.log.log('select equipment', task.criteria.equipment.toLowerCase())
+        await this.page.waitFor(200)
 
         if (task.criteria.equipment) {
-            await this.page
-                .type(
-                    '.searchListTable .equipSelect input',
-                    task.criteria.equipment.substr(0, 1).toUpperCase()
-                )
-                .catch((e) => {
-                    this.log.log('type equipment', e);
-                    throw this.generateError('search', 'wait for selector equipment');
-                });
+            await this.page.type('.searchListTable .equipSelect input#s2id_autogen2',
+                task.criteria.equipment, {
+                delay: 200
+            })
+            await this.page.waitForSelector('body > .select2-drop ul.select2-results li.select2-result-selectable')
+            const selectIndex = await this.page.evaluate((equipment: string) => {
+                let result = 1
+                document.querySelectorAll('body > .select2-drop ul.select2-results li.select2-result-selectable').forEach((el, index) => {
+                    if (el.querySelector('.select2-formatresult-code').textContent === equipment) {
+                        result = index + 1
+                    }
+                })
+                return result
+            }, task.criteria.equipment.substr(0, 1).toUpperCase())
+
+            await this.page.click(`body > .select2-drop ul.select2-results li.select2-result-selectable:nth-child(${selectIndex})`)
         }
 
-        await this.page
-            .type('.searchListTable .dho input', task.criteria.origin_radius)
-            .catch((e) => {
-                this.log.log('type dho', e);
-                throw this.generateError('search', 'wait for selector dho');
-            });
+        this.log.log('type origin')
+        if (task.criteria.origin) {
+            await this.page.type('.searchListTable .origin input', task.criteria.origin)
+        }
 
-        await this.page
-            .type('.searchListTable .dhd input', task.criteria.destination_radius)
-            .catch((e) => {
-                this.log.log('type dhd', e);
-                throw this.generateError('search', 'wait for selector dhd');
-            });
+        this.log.log('type destination')
+        if (task.criteria.destination) {
+            await this.page.type('.searchListTable .dest input', task.criteria.destination)
+        }
 
-        await this.page
-            .$eval('.searchListTable .avail input', (input) => {
-                (input as HTMLInputElement).value = '';
-            })
-            .catch((e) => {
-                this.log.log('clear avail', e);
-                throw this.generateError('search', 'wait for selector avail');
-            });
+        this.log.log('type origin_radius')
+        await this.page.type('.searchListTable .dho input', task.criteria.origin_radius)
 
-        await this.page.keyboard.press('Enter', { delay: 50 });
+        this.log.log('type destination_radius')
+        await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius)
 
+
+        this.log.log('type pick_up_date')
+        await this.page.focus('.searchListTable .avail input');
+        for (let i = 0; i < 10; i++) {
+            await this.page.keyboard.press('Backspace');
+        }
         const date = task.criteria.pick_up_date.substr(5).replace('-', '/');
-        await this.page.type('.searchListTable .avail input', date).catch((e) => {
-            this.log.log('type avail', e);
-            throw this.generateError('search', 'wait for selector avail');
-        });
-
-        this.log.log('search button click');
-        await this.page.evaluate(() => {
-            const button = document.querySelector('button.search') as HTMLElement;
-            button.click();
-        });
+        await this.page.type('.searchListTable .avail input', date)
+        await this.page.keyboard.press('Enter');
 
         this.log.log('wait result');
         await this.page
@@ -130,105 +96,119 @@ export class DAT extends SearchSite {
                 this.log.log('result error:', e);
                 throw this.generateError('search', 'wait for result');
             });
+        await this.page.click('.carriers .search')
 
-        await this.page.click('.carriers .search');
 
         this.log.log('have result');
-        const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
-            this.log.log('$$ .resultItem.exactMatch', e);
-            throw this.generateError('search', '$$ .resultItem.exactMatch');
+        const resultItems = await this.page.$$('.resultItem').catch((e) => {
+            this.log.log('$$ .resultItem', e);
+            throw this.generateError('search', '$$ .resultItem');
         });
 
-        const resultHtml1 = await this.page.$eval(
-            '.searchResultsTable',
-            (input) => input.outerHTML
-        );
+        await this.page.waitFor(2000)
 
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = resultSubItems.length;
-        this.log.log('expend details:', resultSubItemsLength);
-        await this.screenshot('get result');
-
-        // for (let i = 0; i < resultSubItemsLength; i++) {
-        //     await this.getDetailData(i + 2)
-        // }
-
-        await this.page.evaluate(async () => {
-            await (async () => {
-                async function sleep(num: number) {
-                    return new Promise((resolve) => {
-                        setTimeout(() => {
-                            resolve('test resolve');
-                        }, num);
-                    });
+        const expendCountPerTime = 2
+        let extendIndex = 0
+        while (extendIndex < resultSubItemsLength) {
+            const extendsPromises = []
+            for (let i = 0; i < expendCountPerTime; i++) {
+                if (extendIndex < resultSubItemsLength) {
+                    extendsPromises.push(this.getExtendItemData(resultSubItems[extendIndex++], task))
                 }
-                const els = Array.from(document.querySelectorAll('.resultItem.exactMatch'));
-                for (let i = 0, len = els.length; i < len; i++) {
-                    await sleep(200);
-                    (els[i] as HTMLElement).click();
-                }
-            })();
-        });
-        await this.page.waitFor(20000);
-        this.log.log('expended all details');
-        await this.screenshot('expended all details');
-
-        const resultHtml = await this.page
-            .$eval('.searchResultsTable', (res) => res.outerHTML)
-            .catch((e) => {
-                this.log.log('$eval .searchResultsTable', e);
-                throw this.generateError('search', '$eval .searchResultsTable');
-            });
-        const $ = cheerio.load(resultHtml);
-        const items = Array.from($('.resultItem.exactMatch')).map((item: any) => {
-            return GetDataFromHtml(task, $(item), $);
-        });
-
-        await PostSearchData(ModifyPostData(task, items)).then((res: any) => {
-            this.log.log(res.data);
-        });
+            }
+            await Promise.all(extendsPromises)
+        }
     }
 
     protected async afterSearch() {
         await this.cleanSearch();
     }
 
-    private async getDetailData(n: number) {
-        await this.page.evaluate(function (n) {
-            const wh = window.innerHeight;
-            for (let y = 0; y <= 300 * n; y += 10) {
-                window.scrollTo(0, wh + y);
-            }
-        }, n);
+    private async getExtendItemData(element: ElementHandle, task: ITASK) {
 
-        const extendClick = await this.page.evaluate((n) => {
-            const age = document.querySelector(
-                `.resultItem.exactMatch:nth-child(${n}) .age`
-            ) as HTMLElement;
-            if (age) {
-                age.click();
-                return n;
-            }
-            return 'getDetailData age not found';
-        }, n);
-        this.log.log('extendClick:', extendClick);
-        if (extendClick === 'getDetailData age not found') {
-            await this.screenshot('getDetailData age not found ' + n);
-        }
-        await this.page
-            .waitForSelector(`.resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`, {
-                timeout: 3000
-            })
-            .catch((e) => {
-                if (e instanceof TimeoutError) {
-                    this.log.log(
-                        `timeout .resultItem.exactMatch:nth-child(${n}) .widget-numbers-num`
-                    );
-                } else {
-                    this.log.log('getDetailData error:', e);
-                    throw this.generateError('search', 'getDetailData');
+        try {
+            await this.page.waitFor(200)
+            const index = await this.page.evaluate((element: HTMLElement) => {
+                const resultTable = document.querySelector('table.searchResultsTable')
+                return Array.from(resultTable.children).findIndex(item => item === element)
+            }, element)
+            
+            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+            const result = await element.evaluate((el: HTMLElement) => {
+                const result = {}
+                const dataItemClass = [
+                    '.age',
+                    ['.avail', 'pickUp'],
+                    ['.truck', 'equipment'],
+                    '.fp',
+                    ['.do', 'origin_radius'],
+                    '.origin',
+                    '.trip',
+                    ['.dest', 'destination'],
+                    ['.dd', 'destination_radius'],
+                    '.company',
+                    '.contact',
+                    '.length',
+                    '.weight',
+                    '.cs',
+                    '.dtp',
+                    '.factorable',
+                    '.rate'
+                ];
+
+                dataItemClass.forEach((item) => {
+                    let key: string;
+                    let selector: string;
+                    if (Array.isArray(item)) {
+                        [selector, key] = item;
+                    } else {
+                        selector = item;
+                        key = item.substr(1);
+                    }
+                    if (key === 'factorable') {
+                        result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no'
+                    } else {
+                        result[key] = el.querySelector(selector).textContent
+                    }
+                });
+
+                // details
+
+                el.querySelectorAll('.resultDetails dl').forEach(dl => {
+                    const dtDdNodes = dl.querySelectorAll('dt, dd')
+                    let key = ''
+                    dtDdNodes.forEach(item => {
+                        if (item.tagName === 'DT') {
+                            key = item.textContent.trim().replace(':', '').toLowerCase()
+                        } else if (item.tagName === 'DD') {
+                            result[key] = result[key] ? result[key] + " " + item.textContent : item.textContent
+                        }
+                    })
+                })
+
+                const rateview = {}
+                rateview['title'] = el.querySelector('.fm-rateview-widget-title').textContent + ' (' + el.querySelector('.widget-title-incl-text').textContent + ')'
+                rateview['num'] = el.querySelector('.widget-numbers-num').textContent
+                rateview['range'] = el.querySelector('.widget-numbers-range').textContent
+                result['rateview'] = rateview
+                return result
+            }, element)
+
+            for (let key in result) {
+                if (typeof result[key] === 'string') {
+                    result[key] = result[key].replace(/[\t\n]+/g, '').trim()
                 }
+            }
+            result['date'] = result['age'] + ' ' + result['pickUp'] + ' ' + (new Date()).getFullYear()
+
+            await PostSearchData(ModifyPostData(task, [result])).then((res: any) => {
+                this.log.log(res.data);
             });
+        } catch (e) {
+            this.log.log('pass this detail', e)
+        }
     }
 
     private async cleanSearch() {

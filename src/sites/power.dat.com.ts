@@ -43,6 +43,10 @@ export class DAT extends SearchSite {
         await this.page.waitFor(200)
 
         if (task.criteria.equipment) {
+            await this.page.focus('.searchListTable .equipSelect input#s2id_autogen2')
+            for (let i = 0; i < 10; i++) {
+                await this.page.keyboard.press('Backspace');
+            }
             await this.page.type('.searchListTable .equipSelect input#s2id_autogen2',
                 task.criteria.equipment, {
                 delay: 200
@@ -92,9 +96,8 @@ export class DAT extends SearchSite {
             .waitForSelector('.resultItem', {
                 timeout: 10000
             })
-            .catch((e) => {
-                this.log.log('result error:', e);
-                throw this.generateError('search', 'wait for result');
+            .catch(() => {
+                throw this.generateError('noData', 'wait for result');
             });
         await this.page.click('.carriers .search')
 
@@ -133,8 +136,24 @@ export class DAT extends SearchSite {
                 const resultTable = document.querySelector('table.searchResultsTable')
                 return Array.from(resultTable.children).findIndex(item => item === element)
             }, element)
-            
-            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`)
+
+
+            const st = setInterval(() => {
+                this.page.evaluate((element: HTMLElement) => {
+                    const clickEl = element.querySelector('.age') as HTMLElement
+                    clickEl.style.color = 'red'
+                    clickEl.click()
+                    console.log('clickEl', clickEl)
+                }, element)
+            }, 300)
+
+            await this.page.waitForSelector(`.resultItem:nth-child(${index + 1}) .widget-numbers`, {
+                timeout: 3000
+            }).finally(() => {
+                clearInterval(st)
+            })
+
+
             const result = await element.evaluate((el: HTMLElement) => {
                 const result = {}
                 const dataItemClass = [
@@ -206,7 +225,7 @@ export class DAT extends SearchSite {
                 this.log.log(res.data);
             });
         } catch (e) {
-            this.log.log('pass this detail', e)
+            this.log.log('pass this detail')
         }
     }
 

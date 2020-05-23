@@ -96,6 +96,8 @@ export class Coyote extends SearchSite {
                         resolve()
                         throw this.generateError('noData', 'no data element found')
                     }
+                }).catch(() => {
+                    this.log.log('not found .alert__title.alert--empty')
                 })
             })]
         ).catch(() => {

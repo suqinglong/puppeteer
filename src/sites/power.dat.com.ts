@@ -135,8 +135,10 @@ export class DAT extends SearchSite {
             await this.page.waitFor(200)
             const index = await this.page.evaluate((element: HTMLElement) => {
                 const resultTable = document.querySelector('table.searchResultsTable')
-                return Array.from(resultTable.children).findIndex(item => item === element)
+                return Array.from(resultTable.children).findIndex(item => item === element) + 1
             }, element)
+
+            await this.page.click(`.resultItem:nth-child(${index}) .age`)
 
             await new Promise((resolve, reject) => {
                 let si: NodeJS.Timeout

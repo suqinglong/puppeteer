@@ -39,7 +39,7 @@ export class DAT2 extends SearchSite {
     await this.page.waitFor(1000);
 
     this.page.on('response', async (res) => {
-      const url = res.url();
+      const url = res.url()
       let data: any;
 
       if (url.match('/search/matches/take')) {
@@ -90,6 +90,7 @@ export class DAT2 extends SearchSite {
           }
         }
       } else if (url.match('/search/rates/spot')) {
+        console.log('rate url', url)
         data = await res.text();
         responseCount++;
         resultRate[getParams(url, 'matchId')] = data;

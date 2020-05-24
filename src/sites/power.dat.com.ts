@@ -70,7 +70,7 @@ export class DAT extends SearchSite {
             })
         }
 
-        
+
 
         this.log.log('type destination')
         if (task.criteria.destination) {
@@ -88,7 +88,7 @@ export class DAT extends SearchSite {
             delay: 100
         })
 
-        
+
         this.log.log('type destination_radius', task.criteria.destination_radius)
         await this.page.focus('.searchListTable .dhd input');
         for (let i = 0; i < 10; i++) {
@@ -119,7 +119,7 @@ export class DAT extends SearchSite {
             delay: 100
         })
 
-        
+
         this.log.log('type destination_radius', task.criteria.destination_radius)
         await this.page.focus('.searchListTable .dhd input');
         for (let i = 0; i < 10; i++) {
@@ -189,6 +189,9 @@ export class DAT extends SearchSite {
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()
+                        console.log('fm-rateview-widget-title',
+                            element.querySelector('.fm-rateview-widget-title')?.textContent,
+                            element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length)
                         return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
                     }, element, n++)
 

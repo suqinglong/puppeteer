@@ -25,112 +25,117 @@ export class DAT extends SearchSite {
     }
 
     public async search(task: ITASK) {
-        await this.page.click('.carriers .search')
+        await this.page.click('.carriers .search');
         // create new search
         await this.page.waitForSelector('.newSearch', {
             timeout: 5000
         });
 
-        await this.page.click('.newSearch', { delay: 100 })
+        await this.page.click('.newSearch', { delay: 100 });
 
-        this.log.log('wait for origin input')
+        this.log.log('wait for origin input');
         await this.page.waitForSelector('.searchListTable .origin input', {
             timeout: 10000,
             visible: true
-        })
+        });
 
-        this.log.log('select equipment', task.criteria.equipment.toLowerCase())
+        this.log.log('select equipment', task.criteria.equipment.toLowerCase());
         if (task.criteria.equipment) {
-            await this.page.focus('.searchListTable .equipSelect input#s2id_autogen2')
+            await this.page.focus('.searchListTable .equipSelect input#s2id_autogen2');
             for (let i = 0; i < 10; i++) {
                 await this.page.keyboard.press('Backspace');
             }
-            await this.page.type('.searchListTable .equipSelect input#s2id_autogen2',
-                task.criteria.equipment, {
-                delay: 200
-            })
-            await this.page.waitForSelector('body > .select2-drop ul.select2-results li.select2-result-selectable')
+            await this.page.type(
+                '.searchListTable .equipSelect input#s2id_autogen2',
+                task.criteria.equipment,
+                {
+                    delay: 200
+                }
+            );
+            await this.page.waitForSelector(
+                'body > .select2-drop ul.select2-results li.select2-result-selectable'
+            );
             const selectIndex = await this.page.evaluate((equipment: string) => {
-                let result = 1
-                document.querySelectorAll('body > .select2-drop ul.select2-results li.select2-result-selectable').forEach((el, index) => {
-                    if (el.querySelector('.select2-formatresult-code')?.textContent === equipment) {
-                        result = index + 1
-                    }
-                })
-                return result
-            }, task.criteria.equipment.substr(0, 1).toUpperCase())
+                let result = 1;
+                document
+                    .querySelectorAll(
+                        'body > .select2-drop ul.select2-results li.select2-result-selectable'
+                    )
+                    .forEach((el, index) => {
+                        if (
+                            el.querySelector('.select2-formatresult-code')?.textContent ===
+                            equipment
+                        ) {
+                            result = index + 1;
+                        }
+                    });
+                return result;
+            }, task.criteria.equipment.substr(0, 1).toUpperCase());
 
-            await this.page.click(`body > .select2-drop ul.select2-results li.select2-result-selectable:nth-child(${selectIndex})`)
+            await this.page.click(
+                `body > .select2-drop ul.select2-results li.select2-result-selectable:nth-child(${selectIndex})`
+            );
         }
 
-        this.log.log('type origin')
+        this.log.log('type origin');
         if (task.criteria.origin) {
             await this.page.type('.searchListTable .origin input', task.criteria.origin, {
                 delay: 100
-            })
+            });
         }
 
-
-
-        this.log.log('type destination')
+        this.log.log('type destination');
         if (task.criteria.destination) {
             await this.page.type('.searchListTable .dest input', task.criteria.destination, {
                 delay: 100
-            })
+            });
         }
 
-        this.log.log('type origin_radius', task.criteria.origin_radius)
+        this.log.log('type origin_radius', task.criteria.origin_radius);
         await this.page.focus('.searchListTable .dho input');
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace');
         }
         await this.page.type('.searchListTable .dho input', task.criteria.origin_radius, {
             delay: 100
-        })
+        });
 
-
-        this.log.log('type destination_radius', task.criteria.destination_radius)
+        this.log.log('type destination_radius', task.criteria.destination_radius);
         await this.page.focus('.searchListTable .dhd input');
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace');
         }
         await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius, {
             delay: 100
-        })
+        });
 
-
-        this.log.log('type pick_up_date')
+        this.log.log('type pick_up_date');
         await this.page.focus('.searchListTable .avail input');
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace');
         }
         const date = task.criteria.pick_up_date.substr(5).replace('-', '/');
-        await this.page.type('.searchListTable .avail input', date)
+        await this.page.type('.searchListTable .avail input', date);
 
-
-
-
-        this.log.log('type origin_radius', task.criteria.origin_radius)
+        this.log.log('type origin_radius', task.criteria.origin_radius);
         await this.page.focus('.searchListTable .dho input');
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace');
         }
         await this.page.type('.searchListTable .dho input', task.criteria.origin_radius, {
             delay: 100
-        })
+        });
 
-
-        this.log.log('type destination_radius', task.criteria.destination_radius)
+        this.log.log('type destination_radius', task.criteria.destination_radius);
         await this.page.focus('.searchListTable .dhd input');
         for (let i = 0; i < 10; i++) {
             await this.page.keyboard.press('Backspace');
         }
         await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius, {
             delay: 100
-        })
+        });
 
-
-        await this.page.click('button.search')
+        await this.page.click('button.search');
 
         this.log.log('wait result');
         await this.page
@@ -140,7 +145,7 @@ export class DAT extends SearchSite {
             .catch(() => {
                 throw this.generateError('noData', 'wait for result');
             });
-        await this.page.click('.carriers .search')
+        await this.page.click('.carriers .search');
 
         const resultItems = await this.page.$$('.resultItem.exactMatch').catch((e) => {
             throw this.generateError('search', '$$ .resultItem.exactMatch');
@@ -148,28 +153,37 @@ export class DAT extends SearchSite {
 
         this.page.on('request', (res) => {
             if (res.url().indexOf('/search/matches/take') > -1) {
-                this.log.log('request', res.url())
+                this.log.log('request', res.url());
             }
-        })
+        });
 
-        this.page.on('console', msg => {
-            this.log.log('msg', msg.text())
-        })
+        this.page.on('console', (msg) => {
+            this.log.log('msg', msg.text());
+        });
+
+        this.page.on('error', (e) => {
+            this.log.log('error', e);
+        });
+
+        await this.page.click('.resultItem.exactMatch .avail');
+
+        await this.page.waitFor(5000);
+        await this.screenshot('');
 
         const resultSubItems = Array.from(resultItems);
         const resultSubItemsLength = resultSubItems.length;
-        const expendCountPerTime = 2
+        const expendCountPerTime = 2;
         this.log.log('have result:', resultSubItemsLength);
-        let extendIndex = 0
-        while (extendIndex < resultSubItemsLength) {
-            const extendsPromises = []
-            for (let i = 0; i < expendCountPerTime; i++) {
-                if (extendIndex < resultSubItemsLength) {
-                    extendsPromises.push(this.getExtendItemData(resultSubItems[extendIndex++], task))
-                }
-            }
-            await Promise.all(extendsPromises)
-        }
+        let extendIndex = 0;
+        // while (extendIndex < resultSubItemsLength) {
+        //     const extendsPromises = []
+        //     for (let i = 0; i < expendCountPerTime; i++) {
+        //         if (extendIndex < resultSubItemsLength) {
+        //             extendsPromises.push(this.getExtendItemData(resultSubItems[extendIndex++], task))
+        //         }
+        //     }
+        //     await Promise.all(extendsPromises)
+        // }
     }
 
     protected async afterSearch() {
@@ -178,48 +192,54 @@ export class DAT extends SearchSite {
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
         try {
-            await this.page.click('.resultItem.exactMatch .avail')
             const hasData = await new Promise((resolve) => {
-                let si: NodeJS.Timeout
-                let st: NodeJS.Timeout
-                let n = 0
+                let si: NodeJS.Timeout;
+                let st: NodeJS.Timeout;
+                let n = 0;
 
                 si = setInterval(async () => {
-                    const hasRateviewInfo = await this.page.evaluate((element: HTMLElement, n: number) => {
-                        const clickEl = element.querySelector('.avail') as HTMLElement
-                        clickEl.style.color = 'red'
-                        clickEl.setAttribute('n', String(n))
-                        clickEl.click()
-                        console.log('fm-rateview-widget-title:' + element.outerHTML)
-                        return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
-                    }, element, n++)
+                    const hasRateviewInfo = await this.page.evaluate(
+                        (element: HTMLElement, n: number) => {
+                            const clickEl = element.querySelector('.avail') as HTMLElement;
+                            clickEl.style.color = 'red';
+                            clickEl.setAttribute('n', String(n));
+                            clickEl.click();
+                            console.log('fm-rateview-widget-title:' + element.outerHTML);
+                            return (
+                                element
+                                    .querySelector('.fm-rateview-widget-title')
+                                    ?.textContent?.trim().length > 0
+                            );
+                        },
+                        element,
+                        n++
+                    );
 
-                    this.log.log('hasRateviewInfo:', hasRateviewInfo)
+                    this.log.log('hasRateviewInfo:', hasRateviewInfo);
 
                     if (hasRateviewInfo) {
-                        clearTimeout(st)
-                        clearInterval(si)
-                        resolve(true)
+                        clearTimeout(st);
+                        clearInterval(si);
+                        resolve(true);
                     }
-                }, 1000)
+                }, 1000);
 
                 st = setTimeout(() => {
-                    clearTimeout(st)
-                    clearInterval(si)
-                    resolve(false)
+                    clearTimeout(st);
+                    clearInterval(si);
+                    resolve(false);
                 }, 10000);
-
             }).catch((e) => {
-                this.log.log(e)
-                throw this.generateError('search', 'error in extend detail')
-            })
+                this.log.log(e);
+                throw this.generateError('search', 'error in extend detail');
+            });
 
             if (!hasData) {
-                return
+                return;
             }
 
             const result = await element.evaluate((el: HTMLElement) => {
-                const result = {}
+                const result = {};
                 const dataItemClass = [
                     '.age',
                     ['.avail', 'pickUp'],
@@ -250,46 +270,53 @@ export class DAT extends SearchSite {
                         key = item.substr(1);
                     }
                     if (key === 'factorable') {
-                        result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no'
+                        result[key] = el.querySelector('.factorable .trackLink') ? 'yes' : 'no';
                     } else {
-                        result[key] = el.querySelector(selector)?.textContent
+                        result[key] = el.querySelector(selector)?.textContent;
                     }
                 });
 
                 // details
 
-                el.querySelectorAll('.resultDetails dl').forEach(dl => {
-                    const dtDdNodes = dl.querySelectorAll('dt, dd')
-                    let key = ''
-                    dtDdNodes.forEach(item => {
+                el.querySelectorAll('.resultDetails dl').forEach((dl) => {
+                    const dtDdNodes = dl.querySelectorAll('dt, dd');
+                    let key = '';
+                    dtDdNodes.forEach((item) => {
                         if (item.tagName === 'DT') {
-                            key = item?.textContent.trim().replace(':', '').toLowerCase()
+                            key = item?.textContent.trim().replace(':', '').toLowerCase();
                         } else if (item.tagName === 'DD') {
-                            result[key] = result[key] ? result[key] + " " + item?.textContent : item?.textContent
+                            result[key] = result[key]
+                                ? result[key] + ' ' + item?.textContent
+                                : item?.textContent;
                         }
-                    })
-                })
+                    });
+                });
 
-                const rateview = {}
-                rateview['title'] = el.querySelector('.fm-rateview-widget-title')?.textContent + ' (' + el.querySelector('.widget-title-incl-text')?.textContent + ')'
-                rateview['num'] = el.querySelector('.widget-numbers-num')?.textContent
-                rateview['range'] = el.querySelector('.widget-numbers-range')?.textContent
-                result['rateview'] = rateview
-                return result
-            }, element)
+                const rateview = {};
+                rateview['title'] =
+                    el.querySelector('.fm-rateview-widget-title')?.textContent +
+                    ' (' +
+                    el.querySelector('.widget-title-incl-text')?.textContent +
+                    ')';
+                rateview['num'] = el.querySelector('.widget-numbers-num')?.textContent;
+                rateview['range'] = el.querySelector('.widget-numbers-range')?.textContent;
+                result['rateview'] = rateview;
+                return result;
+            }, element);
 
             for (let key in result) {
                 if (typeof result[key] === 'string') {
-                    result[key] = result[key].replace(/[\t\n]+/g, '').trim()
+                    result[key] = result[key].replace(/[\t\n]+/g, '').trim();
                 }
             }
-            result['date'] = result['age'] + ' ' + result['pickUp'] + ' ' + (new Date()).getFullYear()
+            result['date'] =
+                result['age'] + ' ' + result['pickUp'] + ' ' + new Date().getFullYear();
 
             await PostSearchData(ModifyPostData(task, [result])).then((res: any) => {
                 this.log.log(res.data);
             });
         } catch (e) {
-            this.log.log('pass this detail', e)
+            this.log.log('pass this detail', e);
         }
     }
 

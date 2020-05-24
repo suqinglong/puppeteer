@@ -2,14 +2,14 @@ import minimist from 'minimist';
 import xlsx from 'node-xlsx';
 import dateformat from 'dateformat';
 
-export function getParams(url:string, key:string):string {
-    const matches = url.match(/([^?=&]+=[^=&]+)/g)
-    const result = {}
-    matches.forEach(match => {
-        const [key, value] = match.split('=').map(item => decodeURIComponent(item))
-        result[key] = value
-    })
-    return result[key]
+export function getParams(url: string, key: string): string {
+    const matches = url.match(/([^?=&]+=[^=&]+)/g);
+    const result = {};
+    matches.forEach((match) => {
+        const [key, value] = match.split('=').map((item) => decodeURIComponent(item));
+        result[key] = value;
+    });
+    return result[key];
 }
 
 export function getMode(): IMode {

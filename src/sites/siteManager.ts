@@ -1,4 +1,5 @@
 import { DAT } from './power.dat.com';
+import { DAT2 } from './dat';
 import { Echo } from './echodrive.echo.com';
 import { JBHunt } from './www.jbhunt.com';
 import { CHRobinson } from './www.navispherecarrier.com';
@@ -14,7 +15,7 @@ import puppeteer from 'puppeteer';
 
 const sites = [
     Echo,
-    DAT,
+    DAT2,
     JBHunt,
     CHRobinson,
     Coyote,

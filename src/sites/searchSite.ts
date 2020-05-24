@@ -43,7 +43,7 @@ export abstract class SearchSite implements ISite {
                 await this.page.close();
             }
             this.log.log('search end and page closed');
-        } catch(e) {
+        } catch (e) {
             this.log.log('page close error', e);
         }
     }

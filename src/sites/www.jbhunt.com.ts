@@ -103,9 +103,9 @@ export class JBHunt extends SearchSite {
             ) as HTMLElement).click();
         });
         await this.page.waitForSelector('.loadboard-input .ui-dropdown-items');
-        let equipment = task.criteria.equipment.toLowerCase()
+        let equipment = task.criteria.equipment.toLowerCase();
         if (equipment === 'reefer') {
-            equipment = 'refrigerated'
+            equipment = 'refrigerated';
         }
         const equipmentOptionIndex = await this.page.evaluate((equipment) => {
             return Array.from(

@@ -86,23 +86,26 @@ export class Coyote extends SearchSite {
             downloadPath: this.downloadPath
         });
 
-        await Promise.race(
-            [this.page.waitForSelector('#export-to-excel:not(:disabled)', {
+        await Promise.race([
+            this.page.waitForSelector('#export-to-excel:not(:disabled)', {
                 timeout: 10000
             }),
             new Promise((resolve) => {
-                this.page.$eval('.alert__title.alert--empty', input => input.textContent).then((res:string) => {
-                    if (res === 'No loads found') {
-                        resolve()
-                        throw this.generateError('noData', 'no data element found')
-                    }
-                }).catch(() => {
-                    this.log.log('not found .alert__title.alert--empty')
-                })
-            })]
-        ).catch(() => {
-            throw this.generateError('noData', 'no data')
-        })
+                this.page
+                    .$eval('.alert__title.alert--empty', (input) => input.textContent)
+                    .then((res: string) => {
+                        if (res === 'No loads found') {
+                            resolve();
+                            throw this.generateError('noData', 'no data element found');
+                        }
+                    })
+                    .catch(() => {
+                        this.log.log('not found .alert__title.alert--empty');
+                    });
+            })
+        ]).catch(() => {
+            throw this.generateError('noData', 'no data');
+        });
 
         await this.page.evaluate(() => {
             (document.querySelector('#export-to-excel') as HTMLElement).click();

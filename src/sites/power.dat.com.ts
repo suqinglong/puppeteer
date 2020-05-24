@@ -178,6 +178,7 @@ export class DAT extends SearchSite {
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
         try {
+            await this.page.click('.resultItem.exactMatch .avail')
             const hasData = await new Promise((resolve) => {
                 let si: NodeJS.Timeout
                 let st: NodeJS.Timeout

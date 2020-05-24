@@ -178,7 +178,7 @@ export class DAT extends SearchSite {
 
     private async getExtendItemData(element: ElementHandle, task: ITASK) {
         try {
-            await new Promise((resolve) => {
+            const hasData = await new Promise((resolve) => {
                 let si: NodeJS.Timeout
                 let st: NodeJS.Timeout
                 let n = 0
@@ -189,29 +189,33 @@ export class DAT extends SearchSite {
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()
-                        console.log('fm-rateview-widget-title' +
-                            element.querySelector('.fm-rateview-widget-title')?.textContent +
-                            element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length)
+                        console.log('fm-rateview-widget-title:' + element.querySelector('.rateViewInfo').outerHTML)
                         return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
                     }, element, n++)
+
+                    this.log.log('hasRateviewInfo:', hasRateviewInfo)
 
                     if (hasRateviewInfo) {
                         clearTimeout(st)
                         clearInterval(si)
-                        resolve()
+                        resolve(true)
                     }
                 }, 1000)
 
                 st = setTimeout(() => {
                     clearTimeout(st)
                     clearInterval(si)
-                    resolve()
+                    resolve(false)
                 }, 10000);
 
             }).catch((e) => {
                 this.log.log(e)
                 throw this.generateError('search', 'error in extend detail')
             })
+
+            if (!hasData) {
+                return
+            }
 
             const result = await element.evaluate((el: HTMLElement) => {
                 const result = {}

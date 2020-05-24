@@ -189,8 +189,8 @@ export class DAT extends SearchSite {
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()
-                        console.log('fm-rateview-widget-title',
-                            element.querySelector('.fm-rateview-widget-title')?.textContent,
+                        console.log('fm-rateview-widget-title' +
+                            element.querySelector('.fm-rateview-widget-title')?.textContent +
                             element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length)
                         return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
                     }, element, n++)

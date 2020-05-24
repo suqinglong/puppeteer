@@ -189,7 +189,7 @@ export class DAT extends SearchSite {
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()
-                        console.log('fm-rateview-widget-title:' + element.querySelector('.rateViewInfo').outerHTML)
+                        console.log('fm-rateview-widget-title:' + element.outerHTML)
                         return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
                     }, element, n++)
 

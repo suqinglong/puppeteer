@@ -57,6 +57,13 @@ export class UberFreight extends SearchSite {
         );
         await this.page.click('[data-baseweb="typo-labelsmall"]');
 
+        this.log.log('Pickup end date');
+        await this.page.type(
+            '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"]:nth-child(5) input',
+            dateformat(new Date(Number(new Date(task.criteria.pick_up_date)) + 24 * 3600 * 1000), 'mm/dd/yyyy')
+        );
+        await this.page.click('[data-baseweb="typo-labelsmall"]');
+
         this.log.log('origin_radius');
         await this.page.focus(
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"]:nth-child(3) input'

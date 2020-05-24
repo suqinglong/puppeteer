@@ -55,7 +55,7 @@ export class DAT2 extends SearchSite {
           let exactList = data.matchSet?.exact;
           const searchId = data.searchId;
           if (Array.isArray(exactList)) {
-            exactList = exactList.slice(0, 1)
+            // exactList = exactList.slice(0, 1)
             resultCount = exactList.length;
             this.page.evaluate(
               (exactList: Array<any>, searchId: string) => {
@@ -119,7 +119,6 @@ export class DAT2 extends SearchSite {
   }
 
   private getData(resultBase: object, resultDetail: object, resultRate: object) {
-    this.log.log('getData', resultBase, resultDetail, resultRate)
     try {
       const result: any = [];
       Object.keys(resultBase).forEach((key) => {

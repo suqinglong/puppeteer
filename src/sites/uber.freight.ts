@@ -146,7 +146,7 @@ export class UberFreight extends SearchSite {
                     const link = (item as HTMLLinkElement).href;
                     const deadhead = item.querySelector('[role="gridcell"]:nth-child(8)')
                         .textContent;
-                    return { link, data: { deadhead } };
+                    return { link, data: { deadhead, date: task.criteria.pick_up_date } };
                 }
             );
         });
@@ -200,7 +200,7 @@ class UberDetailPage extends DetailPage {
                     )?.textContent;
 
                     const timeEl = itemEls[1];
-                    const date = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
+                    const pickUpDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
                         ?.textContent;
                     const pickUpTime = timeEl.querySelector(
                         '[data-baseweb=typo-paragraphsmall]:last-child'
@@ -216,7 +216,7 @@ class UberDetailPage extends DetailPage {
                     pickData = {
                         origin,
                         pickUpLocation,
-                        date,
+                        pickUpDate,
                         pickUpTime,
                         facilityOwner,
                         pickUpNotes
@@ -311,15 +311,6 @@ class UberDetailPage extends DetailPage {
             .catch((e: Error) => {
                 throw new SiteError('search', 'UberDetailPage: ' + e.message);
             });
-        this.log.log(result['date'], result['pickUpTime']);
-        result['date'] = dateformat(
-            (result['date'] as string).replace(/(\d{2})(\w{2})/, '$1') +
-                ' ' +
-                new Date().getFullYear() +
-                ' ' +
-                result['pickUpTime'],
-            'yyyy-mm-dd HH:MM'
-        );
         return result as IResultHTMLData;
     }
 }

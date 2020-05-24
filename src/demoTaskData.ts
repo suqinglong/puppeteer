@@ -31,7 +31,7 @@ export const TaskData = {
             origin: 'Hauppauge, NY',
             origin_radius: '150',
             destination: 'Windsor, CT',
-            destination_radius: '1',
+            destination_radius: '150',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },
@@ -147,10 +147,10 @@ export const TaskData = {
         email: 'primelinkexpress@live.com',
         password: 'Prime513@',
         criteria: {
-            origin: 'Linden, NJ',
-            origin_radius: '100',
-            destination: 'Lowell, IN',
-            destination_radius: '100',
+            origin: 'Hauppauge, NY',
+            origin_radius: '150',
+            destination: 'Windsor, CT',
+            destination_radius: '150',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

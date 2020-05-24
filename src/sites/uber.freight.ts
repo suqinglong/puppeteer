@@ -140,16 +140,16 @@ export class UberFreight extends SearchSite {
     }
 
     private async getDataFromHtml(task: ITASK) {
-        const linksAndData = await this.page.evaluate(() => {
+        const linksAndData = await this.page.evaluate((date) => {
             return Array.from(document.querySelectorAll('a[data-testid="load-table-row"]')).map(
                 (item) => {
                     const link = (item as HTMLLinkElement).href;
                     const deadhead = item.querySelector('[role="gridcell"]:nth-child(8)')
                         .textContent;
-                    return { link, data: { deadhead, date: task.criteria.pick_up_date } };
+                    return { link, data: { deadhead, date: date } };
                 }
             );
-        });
+        }, task.criteria.pick_up_date);
 
         this.log.log('links', linksAndData);
 

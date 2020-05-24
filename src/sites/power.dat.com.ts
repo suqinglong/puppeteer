@@ -184,15 +184,15 @@ export class DAT extends SearchSite {
                 let n = 0
 
                 si = setInterval(async () => {
-                    const hasNumber = await this.page.evaluate((element: HTMLElement, n: number) => {
+                    const hasRateviewInfo = await this.page.evaluate((element: HTMLElement, n: number) => {
                         const clickEl = element.querySelector('.avail') as HTMLElement
                         clickEl.style.color = 'red'
                         clickEl.setAttribute('n', String(n))
                         clickEl.click()
-                        return !!element.querySelector('.widget-numbers')
+                        return element.querySelector('.fm-rateview-widget-title')?.textContent?.trim().length > 0
                     }, element, n++)
 
-                    if (hasNumber) {
+                    if (hasRateviewInfo) {
                         clearTimeout(st)
                         clearInterval(si)
                         resolve()

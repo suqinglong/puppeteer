@@ -54,8 +54,8 @@ export class DAT2 extends SearchSite {
         if (data) {
           let exactList = data.matchSet?.exact;
           const searchId = data.searchId;
-          exactList = exactList.slice(0, 1)
           if (Array.isArray(exactList)) {
+            exactList = exactList.slice(0, 1)
             resultCount = exactList.length;
             this.page.evaluate(
               (exactList: Array<any>, searchId: string) => {
@@ -90,12 +90,14 @@ export class DAT2 extends SearchSite {
           }
         }
       } else if (url.match('/search/rates/spot')) {
-        console.log('rate url', url)
-        data = await res.text();
-        responseCount++;
-        resultRate[getParams(url, 'matchId')] = data;
-        if (responseCount === 2 * resultCount) {
-          waitResultResolve(this.getData(resultBase, resultDetail, resultRate));
+        const matchId = getParams(url, 'matchId')
+        if (matchId) {
+          data = await res.text();
+          responseCount++;
+          resultRate[matchId] = data;
+          if (responseCount === 2 * resultCount) {
+            waitResultResolve(this.getData(resultBase, resultDetail, resultRate));
+          }
         }
       }
     });

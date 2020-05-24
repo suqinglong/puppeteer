@@ -55,8 +55,10 @@ export class DAT2 extends SearchSite {
           let exactList = data.matchSet?.exact;
           const searchId = data.searchId;
           if (Array.isArray(exactList)) {
-            // exactList = exactList.slice(0, 1)
             resultCount = exactList.length;
+            if (resultCount === 0) {
+              throw this.generateError('noData', 'no data')
+            }
             this.page.evaluate(
               (exactList: Array<any>, searchId: string) => {
                 const $: any = window['$'];
@@ -88,6 +90,8 @@ export class DAT2 extends SearchSite {
               resultBase[item.id] = item;
             });
           }
+        } else {
+          throw this.generateError('search', 'search matches not found')
         }
       } else if (url.match('/search/rates/spot')) {
         const matchId = getParams(url, 'matchId')

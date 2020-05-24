@@ -29,9 +29,9 @@ export const TaskData = {
         password: 'Shostakovich5',
         criteria: {
             origin: 'Hauppauge, NY',
-            origin_radius: '15',
+            origin_radius: '150',
             destination: 'Windsor, CT',
-            destination_radius: '15',
+            destination_radius: '150',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

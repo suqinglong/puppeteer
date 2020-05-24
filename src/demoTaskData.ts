@@ -31,7 +31,7 @@ export const TaskData = {
             origin: 'Hauppauge, NY',
             origin_radius: '150',
             destination: 'Windsor, CT',
-            destination_radius: '150',
+            destination_radius: '1',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

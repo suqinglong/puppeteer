@@ -57,6 +57,7 @@ export class DAT2 extends SearchSite {
           if (Array.isArray(exactList)) {
             resultCount = exactList.length;
             if (resultCount === 0) {
+              waitResultResolve()
               throw this.generateError('noData', 'no data')
             }
             this.page.evaluate(
@@ -91,6 +92,7 @@ export class DAT2 extends SearchSite {
             });
           }
         } else {
+          waitResultResolve()
           throw this.generateError('search', 'search matches not found')
         }
       } else if (url.match('/search/rates/spot')) {
@@ -113,9 +115,11 @@ export class DAT2 extends SearchSite {
       waitResultResolve = resolve;
     });
 
-    await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-      this.log.log(res.data);
-    });
+    if (result) {
+      await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
+        this.log.log(res.data);
+      });
+    }
   }
 
   protected async afterSearch() {

@@ -58,7 +58,6 @@ export class DAT2 extends SearchSite {
             resultCount = exactList.length;
             if (resultCount === 0) {
               waitResultResolve()
-              throw this.generateError('noData', 'no data')
             }
             this.page.evaluate(
               (exactList: Array<any>, searchId: string) => {
@@ -119,6 +118,8 @@ export class DAT2 extends SearchSite {
       await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
         this.log.log(res.data);
       });
+    } else {
+      throw this.generateError('noData', 'no data')
     }
   }
 

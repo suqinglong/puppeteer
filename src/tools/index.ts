@@ -53,10 +53,10 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
             source: task.site,
             equipment: data.equipment,
             origin: data.origin,
-            origin_radius: data.origin_radius,
+            origin_radius: String(data.origin_radius),
             destination: data.destination,
-            destination_radius: data.destination_radius,
-            distance: data.distance || '0',
+            destination_radius: String(data.destination_radius),
+            distance: String(data.distance || '0'),
             extra: JSON.stringify(extroData)
         };
     });

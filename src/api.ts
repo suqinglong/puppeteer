@@ -5,7 +5,7 @@ export async function PostSearchData(records: Array<IResultData>): Promise<{ dat
     return axios.post(`${host}/api/internal/save_search_result`, {
         token,
         records
-    });
+    })
 }
 
 export async function AddNotification(userId: string, content: string) {

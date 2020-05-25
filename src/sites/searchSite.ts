@@ -38,13 +38,13 @@ export abstract class SearchSite implements ISite {
             await this.screenshot('search error, ' + task.task_id);
             this.log.log('search error', e);
         }
-        try {
-            if (getMode() === 'production') {
+        if (getMode() === 'production') {
+            try {
                 await this.page.close();
+                this.log.log('search end and page closed');
+            } catch (e) {
+                this.log.log('page close error', e);
             }
-            this.log.log('search end and page closed');
-        } catch (e) {
-            this.log.log('page close error', e);
         }
     }
 
@@ -52,7 +52,7 @@ export abstract class SearchSite implements ISite {
         this.page = await this.browser.newPage();
         await this.page.setViewport(viewPort);
         await this.page.setUserAgent(userAgent);
-
+        await this.afterPageCreated(task);
         await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
             throw this.generateError('searchTimeout', 'search page load timeout 1');
         });
@@ -70,8 +70,12 @@ export abstract class SearchSite implements ISite {
         }
     }
 
+    protected async afterPageCreated(task: ITASK) {
+
+    }
+
     // run after search and before page closed
-    protected async afterSearch() {}
+    protected async afterSearch() { }
 
     protected async doLogin(task: ITASK) {
         this.log.log('login begin');
@@ -102,8 +106,8 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async beforeLogin(task: ITASK) {}
-    protected async login(task: ITASK) {}
+    protected async beforeLogin(task: ITASK) { }
+    protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage);

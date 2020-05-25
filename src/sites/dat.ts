@@ -134,7 +134,8 @@ export class DAT2 extends SearchSite {
         const base = resultBase[key] || {};
         const detail = resultDetail[key] || {};
         const rate = resultRate[key] || {};
-        const dataItem = {
+        const dataItem:IResultHTMLData = {
+          date: base['age'] + ' ' + base['presentationDate'] + ' ' + new Date().getFullYear(),
           age: base.age,
           pickUp: base.presentationDate,
           equipment: base.equipmentClass,
@@ -155,7 +156,8 @@ export class DAT2 extends SearchSite {
           comment2: detail.comment2 || '',
           docketNumber: detail.docketNumber,
           referenceId: detail.referenceId,
-          rateView: this.getRateDataFromHtml(rate)
+          rateView: this.getRateDataFromHtml(rate),
+          distance: base.tripMiles
         };
 
         result.push(dataItem);

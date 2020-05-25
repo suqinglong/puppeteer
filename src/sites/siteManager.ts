@@ -4,6 +4,7 @@ import { Echo } from './echodrive.echo.com';
 import { JBHunt } from './www.jbhunt.com';
 import { CHRobinson } from './www.navispherecarrier.com';
 import { Coyote } from './connect.coyote.com';
+import { Coyote2 } from './coyote';
 import { Sunteck } from './carriers.suntecktts.com';
 import { Werner } from './www.werner.com';
 import { TQL } from './carrierdashboard.tql.com';
@@ -18,7 +19,7 @@ const sites = [
     DAT2,
     JBHunt,
     CHRobinson,
-    Coyote,
+    Coyote2,
     Sunteck,
     Werner,
     TQL,

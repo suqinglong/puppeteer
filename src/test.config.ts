@@ -3,7 +3,7 @@ import { SingletonTedis } from './tools/tedis';
 import { getMode } from './tools/index';
 
 const count = 1;
-const sourceLoad = 'Uber Freight';
+const sourceLoad = 'DAT';
 const isRandom = false;
 const sourceLoads = [
     'JB Hunt',

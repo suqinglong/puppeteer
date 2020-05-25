@@ -16,7 +16,7 @@ export class Search implements ISearchClass {
             ignoreDefaultArgs: ['--enable-automation'],
             args: ['--disable-gpu'],
             defaultViewport: {
-                deviceScaleFactor: 2,
+                deviceScaleFactor: 1,
                 width: 1920,
                 height: 1080
             },

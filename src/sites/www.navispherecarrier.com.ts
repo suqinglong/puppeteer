@@ -168,7 +168,7 @@ class CHRobinsonDetailPage extends DetailPage {
     protected async search(task: ITASK): Promise<void> {
         await this.page.waitForSelector('.card-view-component', {
             timeout: 5000
-        })
+        });
         const $ = cheerio.load(await this.page.content());
         let pickUpData = {};
         let dropOffData = {};
@@ -182,7 +182,7 @@ class CHRobinsonDetailPage extends DetailPage {
             const [pickOrDrop, dateTime, location, driverWork, weight, distance] = resultTableTr;
             if (pickOrDrop.indexOf('Pickup') > -1) {
                 pickUpData = {
-                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '\$1 '),
+                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '$1 '),
                     location,
                     driverWork,
                     weight,
@@ -190,7 +190,7 @@ class CHRobinsonDetailPage extends DetailPage {
                 };
             } else {
                 dropOffData = {
-                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '\$1 '),
+                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '$1 '),
                     location,
                     driverWork,
                     weight,

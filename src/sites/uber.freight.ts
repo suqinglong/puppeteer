@@ -3,7 +3,6 @@ import dateformat from 'dateformat';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
 import { SiteQueue, DetailPage } from '../tools/siteQueue';
-import { SiteError } from '../error';
 
 export class UberFreight extends SearchSite {
     public static siteName = 'Uber Freight';
@@ -170,7 +169,6 @@ export class UberFreight extends SearchSite {
         });
 
         const siteStack = new SiteQueue(detailPages, 5);
-
         await siteStack.search();
     }
 }

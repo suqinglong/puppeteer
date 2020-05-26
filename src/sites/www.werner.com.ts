@@ -51,7 +51,7 @@ export class Werner extends SearchSite {
         const $ = cheerio.load(content);
 
         await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
-            this.log.log(res.data);
+            this.log.log(res?.data);
         });
     }
 

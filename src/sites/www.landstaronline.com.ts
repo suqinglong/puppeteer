@@ -161,7 +161,7 @@ export class Landstar extends SearchSite {
         }
 
         await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
-            this.log.log(res.data);
+            this.log.log(res?.data);
         });
     }
 

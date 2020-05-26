@@ -149,7 +149,7 @@ export class TQL extends SearchSite {
         await PostSearchData(
             ModifyPostData(task, this.getDataFromResponse(responseData['PostedLoads']))
         ).then((res: any) => {
-            this.log.log(res.data);
+            this.log.log(res?.data);
         });
     }
 

@@ -139,7 +139,7 @@ export class JBHunt extends SearchSite {
             const data = response.data.searchTripsElasticOptimized?.data?.loads;
             await PostSearchData(ModifyPostData(task, this.getDataFromResponse(data))).then(
                 (res: any) => {
-                    this.log.log(res.data);
+                    this.log.log(res?.data);
                 }
             );
         } else {

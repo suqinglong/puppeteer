@@ -164,9 +164,9 @@ export const TaskData = {
         email: 'ajgtranspo',
         password: 'Loaded2020',
         criteria: {
-            origin: 'Atwater, CA',
+            origin: 'SYRACUSE, NY',
             origin_radius: '250',
-            destination: 'Sumner, WA',
+            destination: 'ROWLEY, MA',
             destination_radius: '250',
             pick_up_date: pickUpDate,
             equipment: 'Van'

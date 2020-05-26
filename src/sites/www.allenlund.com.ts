@@ -79,7 +79,7 @@ export class Allenlund extends SearchSite {
 
         const data = await this.getDataFromHtml();
         await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
-            this.log.log(res.data);
+            this.log.log(res?.data);
         });
     }
 

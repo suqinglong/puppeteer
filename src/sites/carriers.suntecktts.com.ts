@@ -82,7 +82,7 @@ export class Sunteck extends SearchSite {
         const resultData = this.getDataFromHtml($, task);
 
         await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
-            this.log.log(res.data);
+            this.log.log(res?.data);
         });
     }
 

@@ -115,7 +115,7 @@ export class DAT extends SearchSite {
 
         if (result) {
             await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                this.log.log(res.data);
+                this.log.log(res?.data);
             });
         } else {
             throw this.generateError('noData', 'no data');

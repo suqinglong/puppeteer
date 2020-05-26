@@ -150,6 +150,9 @@ export class TQL extends SearchSite {
             ModifyPostData(task, this.getDataFromResponse(responseData['PostedLoads']))
         ).then((res: any) => {
             this.log.log(res?.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
         });
     }
 

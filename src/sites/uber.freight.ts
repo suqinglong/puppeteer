@@ -307,6 +307,9 @@ class UberDetailPage extends DetailPage {
         const data = { ...result, ...this.getOriginalData() };
         await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
             this.log.log(res?.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
         });
     }
 }

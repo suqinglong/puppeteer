@@ -123,6 +123,9 @@ export class Coyote extends SearchSite {
 
         await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
             this.log.log('res:', res.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
         });
     }
 }

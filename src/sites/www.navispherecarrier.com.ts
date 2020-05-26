@@ -228,6 +228,9 @@ class CHRobinsonDetailPage extends DetailPage {
         };
         await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
             this.log.log(res?.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
         });
     }
 }

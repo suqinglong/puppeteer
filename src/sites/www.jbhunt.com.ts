@@ -140,6 +140,9 @@ export class JBHunt extends SearchSite {
             await PostSearchData(ModifyPostData(task, this.getDataFromResponse(data))).then(
                 (res: any) => {
                     this.log.log(res?.data);
+                    if (!res.data) {
+                        this.log.log('ajax error', res)
+                    }
                 }
             );
         } else {

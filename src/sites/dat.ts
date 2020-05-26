@@ -116,6 +116,9 @@ export class DAT extends SearchSite {
         if (result) {
             await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
                 this.log.log(res?.data);
+                if (!res.data) {
+                    this.log.log('ajax error', res)
+                }
             });
         } else {
             throw this.generateError('noData', 'no data');

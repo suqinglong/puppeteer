@@ -40,6 +40,9 @@ export class Echo extends SearchSite {
         const $ = cheerio.load(resultHtml);
         await PostSearchData(this.getDataFromHtml($, task)).then((res: any) => {
             console.log('EchodriveEchoCom', res.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
         });
     }
 

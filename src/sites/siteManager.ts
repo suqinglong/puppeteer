@@ -1,10 +1,8 @@
-import { DAT } from './power.dat.com';
-import { DAT2 } from './dat';
+import { DAT } from './dat';
 import { Echo } from './echodrive.echo.com';
 import { JBHunt } from './www.jbhunt.com';
 import { CHRobinson } from './www.navispherecarrier.com';
-import { Coyote } from './connect.coyote.com';
-import { Coyote2 } from './coyote';
+import { Coyote } from './coyote';
 import { Sunteck } from './carriers.suntecktts.com';
 import { Werner } from './www.werner.com';
 import { TQL } from './carrierdashboard.tql.com';
@@ -16,10 +14,10 @@ import puppeteer from 'puppeteer';
 
 const sites = [
     Echo,
-    DAT2,
+    DAT,
     JBHunt,
     CHRobinson,
-    Coyote2,
+    Coyote,
     Sunteck,
     Werner,
     TQL,

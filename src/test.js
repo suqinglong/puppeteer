@@ -1,3 +1,11 @@
-const dateformat = require('dateformat');
+async function test1() {
+    try {
+        await new Promise((resolve, reject) => {
+            reject(new Error('error'));
+        });
+    } catch (e) {
+        console.log('error', e);
+    }
+}
 
-console.log(dateformat('May 26'));
+test1();

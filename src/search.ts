@@ -1,23 +1,19 @@
 import puppeteer from 'puppeteer';
-import { Settings } from './settings';
-import { getMode, useDev } from './tools/index';
-import { SingletonTedis } from './tools/tedis';
+import { ChromeSettings } from './settings';
+import { Config } from './tools/index';
 import { SearchSite } from './sites/searchSite';
 import { SiteManager } from './sites/siteManager';
 
 export class Search implements ISearchClass {
-    private mode: IMode = getMode();
-    private settings = this.mode === 'develop' ? (useDev() === 'yes' ? Settings : {}) : {};
-
     // create browser for one user, this browser will be found by endpoint stored in redis.
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
-            ...this.settings,
+            ...(Config.isUseChrome ? ChromeSettings : {}),
             ignoreDefaultArgs: ['--enable-automation'],
             args: ['--disable-gpu'],
             defaultViewport: {
-                deviceScaleFactor: 1    ,
-                width: 1920,
+                deviceScaleFactor: 1,
+                width: 2200,
                 height: 1080
             },
             dumpio: false

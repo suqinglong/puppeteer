@@ -3,24 +3,19 @@ import dateformat from 'dateformat';
 import { PostSearchData } from '../api';
 import { createUrl, ModifyPostData } from '../tools/index';
 
-export class Coyote2 extends SearchSite {
+export class Coyote extends SearchSite {
     public static siteName = 'Coyote';
     public debugPre = 'Coyote';
     protected loginPage =
         'https://api.coyote.com/Account/Login?ReturnUrl=%2Fconnect%2Fauthorize%2Fcallback%3Fauthority%3Dhttps%253A%252F%252Fapi.coyote.com%26client_id%3Dcoyote_connect_client%26redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26response_type%3Did_token%2520token%26scope%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%2520openid%26post_logout_redirect_uri%3Dhttps%253A%252F%252Fconnect.coyote.com%252F%26acr_values%26state%3D%252F%26nonce%3Dhttps%253A%252F%252Fconnect.coyote.com';
     protected searchPage: string;
     private searchResolve: Function;
-    private isSearchEnd = false
+    private isSearchEnd = false;
 
     protected async shouldLogin(): Promise<boolean> {
         const whichPage = await Promise.race([
-            this.page
-                .waitForSelector('#export-to-excel')
-                .then(() => 'searchPage'),
-            this.page
-                .waitForSelector('#Username')
-                .then(() => 'loginPage')
-
+            this.page.waitForSelector('#export-to-excel').then(() => 'searchPage'),
+            this.page.waitForSelector('#Username').then(() => 'loginPage')
         ]);
         return whichPage === 'loginPage';
     }
@@ -68,48 +63,50 @@ export class Coyote2 extends SearchSite {
             savedLoadsOnly: false,
             sortColumnName: 'pickup date'
         };
-        
+
         this.searchPage = createUrl('https://connect.coyote.com/available-loads-v3', search);
         await super.beforeSearch(task);
     }
 
     protected async search(task: ITASK) {
-        await new Promise(resolve => {
-            this.searchResolve = resolve
-        })
+        await new Promise((resolve) => {
+            this.searchResolve = resolve;
+        });
     }
 
     protected async afterPageCreated(task: ITASK) {
-        this.page.on('response', async res => {
-            if (this.isSearchEnd) return
+        this.page.on('response', async (res) => {
+            if (this.isSearchEnd) return;
             if (res.url().match('Coyote.Client.WebApi/v2/loadsearch/availableloads')) {
-                const dataJson: any = await res.json()
-                const url = res.url()
+                const dataJson: any = await res.json();
+                const url = res.url();
                 if (dataJson) {
-                    this.log.log('dataJson.pagination', dataJson.pagination, 'url', url)
-                    const limit = dataJson.pagination.limit as number
-                    const totalCount = dataJson.pagination.totalCount as number
-                    const offset = dataJson.pagination.offset as number
+                    this.log.log('dataJson.pagination', dataJson.pagination, 'url', url);
+                    const limit = dataJson.pagination.limit as number;
+                    const totalCount = dataJson.pagination.totalCount as number;
+                    const offset = dataJson.pagination.offset as number;
                     if (totalCount > limit) {
-                        const nextPageUrl = url.replace(/offset=(\d+)/, `offset=${limit + offset}`).replace(/limit=(\d+)/, `limit=${limit}`)
+                        const nextPageUrl = url
+                            .replace(/offset=(\d+)/, `offset=${limit + offset}`)
+                            .replace(/limit=(\d+)/, `limit=${limit}`);
                         this.page.evaluate((nextPageUrl) => {
-                            const $ = window['$']
-                            $.ajax(nextPageUrl)
-                        }, nextPageUrl)
+                            const $ = window['$'];
+                            $.ajax(nextPageUrl);
+                        }, nextPageUrl);
                     }
                     await this.postDataFromResponse(task, dataJson.loads).then(() => {
                         if (totalCount <= limit + offset) {
-                            this.isSearchEnd = true
-                            this.searchResolve && this.searchResolve(true)
+                            this.isSearchEnd = true;
+                            this.searchResolve && this.searchResolve(true);
                         }
-                    })
+                    });
                 }
             }
-        })
+        });
     }
 
     private async postDataFromResponse(task: ITASK, data: Array<{ [key: string]: any }>) {
-        const result: Array<IResultHTMLData> = data.map(item => {
+        const result: Array<IResultHTMLData> = data.map((item) => {
             return {
                 date: item.stops[0].scheduleOpenTime,
                 equipment: item.equipmentType,
@@ -121,11 +118,11 @@ export class Coyote2 extends SearchSite {
                 weight: item.totalWeight,
                 loadId: item.loadId,
                 stops: item.stops.length
-            }
-        })
+            };
+        });
 
         await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
             this.log.log('res:', res.data);
-        })
+        });
     }
 }

@@ -1,9 +1,9 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
-import { ModifyPostData } from '../tools/index';
+import { ModifyPostData, createUrl } from '../tools/index';
 import { PostSearchData } from '../api';
 import dateformat from 'dateformat';
-import { SiteStack, DetailPage } from '../tools/siteStack';
+import { SiteQueue, DetailPage } from '../tools/siteQueue';
 
 export class CHRobinson extends SearchSite {
     public static siteName = 'CH Robinson';
@@ -20,29 +20,21 @@ export class CHRobinson extends SearchSite {
     }
 
     protected async login(task: ITASK) {
-        await this.page
-            .waitForSelector('#Username', {
-                timeout: 5000
-            })
-            .catch((e) => {
-                this.log.log('waitForSelector Username', e);
-            });
+        await this.page.waitForSelector('#Username', {
+            timeout: 5000
+        });
         await this.page.type('#Username', task.email).catch((e) => {
             this.log.log('type Username', e);
         });
-
         await this.page.waitForSelector('#Password');
         await this.page.type('#Password', task.password).catch((e) => {
             this.log.log('type Password', e);
         });
-
         await this.page.waitForSelector('#btnLogin');
-        // page.click('#btnLogin') doesn't works
         await this.page.evaluate(() => {
             let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
             btn.click();
         });
-
         await this.page.waitForSelector('div.find-loads', { timeout: 10000 });
     }
 
@@ -86,33 +78,19 @@ export class CHRobinson extends SearchSite {
             mode: task.criteria.equipment.substr(0, 1).toUpperCase()
         };
 
-        let searchQuery = '';
-        Object.keys(search).forEach((key) => {
-            searchQuery += `&${key}=${encodeURIComponent(search[key])}`;
-        });
-        this.searchPage = this.host + '/find-loads/single?' + searchQuery.substr(1);
+        this.searchPage = createUrl(this.host + '/find-loads/singl', search);
         await super.beforeSearch(task);
     }
 
     protected async search(task: ITASK) {
-        await this.page
-            .waitForSelector('.loading-indicator', {
-                timeout: 10000,
-                hidden: true
-            })
-            .catch((e) => {
-                this.log.log('wait loading', e);
-                throw this.generateError('search', 'wait loading');
-            });
+        await this.page.waitForSelector('.loading-indicator', {
+            timeout: 10000,
+            hidden: true
+        });
 
-        await this.page
-            .waitForSelector('.data-table', {
-                timeout: 20000
-            })
-            .catch((e) => {
-                this.log.log('wait for data-table');
-                throw this.generateError('noData', 'no data');
-            });
+        await this.page.waitForSelector('.data-table', {
+            timeout: 20000
+        });
 
         const resultHtml = await this.page.$eval('.data-table', (res) => res.outerHTML);
         const $ = cheerio.load(resultHtml);
@@ -134,18 +112,13 @@ export class CHRobinson extends SearchSite {
         );
 
         const detailPages = linksAndData.map((item) => {
-            return new CHRobinsonDetailPage(item.link, this.browser, item.data);
+            const instance = new CHRobinsonDetailPage(item.link, item.data);
+            instance.prePare(this.browser, task);
+            return instance;
         });
 
-        const siteStack = new SiteStack(detailPages, 5, async (result) => {
-            if (result.length > 0) {
-                await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                    this.log.log(res.data);
-                });
-            }
-        });
-        await siteStack.search();
-        this.log.log('siteStack search end');
+        const siteQueue = new SiteQueue(detailPages, 5);
+        await siteQueue.search();
     }
 
     private getDataFromHtml($: CheerioStatic, taskID: string): Array<any> {
@@ -192,14 +165,10 @@ export class CHRobinson extends SearchSite {
 
 class CHRobinsonDetailPage extends DetailPage {
     protected debugPre = 'CHRobinsonDetailPage';
-    protected async search(): Promise<any> {
-        await this.page
-            .waitForSelector('.card-view-component', {
-                timeout: 5000
-            })
-            .catch((e) => {
-                this.log.log('goToDetailPage timeout:', e);
-            });
+    protected async search(task: ITASK): Promise<void> {
+        await this.page.waitForSelector('.card-view-component', {
+            timeout: 5000
+        })
         const $ = cheerio.load(await this.page.content());
         let pickUpData = {};
         let dropOffData = {};
@@ -213,7 +182,7 @@ class CHRobinsonDetailPage extends DetailPage {
             const [pickOrDrop, dateTime, location, driverWork, weight, distance] = resultTableTr;
             if (pickOrDrop.indexOf('Pickup') > -1) {
                 pickUpData = {
-                    dateTime,
+                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '\$1 '),
                     location,
                     driverWork,
                     weight,
@@ -221,7 +190,7 @@ class CHRobinsonDetailPage extends DetailPage {
                 };
             } else {
                 dropOffData = {
-                    dateTime,
+                    dateTime: dateTime.replace(/(\d{2}\/\d{2}\/\d{4})/, '\$1 '),
                     location,
                     driverWork,
                     weight,
@@ -250,6 +219,15 @@ class CHRobinsonDetailPage extends DetailPage {
             });
         });
 
-        return { pickUpData, dropOffData, requirementData, contactData };
+        const data = {
+            pickUpData,
+            dropOffData,
+            requirementData,
+            contactData,
+            ...this.getOriginalData()
+        };
+        await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
+            this.log.log(res.data);
+        });
     }
 }

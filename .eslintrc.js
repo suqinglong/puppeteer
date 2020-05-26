@@ -3,6 +3,7 @@ module.exports = {
     plugins: ['@typescript-eslint'],
     extends: ['alloy', 'alloy/typescript'],
     rules: {},
+    ignorePatterns: [ "dist/*"],
     parserOptions: {
         ecmaVersion: 6,
         sourceType: 'module',

@@ -2,6 +2,12 @@ import minimist from 'minimist';
 import xlsx from 'node-xlsx';
 import dateformat from 'dateformat';
 
+export const Config = {
+    isDevelop: getMode() === 'develop',
+    isUseScreenshot: useScreenshot() === 'yes',
+    isUseChrome: useChrome() === 'yes' // if use headless browser or chrome client
+};
+
 export function getParams(url: string, key: string): string {
     const matches = url.match(/([^?=&]+=[^=&]+)/g);
     const result = {};
@@ -12,17 +18,17 @@ export function getParams(url: string, key: string): string {
     return result[key];
 }
 
-export function getMode(): IMode {
+function getMode(): IMode {
     let args = minimist(process.argv.slice(2));
     return args.mode;
 }
 
-export function useDev(): 'yes' | null {
+function useChrome(): 'yes' | null {
     let args = minimist(process.argv.slice(2));
-    return args.usedev;
+    return args.useChrome;
 }
 
-export function useScreenshot(): 'yes' | null {
+function useScreenshot(): 'yes' | null {
     let args = minimist(process.argv.slice(2));
     return args.useScreenshot;
 }
@@ -60,7 +66,7 @@ export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultD
             extra: JSON.stringify(extroData)
         };
     });
-    if (getMode() === 'develop') {
+    if (Config.isDevelop) {
         console.log('ModifyPostData', result);
     }
     return result;

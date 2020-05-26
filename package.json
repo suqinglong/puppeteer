@@ -6,8 +6,8 @@
   "scripts": {
     "memoryTest": "node ./dist/memoryTest.js",
     "build": "rm -rf ./dist/* && tsc",
-    "test": "yarn build && node ./dist/index.js --mode=develop --usedev=no --useScreenshot=yes",
-    "testDemo": "yarn build && node ./dist/index.js --mode=develop --usedev=yes", 
+    "test": "yarn build && node ./dist/index.js --mode=develop --useChrome=no --useScreenshot=yes",
+    "testDemo": "yarn build && node ./dist/index.js --mode=develop --useChrome=yes", 
     "product": "yarn build && node ./dist/index.js --useScreenshot=yes",
     "deploy": "yarn build && rsync -auvhp --delete --exclude=node_modules --exclude=dist ./* aws-redot-test:~/puppeteer",
     "lint": "eslint src --ext .ts && prettier --write -l \"./src/**/*\"",

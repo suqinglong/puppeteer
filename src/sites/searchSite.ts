@@ -2,7 +2,7 @@ import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
 import { AddNotification, InactiveLoadSource } from '../api';
 import { SiteError } from '../error';
-import { useScreenshot, getMode } from '../tools/index';
+import { Config } from '../tools/index';
 import { Log } from '../tools/log';
 import { userAgent, viewPort, pageWaitTime } from '../settings';
 
@@ -11,7 +11,7 @@ export abstract class SearchSite implements ISite {
     protected debugPre = '';
     protected browser: puppeteer.Browser;
     protected page: puppeteer.Page;
-    protected isUseScreenshot = useScreenshot() === 'yes';
+    protected isUseScreenshot = Config.isUseScreenshot;
     protected log: Log;
     protected loginPage: string;
     protected searchPage: string;
@@ -38,7 +38,7 @@ export abstract class SearchSite implements ISite {
             await this.screenshot('search error, ' + task.task_id);
             this.log.log('search error', e);
         }
-        if (getMode() === 'production') {
+        if (!Config.isDevelop) {
             try {
                 await this.page.close();
                 this.log.log('search end and page closed');
@@ -70,12 +70,10 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async afterPageCreated(task: ITASK) {
-
-    }
+    protected async afterPageCreated(task: ITASK) {}
 
     // run after search and before page closed
-    protected async afterSearch() { }
+    protected async afterSearch() {}
 
     protected async doLogin(task: ITASK) {
         this.log.log('login begin');
@@ -106,8 +104,8 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async beforeLogin(task: ITASK) { }
-    protected async login(task: ITASK) { }
+    protected async beforeLogin(task: ITASK) {}
+    protected async login(task: ITASK) {}
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage);

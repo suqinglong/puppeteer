@@ -2,10 +2,12 @@ import axios from 'axios';
 import { host, token } from './settings';
 
 export async function PostSearchData(records: Array<IResultData>): Promise<{ data: any }> {
-    return axios.post(`${host}/api/internal/save_search_result`, {
-        token,
-        records
-    })
+    if (records.length > 0) {
+        return axios.post(`${host}/api/internal/save_search_result`, {
+            token,
+            records
+        });
+    }
 }
 
 export async function AddNotification(userId: string, content: string) {

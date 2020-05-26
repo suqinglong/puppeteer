@@ -1,10 +1,9 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
-import { getMode } from './tools/index';
+import { Config } from './tools/index';
 import { prePareTestData } from './test.config';
 
 export class Tasks implements ITasksClass {
-    private mode: IMode = getMode();
     private search = new Search();
 
     public async getTask() {
@@ -59,7 +58,7 @@ export class Tasks implements ITasksClass {
 
     private async prepare() {
         await SingletonTedis.deleteKeys();
-        if (this.mode === 'develop') {
+        if (Config.isDevelop) {
             // do something
             await prePareTestData();
         }

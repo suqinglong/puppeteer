@@ -1,9 +1,9 @@
 import { TaskData } from './demoTaskData';
 import { SingletonTedis } from './tools/tedis';
-import { getMode } from './tools/index';
+import { Config } from './tools/index';
 
 const count = 1;
-const sourceLoad = 'DAT';
+const sourceLoad = 'Uber Freight';
 const isRandom = false;
 const sourceLoads = [
     'JB Hunt',
@@ -17,7 +17,7 @@ const sourceLoads = [
 ];
 
 export async function prePareTestData() {
-    if (getMode() === 'develop') {
+    if (Config.isDevelop) {
         for (let i = 0; i < count; i++) {
             let source = '';
             let random = Math.floor(Math.random() * sourceLoads.length);

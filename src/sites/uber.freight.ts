@@ -2,7 +2,7 @@ import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
 import { ModifyPostData } from '../tools/index';
 import { PostSearchData } from '../api';
-import { SiteStack, DetailPage } from '../tools/siteStack';
+import { SiteQueue, DetailPage } from '../tools/siteQueue';
 import { SiteError } from '../error';
 
 export class UberFreight extends SearchSite {
@@ -60,7 +60,10 @@ export class UberFreight extends SearchSite {
         this.log.log('Pickup end date');
         await this.page.type(
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"]:nth-child(5) input',
-            dateformat(new Date(Number(new Date(task.criteria.pick_up_date)) + 24 * 3600 * 1000), 'mm/dd/yyyy')
+            dateformat(
+                new Date(Number(new Date(task.criteria.pick_up_date)) + 24 * 3600 * 1000),
+                'mm/dd/yyyy'
+            )
         );
         await this.page.click('[data-baseweb="typo-labelsmall"]');
 
@@ -161,14 +164,12 @@ export class UberFreight extends SearchSite {
         this.log.log('links', linksAndData);
 
         const detailPages = linksAndData.map((item) => {
-            return new UberDetailPage(item.link, this.browser, item.data);
+            const instance = new UberDetailPage(item.link, item.data);
+            instance.prePare(this.browser, task);
+            return instance;
         });
 
-        const siteStack = new SiteStack(detailPages, 5, async (result) => {
-            await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                this.log.log(res.data);
-            });
-        });
+        const siteStack = new SiteQueue(detailPages, 5);
 
         await siteStack.search();
     }
@@ -176,148 +177,138 @@ export class UberFreight extends SearchSite {
 
 class UberDetailPage extends DetailPage {
     protected debugPre = 'UberDetailPage';
-    protected async search(): Promise<IResultHTMLData> {
-        await this.page
-            .waitForSelector('section[data-baseweb="card"]', { timeout: 10000 })
-            .catch((e) => {
-                throw new SiteError(
-                    'search',
-                    'UberDetailPage waitForSelector section[data-baseweb="card"]'
+    protected async search(task: ITASK): Promise<void> {
+        await this.page.waitForSelector('section[data-baseweb="card"]', { timeout: 10000 });
+        const result = await this.page.evaluate(() => {
+            const cards = Array.from(document.querySelectorAll('section[data-baseweb="card"]'));
+
+            let result = {};
+            let pickData = {};
+            let dropOffData = {};
+            let bookData = {};
+
+            {
+                const pickupSection = cards[0];
+                const itemEls = Array.from(
+                    pickupSection.querySelectorAll('[data-baseweb=flex-grid-item]')
                 );
-            });
-        const result = await this.page
-            .evaluate(() => {
-                const cards = Array.from(document.querySelectorAll('section[data-baseweb="card"]'));
+                const locationEl = itemEls[0];
+                const origin = locationEl.querySelector('[data-baseweb=typo-paragraphmedium]')
+                    ?.textContent;
+                const pickUpLocation = locationEl.querySelector(
+                    '[data-baseweb=typo-paragraphsmall]:last-child'
+                )?.textContent;
 
-                let result = {};
-                let pickData = {};
-                let dropOffData = {};
-                let bookData = {};
+                const timeEl = itemEls[1];
+                const pickUpDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
+                    ?.textContent;
+                const pickUpTime = timeEl.querySelector(
+                    '[data-baseweb=typo-paragraphsmall]:last-child'
+                )?.textContent;
 
-                {
-                    const pickupSection = cards[0];
-                    const itemEls = Array.from(
-                        pickupSection.querySelectorAll('[data-baseweb=flex-grid-item]')
-                    );
-                    const locationEl = itemEls[0];
-                    const origin = locationEl.querySelector('[data-baseweb=typo-paragraphmedium]')
-                        ?.textContent;
-                    const pickUpLocation = locationEl.querySelector(
-                        '[data-baseweb=typo-paragraphsmall]:last-child'
-                    )?.textContent;
+                const facilityOwner = itemEls[2].querySelector(
+                    '[data-baseweb="typo-paragraphmedium"]'
+                )?.textContent;
+                const pickUpNotes = pickupSection.querySelector(
+                    '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
+                )?.textContent;
 
-                    const timeEl = itemEls[1];
-                    const pickUpDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
-                        ?.textContent;
-                    const pickUpTime = timeEl.querySelector(
-                        '[data-baseweb=typo-paragraphsmall]:last-child'
-                    )?.textContent;
-
-                    const facilityOwner = itemEls[2].querySelector(
-                        '[data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-                    const pickUpNotes = pickupSection.querySelector(
-                        '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-
-                    pickData = {
-                        origin,
-                        pickUpLocation,
-                        pickUpDate,
-                        pickUpTime,
-                        facilityOwner,
-                        pickUpNotes
-                    };
-                }
-
-                {
-                    const dropOffSection = cards[1];
-                    const itemEls = Array.from(
-                        dropOffSection.querySelectorAll('[data-baseweb=flex-grid-item]')
-                    );
-                    const destEl = itemEls[0];
-                    const destination = destEl.querySelector('[data-baseweb=typo-paragraphmedium]')
-                        ?.textContent;
-                    const destLocation = destEl.querySelector(
-                        '[data-baseweb=typo-paragraphsmall]:last-child'
-                    )?.textContent;
-
-                    const timeEl = itemEls[1];
-                    const dropOffDate = timeEl.querySelector(
-                        '[data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-                    const dropOffTime = timeEl.querySelector(
-                        '[data-baseweb=typo-paragraphsmall]:last-child'
-                    )?.textContent;
-
-                    const facilityOwner = itemEls[2].querySelector(
-                        '[data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-                    const dropOffNotes = dropOffSection.querySelector(
-                        '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-
-                    dropOffData = {
-                        destination,
-                        destLocation,
-                        dropOffDate,
-                        dropOffTime,
-                        facilityOwner,
-                        dropOffNotes
-                    };
-                }
-
-                {
-                    const bookInfo = cards[cards.length - 1];
-                    const price = bookInfo.querySelector('h1')?.textContent;
-                    const bookInfoDate = bookInfo.querySelector(
-                        '[data-baseweb="typo-paragraphmedium"]'
-                    )?.textContent;
-                    const items = Array.from(
-                        bookInfo.querySelectorAll(
-                            '[data-baseweb="flex-grid"] [data-baseweb="flex-grid-item"]'
-                        )
-                    );
-                    const [
-                        equipment,
-                        commodity,
-                        weight,
-                        packagingType,
-                        ratePerMile,
-                        distance,
-                        loadId,
-                        specialAttention
-                    ] = items.map(
-                        (item) =>
-                            item.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
-                    );
-
-                    bookData = {
-                        price,
-                        bookInfoDate,
-                        equipment,
-                        commodity,
-                        weight,
-                        packagingType,
-                        ratePerMile,
-                        distance,
-                        loadId,
-                        specialAttention
-                    };
-                }
-
-                result = {
-                    ...pickData,
-                    ...dropOffData,
-                    ...bookData,
-                    origin_radius: '',
-                    destination_radius: ''
+                pickData = {
+                    origin,
+                    pickUpLocation,
+                    pickUpDate,
+                    pickUpTime,
+                    facilityOwner,
+                    pickUpNotes
                 };
-                return result;
-            })
-            .catch((e: Error) => {
-                throw new SiteError('search', 'UberDetailPage: ' + e.message);
-            });
-        return result as IResultHTMLData;
+            }
+
+            {
+                const dropOffSection = cards[1];
+                const itemEls = Array.from(
+                    dropOffSection.querySelectorAll('[data-baseweb=flex-grid-item]')
+                );
+                const destEl = itemEls[0];
+                const destination = destEl.querySelector('[data-baseweb=typo-paragraphmedium]')
+                    ?.textContent;
+                const destLocation = destEl.querySelector(
+                    '[data-baseweb=typo-paragraphsmall]:last-child'
+                )?.textContent;
+
+                const timeEl = itemEls[1];
+                const dropOffDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
+                    ?.textContent;
+                const dropOffTime = timeEl.querySelector(
+                    '[data-baseweb=typo-paragraphsmall]:last-child'
+                )?.textContent;
+
+                const facilityOwner = itemEls[2].querySelector(
+                    '[data-baseweb="typo-paragraphmedium"]'
+                )?.textContent;
+                const dropOffNotes = dropOffSection.querySelector(
+                    '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
+                )?.textContent;
+
+                dropOffData = {
+                    destination,
+                    destLocation,
+                    dropOffDate,
+                    dropOffTime,
+                    facilityOwner,
+                    dropOffNotes
+                };
+            }
+
+            {
+                const bookInfo = cards[cards.length - 1];
+                const price = bookInfo.querySelector('h1')?.textContent;
+                const bookInfoDate = bookInfo.querySelector('[data-baseweb="typo-paragraphmedium"]')
+                    ?.textContent;
+                const items = Array.from(
+                    bookInfo.querySelectorAll(
+                        '[data-baseweb="flex-grid"] [data-baseweb="flex-grid-item"]'
+                    )
+                );
+                const [
+                    equipment,
+                    commodity,
+                    weight,
+                    packagingType,
+                    ratePerMile,
+                    distance,
+                    loadId,
+                    specialAttention
+                ] = items.map(
+                    (item) =>
+                        item.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
+                );
+
+                bookData = {
+                    price,
+                    bookInfoDate,
+                    equipment,
+                    commodity,
+                    weight,
+                    packagingType,
+                    ratePerMile,
+                    distance,
+                    loadId,
+                    specialAttention
+                };
+            }
+
+            result = {
+                ...pickData,
+                ...dropOffData,
+                ...bookData,
+                origin_radius: '',
+                destination_radius: ''
+            };
+            return result;
+        });
+        const data = { ...result, ...this.getOriginalData() };
+        await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
+            this.log.log(res.data);
+        });
     }
 }

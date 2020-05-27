@@ -52,9 +52,6 @@ export abstract class SearchSite implements ISite {
         if (data.length > 0) {
             await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
                 this.log.log(res?.data);
-                if (!res) {
-                    this.log.log('ajax res', res)
-                }
             }).catch(e => {
                 this.log.log('ajax error', e)
             });

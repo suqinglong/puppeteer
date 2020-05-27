@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { ChromeSettings } from './settings';
+import { ChromeSettings, viewPort } from './settings';
 import { Config } from './tools/index';
 import { SearchSite } from './sites/searchSite';
 import { SiteManager } from './sites/siteManager';
@@ -15,11 +15,7 @@ export class Search implements ISearchClass {
                 '–no-first-run',
                 '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
             ],
-            defaultViewport: {
-                deviceScaleFactor: 1,
-                width: 1920,
-                height: 1080
-            },
+            defaultViewport: viewPort,
             dumpio: false
         });
         return browser.wsEndpoint();

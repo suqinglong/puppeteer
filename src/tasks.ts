@@ -16,7 +16,12 @@ export class Tasks implements ITasksClass {
                 if (!taskResult) continue;
                 const task: ITASK = JSON.parse(taskResult) as ITASK;
                 if (Number(new Date()) - Number(task.time) * 1000 > 200 * 1000) {
-                    console.log('------- task passed for over 200s:', task.task_id);
+                    console.log('------- task passed:', task.task_id);
+                    continue;
+                }
+                const isDrop = (await SingletonTedis.getInstance().get(`task:$${task.task_id}:cancel`)) === '1'
+                if (isDrop) {
+                    console.log('------- task droped:', task.task_id)
                     continue;
                 }
                 console.log('---- get task ----', task);

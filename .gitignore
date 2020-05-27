@@ -20,6 +20,6 @@ yarn-error.log*
 *.sln
 *.sw?
 
-src/test.js
+test.js
 src/test.html
 src/gaoshijie.ts

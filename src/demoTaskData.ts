@@ -79,10 +79,10 @@ export const TaskData = {
         email: 'dispatch@ajgtransport.com',
         password: 'KeepLoaded20!',
         criteria: {
-            origin: 'Atwater, CA',
-            origin_radius: '250',
-            destination: 'Sumner, WA',
-            destination_radius: '250',
+            origin: 'Hauppauge, NY',
+            origin_radius: '150',
+            destination: 'Windsor, CT',
+            destination_radius: '150',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

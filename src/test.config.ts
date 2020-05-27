@@ -2,10 +2,10 @@ import { TaskData } from './demoTaskData';
 import { SingletonTedis } from './tools/tedis';
 import { Config } from './tools/index';
 
-const count = 10;
-const sourceLoad = 'Landstar';
-const isRandom = true;
-const isAll = true
+const count = 1;
+const sourceLoad = 'Coyote';
+const isRandom = false;
+const isAll = false
 const sourceLoads = [
     'Allenlund',
     'TQL',

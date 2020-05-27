@@ -84,19 +84,19 @@ export class Coyote extends SearchSite {
                     const limit = dataJson.pagination.limit as number;
                     const totalCount = dataJson.pagination.totalCount as number;
                     const offset = dataJson.pagination.offset as number;
-                    if (totalCount > limit) {
-                        const nextPageUrl = url
-                            .replace(/offset=(\d+)/, `offset=${limit + offset}`)
-                            .replace(/limit=(\d+)/, `limit=${limit}`);
-                        this.page.evaluate((nextPageUrl) => {
-                            const $ = window['$'];
-                            $.ajax(nextPageUrl);
-                        }, nextPageUrl);
-                    }
+
                     await this.postDataFromResponse(task, dataJson.loads).then(() => {
                         if (totalCount <= limit + offset) {
                             this.isSearchEnd = true;
                             this.searchResolve && this.searchResolve(true);
+                        } else {
+                            const nextPageUrl = url
+                                .replace(/offset=(\d+)/, `offset=${limit + offset}`)
+                                .replace(/limit=(\d+)/, `limit=${limit}`);
+                            this.page.evaluate((nextPageUrl) => {
+                                const $ = window['$'];
+                                $.ajax(nextPageUrl);
+                            }, nextPageUrl);
                         }
                     });
                 }

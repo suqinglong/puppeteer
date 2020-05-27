@@ -46,6 +46,7 @@ export abstract class SearchSite implements ISite {
                 this.log.log('page close error', e);
             }
         }
+        this.browser.disconnect()
     }
 
     public async postData(task: ITASK, data: Array<IResultHTMLData>) {

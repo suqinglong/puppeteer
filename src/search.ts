@@ -12,17 +12,12 @@ export class Search implements ISearchClass {
             ignoreDefaultArgs: ['--enable-automation'],
             args: [
                 '--disable-gpu',
-                '–disable-dev-shm-usage',
-                '–disable-setuid-sandbox',
                 '–no-first-run',
-                '–no-sandbox',
-                '–no-zygote',
-                '–single-process',
                 '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
             ],
             defaultViewport: {
                 deviceScaleFactor: 1,
-                width: 2200,
+                width: 1920,
                 height: 1080
             },
             dumpio: false

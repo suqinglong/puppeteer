@@ -19,9 +19,11 @@ export class Tasks implements ITasksClass {
                     console.log('------- task passed:', task.task_id);
                     continue;
                 }
-                const isDrop = (await SingletonTedis.getInstance().get(`task:$${task.task_id}:cancel`)) === '1'
+                const isDrop =
+                    (await SingletonTedis.getInstance().get(`task:$${task.task_id}:cancel`)) ===
+                    '1';
                 if (isDrop) {
-                    console.log('------- task droped:', task.task_id)
+                    console.log('------- task droped:', task.task_id);
                     continue;
                 }
                 console.log('---- get task ----', task);

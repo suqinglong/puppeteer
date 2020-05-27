@@ -1,6 +1,5 @@
 import { SearchSite } from './searchSite';
-import { ModifyPostData, getParams } from '../tools/index';
-import { PostSearchData } from '../api';
+import { getParams } from '../tools/index';
 import cheerio from 'cheerio';
 
 export class DAT extends SearchSite {
@@ -35,76 +34,78 @@ export class DAT extends SearchSite {
 
         await this.clickSearch(task);
 
-        await this.page.waitFor(1000);
+        try {
+            this.page.on('response', async (res) => {
+                const url = res.url();
+                let data: any;
 
-        this.page.on('response', async (res) => {
-            const url = res.url();
-            let data: any;
-
-            if (url.match('/search/matches/take')) {
-                data = await res.json();
-                responseCount++;
-                resultDetail[getParams(url, 'matchId')] = data;
-                if (responseCount === 2 * resultCount) {
-                    waitResultResolve(this.getData(resultBase, resultDetail, resultRate));
-                }
-            } else if (url.match('/search/matches')) {
-                data = await res.json();
-                if (data) {
-                    let exactList = data.matchSet?.exact;
-                    const searchId = data.searchId;
-                    if (Array.isArray(exactList)) {
-                        resultCount = exactList.length;
-                        if (resultCount === 0) {
-                            waitResultResolve();
-                        }
-                        this.page.evaluate(
-                            (exactList: Array<any>, searchId: string) => {
-                                const $: any = window['$'];
-                                exactList.forEach((exact) => {
-                                    $.ajax(
-                                        `https://power.dat.com/search/matches/take/?matchId=${exact.id}&searchId=${searchId}`
-                                    );
-                                    // destination "W Harrison, NY"
-                                    // origin: "Paterson, NJ"
-                                    // originCoordinates: "40.91667,-74.17222"
-                                    let [dCity, dState] = exact.destination.split(', ');
-                                    dCity = dCity.replace(' ', '+');
-
-                                    let [oCity, oState] = exact.origin.split(', ');
-                                    oCity = oCity.replace(' ', '+');
-
-                                    let [oLat, oLong] = exact.originCoordinates.split(',');
-                                    let [dLat, dLong] = exact.destinationCoordinates.split(',');
-                                    $.ajax(
-                                        `https://power.dat.com/search/rates/spot/?dCity=${dCity}&dLat=${dLat}&dLong=${dLong}&dState=${dState}&equipmentTypes=${exact.equipmentClass}&oCity=${oCity}&oLat=${oLat}&oLong=${oLong}&oState=${oState}&matchId=${exact.id}`
-                                    );
-                                });
-                            },
-                            exactList,
-                            searchId
-                        );
-
-                        exactList.forEach((item) => {
-                            resultBase[item.id] = item;
-                        });
-                    }
-                } else {
-                    waitResultResolve();
-                    throw this.generateError('search', 'search matches not found');
-                }
-            } else if (url.match('/search/rates/spot')) {
-                const matchId = getParams(url, 'matchId');
-                if (matchId) {
-                    data = await res.text();
+                if (url.match('/search/matches/take')) {
+                    data = await res.json();
                     responseCount++;
-                    resultRate[matchId] = data;
+                    resultDetail[getParams(url, 'matchId')] = data;
                     if (responseCount === 2 * resultCount) {
                         waitResultResolve(this.getData(resultBase, resultDetail, resultRate));
                     }
+                } else if (url.match('/search/matches')) {
+                    data = await res.json();
+                    if (data) {
+                        let exactList = data.matchSet?.exact;
+                        const searchId = data.searchId;
+                        if (Array.isArray(exactList)) {
+                            resultCount = exactList.length;
+                            if (resultCount === 0) {
+                                waitResultResolve();
+                            }
+                            this.page.evaluate(
+                                (exactList: Array<any>, searchId: string) => {
+                                    const $: any = window['$'];
+                                    exactList.forEach((exact) => {
+                                        $.ajax(
+                                            `https://power.dat.com/search/matches/take/?matchId=${exact.id}&searchId=${searchId}`
+                                        );
+                                        // destination "W Harrison, NY"
+                                        // origin: "Paterson, NJ"
+                                        // originCoordinates: "40.91667,-74.17222"
+                                        let [dCity, dState] = exact.destination.split(', ');
+                                        dCity = dCity.replace(' ', '+');
+
+                                        let [oCity, oState] = exact.origin.split(', ');
+                                        oCity = oCity.replace(' ', '+');
+
+                                        let [oLat, oLong] = exact.originCoordinates.split(',');
+                                        let [dLat, dLong] = exact.destinationCoordinates.split(',');
+                                        $.ajax(
+                                            `https://power.dat.com/search/rates/spot/?dCity=${dCity}&dLat=${dLat}&dLong=${dLong}&dState=${dState}&equipmentTypes=${exact.equipmentClass}&oCity=${oCity}&oLat=${oLat}&oLong=${oLong}&oState=${oState}&matchId=${exact.id}`
+                                        );
+                                    });
+                                },
+                                exactList,
+                                searchId
+                            );
+
+                            exactList.forEach((item) => {
+                                resultBase[item.id] = item;
+                            });
+                        }
+                    } else {
+                        waitResultResolve();
+                        throw this.generateError('search', 'search matches not found');
+                    }
+                } else if (url.match('/search/rates/spot')) {
+                    const matchId = getParams(url, 'matchId');
+                    if (matchId) {
+                        data = await res.text();
+                        responseCount++;
+                        resultRate[matchId] = data;
+                        if (responseCount === 2 * resultCount) {
+                            waitResultResolve(this.getData(resultBase, resultDetail, resultRate));
+                        }
+                    }
                 }
-            }
-        });
+            })
+        } catch (e) {
+            this.log.log('on reponse closed')
+        }
 
         await this.page.click('button.search');
         this.log.log('click search');
@@ -113,13 +114,12 @@ export class DAT extends SearchSite {
             waitResultResolve = resolve;
         });
 
+        setTimeout(() => {
+            waitResultResolve(false)
+        }, 40000)
+
         if (result) {
-            await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-                this.log.log(res?.data);
-                if (!res.data) {
-                    this.log.log('ajax error', res)
-                }
-            });
+            await this.postData(task, result)
         } else {
             throw this.generateError('noData', 'no data');
         }

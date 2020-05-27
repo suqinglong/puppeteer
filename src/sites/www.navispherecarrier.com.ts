@@ -1,7 +1,6 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
-import { ModifyPostData, createUrl } from '../tools/index';
-import { PostSearchData } from '../api';
+import { createUrl } from '../tools/index';
 import dateformat from 'dateformat';
 import { SiteQueue, DetailPage } from '../tools/siteQueue';
 
@@ -113,7 +112,7 @@ export class CHRobinson extends SearchSite {
 
         const detailPages = linksAndData.map((item) => {
             const instance = new CHRobinsonDetailPage(item.link, item.data);
-            instance.prePare(this.browser, task);
+            instance.prePare(this.browser, task, this);
             return instance;
         });
 
@@ -219,18 +218,14 @@ class CHRobinsonDetailPage extends DetailPage {
             });
         });
 
-        const data = {
+        const data: any = {
             pickUpData,
             dropOffData,
             requirementData,
             contactData,
             ...this.getOriginalData()
         };
-        await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+
+        await this.searchSite.postData(task, [data as IResultHTMLData])
     }
 }

@@ -1,9 +1,7 @@
 import { SearchSite } from './searchSite';
-import { SiteError } from '../error';
 import dateformat from 'dateformat';
 import cheerio from 'cheerio';
-import { Trim, ModifyPostData } from '../tools/index';
-import { PostSearchData } from '../api';
+import { Trim } from '../tools/index';
 
 export class Echo extends SearchSite {
     public static siteName = 'Echo';
@@ -38,15 +36,11 @@ export class Echo extends SearchSite {
         await this.page.waitForSelector('.available-loads-row');
         const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
         const $ = cheerio.load(resultHtml);
-        await PostSearchData(this.getDataFromHtml($, task)).then((res: any) => {
-            console.log('EchodriveEchoCom', res.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+
+        await this.postData(task, this.getDataFromHtml($))
     }
 
-    private getDataFromHtml($: CheerioStatic, task: ITASK): Array<IResultData> {
+    private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {
         const result: any = {};
 
         const dataItemClass = [
@@ -97,6 +91,6 @@ export class Echo extends SearchSite {
             records.push({ ...resultItemRows[i], ...resultItemDetails[i] });
         }
 
-        return ModifyPostData(task, records);
+        return records;
     }
 }

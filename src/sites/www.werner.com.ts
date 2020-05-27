@@ -1,9 +1,5 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
-import { ModifyPostData } from '../tools/index';
-import { PostSearchData } from '../api';
-import dateformat from 'dateformat';
-import { SiteError } from '../error';
 
 export class Werner extends SearchSite {
     public static siteName = 'Werner';
@@ -20,21 +16,18 @@ export class Werner extends SearchSite {
         await this.page.select('#DestinState', destState);
 
         await Promise.race([
-            this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData'),
-            this.page.waitForSelector('#avail_loads_table tr[role="row"]').then(() => 'haveData')
-        ])
-            .then((raceResult) => {
-                if (raceResult === 'noData') {
-                    this.log.log('There is no data');
-                    throw this.generateError('noData', 'There is no data');
-                }
+            this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData').catch(() => {
+                this.log.log('waitfor no data')
+            }),
+            this.page.waitForSelector('#avail_loads_table tr[role="row"]').then(() => 'haveData').catch(() => {
+                this.log.log('waitfor have data')
             })
-            .catch((e) => {
-                if (!(e instanceof SiteError)) {
-                    this.log.log('Promise race error', e);
-                    throw this.generateError('search', 'Promise race error');
-                }
-            });
+        ]).then((raceResult) => {
+            if (raceResult === 'noData') {
+                this.log.log('There is no data');
+                throw this.generateError('noData', 'There is no data');
+            }
+        })
 
         // expend all child
         await this.page.evaluate(() => {
@@ -50,12 +43,7 @@ export class Werner extends SearchSite {
         });
         const $ = cheerio.load(content);
 
-        await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.postData(task, this.getDataFromHtml($))
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {
@@ -80,7 +68,7 @@ export class Werner extends SearchSite {
                 $(el).text()
             );
             result.push({
-                date: dateformat(new Date(Date.parse(pickup)), 'yyyy-mm-dd HH:MM'),
+                date: pickup,
                 pickup,
                 equipment,
                 origin: [originCity, originState].join(', '),
@@ -94,7 +82,6 @@ export class Werner extends SearchSite {
                 reference
             });
         });
-        this.log.log('result:', result);
         return result;
     }
 }

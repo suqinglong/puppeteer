@@ -1,8 +1,8 @@
 import puppeteer from 'puppeteer';
 import { SingletonTedis } from '../tools/tedis';
-import { AddNotification, InactiveLoadSource } from '../api';
+import { AddNotification, InactiveLoadSource, PostSearchData } from '../api';
 import { SiteError } from '../error';
-import { Config } from '../tools/index';
+import { Config, ModifyPostData } from '../tools/index';
 import { Log } from '../tools/log';
 import { userAgent, viewPort, pageWaitTime } from '../settings';
 
@@ -38,7 +38,7 @@ export abstract class SearchSite implements ISite {
             await this.screenshot('search error, ' + task.task_id);
             this.log.log('search error', e);
         }
-        if (!Config.isDevelop) {
+        if (!Config.isUseChrome) {
             try {
                 await this.page.close();
                 this.log.log('search end and page closed');
@@ -46,6 +46,15 @@ export abstract class SearchSite implements ISite {
                 this.log.log('page close error', e);
             }
         }
+    }
+
+    public async postData(task: ITASK, data: Array<IResultHTMLData>) {
+        await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
+            this.log.log(res?.data);
+            if (!res.data) {
+                this.log.log('ajax error', res)
+            }
+        });
     }
 
     protected async beforeSearch(task: ITASK) {

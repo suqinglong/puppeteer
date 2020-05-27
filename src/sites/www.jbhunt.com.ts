@@ -1,7 +1,5 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData } from '../tools/index';
-import { PostSearchData } from '../api';
 
 export class JBHunt extends SearchSite {
     public static siteName = 'JB Hunt';
@@ -137,14 +135,7 @@ export class JBHunt extends SearchSite {
 
         if (response?.data?.searchTripsElasticOptimized?.success) {
             const data = response.data.searchTripsElasticOptimized?.data?.loads;
-            await PostSearchData(ModifyPostData(task, this.getDataFromResponse(data))).then(
-                (res: any) => {
-                    this.log.log(res?.data);
-                    if (!res.data) {
-                        this.log.log('ajax error', res)
-                    }
-                }
-            );
+            await this.postData(task, this.getDataFromResponse(data))
         } else {
             throw this.generateError('noData', 'no data');
         }

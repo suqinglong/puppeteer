@@ -1,7 +1,5 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData } from '../tools/index';
-import { PostSearchData } from '../api';
 import { SiteQueue, DetailPage } from '../tools/siteQueue';
 
 export class UberFreight extends SearchSite {
@@ -164,7 +162,7 @@ export class UberFreight extends SearchSite {
 
         const detailPages = linksAndData.map((item) => {
             const instance = new UberDetailPage(item.link, item.data);
-            instance.prePare(this.browser, task);
+            instance.prePare(this.browser, task, this);
             return instance;
         });
 
@@ -305,11 +303,6 @@ class UberDetailPage extends DetailPage {
             return result;
         });
         const data = { ...result, ...this.getOriginalData() };
-        await PostSearchData(ModifyPostData(task, [data])).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.searchSite.postData(task, [data as IResultHTMLData])
     }
 }

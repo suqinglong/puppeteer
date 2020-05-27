@@ -1,7 +1,6 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { PostSearchData } from '../api';
-import { createUrl, ModifyPostData } from '../tools/index';
+import { createUrl } from '../tools/index';
 
 export class Coyote extends SearchSite {
     public static siteName = 'Coyote';
@@ -121,11 +120,6 @@ export class Coyote extends SearchSite {
             };
         });
 
-        await PostSearchData(ModifyPostData(task, result)).then((res: any) => {
-            this.log.log('res:', res.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.postData(task, result)
     }
 }

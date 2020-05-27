@@ -3,6 +3,7 @@ import { userAgent, viewPort } from '../settings';
 import { Log } from './log';
 import { SiteError } from '../error';
 import { Config } from '../tools/index';
+import { SearchSite } from '@/sites/searchSite';
 
 export class SiteQueue {
     private queue: Array<DetailPage> = [];
@@ -49,6 +50,7 @@ export abstract class DetailPage {
     protected searchPage: string;
     protected log: Log;
     protected debugPre: string;
+    protected searchSite: SearchSite;
     private task: ITASK;
     private siteQueue: SiteQueue;
     private browser: puppeteer.Browser;
@@ -59,9 +61,10 @@ export abstract class DetailPage {
         this.originalData = originalData;
     }
 
-    public prePare(browser: puppeteer.Browser, task: ITASK) {
+    public prePare(browser: puppeteer.Browser, task: ITASK, searchSite: SearchSite) {
         this.browser = browser;
         this.task = task;
+        this.searchSite = searchSite
     }
 
     public setSiteQueue(siteQueue: SiteQueue) {

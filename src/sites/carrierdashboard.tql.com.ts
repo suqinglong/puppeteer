@@ -1,7 +1,6 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData, getRadiusFromValues } from '../tools/index';
-import { PostSearchData } from '../api';
+import { getRadiusFromValues } from '../tools/index';
 
 export class TQL extends SearchSite {
     public static siteName = 'TQL';
@@ -146,14 +145,7 @@ export class TQL extends SearchSite {
 
         const responseData = await (response as Response).json();
         this.log.log('waitForResponse done');
-        await PostSearchData(
-            ModifyPostData(task, this.getDataFromResponse(responseData['PostedLoads']))
-        ).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.postData(task, this.getDataFromResponse(responseData['PostedLoads']))
     }
 
     private getDataFromResponse(data: Array<any>): Array<IResultHTMLData> {

@@ -1,7 +1,6 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData, getRadiusFromValues } from '../tools/index';
-import { PostSearchData } from '../api';
+import { getRadiusFromValues } from '../tools/index';
 import cheerio from 'cheerio';
 
 export class Sunteck extends SearchSite {
@@ -81,12 +80,7 @@ export class Sunteck extends SearchSite {
         const $ = cheerio.load(resultHtml);
         const resultData = this.getDataFromHtml($, task);
 
-        await PostSearchData(ModifyPostData(task, resultData)).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.postData(task, resultData)
     }
 
     private getDataFromHtml($: CheerioStatic, task: ITASK): Array<IResultHTMLData> {

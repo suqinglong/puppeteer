@@ -1,6 +1,4 @@
 import { SearchSite } from './searchSite';
-import { ModifyPostData } from '../tools/index';
-import { PostSearchData } from '../api';
 
 export class Allenlund extends SearchSite {
     public static siteName = 'Allenlund';
@@ -76,11 +74,7 @@ export class Allenlund extends SearchSite {
         });
 
         await page.waitFor(3000);
-
-        const data = await this.getDataFromHtml();
-        await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
-            this.log.log(res?.data);
-        });
+        await this.postData(task, await this.getDataFromHtml())
     }
 
     private async getDataFromHtml(): Promise<Array<IResultHTMLData>> {

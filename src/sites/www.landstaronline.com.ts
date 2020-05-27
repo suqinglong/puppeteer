@@ -1,7 +1,6 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { ModifyPostData, getRadiusFromValues } from '../tools/index';
-import { PostSearchData } from '../api';
+import { getRadiusFromValues } from '../tools/index';
 import cheerio from 'cheerio';
 
 export class Landstar extends SearchSite {
@@ -160,12 +159,7 @@ export class Landstar extends SearchSite {
             throw this.generateError('noData', 'no data');
         }
 
-        await PostSearchData(ModifyPostData(task, this.getDataFromHtml($))).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res.data) {
-                this.log.log('ajax error', res)
-            }
-        });
+        await this.postData(task, this.getDataFromHtml($))
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {

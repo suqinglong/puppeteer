@@ -18,7 +18,7 @@ export class Search implements ISearchClass {
                 '–no-sandbox',
                 '–no-zygote',
                 '–single-process',
-                '--user-data-dir=/var/data/session-xxx'
+                '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
             ],
             defaultViewport: {
                 deviceScaleFactor: 1,

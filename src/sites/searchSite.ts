@@ -49,14 +49,18 @@ export abstract class SearchSite implements ISite {
     }
 
     public async postData(task: ITASK, data: Array<IResultHTMLData>) {
-        await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
-            this.log.log(res?.data);
-            if (!res) {
-                this.log.log('ajax res', res)
-            }
-        }).catch(e =>  {
-            this.log.log('ajax error', e)
-        });
+        if (data.length > 0) {
+            await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
+                this.log.log(res?.data);
+                if (!res) {
+                    this.log.log('ajax res', res)
+                }
+            }).catch(e => {
+                this.log.log('ajax error', e)
+            });
+        } else {
+            this.log.log('no data in postData')
+        }
     }
 
     protected async beforeSearch(task: ITASK) {
@@ -81,10 +85,10 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async afterPageCreated(task: ITASK) {}
+    protected async afterPageCreated(task: ITASK) { }
 
     // run after search and before page closed
-    protected async afterSearch() {}
+    protected async afterSearch() { }
 
     protected async doLogin(task: ITASK) {
         this.log.log('login begin');
@@ -115,8 +119,8 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async beforeLogin(task: ITASK) {}
-    protected async login(task: ITASK) {}
+    protected async beforeLogin(task: ITASK) { }
+    protected async login(task: ITASK) { }
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage);

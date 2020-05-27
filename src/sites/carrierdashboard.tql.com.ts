@@ -145,7 +145,7 @@ export class TQL extends SearchSite {
 
         const responseData = await (response as Response).json();
         this.log.log('waitForResponse done');
-        await this.postData(task, this.getDataFromResponse(responseData['PostedLoads']))
+        await this.postData(task, this.getDataFromResponse(responseData['PostedLoads']));
     }
 
     private getDataFromResponse(data: Array<any>): Array<IResultHTMLData> {

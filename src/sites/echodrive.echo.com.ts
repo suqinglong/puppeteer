@@ -37,7 +37,7 @@ export class Echo extends SearchSite {
         const resultHtml = await this.page.$eval('.loads-bids-container', (res) => res.innerHTML);
         const $ = cheerio.load(resultHtml);
 
-        await this.postData(task, this.getDataFromHtml($))
+        await this.postData(task, this.getDataFromHtml($));
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {

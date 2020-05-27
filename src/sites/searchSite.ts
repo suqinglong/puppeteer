@@ -46,18 +46,20 @@ export abstract class SearchSite implements ISite {
                 this.log.log('page close error', e);
             }
         }
-        this.browser.disconnect()
+        this.browser.disconnect();
     }
 
     public async postData(task: ITASK, data: Array<IResultHTMLData>) {
         if (data.length > 0) {
-            await PostSearchData(ModifyPostData(task, data)).then((res: any) => {
-                this.log.log(res?.data);
-            }).catch(e => {
-                this.log.log('ajax error', e)
-            });
+            await PostSearchData(ModifyPostData(task, data))
+                .then((res: any) => {
+                    this.log.log(res?.data);
+                })
+                .catch((e) => {
+                    this.log.log('ajax error', e);
+                });
         } else {
-            this.log.log('no data in postData')
+            this.log.log('no data in postData');
         }
     }
 
@@ -83,10 +85,10 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async afterPageCreated(task: ITASK) { }
+    protected async afterPageCreated(task: ITASK) {}
 
     // run after search and before page closed
-    protected async afterSearch() { }
+    protected async afterSearch() {}
 
     protected async doLogin(task: ITASK) {
         this.log.log('login begin');
@@ -117,8 +119,8 @@ export abstract class SearchSite implements ISite {
         }
     }
 
-    protected async beforeLogin(task: ITASK) { }
-    protected async login(task: ITASK) { }
+    protected async beforeLogin(task: ITASK) {}
+    protected async login(task: ITASK) {}
 
     protected async shouldLogin(task: ITASK): Promise<boolean> {
         return this.loginPage && !this.isSamePath(this.page.url(), this.searchPage);

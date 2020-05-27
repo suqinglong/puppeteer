@@ -4,7 +4,7 @@ import dateFormat from 'dateformat';
 const pickUpDate = dateFormat(new Date(Number(new Date()) + 3 * 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {
-    'Echo': {
+    Echo: {
         task_id: 'f1f83186dac71994df2309d5ece61cd6',
         site: 'Echo',
         user_id: '3',

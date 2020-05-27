@@ -303,6 +303,6 @@ class UberDetailPage extends DetailPage {
             return result;
         });
         const data = { ...result, ...this.getOriginalData() };
-        await this.searchSite.postData(task, [data as IResultHTMLData])
+        await this.searchSite.postData(task, [data as IResultHTMLData]);
     }
 }

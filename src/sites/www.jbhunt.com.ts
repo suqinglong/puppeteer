@@ -135,7 +135,7 @@ export class JBHunt extends SearchSite {
 
         if (response?.data?.searchTripsElasticOptimized?.success) {
             const data = response.data.searchTripsElasticOptimized?.data?.loads;
-            await this.postData(task, this.getDataFromResponse(data))
+            await this.postData(task, this.getDataFromResponse(data));
         } else {
             throw this.generateError('noData', 'no data');
         }

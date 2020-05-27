@@ -120,6 +120,6 @@ export class Coyote extends SearchSite {
             };
         });
 
-        await this.postData(task, result)
+        await this.postData(task, result);
     }
 }

@@ -74,7 +74,7 @@ export class Allenlund extends SearchSite {
         });
 
         await page.waitFor(3000);
-        await this.postData(task, await this.getDataFromHtml())
+        await this.postData(task, await this.getDataFromHtml());
     }
 
     private async getDataFromHtml(): Promise<Array<IResultHTMLData>> {

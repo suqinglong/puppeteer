@@ -16,7 +16,7 @@ export class Tasks implements ITasksClass {
                 if (!taskResult) continue;
                 const task: ITASK = JSON.parse(taskResult) as ITASK;
                 if (Number(new Date()) - Number(task.time) * 1000 > 200 * 1000) {
-                    console.log('------- task passed for over 200s:', task.task_id)
+                    console.log('------- task passed for over 200s:', task.task_id);
                     continue;
                 }
                 console.log('---- get task ----', task);

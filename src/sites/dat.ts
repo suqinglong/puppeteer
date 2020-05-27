@@ -102,9 +102,9 @@ export class DAT extends SearchSite {
                         }
                     }
                 }
-            })
+            });
         } catch (e) {
-            this.log.log('on reponse closed')
+            this.log.log('on reponse closed');
         }
 
         await this.page.click('button.search');
@@ -115,11 +115,11 @@ export class DAT extends SearchSite {
         });
 
         setTimeout(() => {
-            waitResultResolve(false)
-        }, 40000)
+            waitResultResolve(false);
+        }, 40000);
 
         if (result) {
-            await this.postData(task, result)
+            await this.postData(task, result);
         } else {
             throw this.generateError('noData', 'no data');
         }

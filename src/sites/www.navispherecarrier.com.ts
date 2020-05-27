@@ -226,6 +226,6 @@ class CHRobinsonDetailPage extends DetailPage {
             ...this.getOriginalData()
         };
 
-        await this.searchSite.postData(task, [data as IResultHTMLData])
+        await this.searchSite.postData(task, [data as IResultHTMLData]);
     }
 }

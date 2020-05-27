@@ -80,7 +80,7 @@ export class Sunteck extends SearchSite {
         const $ = cheerio.load(resultHtml);
         const resultData = this.getDataFromHtml($, task);
 
-        await this.postData(task, resultData)
+        await this.postData(task, resultData);
     }
 
     private getDataFromHtml($: CheerioStatic, task: ITASK): Array<IResultHTMLData> {

@@ -64,7 +64,7 @@ export abstract class DetailPage {
     public prePare(browser: puppeteer.Browser, task: ITASK, searchSite: SearchSite) {
         this.browser = browser;
         this.task = task;
-        this.searchSite = searchSite
+        this.searchSite = searchSite;
     }
 
     public setSiteQueue(siteQueue: SiteQueue) {

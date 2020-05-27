@@ -159,7 +159,7 @@ export class Landstar extends SearchSite {
             throw this.generateError('noData', 'no data');
         }
 
-        await this.postData(task, this.getDataFromHtml($))
+        await this.postData(task, this.getDataFromHtml($));
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {

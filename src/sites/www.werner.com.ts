@@ -16,18 +16,24 @@ export class Werner extends SearchSite {
         await this.page.select('#DestinState', destState);
 
         await Promise.race([
-            this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData').catch(() => {
-                this.log.log('waitfor no data')
-            }),
-            this.page.waitForSelector('#avail_loads_table tr[role="row"]').then(() => 'haveData').catch(() => {
-                this.log.log('waitfor have data')
-            })
+            this.page
+                .waitForSelector('#avail_loads_table .dataTables_empty')
+                .then(() => 'noData')
+                .catch(() => {
+                    this.log.log('waitfor no data');
+                }),
+            this.page
+                .waitForSelector('#avail_loads_table tr[role="row"]')
+                .then(() => 'haveData')
+                .catch(() => {
+                    this.log.log('waitfor have data');
+                })
         ]).then((raceResult) => {
             if (raceResult === 'noData') {
                 this.log.log('There is no data');
                 throw this.generateError('noData', 'There is no data');
             }
-        })
+        });
 
         // expend all child
         await this.page.evaluate(() => {
@@ -43,7 +49,7 @@ export class Werner extends SearchSite {
         });
         const $ = cheerio.load(content);
 
-        await this.postData(task, this.getDataFromHtml($))
+        await this.postData(task, this.getDataFromHtml($));
     }
 
     private getDataFromHtml($: CheerioStatic): Array<IResultHTMLData> {

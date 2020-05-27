@@ -10,7 +10,16 @@ export class Search implements ISearchClass {
         const browser = await puppeteer.launch({
             ...(Config.isUseChrome ? ChromeSettings : {}),
             ignoreDefaultArgs: ['--enable-automation'],
-            args: ['--disable-gpu'],
+            args: [
+                '--disable-gpu',
+                '–disable-dev-shm-usage',
+                '–disable-setuid-sandbox',
+                '–no-first-run',
+                '–no-sandbox',
+                '–no-zygote',
+                '–single-process',
+                '--user-data-dir=/var/data/session-xxx'
+            ],
             defaultViewport: {
                 deviceScaleFactor: 1,
                 width: 2200,

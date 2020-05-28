@@ -1,7 +1,7 @@
 const time = parseInt(String(Number(new Date()) / 1000), 10);
 import dateFormat from 'dateformat';
 
-const pickUpDate = dateFormat(new Date(Number(new Date()) + 3 * 24 * 3600 * 1000), 'yyyy-mm-dd');
+const pickUpDate = dateFormat(new Date(Number(new Date()) - 3 * 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {
     Echo: {

@@ -18,8 +18,8 @@ async function memoryTest() {
             console.log('*********** browser: ', item, 'pages length: ', pages.length);
             pages.forEach(async (page) => {
                 console.log('*********** page url:', page.url());
-                const title =  await page.title()
-                screenshot(page, title.replace(/\s/g, '_') + '_memoryTest')
+                const title = await page.title();
+                screenshot(page, title.replace(/\s/g, '_') + '_memoryTest');
             });
         } catch (e) {
             console.log('error:', e);
@@ -29,7 +29,7 @@ async function memoryTest() {
     console.log('memoryTest end\n\n\n');
 }
 
-async function screenshot(page: puppeteer.Page, name:string) {
+async function screenshot(page: puppeteer.Page, name: string) {
     await page.screenshot({
         path: `/home/ubuntu/screenshot/${name}.png`,
         fullPage: true

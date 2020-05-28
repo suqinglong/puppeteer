@@ -12,8 +12,8 @@ export class Search implements ISearchClass {
             ignoreDefaultArgs: ['--enable-automation'],
             args: [
                 '--disable-gpu',
-                '–no-first-run',
-                '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
+                '–no-first-run'
+                // '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
             ],
             defaultViewport: viewPort,
             dumpio: false

@@ -110,10 +110,6 @@ export class DAT extends SearchSite {
         await this.page.click('button.search');
         this.log.log('click search');
 
-        setTimeout(() => {
-            waitResultResolve(false);
-        }, 10000);
-
         const result: Array<any> = await new Promise((resolve) => {
             waitResultResolve = resolve;
         });
@@ -306,6 +302,12 @@ export class DAT extends SearchSite {
         await this.page.type('.searchListTable .dhd input', task.criteria.destination_radius, {
             delay: 100
         });
+
+        if (await this.page.waitForSelector('.ng-invalid-input', {
+            timeout: 100
+        })) {
+            throw this.generateError('search', 'search invalid input')
+        }
     }
 
     private async cleanSearch() {

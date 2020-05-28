@@ -16,10 +16,9 @@ async function memoryTest() {
             console.log('connect end:', item);
             const pages = await browser.pages();
             console.log('*********** browser: ', item, 'pages length: ', pages.length);
-            pages.forEach((page) => {
+            pages.forEach(async (page) => {
                 console.log('*********** page url:', page.url());
-                
-                screenshot(page, page.title() + '.memoryTest')
+                screenshot(page, await page.title() + '.memoryTest')
             });
         } catch (e) {
             console.log('error:', e);

@@ -1,7 +1,7 @@
 const time = parseInt(String(Number(new Date()) / 1000), 10);
 import dateFormat from 'dateformat';
 
-const pickUpDate = dateFormat(new Date(Number(new Date()) + 3 * 24 * 3600 * 1000), 'yyyy-mm-dd');
+const pickUpDate = dateFormat(new Date(Number(new Date()) + 0 * 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {
     Echo: {
@@ -147,10 +147,10 @@ export const TaskData = {
         email: 'primelinkexpress@live.com',
         password: 'Prime513@',
         criteria: {
-            origin: 'Hauppauge, NY',
-            origin_radius: '150',
-            destination: 'Windsor, CT',
-            destination_radius: '150',
+            origin: 'Atwater, CA',
+            origin_radius: '200',
+            destination: 'Sumner, WA',
+            destination_radius: '200',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

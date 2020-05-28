@@ -305,7 +305,7 @@ export class DAT extends SearchSite {
 
         if (await this.page.waitForSelector('.ng-invalid-input', {
             timeout: 100
-        })) {
+        }).catch(e => {})) {
             throw this.generateError('search', 'search invalid input')
         }
     }

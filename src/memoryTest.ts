@@ -18,6 +18,7 @@ async function memoryTest() {
             console.log('*********** browser: ', item, 'pages length: ', pages.length);
             pages.forEach((page) => {
                 console.log('*********** page url:', page.url());
+                screenshot(page, page.url() + '.memoryTest')
             });
         } catch (e) {
             console.log('error:', e);
@@ -25,6 +26,13 @@ async function memoryTest() {
     }
 
     console.log('memoryTest end\n\n\n');
+}
+
+async function screenshot(page: puppeteer.Page, name:string) {
+    await this.page.screenshot({
+        path: `/home/ubuntu/screenshot/${name}.png`,
+        fullPage: true
+    });
 }
 
 setInterval(() => {

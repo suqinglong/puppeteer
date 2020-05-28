@@ -32,7 +32,7 @@ export class DAT extends SearchSite {
 
         let waitResultResolve: Function;
 
-        await this.clickSearch(task);
+        await this.fillSearchForm(task);
 
         try {
             this.page.on('response', async (res) => {
@@ -110,13 +110,13 @@ export class DAT extends SearchSite {
         await this.page.click('button.search');
         this.log.log('click search');
 
+        setTimeout(() => {
+            waitResultResolve(false);
+        }, 10000);
+
         const result: Array<any> = await new Promise((resolve) => {
             waitResultResolve = resolve;
         });
-
-        setTimeout(() => {
-            waitResultResolve(false);
-        }, 40000);
 
         if (result) {
             await this.postData(task, result);
@@ -197,7 +197,7 @@ export class DAT extends SearchSite {
         }
     }
 
-    private async clickSearch(task: ITASK) {
+    private async fillSearchForm(task: ITASK) {
         // create new search
         await this.page.waitForSelector('.newSearch', {
             timeout: 5000

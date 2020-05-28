@@ -18,7 +18,8 @@ async function memoryTest() {
             console.log('*********** browser: ', item, 'pages length: ', pages.length);
             pages.forEach((page) => {
                 console.log('*********** page url:', page.url());
-                screenshot(page, page.url() + '.memoryTest')
+                
+                screenshot(page, page.title() + '.memoryTest')
             });
         } catch (e) {
             console.log('error:', e);

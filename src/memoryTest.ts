@@ -29,7 +29,7 @@ async function memoryTest() {
 }
 
 async function screenshot(page: puppeteer.Page, name:string) {
-    await this.page.screenshot({
+    await page.screenshot({
         path: `/home/ubuntu/screenshot/${name}.png`,
         fullPage: true
     });

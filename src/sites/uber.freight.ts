@@ -1,6 +1,5 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { SiteQueue, DetailPage } from '../tools/siteQueue';
 
 export class UberFreight extends SearchSite {
     public static siteName = 'Uber Freight';
@@ -124,7 +123,7 @@ export class UberFreight extends SearchSite {
         if (selectedIndex > -1) {
             await this.page.click(
                 `[data-baseweb="popover"] ul[role="listbox"] li[role="option"]:nth-child(${
-                    selectedIndex + 1
+                selectedIndex + 1
                 })`
             );
         }
@@ -132,177 +131,55 @@ export class UberFreight extends SearchSite {
         await this.page.waitForSelector(
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"] button:not(:disabled)'
         );
-        this.page.click(
+
+        let searchResolve
+        this.page.on('response', async res => {
+            if (res.url().match('/freight/carriers/fleet/api/getSearchJobPage')) {
+                const data: Array<any> = (await res.json() as any).data.jobs
+                if (data && data.length > 0) {
+                    await this.postData(task, data.map((item: any) => this.getDataFromResponse(item)))
+                }
+                searchResolve()
+            }
+        })
+
+        await this.page.click(
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"] button:not(:disabled)'
         );
 
-        await this.page
-            .waitForSelector('a[data-testid="load-table-row"]', {
-                timeout: 10000
-            })
-            .catch((e) => {
-                throw this.generateError('noData', 'no data');
-            });
-        await this.getDataFromHtml(task);
+        await new Promise(resolve => {
+            searchResolve = resolve
+        })
     }
 
-    private async getDataFromHtml(task: ITASK) {
-        const linksAndData = await this.page.evaluate((date) => {
-            return Array.from(document.querySelectorAll('a[data-testid="load-table-row"]')).map(
-                (item) => {
-                    const link = (item as HTMLLinkElement).href;
-                    const deadhead = item.querySelector('[role="gridcell"]:nth-child(8)')
-                        .textContent;
-                    return { link, data: { deadhead, date: date } };
-                }
-            );
-        }, task.criteria.pick_up_date);
-
-        this.log.log('links', linksAndData);
-
-        const detailPages = linksAndData.map((item) => {
-            const instance = new UberDetailPage(item.link, item.data);
-            instance.prePare(this.browser, task, this);
-            return instance;
-        });
-
-        const siteStack = new SiteQueue(detailPages, 5);
-        await siteStack.search();
-    }
-}
-
-class UberDetailPage extends DetailPage {
-    protected debugPre = 'UberDetailPage';
-    protected async search(task: ITASK): Promise<void> {
-        await this.page.waitForSelector('section[data-baseweb="card"]', { timeout: 10000 });
-        const result = await this.page.evaluate(() => {
-            const cards = Array.from(document.querySelectorAll('section[data-baseweb="card"]'));
-
-            let result = {};
-            let pickData = {};
-            let dropOffData = {};
-            let bookData = {};
-
-            {
-                const pickupSection = cards[0];
-                const itemEls = Array.from(
-                    pickupSection.querySelectorAll('[data-baseweb=flex-grid-item]')
-                );
-                const locationEl = itemEls[0];
-                const origin = locationEl.querySelector('[data-baseweb=typo-paragraphmedium]')
-                    ?.textContent;
-                const pickUpLocation = locationEl.querySelector(
-                    '[data-baseweb=typo-paragraphsmall]:last-child'
-                )?.textContent;
-
-                const timeEl = itemEls[1];
-                const pickUpDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
-                    ?.textContent;
-                const pickUpTime = timeEl.querySelector(
-                    '[data-baseweb=typo-paragraphsmall]:last-child'
-                )?.textContent;
-
-                const facilityOwner = itemEls[2].querySelector(
-                    '[data-baseweb="typo-paragraphmedium"]'
-                )?.textContent;
-                const pickUpNotes = pickupSection.querySelector(
-                    '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
-                )?.textContent;
-
-                pickData = {
-                    origin,
-                    pickUpLocation,
-                    pickUpDate,
-                    pickUpTime,
-                    facilityOwner,
-                    pickUpNotes
-                };
-            }
-
-            {
-                const dropOffSection = cards[1];
-                const itemEls = Array.from(
-                    dropOffSection.querySelectorAll('[data-baseweb=flex-grid-item]')
-                );
-                const destEl = itemEls[0];
-                const destination = destEl.querySelector('[data-baseweb=typo-paragraphmedium]')
-                    ?.textContent;
-                const destLocation = destEl.querySelector(
-                    '[data-baseweb=typo-paragraphsmall]:last-child'
-                )?.textContent;
-
-                const timeEl = itemEls[1];
-                const dropOffDate = timeEl.querySelector('[data-baseweb="typo-paragraphmedium"]')
-                    ?.textContent;
-                const dropOffTime = timeEl.querySelector(
-                    '[data-baseweb=typo-paragraphsmall]:last-child'
-                )?.textContent;
-
-                const facilityOwner = itemEls[2].querySelector(
-                    '[data-baseweb="typo-paragraphmedium"]'
-                )?.textContent;
-                const dropOffNotes = dropOffSection.querySelector(
-                    '[data-baseweb="flex-grid"] + [data-baseweb="block"] [data-baseweb="typo-paragraphmedium"]'
-                )?.textContent;
-
-                dropOffData = {
-                    destination,
-                    destLocation,
-                    dropOffDate,
-                    dropOffTime,
-                    facilityOwner,
-                    dropOffNotes
-                };
-            }
-
-            {
-                const bookInfo = cards[cards.length - 1];
-                const price = bookInfo.querySelector('h1')?.textContent;
-                const bookInfoDate = bookInfo.querySelector('[data-baseweb="typo-paragraphmedium"]')
-                    ?.textContent;
-                const items = Array.from(
-                    bookInfo.querySelectorAll(
-                        '[data-baseweb="flex-grid"] [data-baseweb="flex-grid-item"]'
-                    )
-                );
-                const [
-                    equipment,
-                    commodity,
-                    weight,
-                    packagingType,
-                    ratePerMile,
-                    distance,
-                    loadId,
-                    specialAttention
-                ] = items.map(
-                    (item) =>
-                        item.querySelector('[data-baseweb="typo-paragraphmedium"]')?.textContent
-                );
-
-                bookData = {
-                    price,
-                    bookInfoDate,
-                    equipment,
-                    commodity,
-                    weight,
-                    packagingType,
-                    ratePerMile,
-                    distance,
-                    loadId,
-                    specialAttention
-                };
-            }
-
-            result = {
-                ...pickData,
-                ...dropOffData,
-                ...bookData,
-                origin_radius: '',
-                destination_radius: ''
-            };
-            return result;
-        });
-        const data = { ...result, ...this.getOriginalData() };
-        await this.searchSite.postData(task, [data as IResultHTMLData]);
+    private getDataFromResponse(data: any): IResultHTMLData {
+        this.log.log('data', data?.trailerType)
+        let originPoint = data?.waypoints?.[0]
+        let destPoint = data?.waypoints?.[1]
+        let task0 = originPoint?.tasks?.[0]
+        let items = task0?.DEPRECATED_purchaseOrderTask?.purchaseOrder?.items
+        return {
+            date: originPoint?.appointStartTime?.epoch,
+            origin: originPoint?.locationText,
+            origin_radius: data?.formattedMeasurements?.deadHead,
+            destination_radius: '',
+            destination: destPoint?.locationText,
+            rate: data?.formattedMeasurements?.price,
+            ratePerDistance: data?.formattedMeasurements?.ratePerDistance,
+            weight: data?.formattedMeasurements?.weight,
+            distance: data?.formattedMeasurements?.distance,
+            loadId: data?.jobID,
+            equipment: data?.trailerType,
+            packagingType: task0?.DEPRECATED_purchaseOrderTask?.purchaseOrder?.packageCount + ' ' + task0?.DEPRECATED_purchaseOrderTask?.purchaseOrder?.packaging,
+            commodity: items?.[0]?.name,
+            dropoffTime: destPoint?.appointEndTime?.epoch + ' ' + destPoint?.appointEndTime?.timeZone,
+            originLocationDetail: originPoint?.businessFacility?.facilityProfile?.formattedAddress,
+            destinationLocationDetail: destPoint?.businessFacility?.facilityProfile?.formattedAddress,
+            orginFacilityOwner: originPoint?.businessFacility?.business?.name,
+            destinationFacilityOwner: destPoint?.businessFacility?.business?.name,
+            specialAttention: data?.formattedMeasurements?.specialAttention || '',
+            pickUpNote: originPoint?.note,
+            dropoffNote: destPoint?.note,
+        }
     }
 }

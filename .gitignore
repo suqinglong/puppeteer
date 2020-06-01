@@ -23,3 +23,4 @@ yarn-error.log*
 test.js
 src/test.html
 src/gaoshijie.ts
+test.config.ts

@@ -20,13 +20,9 @@ export class Coyote extends SearchSite {
     }
 
     protected async login(task: ITASK) {
-        await this.page
-            .waitForSelector('#Username', {
-                timeout: 5000
-            })
-            .catch((e) => {
-                this.log.log('waitForSelector Username', e);
-            });
+        await this.page.waitForSelector('#Username', {
+            timeout: 10000
+        });
 
         this.log.log('find #Username');
 
@@ -36,6 +32,10 @@ export class Coyote extends SearchSite {
 
         await this.page.type('#password', task.password).catch((e) => {
             this.log.log('type Password', e);
+        });
+
+        await this.page.waitForSelector('#login-form-submit', {
+            timeout: 10000
         });
         await this.page.click('#login-form-submit');
 

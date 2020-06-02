@@ -34,7 +34,7 @@ export class CHRobinson extends SearchSite {
             let btn: HTMLElement = document.querySelector('#btnLogin') as HTMLElement;
             btn.click();
         });
-        await this.page.waitForSelector('div.find-loads', { timeout: 10000 });
+        await this.page.waitForSelector('div.find-loads', { timeout: 20000 });
     }
 
     protected async beforeSearch(task: ITASK) {

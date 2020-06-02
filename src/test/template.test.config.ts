@@ -1,9 +1,9 @@
 import { TaskData } from './demoTaskData';
 import { SingletonTedis } from '../tools/tedis';
 
-const count = 1;
-const sourceLoad = 'CH Robinson';
-const isRandom = false;
+const count = 1; // How many tasks will push to redis queue.
+const sourceLoad = 'CH Robinson'; // Which site will be test.
+const isRandom = false; // If this is true, will ignore const var sourceLoad.
 const isAll = false; // If this is true, will ignore all const vars above.
 const sourceLoads = [
     'Allenlund',

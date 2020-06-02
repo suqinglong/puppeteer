@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import {settings } from './settings';
+import { settings } from './settings';
 import { Config } from './tools/index';
 import { SearchSite } from './sites/searchSite';
 import { SiteManager } from './sites/siteManager';

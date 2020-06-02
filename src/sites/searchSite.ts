@@ -101,9 +101,11 @@ export abstract class SearchSite implements ISite {
                     this.page.url(),
                     this.loginPage
                 );
-                await this.page.goto(this.loginPage, { timeout: settings.pageWaitTime }).catch(() => {
-                    throw this.generateError('loginTimeout', 'login page load timeout');
-                });
+                await this.page
+                    .goto(this.loginPage, { timeout: settings.pageWaitTime })
+                    .catch(() => {
+                        throw this.generateError('loginTimeout', 'login page load timeout');
+                    });
             }
             await this.login(task);
             this.log.log('login success');

@@ -20,24 +20,24 @@ const sourceLoads = [
 ];
 
 export async function prePareTestData() {
-        if (isAll) {
-            for (let i = 0; i < sourceLoads.length; i++) {
-                let data = TaskData[sourceLoads[i]] as ITASK;
-                data.task_id = 'taskid_' + new Date() + '___' + i;
-                await SingletonTedis.pushTask(JSON.stringify(data));
-            }
-        } else {
-            for (let i = 0; i < count; i++) {
-                let source = '';
-                let random = Math.floor(Math.random() * sourceLoads.length);
-                if (isRandom) {
-                    source = sourceLoads[random];
-                } else {
-                    source = sourceLoad;
-                }
-                let data = TaskData[source] as ITASK;
-                data.task_id = 'taskid_' + new Date() + '___' + i;
-                await SingletonTedis.pushTask(JSON.stringify(data));
-            }
+    if (isAll) {
+        for (let i = 0; i < sourceLoads.length; i++) {
+            let data = TaskData[sourceLoads[i]] as ITASK;
+            data.task_id = 'taskid_' + new Date() + '___' + i;
+            await SingletonTedis.pushTask(JSON.stringify(data));
         }
+    } else {
+        for (let i = 0; i < count; i++) {
+            let source = '';
+            let random = Math.floor(Math.random() * sourceLoads.length);
+            if (isRandom) {
+                source = sourceLoads[random];
+            } else {
+                source = sourceLoad;
+            }
+            let data = TaskData[source] as ITASK;
+            data.task_id = 'taskid_' + new Date() + '___' + i;
+            await SingletonTedis.pushTask(JSON.stringify(data));
+        }
+    }
 }

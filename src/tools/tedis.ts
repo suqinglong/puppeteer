@@ -1,7 +1,9 @@
 import { Tedis } from 'tedis';
+import { Config } from './index';
 
 export class SingletonTedis {
     private static instance: Tedis;
+    private static queue: string = Config.isDevelop ? 'dev_search_tasks' : 'search_tasks';
 
     // mark user unable to login with 1 minute expired time
     public static async markUserUnableToLogin(userId: string, site: string) {
@@ -62,13 +64,13 @@ export class SingletonTedis {
 
     public static async getTask() {
         const r = this.getInstance();
-        const result = await r.blpop(0, 'search_tasks');
+        const result = await r.blpop(0, this.queue);
         return result?.[1];
     }
 
     public static async pushTask(taskResult: string) {
         const r = this.getInstance();
-        await r.lpush('search_tasks', taskResult);
+        await r.lpush(this.queue, taskResult);
         console.log('push task', taskResult);
     }
 

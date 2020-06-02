@@ -1,5 +1,5 @@
-import { prePareTestData } from './test.config'
+import { prePareTestData } from './test.config';
 import { Tasks } from '../tasks';
 
-prePareTestData()
+prePareTestData();
 new Tasks().getTask();

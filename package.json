@@ -6,7 +6,7 @@
   "scripts": {
     "memoryTest": "node ./dist/test/memoryTest.js",
     "build": "rm -rf ./dist/* && tsc",
-    "test": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=no --useScreenshot=no",
+    "test": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=no --useScreenshot=yes",
     "testDev": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=yes", 
     "product": "yarn build && node ./dist/index.js --useScreenshot=yes",
     "deploy": "yarn build && rsync -auvhp --delete --exclude=node_modules --exclude=dist ./* aws-redot-test:~/puppeteer",

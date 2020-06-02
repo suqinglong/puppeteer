@@ -164,7 +164,7 @@ export class CHRobinson extends SearchSite {
 class CHRobinsonDetailPage extends DetailPage {
     protected debugPre = 'CHRobinsonDetailPage';
     protected async search(task: ITASK): Promise<void> {
-        await this.page.waitForSelector('.card-view-component', {
+        await this.page.waitForSelector('.data-table', {
             timeout: 5000
         });
         const $ = cheerio.load(await this.page.content());

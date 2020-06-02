@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { ChromeSettings, viewPort } from './settings';
+import {settings } from './settings';
 import { Config } from './tools/index';
 import { SearchSite } from './sites/searchSite';
 import { SiteManager } from './sites/siteManager';
@@ -8,14 +8,14 @@ export class Search implements ISearchClass {
     // create browser for one user, this browser will be found by endpoint stored in redis.
     public async createBrowser(task: ITASK): Promise<IbrowserWSEndpoint> {
         const browser = await puppeteer.launch({
-            ...(Config.isUseChrome ? ChromeSettings : {}),
+            ...(Config.isUseChrome ? settings.chromeSettings : {}),
             ignoreDefaultArgs: ['--enable-automation'],
             args: [
                 '--disable-gpu',
                 '–no-first-run'
                 // '--user-data-dir=/home/ubuntu/puppeteer/chrome-user-data'
             ],
-            defaultViewport: viewPort,
+            defaultViewport: settings.viewPort,
             dumpio: false
         });
         return browser.wsEndpoint();

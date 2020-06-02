@@ -1,5 +1,5 @@
 import puppeteer from 'puppeteer';
-import { userAgent, viewPort } from '../settings';
+import { settings } from '../settings';
 import { Log } from './log';
 import { SiteError } from '../error';
 import { Config } from '../tools/index';
@@ -79,8 +79,8 @@ export abstract class DetailPage {
         try {
             this.log = new Log(this.debugPre + ':' + this.searchPage);
             this.page = await this.browser.newPage();
-            await this.page.setViewport(viewPort);
-            await this.page.setUserAgent(userAgent);
+            await this.page.setViewport(settings.viewPort);
+            await this.page.setUserAgent(settings.userAgent);
             await this.page.goto(this.searchPage, { timeout: 20000 });
             await this.search(this.task);
         } catch (e) {

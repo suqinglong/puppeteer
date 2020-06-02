@@ -1,5 +1,4 @@
 import minimist from 'minimist';
-import xlsx from 'node-xlsx';
 import dateformat from 'dateformat';
 
 export const Config = {
@@ -7,16 +6,6 @@ export const Config = {
     isUseScreenshot: useScreenshot() === 'yes',
     isUseChrome: useChrome() === 'yes' // if use headless browser or chrome client
 };
-
-export function getParams(url: string, key: string): string {
-    const matches = url.match(/([^?=&]+=[^=&]+)/g);
-    const result = {};
-    matches.forEach((match) => {
-        const [key, value] = match.split('=').map((item) => decodeURIComponent(item));
-        result[key] = value;
-    });
-    return result[key];
-}
 
 function getMode(): IMode {
     let args = minimist(process.argv.slice(2));
@@ -31,6 +20,16 @@ function useChrome(): 'yes' | null {
 function useScreenshot(): 'yes' | null {
     let args = minimist(process.argv.slice(2));
     return args.useScreenshot;
+}
+
+export function getParams(url: string, key: string): string {
+    const matches = url.match(/([^?=&]+=[^=&]+)/g);
+    const result = {};
+    matches.forEach((match) => {
+        const [key, value] = match.split('=').map((item) => decodeURIComponent(item));
+        result[key] = value;
+    });
+    return result[key];
 }
 
 export function ModifyPostData(task: ITASK, dataArr: Array<any>): Array<IResultData> {
@@ -86,10 +85,6 @@ export function createUrl(baseUrl: string, search: { [key: string]: string | boo
         searchQuery += `&${key}=${encodeURIComponent(v)}`;
     });
     return baseUrl + '?' + searchQuery.substr(1);
-}
-
-export function xlsxParse(file: string) {
-    return xlsx.parse(file)[0]['data'];
 }
 
 export function getRadiusFromValues(radius: number, radiusValues: Array<number>) {

@@ -4,7 +4,7 @@ import { AddNotification, InactiveLoadSource, PostSearchData } from '../api';
 import { SiteError } from '../error';
 import { Config, ModifyPostData } from '../tools/index';
 import { Log } from '../tools/log';
-import { userAgent, viewPort, pageWaitTime } from '../settings';
+import { settings } from '../settings';
 
 export abstract class SearchSite implements ISite {
     public static siteName: string;
@@ -65,10 +65,10 @@ export abstract class SearchSite implements ISite {
 
     protected async beforeSearch(task: ITASK) {
         this.page = await this.browser.newPage();
-        await this.page.setViewport(viewPort);
-        await this.page.setUserAgent(userAgent);
+        await this.page.setViewport(settings.viewPort);
+        await this.page.setUserAgent(settings.userAgent);
         await this.afterPageCreated(task);
-        await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
+        await this.page.goto(this.searchPage, { timeout: settings.pageWaitTime }).catch(() => {
             throw this.generateError('searchTimeout', 'search page load timeout 1');
         });
 
@@ -77,7 +77,7 @@ export abstract class SearchSite implements ISite {
             this.log.log('need login');
             await this.doLogin(task);
             // go to search page
-            await this.page.goto(this.searchPage, { timeout: pageWaitTime }).catch(() => {
+            await this.page.goto(this.searchPage, { timeout: settings.pageWaitTime }).catch(() => {
                 throw this.generateError('searchTimeout', 'search page load timeout 2');
             });
         } else {
@@ -101,7 +101,7 @@ export abstract class SearchSite implements ISite {
                     this.page.url(),
                     this.loginPage
                 );
-                await this.page.goto(this.loginPage, { timeout: pageWaitTime }).catch(() => {
+                await this.page.goto(this.loginPage, { timeout: settings.pageWaitTime }).catch(() => {
                     throw this.generateError('loginTimeout', 'login page load timeout');
                 });
             }

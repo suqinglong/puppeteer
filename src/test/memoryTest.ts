@@ -1,4 +1,4 @@
-import { SingletonTedis } from './tools/tedis';
+import { SingletonTedis } from '../tools/tedis';
 import puppeteer from 'puppeteer';
 
 async function memoryTest() {

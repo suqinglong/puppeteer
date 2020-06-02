@@ -1,6 +1,6 @@
-const time = parseInt(String(Number(new Date()) / 1000), 10);
 import dateFormat from 'dateformat';
 
+const time = parseInt(String(Number(new Date()) / 1000), 10);
 const pickUpDate = dateFormat(new Date(Number(new Date()) + 0 * 24 * 3600 * 1000), 'yyyy-mm-dd');
 
 export const TaskData = {

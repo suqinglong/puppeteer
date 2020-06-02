@@ -1,7 +1,5 @@
 import { Search } from './search';
 import { SingletonTedis } from './tools/tedis';
-import { Config } from './tools/index';
-import { prePareTestData } from './test.config';
 
 export class Tasks implements ITasksClass {
     private search = new Search();
@@ -65,9 +63,5 @@ export class Tasks implements ITasksClass {
 
     private async prepare() {
         await SingletonTedis.deleteKeys();
-        if (Config.isDevelop) {
-            // do something
-            await prePareTestData();
-        }
     }
 }

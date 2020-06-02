@@ -4,16 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "memoryTest": "node ./dist/memoryTest.js",
+    "memoryTest": "node ./dist/test/memoryTest.js",
     "build": "rm -rf ./dist/* && tsc",
-    "test": "yarn build && node ./dist/index.js --mode=develop --useChrome=no --useScreenshot=no",
-    "testDemo": "yarn build && node ./dist/index.js --mode=develop --useChrome=yes", 
+    "test": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=no --useScreenshot=no",
+    "testDev": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=yes", 
     "product": "yarn build && node ./dist/index.js --useScreenshot=yes",
     "deploy": "yarn build && rsync -auvhp --delete --exclude=node_modules --exclude=dist ./* aws-redot-test:~/puppeteer",
     "lint": "eslint src --ext .ts && prettier --write -l \"./src/**/*\"",
-    "eslint": "eslint src --ext .ts",
-    "prettier": "prettier -l \"./src/**/*\"",
-    "prettier:fix": "prettier --write -l \"./src/**/*\""
   },
   "dependencies": {
     "@types/cheerio": "^0.22.17",

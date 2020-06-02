@@ -1,11 +1,10 @@
 import { TaskData } from './demoTaskData';
-import { SingletonTedis } from './tools/tedis';
-import { Config } from './tools/index';
+import { SingletonTedis } from '../tools/tedis';
 
-const count = 5;
-const sourceLoad = 'Coyote';
+const count = 1;
+const sourceLoad = 'CH Robinson';
 const isRandom = false;
-const isAll = false;
+const isAll = false; // If this is true, will ignore all const vars above.
 const sourceLoads = [
     'Allenlund',
     'TQL',
@@ -21,7 +20,6 @@ const sourceLoads = [
 ];
 
 export async function prePareTestData() {
-    if (Config.isDevelop) {
         if (isAll) {
             for (let i = 0; i < sourceLoads.length; i++) {
                 let data = TaskData[sourceLoads[i]] as ITASK;
@@ -42,5 +40,4 @@ export async function prePareTestData() {
                 await SingletonTedis.pushTask(JSON.stringify(data));
             }
         }
-    }
 }

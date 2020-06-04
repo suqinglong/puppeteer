@@ -1,5 +1,6 @@
 import { SingletonTedis } from '../tools/tedis';
 import puppeteer from 'puppeteer';
+import { settings } from '../settings';
 
 async function memoryTest() {
     console.log('memoryTest begin');
@@ -31,7 +32,7 @@ async function memoryTest() {
 
 async function screenshot(page: puppeteer.Page, name: string) {
     await page.screenshot({
-        path: `/home/ubuntu/screenshot/${name}.png`,
+        path: `${settings.screenPath}${name}.png`,
         fullPage: true
     });
 }

@@ -85,7 +85,7 @@ export abstract class DetailPage {
             await this.search(this.task);
         } catch (e) {
             await this.screenshot('doSearch error');
-            this.log.log('An error in doSearch', e);
+            this.log.error('An error in doSearch', e);
         }
         await this.siteQueue.remove(this);
         await this.page.close();
@@ -99,9 +99,7 @@ export abstract class DetailPage {
         if (Config.isUseScreenshot) {
             console.log(`screenshot: ${this.debugPre}-${name}.png`);
             await this.page.screenshot({
-                path: `/home/ubuntu/screenshot/${
-                    this.debugPre + ':' + this.searchPage
-                }-${name}.png`,
+                path: `${settings.screenPath}/${this.debugPre + ':' + this.searchPage}-${name}.png`,
                 fullPage: true
             });
         }

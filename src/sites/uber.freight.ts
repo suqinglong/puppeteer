@@ -132,16 +132,18 @@ export class UberFreight extends SearchSite {
             '[data-baseweb=flex-grid] [data-baseweb="flex-grid-item"] button:not(:disabled)'
         );
 
-        let searchResolve;
+        let searchResolve: Function;
         let isSendRequest = false;
+        let hasData = false;
         this.page.on('response', async (res) => {
             if (res.url().match('/freight/carriers/fleet/api/getSearchJobPage')) {
                 const data: Array<any> = ((await res.json()) as any).data.jobs;
-                if (data && data.length > 0) {
+                if (data?.length > 0) {
                     await this.postData(
                         task,
                         data.map((item: any) => this.getDataFromResponse(item))
                     );
+                    hasData = true;
                 }
                 searchResolve();
             }
@@ -167,6 +169,10 @@ export class UberFreight extends SearchSite {
         await new Promise((resolve) => {
             searchResolve = resolve;
         });
+
+        if (!hasData) {
+            throw this.generateError('noData', 'no data');
+        }
     }
 
     private getDataFromResponse(data: any): IResultHTMLData {

@@ -28,7 +28,7 @@ export abstract class SearchSite implements ISite {
             task.site
         );
         if (isUserUnableToLogin) {
-            return this.log.log('user unable to login');
+            return this.log.error('user unable to login');
         }
         try {
             await this.beforeSearch(task);
@@ -36,14 +36,18 @@ export abstract class SearchSite implements ISite {
             await this.afterSearch();
         } catch (e) {
             await this.screenshot('search error, ' + task.task_id);
-            this.log.log('search error', e);
+            if (e instanceof SiteError && e.type === 'noData') {
+                this.log.warning(e);
+            } else {
+                this.log.error('search error', e);
+            }
         }
-        if (!Config.isUseChrome) {
+        if (!Config.isUseChrome && this.page) {
             try {
                 await this.page.close();
                 this.log.log('search end and page closed');
             } catch (e) {
-                this.log.log('page close error', e);
+                this.log.error('page close error', e);
             }
         }
         this.browser.disconnect();
@@ -56,7 +60,7 @@ export abstract class SearchSite implements ISite {
                     this.log.log(res?.data);
                 })
                 .catch((e) => {
-                    this.log.log('ajax error', e);
+                    this.log.error('ajax error', e);
                 });
         } else {
             this.log.log('no data in postData');
@@ -64,6 +68,9 @@ export abstract class SearchSite implements ISite {
     }
 
     protected async beforeSearch(task: ITASK) {
+        if (!this.searchPage) {
+            return;
+        }
         this.page = await this.browser.newPage();
         await this.page.setViewport(settings.viewPort);
         await this.page.setUserAgent(settings.userAgent);
@@ -96,11 +103,7 @@ export abstract class SearchSite implements ISite {
             await this.beforeLogin(task);
             // if not in login page, then go to login page.
             if (!this.isSamePath(this.page.url(), this.loginPage)) {
-                this.log.log(
-                    'not redirect to login page, goto login page',
-                    this.page.url(),
-                    this.loginPage
-                );
+                this.log.log('goto login page', this.page.url(), this.loginPage);
                 await this.page
                     .goto(this.loginPage, { timeout: settings.pageWaitTime })
                     .catch(() => {
@@ -111,7 +114,7 @@ export abstract class SearchSite implements ISite {
             this.log.log('login success');
         } catch (e) {
             await this.screenshot('login error');
-            this.log.log('login error', e);
+            this.log.error('login error', e);
             if (e.type !== 'loginTimeout') {
                 await this.markUserUnableToLogin(task);
                 throw this.generateError('unableToLogin', 'login faild');
@@ -136,7 +139,7 @@ export abstract class SearchSite implements ISite {
         if (this.isUseScreenshot) {
             console.log(`screenshot: ${this.debugPre}-${name}.png`);
             await this.page.screenshot({
-                path: `/home/ubuntu/screenshot/${this.debugPre}-${name}.png`,
+                path: `${settings.screenPath}${this.debugPre}-${name}.png`,
                 fullPage: true
             });
         }
@@ -145,7 +148,7 @@ export abstract class SearchSite implements ISite {
     protected async pageScreenshot(page: puppeteer.Page, name: string) {
         if (this.isUseScreenshot) {
             await page.screenshot({
-                path: `/home/ubuntu/screenshot/${name}.png`,
+                path: `${settings.screenPath}${name}.png`,
                 fullPage: true
             });
         }

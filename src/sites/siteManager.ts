@@ -5,7 +5,7 @@ import { CHRobinson } from './www.navispherecarrier.com';
 import { Coyote } from './coyote';
 import { Sunteck } from './carriers.suntecktts.com';
 import { Werner } from './www.werner.com';
-import { TQL } from './carrierdashboard.tql.com';
+import { TQL } from './tql';
 import { SearchSite } from './searchSite';
 import { UberFreight } from './uber.freight';
 import { Landstar } from './www.landstaronline.com';

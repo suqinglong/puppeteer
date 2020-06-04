@@ -1,6 +1,6 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
-import { createUrl } from '../tools/index';
+import { createUrl, getCityAndState } from '../tools/index';
 import dateformat from 'dateformat';
 import { SiteQueue, DetailPage } from '../tools/siteQueue';
 
@@ -47,12 +47,8 @@ export class CHRobinson extends SearchSite {
         }
 
         // origin: 'New York, NY',
-        const [originCity, originStateProvinceCode] = task.criteria.origin
-            .split(',')
-            .map((item) => item.trim());
-        const [destinationCity, destinationStateProvinceCode] = task.criteria.destination
-            .split(',')
-            .map((item) => item.trim());
+        const { originCity, originState, destCity, destState } = getCityAndState(task);
+
         // &pickupStart=2020-05-17T08%3A00%3A00
         // &pickupStart=2020-05-17T08%3A00%3A00&pickupEnd=2020-05-18T08%3A00%3A00
         const pickupStart = dateformat(
@@ -65,12 +61,12 @@ export class CHRobinson extends SearchSite {
         ) as string;
         const search = {
             originCountryCode: 'US',
-            originStateProvinceCode,
+            originStateProvinceCode: originState,
             originCity,
             originRadiusMiles: task.criteria.origin_radius,
             destinationCountryCode: 'US',
-            destinationStateProvinceCode,
-            destinationCity,
+            destinationStateProvinceCode: destState,
+            destinationCity: destCity,
             destinationRadiusMiles: task.criteria.destination_radius,
             pickupStart,
             pickupEnd,

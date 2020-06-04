@@ -1,10 +1,10 @@
-# files
+## directory structure
 
-demoTaskData.ts contains demo task's every site. you can see the task data structor in it.
+demoTaskData.ts contains demo task data.
 
-memoryTest.ts is a script that see how many browser is running, and how may tabs opened in each browser.
+memoryTest.ts is a script that watch how many browser instance running and how many tabs opened.
 
-template.test.config.ts is template file for testing config. you should copy it and modify your own file to test.
+template.test.config.ts is template file for testing config. you should copy it and modify arguments to test.
 
 ```shell
 copy template.test.config.ts test.config.ts
@@ -12,9 +12,16 @@ copy template.test.config.ts test.config.ts
 
 index.ts is the entry file.
 
-# run
+## run
+
+To use headless browser
 
 ```shell
 yarn test
+```
+
+To use client browser
+
+```shell
 yarn testDev
 ```

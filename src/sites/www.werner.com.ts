@@ -1,5 +1,6 @@
 import cheerio from 'cheerio';
 import { SearchSite } from './searchSite';
+import { getCityAndState } from '../tools/index';
 
 export class Werner extends SearchSite {
     public static siteName = 'Werner';
@@ -8,26 +9,15 @@ export class Werner extends SearchSite {
 
     protected async search(task: ITASK) {
         await this.page.waitForSelector('#OriginState');
-        const [, originState] = task.criteria.origin.split(',').map((item) => item.trim());
+        const { originState, destState } = getCityAndState(task);
         await this.page.select('#OriginState', originState);
 
         await this.page.waitForSelector('#DestinState');
-        const [, destState] = task.criteria.destination.split(',').map((item) => item.trim());
         await this.page.select('#DestinState', destState);
 
         await Promise.race([
-            this.page
-                .waitForSelector('#avail_loads_table .dataTables_empty')
-                .then(() => 'noData')
-                .catch(() => {
-                    this.log.log('waitfor no data');
-                }),
-            this.page
-                .waitForSelector('#avail_loads_table tr[role="row"]')
-                .then(() => 'haveData')
-                .catch(() => {
-                    this.log.log('waitfor have data');
-                })
+            this.page.waitForSelector('#avail_loads_table .dataTables_empty').then(() => 'noData'),
+            this.page.waitForSelector('#avail_loads_table tr[role="row"]').then(() => 'haveData')
         ]).then((raceResult) => {
             if (raceResult === 'noData') {
                 this.log.log('There is no data');
@@ -42,7 +32,6 @@ export class Werner extends SearchSite {
             });
         });
         await this.page.waitFor(200);
-        await this.screenshot('search data done');
 
         const content = await this.page.evaluate(() => {
             return document.querySelector('#avail_loads_table').outerHTML;

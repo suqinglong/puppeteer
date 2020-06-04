@@ -6,8 +6,8 @@
   "scripts": {
     "memoryTest": "node ./dist/test/memoryTest.js",
     "build": "rm -rf ./dist/* && tsc",
-    "test": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=no --useScreenshot=yes",
-    "testDev": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=yes", 
+    "test": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=no --useScreenshot=no",
+    "testDev": "yarn build && node ./dist/test/index.js --mode=develop --useChrome=yes",
     "product": "yarn build && node ./dist/index.js --useScreenshot=yes",
     "deploy": "yarn build && rsync -auvhp --delete --exclude=node_modules --exclude=dist ./* aws-redot-test:~/puppeteer",
     "lint": "eslint src --ext .ts && prettier --write -l \"./src/**/*\""
@@ -17,6 +17,7 @@
     "@types/puppeteer": "^2.0.1",
     "axios": "^0.19.2",
     "cheerio": "^1.0.0-rc.3",
+    "colors": "^1.4.0",
     "dateformat": "^3.0.3",
     "node-xlsx": "^0.15.0",
     "prettier": "^2.0.4",

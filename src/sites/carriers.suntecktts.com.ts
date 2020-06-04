@@ -1,6 +1,6 @@
 import { SearchSite } from './searchSite';
 import dateformat from 'dateformat';
-import { getRadiusFromValues } from '../tools/index';
+import { getRadiusFromValues, getCityAndState } from '../tools/index';
 import cheerio from 'cheerio';
 
 export class Sunteck extends SearchSite {
@@ -31,31 +31,22 @@ export class Sunteck extends SearchSite {
                 throw this.generateError('logout', 'logout in search page');
             });
 
-        const [originCity, originState] = task.criteria.origin
-            .split(',')
-            .map((item) => item.trim());
+        const { originCity, originState, destCity, destState } = getCityAndState(task);
         await this.page.type('#load_board_search_shipperCity', originCity);
         await this.page.select('#load_board_search_shipperState', originState);
         // 50, 100, 200, 300
-
         await this.page.select(
             '#load_board_search_shipperRadius',
             String(getRadiusFromValues(Number(task.criteria.origin_radius), [50, 100, 200, 300]))
         );
-
-        const [destCity, destState] = task.criteria.destination
-            .split(',')
-            .map((item) => item.trim());
         await this.page.type('#load_board_search_consigneeCity', destCity);
         await this.page.select('#load_board_search_consigneeState', destState);
-
         await this.page.select(
             '#load_board_search_consigneeRadius',
             String(
                 getRadiusFromValues(Number(task.criteria.destination_radius), [50, 100, 200, 300])
             )
         );
-
         await this.page.click('[type=submit]');
         this.log.log('click search button');
 

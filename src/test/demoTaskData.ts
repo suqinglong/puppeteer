@@ -130,10 +130,10 @@ export const TaskData = {
         email: 'ajgtransportation@gmail.com',
         password: 'KeepLoaded19',
         criteria: {
-            origin: 'Tulare, CA',
-            origin_radius: '100',
-            destination: 'Morris, IL',
-            destination_radius: '100',
+            origin: 'Atwater, CA',
+            origin_radius: '201',
+            destination: 'Sumner, WA',
+            destination_radius: '200',
             pick_up_date: pickUpDate,
             equipment: 'Van'
         },

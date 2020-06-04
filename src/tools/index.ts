@@ -112,10 +112,18 @@ export function getRadiusFromValues(radius: number, radiusValues: Array<number>)
     return result;
 }
 
-export function formateDate(time: string): string {
+export function getCityAndState(
+    task: ITASK
+): { originCity: string; originState: string; destCity: string; destState: string } {
+    const [originCity, originState] = task.criteria.origin.split(',').map((item) => item.trim());
+    const [destCity, destState] = task.criteria.destination.split(',').map((item) => item.trim());
+    return { originCity, originState, destCity, destState };
+}
+
+function formateDate(time: string): string {
     try {
         return dateformat(time, 'yyyy-mm-dd HH:MM:ss');
     } catch (e) {
-        console.log('formateDate:', time);
+        console.log('formateDate error:', time);
     }
 }
